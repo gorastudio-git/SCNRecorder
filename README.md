@@ -41,26 +41,26 @@ Using Interface Builder you need to set a class of a scene view to ARSCNRecorder
 
 #### Code
 
-When initializing your ARSCNView or SCNView, you need to use ARSCNRecorderView or SCNRecorderView respectively.
+When initializing your ARSCNView or SCNView, you need to use ARSCNRecorder.ARSCNView or SCNRecorder.SCNView respectively.
 
 ```
-let sceneView: ARSCNView = ARSCNRecorderView(...)
+let sceneView: ARSCNView = ARSCNRecorder.ARSCNView(...)
 ```
 or 
 
 ```
-let sceneView: SCNView = SCNRecorderView(...)
+let sceneView: SCNView = SCNRecorder.SCNView(...)
 ```
 
-If your classes inherit ARSCNView or SCNView just inherit from ARSCNRecorderView or SCNRecorderView.
+If your classes inherit from ARSCNView or SCNView just inherit them from ARSCNRecorder.ARSCNView or SCNRecorder.SCNView.
 
 ```
-class MyArSceneView: ARSCNRecorderView { ... }
+class MyArSceneView: ARSCNRecorder.ARSCNView { ... }
 ```
 or
 
 ```
-class MySceneView: SCNRecorderView { ... }
+class MySceneView: SCNRecorder.SCNView { ... }
 ```
 
 ### Preparing recorder
@@ -92,8 +92,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         recorder = try! ARSCNRecorder(sceneView)
-        sceneView.delegate = recorder
-        recorder.sceneViewDelegate = self
     }
     
     @IBAction func startVideoRecording(_ sender: Any) {
@@ -107,6 +105,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // You must store a strong reference to a video recording
         videoRecording = try! recorder.makeVideoRecording(to: url)
+        
+        // Don't forget to resume recording
         videoRecording?.resume()
     }
     
@@ -120,6 +120,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 ```
 
 ### That's it!
+
+Look at the Example project for more details.
 
 ## Author
 
