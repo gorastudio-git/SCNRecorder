@@ -55,7 +55,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         recorder = try! ARSCNRecorder(sceneView)
         
         // Set the view's delegate
@@ -121,7 +121,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("video.mov", isDirectory: false)
         try? fileManager.removeItem(at: url)
         
+        // Store a strong reference to a viddeo recording
         videoRecording = try! recorder.makeVideoRecording(to: url)
+        
+        // Don't forget to resume recording
         videoRecording?.resume()
         
         // Update UI
