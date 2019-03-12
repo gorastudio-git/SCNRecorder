@@ -27,9 +27,7 @@ import Foundation
 import ARKit
 
 extension ARSCNRecorder {
-    
-    public typealias ARSCNRecordableView = ARSCNView
-    
+        
     public typealias ARSCNView = View
     
     @objc(ARSCNRecordableView)
@@ -69,10 +67,7 @@ extension ARSCNRecorder {
         
         open override weak var delegate: ARSCNViewDelegate? {
             get {
-                guard let recorder = recorder else {
-                    return super.delegate
-                }
-                return recorder.sceneViewDelegate
+                return super.delegate
             }
             set {
                 guard let recorder = recorder else {

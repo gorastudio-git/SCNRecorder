@@ -67,7 +67,7 @@ final class InternalRecorder {
         var unmanagedPixelBufferPool: CVPixelBufferPool?
         let errorCode = CVPixelBufferPoolCreate(nil,
                                                 nil,
-                                                pixelBufferProducer.recommendedPixelBufferAttributes as CFDictionary,
+                                                _pixelBufferProducer.recommendedPixelBufferAttributes as CFDictionary,
                                                 &unmanagedPixelBufferPool)
         
         guard errorCode == kCVReturnSuccess, let pixelBufferPool = unmanagedPixelBufferPool else {

@@ -27,9 +27,7 @@ import Foundation
 import SceneKit
 
 extension SCNRecorder {
-    
-    public typealias SCNRecordableView = SCNView
-    
+        
     public typealias SCNView = View
     
     @objc(SCNRecordableView)
@@ -75,10 +73,7 @@ extension SCNRecorder {
         
         open override weak var delegate: SCNSceneRendererDelegate? {
             get {
-                guard let recorder = recorder else {
-                    return super.delegate
-                }
-                return recorder.sceneViewDelegate
+                return super.delegate
             }
             set {
                 guard let recorder = recorder else {
