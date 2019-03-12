@@ -136,9 +136,9 @@ extension InternalRecorder: Recorder {
         }
     }
     
-    func createVideoRecording(to url: URL,
-                              fileType: AVFileType = .mov,
-                              timeScale: CMTimeScale = defaultTimeScale) throws -> VideoRecording {
+    func makeVideoRecording(to url: URL,
+                            fileType: AVFileType = .mov,
+                            timeScale: CMTimeScale = defaultTimeScale) throws -> VideoRecording {
         
         let videoRecorder = try VideoRecorder(url: url,
                                               fileType: fileType,

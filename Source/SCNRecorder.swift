@@ -80,8 +80,13 @@ extension SCNRecorder: Recorder {
         }
     }
     
-    public func createVideoRecording(to url: URL, fileType: AVFileType = .mov, timeScale: CMTimeScale = defaultTimeScale) throws -> VideoRecording {
-        return try recorder.createVideoRecording(to: url, fileType: fileType, timeScale: timeScale)
+    public func makeVideoRecording(to url: URL,
+                                   fileType: AVFileType = .mov,
+                                   timeScale: CMTimeScale = defaultTimeScale) throws -> VideoRecording {
+        
+        return try recorder.makeVideoRecording(to: url,
+                                               fileType: fileType,
+                                               timeScale: timeScale)
     }
     
     public func takePhoto(scale: CGFloat = UIScreen.main.scale,

@@ -32,7 +32,9 @@ public protocol Recorder: class {
     
     var filters: [Filter] { get set }
     
-    func createVideoRecording(to url: URL, fileType: AVFileType, timeScale: CMTimeScale) throws -> VideoRecording
+    func makeVideoRecording(to url: URL,
+                            fileType: AVFileType,
+                            timeScale: CMTimeScale) throws -> VideoRecording
     
     func takePhoto(scale: CGFloat,
                    orientation: UIImage.Orientation,

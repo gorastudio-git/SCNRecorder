@@ -106,7 +106,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         try? fileManager.removeItem(at: url)
 
         // You must store a strong reference to a video recording
-        videoRecording = try! recorder.createVideoRecording(to: url)
+        videoRecording = try! recorder.makeVideoRecording(to: url)
         videoRecording?.resume()
     }
     

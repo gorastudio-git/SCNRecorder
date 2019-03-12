@@ -1,5 +1,5 @@
 //
-//  SCNRecorder.SCNView.swift
+//  ARSCNRecorder.View.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -24,39 +24,35 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
+import ARKit
 
-extension SCNRecorder {
+extension ARSCNRecorder {
     
-    public typealias View = SCNView
+    public typealias ARSCNRecordableView = ARSCNView
     
-    @objc(SCNView)
-    open class SCNView: SceneKit.SCNView {
+    public typealias ARSCNView = View
+    
+    @objc(ARSCNRecordableView)
+    open class View: ARKit.ARSCNView {
         
         #if !targetEnvironment(simulator)
+        
         override open class var layerClass: AnyClass {
-            guard super.layerClass is CAMetalLayer.Type else {
-                return super.layerClass
-            }
             return CAMetalRecorderLayer.self
         }
         
-        var metalLayer: CAMetalRecorderLayer? {
-            switch renderingAPI {
-            case .metal:
-                assert(layer is CAMetalRecorderLayer, "SCNRecorder.SCNView layer must be SCNRecorder.CAMetalRecorderLayer or its descendant")
-                return (layer as! CAMetalRecorderLayer)
-            case .openGLES2:
-                return nil
-            }
+        var metalLayer: CAMetalRecorderLayer {
+            assert(layer is CAMetalRecorderLayer, "SCNRecorder.ARSCNView layer must be SCNRecorder.CAMetalRecorderLayer or its descendant")
+            return layer as! CAMetalRecorderLayer
         }
         
         var lastDrawable: CAMetalDrawable? {
-            return metalLayer?.lastDrawable
+            return metalLayer.lastDrawable
         }
+        
         #endif
         
-        weak var recorder: SCNRecorder? {
+        weak var recorder: ARSCNRecorder? {
             didSet {
                 if let oldRecorder = oldValue {
                     super.delegate = oldRecorder.sceneViewDelegate
@@ -71,7 +67,7 @@ extension SCNRecorder {
             }
         }
         
-        open override var delegate: SCNSceneRendererDelegate? {
+        open override weak var delegate: ARSCNViewDelegate? {
             get {
                 guard let recorder = recorder else {
                     return super.delegate
