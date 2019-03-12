@@ -61,6 +61,22 @@ final class InternalRecorder {
     
     private var _hasAudioSampleBufferConsumers: Bool = false
     
+    private lazy var _pixelBufferProducer: PixelBufferProducer = api.makePixelBufferProducer()
+    
+    private lazy var _pixelBufferPool: CVPixelBufferPool = {
+        var unmanagedPixelBufferPool: CVPixelBufferPool?
+        let errorCode = CVPixelBufferPoolCreate(nil,
+                                                nil,
+                                                pixelBufferProducer.recommendedPixelBufferAttributes as CFDictionary,
+                                                &unmanagedPixelBufferPool)
+        
+        guard errorCode == kCVReturnSuccess, let pixelBufferPool = unmanagedPixelBufferPool else {
+            fatalError("CVPixelBufferPoolCreate Error: \(errorCode)")
+        }
+        
+        return pixelBufferPool
+    }()
+    
     var pixelBufferConsumers = [(Weak<PixelBufferConsumer>, DispatchQueue)]() {
         didSet {
             let isEmpty = pixelBufferConsumers.isEmpty
@@ -74,22 +90,6 @@ final class InternalRecorder {
             hasAudioSampleBufferConsumers = !audioSampleBufferConsumers.isEmpty
         }
     }
-    
-    lazy var pixelBufferProducer: PixelBufferProducer = api.makePixelBufferProducer()
-    
-    lazy var pixelBufferPool: CVPixelBufferPool = {
-        var unmanagedPixelBufferPool: CVPixelBufferPool?
-        let errorCode = CVPixelBufferPoolCreate(nil,
-                                                nil,
-                                                pixelBufferProducer.recommendedPixelBufferAttributes as CFDictionary,
-                                                &unmanagedPixelBufferPool)
-        
-        guard errorCode == kCVReturnSuccess, let pixelBufferPool = unmanagedPixelBufferPool else {
-            fatalError("CVPixelBufferPoolCreate Error: \(errorCode)")
-        }
-        
-        return pixelBufferPool
-    }()
     
     public init(_ sceneView: SCNView) throws {
         self.sceneView = sceneView
@@ -240,12 +240,36 @@ extension InternalRecorder {
             }
         }
     }
+    
+    func preparePixelBufferComponents() {
+        synchronizationQueue.async {
+            _ = self._pixelBufferProducer
+            _ = self._pixelBufferPool
+        }
+    }
+    
+    var pixelBufferProducer: PixelBufferProducer {
+        var pixelBufferProducer: PixelBufferProducer!
+        synchronizationQueue.sync {
+            pixelBufferProducer = self._pixelBufferProducer
+        }
+        return pixelBufferProducer
+    }
+    
+    var pixelBufferPool: CVPixelBufferPool {
+        var pixelBufferPool: CVPixelBufferPool!
+        synchronizationQueue.sync {
+            pixelBufferPool = self._pixelBufferPool
+        }
+        return pixelBufferPool
+    }
 }
 
 extension InternalRecorder {
     
     func producePixelBuffer(at time: TimeInterval) {
         guard hasPixelBufferConsumers else {
+            preparePixelBufferComponents()
             return
         }
         
