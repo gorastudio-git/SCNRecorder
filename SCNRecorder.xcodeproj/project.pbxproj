@@ -18,8 +18,8 @@
 		BE4C33ED2236AB99007AE1EE /* WatermarkFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33EC2236AB99007AE1EE /* WatermarkFilter.swift */; };
 		BE4C33F02236B0E3007AE1EE /* AVCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33EF2236B0E3007AE1EE /* AVCaptureSession.swift */; };
 		BE4C33F22236B0EA007AE1EE /* CIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33F12236B0EA007AE1EE /* CIImage.swift */; };
-		BE4C33F52236B21B007AE1EE /* SCNRecorder.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33F42236B21B007AE1EE /* SCNRecorder.View.swift */; };
-		BE4C33F72236B22F007AE1EE /* ARSCNRecorder.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33F62236B22F007AE1EE /* ARSCNRecorder.View.swift */; };
+		BE4C33F52236B21B007AE1EE /* SCNRecordableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33F42236B21B007AE1EE /* SCNRecordableView.swift */; };
+		BE4C33F72236B22F007AE1EE /* ARSCNRecordableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33F62236B22F007AE1EE /* ARSCNRecordableView.swift */; };
 		BE4C33FA2236B326007AE1EE /* CAMetalRecorderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33F92236B326007AE1EE /* CAMetalRecorderLayer.swift */; };
 		BE4C33FD2236B412007AE1EE /* InternalRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33FC2236B412007AE1EE /* InternalRecorder.swift */; };
 		BE4C33FF2236B47A007AE1EE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C33FE2236B47A007AE1EE /* API.swift */; };
@@ -55,8 +55,8 @@
 		BE4C33EC2236AB99007AE1EE /* WatermarkFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatermarkFilter.swift; sourceTree = "<group>"; };
 		BE4C33EF2236B0E3007AE1EE /* AVCaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureSession.swift; sourceTree = "<group>"; };
 		BE4C33F12236B0EA007AE1EE /* CIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImage.swift; sourceTree = "<group>"; };
-		BE4C33F42236B21B007AE1EE /* SCNRecorder.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNRecorder.View.swift; sourceTree = "<group>"; };
-		BE4C33F62236B22F007AE1EE /* ARSCNRecorder.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSCNRecorder.View.swift; sourceTree = "<group>"; };
+		BE4C33F42236B21B007AE1EE /* SCNRecordableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNRecordableView.swift; sourceTree = "<group>"; };
+		BE4C33F62236B22F007AE1EE /* ARSCNRecordableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSCNRecordableView.swift; sourceTree = "<group>"; };
 		BE4C33F92236B326007AE1EE /* CAMetalRecorderLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetalRecorderLayer.swift; sourceTree = "<group>"; };
 		BE4C33FC2236B412007AE1EE /* InternalRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalRecorder.swift; sourceTree = "<group>"; };
 		BE4C33FE2236B47A007AE1EE /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -114,9 +114,9 @@
 				BE4C34212236B7F2007AE1EE /* Controlable.swift */,
 				BE4C33E02236A992007AE1EE /* Recorder.swift */,
 				BE4C33DB2236A7AB007AE1EE /* SCNRecorder.swift */,
-				BE4C33F42236B21B007AE1EE /* SCNRecorder.View.swift */,
+				BE4C33F42236B21B007AE1EE /* SCNRecordableView.swift */,
 				BE4C33DD2236A7BA007AE1EE /* ARSCNRecorder.swift */,
-				BE4C33F62236B22F007AE1EE /* ARSCNRecorder.View.swift */,
+				BE4C33F62236B22F007AE1EE /* ARSCNRecordableView.swift */,
 				BE4C33FB2236B3F9007AE1EE /* InternalRecorder */,
 				BE4C34032236B5DD007AE1EE /* PixelBufferProducers */,
 				BE4C340A2236B657007AE1EE /* Consumers */,
@@ -311,12 +311,12 @@
 				BE4C33F02236B0E3007AE1EE /* AVCaptureSession.swift in Sources */,
 				BE4C34162236B6FE007AE1EE /* VideoRecorder.Recording.swift in Sources */,
 				BE4C33F22236B0EA007AE1EE /* CIImage.swift in Sources */,
-				BE4C33F72236B22F007AE1EE /* ARSCNRecorder.View.swift in Sources */,
+				BE4C33F72236B22F007AE1EE /* ARSCNRecordableView.swift in Sources */,
 				BE4C33ED2236AB99007AE1EE /* WatermarkFilter.swift in Sources */,
 				BE4C34222236B7F2007AE1EE /* Controlable.swift in Sources */,
 				BE4C33E72236AB6B007AE1EE /* SwappingFilter.swift in Sources */,
 				BE4C34092236B615007AE1EE /* EAGLPixelBufferProducer.swift in Sources */,
-				BE4C33F52236B21B007AE1EE /* SCNRecorder.View.swift in Sources */,
+				BE4C33F52236B21B007AE1EE /* SCNRecordableView.swift in Sources */,
 				BE4C34072236B600007AE1EE /* MetalPixelBufferProducer.swift in Sources */,
 				BE4C33FA2236B326007AE1EE /* CAMetalRecorderLayer.swift in Sources */,
 				BE4C34022236B4C2007AE1EE /* Weak.swift in Sources */,

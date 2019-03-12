@@ -37,6 +37,10 @@ extension SCNRecorder {
 
 public final class SCNRecorder: NSObject {
     
+    public typealias View = SCNView
+    
+    public typealias SCNView = SCNRecordableView
+    
     public internal(set) weak var sceneView: SCNRecorder.View?
     
     weak var sceneViewDelegate: SCNSceneRendererDelegate?

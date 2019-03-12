@@ -38,6 +38,10 @@ extension ARSCNRecorder {
 
 public final class ARSCNRecorder: NSObject {
     
+    public typealias View = ARSCNView
+    
+    public typealias ARSCNView = ARSCNRecordableView
+    
     public internal(set) weak var sceneView: ARSCNRecorder.View?
     
     weak var sceneViewDelegate: ARSCNViewDelegate?
