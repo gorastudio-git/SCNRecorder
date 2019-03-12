@@ -28,7 +28,6 @@ At every file where you need the functionality, you need to import the module.
 
 ```
 import SCNRecorder
-
 ```
 
 ### Configure view
