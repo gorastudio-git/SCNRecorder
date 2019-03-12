@@ -28,17 +28,36 @@ import AVFoundation
 import SceneKit
 import ARKit
 
+extension ARSCNRecorder {
+    
+    enum Error: Swift.Error {
+        
+        case wrongType
+    }
+}
+
 public final class ARSCNRecorder: NSObject {
     
-    public weak var sceneViewDelegate: ARSCNViewDelegate?
+    public internal(set) weak var sceneView: ARSCNRecorder.View?
     
-    public let sceneView: ARSCNView
+    weak var sceneViewDelegate: ARSCNViewDelegate?
     
     let recorder: InternalRecorder
     
-    public init(_ sceneView: ARSCNView) throws {
+    public init(_ sceneView: ARKit.ARSCNView) throws {
+        guard let sceneView = sceneView as? View else {
+            throw Error.wrongType
+        }
+        
         self.sceneView = sceneView
         self.recorder = try InternalRecorder(sceneView)
+    
+        super.init()
+        sceneView.recorder = self
+    }
+    
+    deinit {
+        sceneView?.recorder = nil
     }
 }
 
@@ -108,7 +127,7 @@ extension ARSCNRecorder: ARSCNViewDelegate {
     
     // MARK: ARSessionObserver
     @objc
-    public func session(_ session: ARSession, didFailWithError error: Error) {
+    public func session(_ session: ARSession, didFailWithError error: Swift.Error) {
         sceneViewDelegate?.session?(session, didFailWithError: error)
     }
     

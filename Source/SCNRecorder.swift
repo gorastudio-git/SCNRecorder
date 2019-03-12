@@ -27,13 +27,19 @@ import Foundation
 import AVFoundation
 import SceneKit
 
+extension SCNRecorder {
+    
+    enum Error: Swift.Error {
+        
+        case wrongType
+    }
+}
+
 public final class SCNRecorder: NSObject {
     
-    public weak var sceneViewDelegate: SCNSceneRendererDelegate?
+    public internal(set) weak var sceneView: SCNRecorder.View?
     
-    public var sceneView: SCNView {
-        return recorder.sceneView
-    }
+    weak var sceneViewDelegate: SCNSceneRendererDelegate?
     
     let recorder: InternalRecorder
     
@@ -41,12 +47,23 @@ public final class SCNRecorder: NSObject {
     
     let audioQueue = DispatchQueue(label: "SCNRecorder.AudioQueue", qos: .userInitiated)
     
-    public init(_ sceneView: SCNView) throws {
-        let recorder = try InternalRecorder(sceneView)
-        self.recorder = recorder
-        audioAdapter = AudioAdapter(queue: audioQueue, callback: { (sampleBuffer) in
+    public init(_ sceneView: SceneKit.SCNView) throws {
+        guard let sceneView = sceneView as? View else {
+            throw Error.wrongType
+        }
+        
+        self.sceneView = sceneView
+        self.recorder = try InternalRecorder(sceneView)
+        audioAdapter = AudioAdapter(queue: audioQueue, callback: { [recorder] (sampleBuffer) in
             recorder.produceAudioSampleBuffer(sampleBuffer)
         })
+        
+        super.init()
+        sceneView.recorder = self
+    }
+    
+    deinit {
+        sceneView?.recorder = nil
     }
 }
 
