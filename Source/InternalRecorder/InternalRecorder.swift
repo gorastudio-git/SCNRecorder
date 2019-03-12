@@ -167,6 +167,7 @@ extension InternalRecorder: Recorder {
         
         addPixelBufferConsumer(ImageRecorder.takeUIImage(scale: scale,
                                                          orientation: orientation,
+                                                         context: pixelBufferProducer.context,
                                                          completionHandler: handler),
                                queue: photoQueue)
     }
