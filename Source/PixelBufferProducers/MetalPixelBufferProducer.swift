@@ -40,9 +40,9 @@ extension MetalPixelBufferProducer {
 
 final class MetalPixelBufferProducer: PixelBufferProducer {
     
-    static let colorSpaces: [MTLPixelFormat: () -> CGColorSpace] = [
-        .bgra8Unorm_srgb: { CGColorSpace(name: CGColorSpace.sRGB)! },
-        .bgr10_xr_srgb: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB)! }
+    static let colorSpaces: [MTLPixelFormat: () -> CGColorSpace?] = [
+        .bgra8Unorm_srgb: { CGColorSpace(name: CGColorSpace.sRGB) },
+        .bgr10_xr_srgb: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) }
     ]
     
     static let pixelFormats: [MTLPixelFormat: OSType] = [
@@ -50,12 +50,24 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
         .bgr10_xr_srgb: kCVPixelFormatType_30RGBLEPackedWideGamut
     ]
     
+    static let defaultICCData: [MTLPixelFormat: () -> Data?] = [
+        .bgra8Unorm_srgb: { ICCData.sRGB.data },
+        .bgr10_xr_srgb: { ICCData.extendedLinearSRGB.data }
+    ]
+    
     static func getPixelFormat(for metalPixelFormat: MTLPixelFormat) -> OSType {
         return pixelFormats[metalPixelFormat] ?? kCVPixelFormatType_32BGRA
     }
     
     static func getColorSpace(for metalPixelFormat: MTLPixelFormat) -> CGColorSpace {
-        return colorSpaces[metalPixelFormat]?() ?? CGColorSpaceCreateDeviceRGB()
+        return colorSpaces[metalPixelFormat]?() ??
+               CGColorSpace(name: CGColorSpace.sRGB) ??
+               CGColorSpaceCreateDeviceRGB()
+    }
+    
+    static func getICCData(for metalPixelFormat: MTLPixelFormat) -> CFData? {
+        return getColorSpace(for: metalPixelFormat).copyICCData() ??
+               defaultICCData[metalPixelFormat]?().map({ $0 as CFData })
     }
     
     lazy var recommendedVideoSettings: [String : Any] = {
@@ -67,15 +79,22 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
     }()
     
     lazy var recommendedPixelBufferAttributes: [String : Any] = {
-        return [
+        let pixelFormat = metalLayer.pixelFormat
+
+        var attributes: [String : Any] = [
             kCVPixelBufferWidthKey as String: metalLayer.drawableSize.width,
             kCVPixelBufferHeightKey as String: metalLayer.drawableSize.height,
-            kCVPixelBufferPixelFormatTypeKey as String: MetalPixelBufferProducer.getPixelFormat(for: metalLayer.pixelFormat),
-            kCVPixelBufferIOSurfacePropertiesKey as String : [:],
-            kCVBufferPropagatedAttachmentsKey as String: [
-                kCVImageBufferICCProfileKey: MetalPixelBufferProducer.getColorSpace(for: metalLayer.pixelFormat).copyICCData()!
-            ]
+            kCVPixelBufferPixelFormatTypeKey as String: MetalPixelBufferProducer.getPixelFormat(for: pixelFormat),
+            kCVPixelBufferIOSurfacePropertiesKey as String : [:]
         ]
+        
+        if let iccData = MetalPixelBufferProducer.getICCData(for: pixelFormat) {
+            attributes[kCVBufferPropagatedAttachmentsKey as String] = [
+                kCVImageBufferICCProfileKey: MetalPixelBufferProducer.getICCData(for: pixelFormat)
+            ]
+        }
+        
+        return attributes
     }()
     
     var emptyBufferSize: Int = 0

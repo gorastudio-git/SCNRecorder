@@ -39,6 +39,7 @@
 		BE4C34222236B7F2007AE1EE /* Controlable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34212236B7F2007AE1EE /* Controlable.swift */; };
 		BE4C34242236BAB2007AE1EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34232236BAB2007AE1EE /* README.md */; };
 		BE4C34262236C034007AE1EE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34252236C034007AE1EE /* LICENSE */; };
+		BE7EA7BB2239359500ED1E98 /* ICCData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7EA7BA2239359500ED1E98 /* ICCData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		BE4C34212236B7F2007AE1EE /* Controlable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controlable.swift; sourceTree = "<group>"; };
 		BE4C34232236BAB2007AE1EE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BE4C34252236C034007AE1EE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		BE7EA7BA2239359500ED1E98 /* ICCData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICCData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				BE4C33EE2236B0C4007AE1EE /* Extensions */,
 				BE4C33D32236A6BA007AE1EE /* SCNRecorder.h */,
 				BE4C33D42236A6BA007AE1EE /* Info.plist */,
+				BE7EA7BA2239359500ED1E98 /* ICCData.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				BE4C33E12236A992007AE1EE /* Recorder.swift in Sources */,
 				BE4C33E52236A9D8007AE1EE /* Filter.swift in Sources */,
 				BE4C341C2236B727007AE1EE /* Recording.swift in Sources */,
+				BE7EA7BB2239359500ED1E98 /* ICCData.swift in Sources */,
 				BE4C33DC2236A7AB007AE1EE /* SCNRecorder.swift in Sources */,
 				BE4C33EB2236AB88007AE1EE /* GeometryFilter.swift in Sources */,
 				BE4C33FF2236B47A007AE1EE /* API.swift in Sources */,
