@@ -34,16 +34,16 @@ import SCNRecorder
 
 #### Interface Builder
 
-Using Interface Builder you need to set a class of a scene view to ARSCNRecorderView, SCNRecorderView and choose SCNRecorder as a module. You may inherit from recorder's views and use them instead.
+Using Interface Builder you need to set a class of a scene view to ARSCNRecordableView, SCNRecordableView and choose SCNRecorder as a module. You may inherit from recorder's views and use them instead.
 
 ![SCNRecorder IB integration](/images/InterfaceBuilder.png?raw=true )
 
 #### Code
 
-When initializing your ARSCNView or SCNView, you need to use ARSCNRecorder.ARSCNView or SCNRecorder.SCNView respectively.
+When initializing your ARSCNView or SCNView, you need to use SCNRecorder.ARSCNView or SCNRecorder.SCNView respectively.
 
 ```
-let sceneView: ARSCNView = ARSCNRecorder.ARSCNView(...)
+let sceneView: ARSCNView = SCNRecorder.ARSCNView(...)
 ```
 or 
 
@@ -51,10 +51,10 @@ or
 let sceneView: SCNView = SCNRecorder.SCNView(...)
 ```
 
-If your classes inherit from ARSCNView or SCNView just inherit them from ARSCNRecorder.ARSCNView or SCNRecorder.SCNView.
+If your classes inherit from ARSCNView or SCNView just inherit them from SCNRecorder.ARSCNView or SCNRecorder.SCNView.
 
 ```
-class MyArSceneView: ARSCNRecorder.ARSCNView { ... }
+class MyArSceneView: SCNRecorder.ARSCNView { ... }
 ```
 or
 
@@ -90,7 +90,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recorder = try! ARSCNRecorder(sceneView)
+        recorder = try! SCNRecorder(sceneView)
     }
     
     @IBAction func startVideoRecording(_ sender: Any) {

@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.Recording.swift
+//  RecordableView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 13/03/2019.
 //  Copyright (c) 2019 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,37 +24,13 @@
 //  THE SOFTWARE.
 
 import Foundation
+import UIKit
 
-extension VideoRecorder {
+protocol RecordableView: AnyObject {
     
-    final class Recording: InternalVideoRecording {
-        
-        let notificationQueue: DispatchQueue = DispatchQueue(label: "VideoRecording.NotificationQueue", qos: .userInteractive)
-        
-        var _duration: TimeInterval = 0.0
-        
-        var onDurationChanged: ((TimeInterval) -> Void)?
-        
-        var _state: Recording.State = .preparing
-        
-        var onStateChanged: ((Recording.State) -> Void)?
-        
-        var _error: Swift.Error?
-        
-        var onError: ((Swift.Error) -> Void)?
-        
-        var controlable: Controlable {
-            return videoRecorder
-        }
-        
-        var videoInfoProvider: VideoInfoProvider {
-            return videoRecorder
-        }
-        
-        let videoRecorder: VideoRecorder
-        
-        init(videoRecorder: VideoRecorder) {
-            self.videoRecorder = videoRecorder
-        }
-    }
+    var metalLayer: CAMetalRecordableLayer? { get }
+    
+    var lastDrawable: CAMetalDrawable? { get }
+    
+    var recorder: SCNRecorder? { get set }
 }

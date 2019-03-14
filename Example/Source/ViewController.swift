@@ -40,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var videoButton: UIButton!
     
-    var recorder: ARSCNRecorder!
+    var recorder: SCNRecorder!
     
     var videoRecording: VideoRecording? {
         didSet {
@@ -56,7 +56,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        recorder = try! ARSCNRecorder(sceneView)
+        recorder = try! SCNRecorder(sceneView)
         
         // Set the view's delegate
         sceneView.delegate = self

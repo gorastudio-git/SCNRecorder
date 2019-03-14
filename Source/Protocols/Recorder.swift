@@ -26,7 +26,7 @@
 import Foundation
 import AVFoundation
 
-public protocol Recorder: class {
+protocol Recorder: class {
     
     static var defaultTimeScale: CMTimeScale { get }
     

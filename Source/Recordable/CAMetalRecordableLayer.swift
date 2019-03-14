@@ -1,5 +1,5 @@
 //
-//  CAMetalRecorderLayer.swift
+//  CAMetalRecordableLayer.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -28,7 +28,7 @@ import UIKit
 
 #if !targetEnvironment(simulator)
 
-open class CAMetalRecorderLayer: UIKit.CAMetalLayer {
+open class CAMetalRecordableLayer: UIKit.CAMetalLayer {
     
     var lastFramebufferOnly: Bool = true
     

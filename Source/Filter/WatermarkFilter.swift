@@ -85,18 +85,23 @@ public struct WatermarkFilter: Filter {
         }
         
         func getTranslation(of originExtent: CGRect, on targetExtent: CGRect) -> CGFloat {
+            let padding: CGFloat
             var translation: CGFloat
+            
             switch self {
             case .left:
                 // Left difference
+                padding = self.padding
                 translation = targetExtent.minX - originExtent.minX
                 
             case .center:
                 // Center difference
+                padding = self.padding
                 translation = targetExtent.midX - originExtent.midX
                 
             case .right:
                 // Right difference
+                padding = -self.padding
                 translation = targetExtent.maxX - originExtent.maxX
             }
             return translation + padding

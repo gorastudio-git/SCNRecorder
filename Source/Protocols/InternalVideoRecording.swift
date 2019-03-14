@@ -1,8 +1,8 @@
 //
-//  VideoRecording.swift
+//  InternalVideoRecording.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 14/03/2019.
 //  Copyright (c) 2019 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,21 +26,12 @@
 import Foundation
 import AVFoundation
 
-public protocol VideoRecording: Recording {
-    
-    var url: URL { get }
-    
-    var fileType: AVFileType { get }
-    
-    var timeScale: CMTimeScale { get }
-}
-
-protocol _VideoRecording: VideoRecording, _Recording {
+protocol InternalVideoRecording: VideoRecording, InternalRecording {
     
     var videoInfoProvider: VideoInfoProvider { get }
 }
 
-extension _VideoRecording {
+extension InternalVideoRecording {
     
     var url: URL {
         return videoInfoProvider.url

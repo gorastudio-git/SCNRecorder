@@ -26,36 +26,35 @@
 import Foundation
 import ARKit
 
-open class ARSCNRecordableView: ARKit.ARSCNView {
+open class ARSCNRecordableView: ARSCNView, RecordableView {
     
     #if !targetEnvironment(simulator)
     
     override open class var layerClass: AnyClass {
-        return CAMetalRecorderLayer.self
+        return CAMetalRecordableLayer.self
     }
     
-    var metalLayer: CAMetalRecorderLayer {
-        assert(layer is CAMetalRecorderLayer, "SCNRecorder.ARSCNView layer must be SCNRecorder.CAMetalRecorderLayer or its descendant")
-        return layer as! CAMetalRecorderLayer
+    var metalLayer: CAMetalRecordableLayer? {
+        return layer as? CAMetalRecordableLayer
     }
     
     var lastDrawable: CAMetalDrawable? {
-        return metalLayer.lastDrawable
+        return metalLayer?.lastDrawable
     }
     
     #endif
     
-    weak var recorder: ARSCNRecorder? {
+    weak var recorder: SCNRecorder? {
         didSet {
             if let oldRecorder = oldValue {
-                super.delegate = oldRecorder.sceneViewDelegate
+                super.delegate = oldRecorder.arSceneViewDelegate
             }
             
             guard let recorder = recorder else {
                 return
             }
             
-            recorder.sceneViewDelegate = super.delegate
+            recorder.arSceneViewDelegate = super.delegate
             super.delegate = recorder
         }
     }
@@ -69,7 +68,7 @@ open class ARSCNRecordableView: ARKit.ARSCNView {
                 super.delegate = newValue
                 return
             }
-            recorder.sceneViewDelegate = newValue
+            recorder.arSceneViewDelegate = newValue
         }
     }
 }

@@ -101,13 +101,13 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
     
     var emptyBuffer: UnsafeMutableRawPointer?
     
-    let metalLayer: CAMetalRecorderLayer
+    let metalLayer: CAMetalRecordableLayer
     
     lazy var context: CIContext = {
         return CIContext(mtlDevice: metalLayer.device!)
     }()
     
-    init(metalLayer: CAMetalRecorderLayer) {
+    init(metalLayer: CAMetalRecordableLayer) {
         self.metalLayer = metalLayer
     }
     

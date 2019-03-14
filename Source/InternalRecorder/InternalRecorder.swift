@@ -101,7 +101,7 @@ final class InternalRecorder {
         switch sceneView.renderingAPI {
         case .metal:
             #if !targetEnvironment(simulator)
-            guard let metalLayer = sceneView.layer as? CAMetalRecorderLayer else {
+            guard let metalLayer = sceneView.layer as? CAMetalRecordableLayer else {
                 throw Error.metalLayer
             }
             api = .metal(metalLayer)

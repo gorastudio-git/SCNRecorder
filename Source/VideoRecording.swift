@@ -1,5 +1,5 @@
 //
-//  VideoRecorder.Recording.swift
+//  VideoRecording.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -24,37 +24,13 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-extension VideoRecorder {
+public protocol VideoRecording: Recording {
     
-    final class Recording: InternalVideoRecording {
-        
-        let notificationQueue: DispatchQueue = DispatchQueue(label: "VideoRecording.NotificationQueue", qos: .userInteractive)
-        
-        var _duration: TimeInterval = 0.0
-        
-        var onDurationChanged: ((TimeInterval) -> Void)?
-        
-        var _state: Recording.State = .preparing
-        
-        var onStateChanged: ((Recording.State) -> Void)?
-        
-        var _error: Swift.Error?
-        
-        var onError: ((Swift.Error) -> Void)?
-        
-        var controlable: Controlable {
-            return videoRecorder
-        }
-        
-        var videoInfoProvider: VideoInfoProvider {
-            return videoRecorder
-        }
-        
-        let videoRecorder: VideoRecorder
-        
-        init(videoRecorder: VideoRecorder) {
-            self.videoRecorder = videoRecorder
-        }
-    }
+    var url: URL { get }
+    
+    var fileType: AVFileType { get }
+    
+    var timeScale: CMTimeScale { get }
 }

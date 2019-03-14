@@ -26,21 +26,20 @@
 import Foundation
 import SceneKit
 
-open class SCNRecordableView: SceneKit.SCNView {
+open class SCNRecordableView: SCNView, RecordableView {
     
     #if !targetEnvironment(simulator)
     override open class var layerClass: AnyClass {
         guard super.layerClass is CAMetalLayer.Type else {
             return super.layerClass
         }
-        return CAMetalRecorderLayer.self
+        return CAMetalRecordableLayer.self
     }
     
-    var metalLayer: CAMetalRecorderLayer? {
+    var metalLayer: CAMetalRecordableLayer? {
         switch renderingAPI {
         case .metal:
-            assert(layer is CAMetalRecorderLayer, "SCNRecorder.SCNView layer must be SCNRecorder.CAMetalRecorderLayer or its descendant")
-            return (layer as! CAMetalRecorderLayer)
+            return layer as? CAMetalRecordableLayer
         case .openGLES2:
             return nil
         }
