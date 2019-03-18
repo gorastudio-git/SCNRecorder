@@ -40,34 +40,34 @@ extension MetalPixelBufferProducer {
 
 final class MetalPixelBufferProducer: PixelBufferProducer {
     
-    static let colorSpaces: [MTLPixelFormat: () -> CGColorSpace?] = [
-        .bgra8Unorm_srgb: { CGColorSpace(name: CGColorSpace.sRGB) },
-        .bgr10_xr_srgb: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) }
+    static let colorSpaces: [UInt: () -> CGColorSpace?] = [
+        MTLPixelFormat.bgra8Unorm_srgb.rawValue: { CGColorSpace(name: CGColorSpace.sRGB) },
+        MTLPixelFormat.bgr10_xr_srgb.rawValue: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) },
+        
+        // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
+        551: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) }
     ]
     
-    static let pixelFormats: [MTLPixelFormat: OSType] = [
-        .bgra8Unorm_srgb: kCVPixelFormatType_32BGRA,
-        .bgr10_xr_srgb: kCVPixelFormatType_30RGBLEPackedWideGamut
-    ]
-    
-    static let defaultICCData: [MTLPixelFormat: () -> Data?] = [
-        .bgra8Unorm_srgb: { ICCData.sRGB.data },
-        .bgr10_xr_srgb: { ICCData.extendedLinearSRGB.data }
+    static let pixelFormats: [UInt: OSType] = [
+        MTLPixelFormat.bgra8Unorm_srgb.rawValue: kCVPixelFormatType_32BGRA,
+        MTLPixelFormat.bgr10_xr_srgb.rawValue: kCVPixelFormatType_30RGBLEPackedWideGamut,
+        
+        // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
+        551: kCVPixelFormatType_30RGBLEPackedWideGamut
     ]
     
     static func getPixelFormat(for metalPixelFormat: MTLPixelFormat) -> OSType {
-        return pixelFormats[metalPixelFormat] ?? kCVPixelFormatType_32BGRA
+        return pixelFormats[metalPixelFormat.rawValue] ?? kCVPixelFormatType_32BGRA
     }
     
     static func getColorSpace(for metalPixelFormat: MTLPixelFormat) -> CGColorSpace {
-        return colorSpaces[metalPixelFormat]?() ??
+        return colorSpaces[metalPixelFormat.rawValue]?() ??
                CGColorSpace(name: CGColorSpace.sRGB) ??
                CGColorSpaceCreateDeviceRGB()
     }
     
     static func getICCData(for metalPixelFormat: MTLPixelFormat) -> CFData? {
-        return getColorSpace(for: metalPixelFormat).copyICCData() ??
-               defaultICCData[metalPixelFormat]?().map({ $0 as CFData })
+        return getColorSpace(for: metalPixelFormat).copyICCData()
     }
     
     lazy var recommendedVideoSettings: [String : Any] = {
