@@ -40,6 +40,27 @@ extension MetalPixelBufferProducer {
 
 final class MetalPixelBufferProducer: PixelBufferProducer {
     
+    static let videoColorProperties: [UInt: [String: Any]] = [
+        MTLPixelFormat.bgra8Unorm_srgb.rawValue: [
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
+        ],
+        
+        MTLPixelFormat.bgr10_xr_srgb.rawValue: [
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
+        ],
+        
+        // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
+        551: [
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
+        ]
+    ]
+
     static let colorSpaces: [UInt: () -> CGColorSpace?] = [
         MTLPixelFormat.bgra8Unorm_srgb.rawValue: { CGColorSpace(name: CGColorSpace.sRGB) },
         MTLPixelFormat.bgr10_xr_srgb.rawValue: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) },
@@ -70,11 +91,20 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
         return getColorSpace(for: metalPixelFormat).copyICCData()
     }
     
+    static func getVideoColorProperties(for metalPixelFormat: MTLPixelFormat) -> [String: Any] {
+        return videoColorProperties[metalPixelFormat.rawValue] ?? [
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
+        ]
+    }
+    
     lazy var recommendedVideoSettings: [String : Any] = {
         return [
             AVVideoWidthKey: metalLayer.drawableSize.width,
             AVVideoHeightKey: metalLayer.drawableSize.height,
-            AVVideoCodecKey: AVVideoCodecType.h264
+            AVVideoCodecKey: AVVideoCodecType.h264,
+            AVVideoColorPropertiesKey: MetalPixelBufferProducer.getVideoColorProperties(for: metalLayer.pixelFormat),
         ]
     }()
     
