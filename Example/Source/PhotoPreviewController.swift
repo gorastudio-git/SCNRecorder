@@ -31,6 +31,12 @@ final class PhotoPreviewController: UIViewController {
     
     let photo: UIImage
     
+    override var navigationItem: UINavigationItem {
+        let navigationItem = super.navigationItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        return navigationItem
+    }
+    
     init(photo: UIImage) {
         self.photo = photo
         super.init(nibName: nil, bundle: nil)
@@ -51,5 +57,12 @@ final class PhotoPreviewController: UIViewController {
         imageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         imageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    @objc func share(_ sender: Any) {
+        present(UIActivityViewController(activityItems: [photo],
+                                         applicationActivities: nil),
+                animated: true,
+                completion: nil)
     }
 }

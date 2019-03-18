@@ -145,6 +145,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 // The url is the same you passed to makeVideoRecording
                 controller.player = AVPlayer(url: recording.url)
                 
+                // I don't recommend you to do this in an real app
+                controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action,
+                                                                               target: self,
+                                                                               action: #selector(ViewController.share(_:)))
+                
                 // Present the controller
                 self.navigationController?.pushViewController(controller, animated: true)
                 
@@ -155,14 +160,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         })
         
-        // It's safe to immediatly remove reference
-        videoRecording = nil
-        
         // Update UI
         videoButton.isEnabled = false
         videoButton.setTitle("Start Video", for: .normal)
         videoButton.removeTarget(self, action: #selector(finishVideoRecording), for: .touchUpInside)
         videoButton.addTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
+    }
+    
+    @objc func share(_ sender: Any) {
+        guard let url = videoRecording?.url else {
+            return
+        }
+        
+        present(UIActivityViewController(activityItems: [url],
+                                         applicationActivities: nil),
+                animated: true,
+                completion: nil)
     }
 
     // MARK: - ARSCNViewDelegate
