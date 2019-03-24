@@ -345,8 +345,8 @@ extension InternalRecorder {
             image = outputImage
         }
         
-        let attachments = CVBufferGetAttachments(pixelBuffer, .shouldPropagate)!
-        let colorSpace = CVImageBufferCreateColorSpaceFromAttachments(attachments)!.takeRetainedValue()
+        let attachments = CVBufferGetAttachments(pixelBuffer, .shouldPropagate)
+        let colorSpace = attachments.map({CVImageBufferCreateColorSpaceFromAttachments($0)})??.takeRetainedValue()
         pixelBufferProducer.context.render(image, to: pixelBuffer, bounds: image.extent, colorSpace: colorSpace)
     }
 }

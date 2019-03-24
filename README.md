@@ -2,6 +2,8 @@
 
 SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share media content of your augmented reality app or SceneKit based game.
 
+![Sample](/images/sample.gif?raw=true )
+
 ## Requirements
 
 - iOS 11.0+
@@ -10,7 +12,7 @@ SCNRecorder allows you to record videos and to capture images from ARSCNView and
 
 ## Installation
 
-For now, the only way to install the library is using CocoaPods.
+For now, the only approved way to install the library is using CocoaPods.
 But the framework has no external dependencies, so you may just install it by cloning repository.
 
 ### Installation with CocoaPods
@@ -34,13 +36,15 @@ import SCNRecorder
 
 #### Interface Builder
 
-Using Interface Builder you need to set a class of a scene view to ARSCNRecordableView, SCNRecordableView and choose SCNRecorder as a module. You may inherit from recorder's views and use them instead.
+Using Interface Builder you need to set a class of a scene view to ARSCNRecordableView or SCNRecordableView and choose SCNRecorder as a module. 
+You may inherit from the recorder's views and use them instead.
 
 ![SCNRecorder IB integration](/images/InterfaceBuilder.png?raw=true )
 
 #### Code
 
-When initializing your ARSCNView or SCNView, you need to use SCNRecorder.ARSCNView or SCNRecorder.SCNView respectively.
+When initializing your ARSCNView or SCNView, you need to add SCNRecorder before the name of an inherited class.
+SCNRecorder.ARSCNView and SCNRecorder.SCNView is a shortcut to ARSCNRecordableView and SCNRecordableView respectively.
 
 ```
 let sceneView: ARSCNView = SCNRecorder.ARSCNView(...)
@@ -64,7 +68,7 @@ class MySceneView: SCNRecorder.SCNView { ... }
 
 ### Preparing recorder
 
-For example if you are going to add an ability to capture videos to a ViewControler with ARSCNView on it, your code will looks like the snippet below.
+For example, if you are going to add an ability to capture videos to a ViewControler with ARSCNView on it, your code will look like the snippet below.
 
 ```
 import Foundation
@@ -125,6 +129,8 @@ Look at the Example project for more details.
 ## Author
 
 - [Vladislav Grigoryev](https://github.com/v-grigoriev)
+
+Thanks to [Fedor ]
 
 ## License
 

@@ -32,7 +32,7 @@ enum PixelBufferProducerError: Swift.Error {
     
     case getBaseAddress
     
-    case empty
+    case emptySource
     
     case unlockBaseAddress(errorCode: CVReturn)
 }

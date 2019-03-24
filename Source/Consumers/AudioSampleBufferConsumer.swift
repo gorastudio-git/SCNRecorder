@@ -27,7 +27,7 @@
 import Foundation
 import AVFoundation
 
-protocol AudioSampleBufferConsumer: class {
+protocol AudioSampleBufferConsumer: AnyObject {
     
     func setAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer)
 }

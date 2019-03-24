@@ -28,9 +28,13 @@ import UIKit
 
 protocol RecordableView: AnyObject {
     
+    #if !targetEnvironment(simulator)
+
     var metalLayer: CAMetalRecordableLayer? { get }
     
     var lastDrawable: CAMetalDrawable? { get }
+    
+    #endif
     
     var recorder: SCNRecorder? { get set }
 }

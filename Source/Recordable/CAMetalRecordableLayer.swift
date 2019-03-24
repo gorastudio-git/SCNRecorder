@@ -30,7 +30,7 @@ import UIKit
 
 open class CAMetalRecordableLayer: UIKit.CAMetalLayer {
     
-    var lastFramebufferOnly: Bool = true
+    lazy var lastFramebufferOnly: Bool = framebufferOnly
     
     open override var framebufferOnly: Bool {
         get {

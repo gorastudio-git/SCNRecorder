@@ -40,87 +40,26 @@ extension MetalPixelBufferProducer {
 
 final class MetalPixelBufferProducer: PixelBufferProducer {
     
-    static let videoColorProperties: [UInt: [String: Any]] = [
-        MTLPixelFormat.bgra8Unorm_srgb.rawValue: [
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
-        ],
-        
-        MTLPixelFormat.bgr10_xr_srgb.rawValue: [
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
-        ],
-        
-        // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
-        551: [
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
-        ]
-    ]
-
-    static let colorSpaces: [UInt: () -> CGColorSpace?] = [
-        MTLPixelFormat.bgra8Unorm_srgb.rawValue: { CGColorSpace(name: CGColorSpace.sRGB) },
-        MTLPixelFormat.bgr10_xr_srgb.rawValue: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) },
-        
-        // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
-        551: { CGColorSpace(name: CGColorSpace.extendedLinearSRGB) }
-    ]
-    
-    static let pixelFormats: [UInt: OSType] = [
-        MTLPixelFormat.bgra8Unorm_srgb.rawValue: kCVPixelFormatType_32BGRA,
-        MTLPixelFormat.bgr10_xr_srgb.rawValue: kCVPixelFormatType_30RGBLEPackedWideGamut,
-        
-        // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
-        551: kCVPixelFormatType_30RGBLEPackedWideGamut
-    ]
-    
-    static func getPixelFormat(for metalPixelFormat: MTLPixelFormat) -> OSType {
-        return pixelFormats[metalPixelFormat.rawValue] ?? kCVPixelFormatType_32BGRA
-    }
-    
-    static func getColorSpace(for metalPixelFormat: MTLPixelFormat) -> CGColorSpace {
-        return colorSpaces[metalPixelFormat.rawValue]?() ??
-               CGColorSpace(name: CGColorSpace.sRGB) ??
-               CGColorSpaceCreateDeviceRGB()
-    }
-    
-    static func getICCData(for metalPixelFormat: MTLPixelFormat) -> CFData? {
-        return getColorSpace(for: metalPixelFormat).copyICCData()
-    }
-    
-    static func getVideoColorProperties(for metalPixelFormat: MTLPixelFormat) -> [String: Any] {
-        return videoColorProperties[metalPixelFormat.rawValue] ?? [
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
-        ]
-    }
-    
     lazy var recommendedVideoSettings: [String : Any] = {
         return [
             AVVideoWidthKey: metalLayer.drawableSize.width,
             AVVideoHeightKey: metalLayer.drawableSize.height,
             AVVideoCodecKey: AVVideoCodecType.h264,
-            AVVideoColorPropertiesKey: MetalPixelBufferProducer.getVideoColorProperties(for: metalLayer.pixelFormat),
+            AVVideoColorPropertiesKey: metalLayer.pixelFormat.videoColorProperties,
         ]
     }()
     
     lazy var recommendedPixelBufferAttributes: [String : Any] = {
-        let pixelFormat = metalLayer.pixelFormat
-
         var attributes: [String : Any] = [
             kCVPixelBufferWidthKey as String: metalLayer.drawableSize.width,
             kCVPixelBufferHeightKey as String: metalLayer.drawableSize.height,
-            kCVPixelBufferPixelFormatTypeKey as String: MetalPixelBufferProducer.getPixelFormat(for: pixelFormat),
+            kCVPixelBufferPixelFormatTypeKey as String: metalLayer.pixelFormat.pixelFormatType,
             kCVPixelBufferIOSurfacePropertiesKey as String : [:]
         ]
         
-        if let iccData = MetalPixelBufferProducer.getICCData(for: pixelFormat) {
+        if let iccData = metalLayer.pixelFormat.iccData {
             attributes[kCVBufferPropagatedAttachmentsKey as String] = [
-                kCVImageBufferICCProfileKey: MetalPixelBufferProducer.getICCData(for: pixelFormat)
+                kCVImageBufferICCProfileKey: iccData
             ]
         }
         
@@ -134,7 +73,7 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
     let metalLayer: CAMetalRecordableLayer
     
     lazy var context: CIContext = {
-        return CIContext(mtlDevice: metalLayer.device!)
+        return CIContext(mtlDevice: metalLayer.device ?? MTLCreateSystemDefaultDevice()!)
     }()
     
     init(metalLayer: CAMetalRecordableLayer) {
@@ -184,7 +123,7 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
         
         guard !isEmpty(baseAddress, size: bytesPerRow * height) else {
             CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
-            throw PixelBufferProducer.Error.empty
+            throw PixelBufferProducer.Error.emptySource
         }
         
         errorCode = CVPixelBufferUnlockBaseAddress(pixelBuffer, [])

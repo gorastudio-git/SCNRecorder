@@ -26,11 +26,48 @@
 import Foundation
 import AVFoundation
 
-public protocol VideoRecording: Recording {
+public protocol VideoRecording: AnyObject {
+    
+    typealias State = VideoRecordingState
     
     var url: URL { get }
     
     var fileType: AVFileType { get }
     
     var timeScale: CMTimeScale { get }
+    
+    var duration: TimeInterval { get }
+    
+    var onDurationChanged: ((_ duration: TimeInterval) -> Void)? { get set }
+    
+    var state: State { get }
+    
+    var onStateChanged: ((_ state: State) -> Void)? { get set }
+    
+    var error: Swift.Error? { get }
+    
+    var onError: ((_ error: Swift.Error) -> Void)? { get set }
+    
+    func resume()
+    
+    func pause()
+    
+    func finish(completionHandler handler: @escaping (_ recording: VideoRecording) -> Void)
+    
+    func cancel()
+}
+
+public enum VideoRecordingState {
+    
+    case ready
+    
+    case preparing
+    
+    case recording
+    
+    case paused
+    
+    case canceled
+    
+    case finished
 }
