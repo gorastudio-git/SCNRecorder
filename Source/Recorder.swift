@@ -26,13 +26,15 @@
 import Foundation
 import AVFoundation
 
-public protocol Recorder: class {
+public protocol Recorder: AnyObject {
     
     static var defaultTimeScale: CMTimeScale { get }
     
     var filters: [Filter] { get set }
     
-    func createVideoRecording(to url: URL, fileType: AVFileType, timeScale: CMTimeScale) throws -> VideoRecording
+    func makeVideoRecording(to url: URL,
+                            fileType: AVFileType,
+                            timeScale: CMTimeScale) throws -> VideoRecording
     
     func takePhoto(scale: CGFloat,
                    orientation: UIImage.Orientation,

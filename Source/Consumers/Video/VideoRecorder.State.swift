@@ -51,7 +51,7 @@ extension VideoRecorder {
             }
         }
         
-        var recordingState: RecordingState {
+        var recordingState: VideoRecording.State {
             switch self {
                 
             case .ready:

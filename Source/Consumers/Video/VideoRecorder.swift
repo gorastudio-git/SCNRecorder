@@ -184,7 +184,7 @@ extension VideoRecorder {
     }
 }
 
-extension VideoRecorder: Controlable {
+extension VideoRecorder {
     
     func resume(onError: @escaping (Swift.Error) -> Void) {
         queue.async { [weak self] in

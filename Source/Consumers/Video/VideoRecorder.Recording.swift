@@ -24,37 +24,122 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
 extension VideoRecorder {
     
-    final class Recording: _VideoRecording {
+    final class Recording {
         
         let notificationQueue: DispatchQueue = DispatchQueue(label: "VideoRecording.NotificationQueue", qos: .userInteractive)
         
         var _duration: TimeInterval = 0.0
         
+        var _state: VideoRecording.State = .preparing
+
+        var _error: Swift.Error?
+
         var onDurationChanged: ((TimeInterval) -> Void)?
         
-        var _state: Recording.State = .preparing
-        
-        var onStateChanged: ((Recording.State) -> Void)?
-        
-        var _error: Swift.Error?
+        var onStateChanged: ((VideoRecording.State) -> Void)?
         
         var onError: ((Swift.Error) -> Void)?
-        
-        var controlable: Controlable {
-            return videoRecorder
-        }
-        
-        var videoInfoProvider: VideoInfoProvider {
-            return videoRecorder
-        }
         
         let videoRecorder: VideoRecorder
         
         init(videoRecorder: VideoRecorder) {
             self.videoRecorder = videoRecorder
         }
+    }
+}
+
+extension VideoRecorder.Recording: VideoRecording {
+
+    var duration: TimeInterval {
+        get {
+            var duration: TimeInterval = 0.0
+            notificationQueue.sync {
+                duration = _duration
+            }
+            return duration
+        }
+        set {
+            notificationQueue.async { [weak self] in
+                guard let `self` = self, self._duration != newValue else {
+                    return
+                }
+                
+                self._duration = newValue
+                self.onDurationChanged?(newValue)
+            }
+        }
+    }
+    
+    var state: VideoRecording.State {
+        get {
+            var state: VideoRecording.State = .recording
+            notificationQueue.sync {
+                state = _state
+            }
+            return state
+        }
+        set {
+            notificationQueue.async { [weak self] in
+                guard let `self` = self, self._state != newValue else {
+                    return
+                }
+                
+                self._state = newValue
+                self.onStateChanged?(newValue)
+            }
+        }
+    }
+    
+    var error: Swift.Error? {
+        get {
+            var error: Swift.Error? = nil
+            notificationQueue.sync {
+                error = _error
+            }
+            return error
+        }
+        set {
+            notificationQueue.async { [weak self] in
+                guard let `self` = self, let error = newValue else {
+                    return
+                }
+                self._error = error
+                self.onError?(error)
+            }
+        }
+    }
+    
+    var url: URL {
+        return videoRecorder.url
+    }
+    
+    var fileType: AVFileType {
+        return videoRecorder.fileType
+    }
+    
+    var timeScale: CMTimeScale {
+        return videoRecorder.timeScale
+    }
+    
+    func resume() {
+        videoRecorder.resume { [weak self] (error) in
+            self?.error = error
+        }
+    }
+    
+    func pause() {
+        videoRecorder.pause()
+    }
+    
+    func finish(completionHandler handler: @escaping (_ recording: VideoRecording) -> Void) {
+        videoRecorder.finish { handler(self) }
+    }
+    
+    func cancel() {
+        videoRecorder.cancel()
     }
 }

@@ -60,7 +60,7 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
     let eaglContext: EAGLContext
     
     lazy var context: CIContext = {
-        return CIContext(eaglContext: EAGLContext(api: eaglContext.api)!)
+        return CIContext(eaglContext: EAGLContext(api: eaglContext.api) ?? EAGLContext(api: .openGLES3)!)
     }()
     
     init(eaglContext: EAGLContext) {

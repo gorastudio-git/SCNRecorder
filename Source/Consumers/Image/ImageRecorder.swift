@@ -30,15 +30,21 @@ final class ImageRecorder {
     
     static func takeUIImage(scale: CGFloat,
                             orientation: UIImage.Orientation,
+                            context: CIContext,
                             completionHandler handler: @escaping (UIImage) -> Void) -> ImageRecorder {
-        
-        return takeCIImage { (ciImage) in
-            handler(UIImage(ciImage: ciImage, scale: scale, orientation: orientation))
-        }
+        return takeCGImage(context: context, completionHandler: { (cgImage) in
+            handler(UIImage(cgImage: cgImage, scale: scale, orientation: orientation))
+        })
+    }
+    
+    static func takeCGImage(context: CIContext,
+                            completionHandler handler: @escaping (CGImage) -> Void) -> ImageRecorder {
+        return takeCIImage(completionHandler: { (ciImage) in
+            handler(context.createCGImage(ciImage, from: ciImage.extent)!)
+        })
     }
     
     static func takeCIImage(completionHandler handler: @escaping (CIImage) -> Void) -> ImageRecorder {
-        
         return takePixelBuffer { (pixelBuffer) in
             handler(CIImage(cvPixelBuffer: pixelBuffer))
         }

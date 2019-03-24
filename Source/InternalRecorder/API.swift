@@ -28,7 +28,7 @@ import Foundation
 enum API {
     
     #if !targetEnvironment(simulator)
-    case metal(_ layer: CAMetalRecorderLayer)
+    case metal(_ layer: CAMetalRecordableLayer)
     #endif
     
     case openGLES2(_ context: EAGLContext)

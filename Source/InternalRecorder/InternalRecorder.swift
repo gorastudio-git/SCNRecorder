@@ -61,6 +61,22 @@ final class InternalRecorder {
     
     private var _hasAudioSampleBufferConsumers: Bool = false
     
+    private lazy var _pixelBufferProducer: PixelBufferProducer = api.makePixelBufferProducer()
+    
+    private lazy var _pixelBufferPool: CVPixelBufferPool = {
+        var unmanagedPixelBufferPool: CVPixelBufferPool?
+        let errorCode = CVPixelBufferPoolCreate(nil,
+                                                nil,
+                                                _pixelBufferProducer.recommendedPixelBufferAttributes as CFDictionary,
+                                                &unmanagedPixelBufferPool)
+        
+        guard errorCode == kCVReturnSuccess, let pixelBufferPool = unmanagedPixelBufferPool else {
+            fatalError("CVPixelBufferPoolCreate Error: \(errorCode)")
+        }
+        
+        return pixelBufferPool
+    }()
+    
     var pixelBufferConsumers = [(Weak<PixelBufferConsumer>, DispatchQueue)]() {
         didSet {
             let isEmpty = pixelBufferConsumers.isEmpty
@@ -75,22 +91,6 @@ final class InternalRecorder {
         }
     }
     
-    lazy var pixelBufferProducer: PixelBufferProducer = api.makePixelBufferProducer()
-    
-    lazy var pixelBufferPool: CVPixelBufferPool = {
-        var unmanagedPixelBufferPool: CVPixelBufferPool?
-        let errorCode = CVPixelBufferPoolCreate(nil,
-                                                nil,
-                                                pixelBufferProducer.recommendedPixelBufferAttributes as CFDictionary,
-                                                &unmanagedPixelBufferPool)
-        
-        guard errorCode == kCVReturnSuccess, let pixelBufferPool = unmanagedPixelBufferPool else {
-            fatalError("CVPixelBufferPoolCreate Error: \(errorCode)")
-        }
-        
-        return pixelBufferPool
-    }()
-    
     public init(_ sceneView: SCNView) throws {
         self.sceneView = sceneView
         
@@ -101,7 +101,7 @@ final class InternalRecorder {
         switch sceneView.renderingAPI {
         case .metal:
             #if !targetEnvironment(simulator)
-            guard let metalLayer = sceneView.layer as? CAMetalRecorderLayer else {
+            guard let metalLayer = sceneView.layer as? CAMetalRecordableLayer else {
                 throw Error.metalLayer
             }
             api = .metal(metalLayer)
@@ -136,9 +136,9 @@ extension InternalRecorder: Recorder {
         }
     }
     
-    func createVideoRecording(to url: URL,
-                              fileType: AVFileType = .mov,
-                              timeScale: CMTimeScale = defaultTimeScale) throws -> VideoRecording {
+    func makeVideoRecording(to url: URL,
+                            fileType: AVFileType = .mov,
+                            timeScale: CMTimeScale = defaultTimeScale) throws -> VideoRecording {
         
         let videoRecorder = try VideoRecorder(url: url,
                                               fileType: fileType,
@@ -167,6 +167,7 @@ extension InternalRecorder: Recorder {
         
         addPixelBufferConsumer(ImageRecorder.takeUIImage(scale: scale,
                                                          orientation: orientation,
+                                                         context: pixelBufferProducer.context,
                                                          completionHandler: handler),
                                queue: photoQueue)
     }
@@ -240,12 +241,36 @@ extension InternalRecorder {
             }
         }
     }
+    
+    func preparePixelBufferComponents() {
+        synchronizationQueue.async {
+            _ = self._pixelBufferProducer
+            _ = self._pixelBufferPool
+        }
+    }
+    
+    var pixelBufferProducer: PixelBufferProducer {
+        var pixelBufferProducer: PixelBufferProducer!
+        synchronizationQueue.sync {
+            pixelBufferProducer = self._pixelBufferProducer
+        }
+        return pixelBufferProducer
+    }
+    
+    var pixelBufferPool: CVPixelBufferPool {
+        var pixelBufferPool: CVPixelBufferPool!
+        synchronizationQueue.sync {
+            pixelBufferPool = self._pixelBufferPool
+        }
+        return pixelBufferPool
+    }
 }
 
 extension InternalRecorder {
     
     func producePixelBuffer(at time: TimeInterval) {
         guard hasPixelBufferConsumers else {
+            preparePixelBufferComponents()
             return
         }
         
@@ -320,8 +345,8 @@ extension InternalRecorder {
             image = outputImage
         }
         
-        let attachments = CVBufferGetAttachments(pixelBuffer, .shouldPropagate)!
-        let colorSpace = CVImageBufferCreateColorSpaceFromAttachments(attachments)!.takeRetainedValue()
+        let attachments = CVBufferGetAttachments(pixelBuffer, .shouldPropagate)
+        let colorSpace = attachments.map({CVImageBufferCreateColorSpaceFromAttachments($0)})??.takeRetainedValue()
         pixelBufferProducer.context.render(image, to: pixelBuffer, bounds: image.extent, colorSpace: colorSpace)
     }
 }

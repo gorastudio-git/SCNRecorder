@@ -25,7 +25,7 @@
 
 import Foundation
 
-protocol PixelBufferConsumer: class {
+protocol PixelBufferConsumer: AnyObject {
     
     func setPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval)
 }

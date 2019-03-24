@@ -2,6 +2,10 @@
 
 SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share media content of your augmented reality app or SceneKit based game.
 
+![Sample](/images/sample.gif?raw=true )
+
+(Don't worry! The bottom line is a part of the content, not the user's interface!)
+
 ## Requirements
 
 - iOS 11.0+
@@ -10,7 +14,7 @@ SCNRecorder allows you to record videos and to capture images from ARSCNView and
 
 ## Installation
 
-For now, the only way to install the library is using CocoaPods.
+For now, the only approved way to install the library is using CocoaPods.
 But the framework has no external dependencies, so you may just install it by cloning repository.
 
 ### Installation with CocoaPods
@@ -28,44 +32,45 @@ At every file where you need the functionality, you need to import the module.
 
 ```
 import SCNRecorder
-
 ```
 
 ### Configure view
 
 #### Interface Builder
 
-Using Interface Builder you need to set a class of a scene view to ARSCNRecorderView, SCNRecorderView and choose SCNRecorder as a module. You may inherit from recorder's views and use them instead.
+Using Interface Builder you need to set a class of a scene view to ARSCNRecordableView or SCNRecordableView and choose SCNRecorder as a module. 
+You may inherit from the recorder's views and use them instead.
 
 ![SCNRecorder IB integration](/images/InterfaceBuilder.png?raw=true )
 
 #### Code
 
-When initializing your ARSCNView or SCNView, you need to use ARSCNRecorderView or SCNRecorderView respectively.
+When initializing your ARSCNView or SCNView, you need to add SCNRecorder before the name of an inherited class.
+SCNRecorder.ARSCNView and SCNRecorder.SCNView is a shortcut to ARSCNRecordableView and SCNRecordableView respectively.
 
 ```
-let sceneView: ARSCNView = ARSCNRecorderView(...)
+let sceneView: ARSCNView = SCNRecorder.ARSCNView(...)
 ```
 or 
 
 ```
-let sceneView: SCNView = SCNRecorderView(...)
+let sceneView: SCNView = SCNRecorder.SCNView(...)
 ```
 
-If your classes inherit ARSCNView or SCNView just inherit from ARSCNRecorderView or SCNRecorderView.
+If your classes inherit from ARSCNView or SCNView just inherit them from SCNRecorder.ARSCNView or SCNRecorder.SCNView.
 
 ```
-class MyArSceneView: ARSCNRecorderView { ... }
+class MyArSceneView: SCNRecorder.ARSCNView { ... }
 ```
 or
 
 ```
-class MySceneView: SCNRecorderView { ... }
+class MySceneView: SCNRecorder.SCNView { ... }
 ```
 
 ### Preparing recorder
 
-For example if you are going to add an ability to capture videos to a ViewControler with ARSCNView on it, your code will looks like the snippet below.
+For example, if you are going to add an ability to capture videos to a ViewControler with ARSCNView on it, your code will look like the snippet below.
 
 ```
 import Foundation
@@ -91,9 +96,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recorder = try! ARSCNRecorder(sceneView)
-        sceneView.delegate = recorder
-        recorder.sceneViewDelegate = self
+        recorder = try! SCNRecorder(sceneView)
     }
     
     @IBAction func startVideoRecording(_ sender: Any) {
@@ -106,7 +109,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         try? fileManager.removeItem(at: url)
 
         // You must store a strong reference to a video recording
-        videoRecording = try! recorder.createVideoRecording(to: url)
+        videoRecording = try! recorder.makeVideoRecording(to: url)
+        
+        // Don't forget to resume recording
         videoRecording?.resume()
     }
     
@@ -121,9 +126,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
 ### That's it!
 
+Look at the Example project for more details.
+
 ## Author
 
 - [Vladislav Grigoryev](https://github.com/v-grigoriev)
+
+Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) for testing and clarifying the public interface of the framework.
 
 ## License
 
