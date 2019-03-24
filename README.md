@@ -3,6 +3,7 @@
 SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share media content of your augmented reality app or SceneKit based game.
 
 ![Sample](/images/sample.gif?raw=true )
+(Don't worry! The bottom line is a part of the content, not the user's interface!)
 
 ## Requirements
 
@@ -130,7 +131,7 @@ Look at the Example project for more details.
 
 - [Vladislav Grigoryev](https://github.com/v-grigoriev)
 
-Thanks to [Fedor ]
+Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) for testing and clarifying the public interface of the framework.
 
 ## License
 
