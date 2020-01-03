@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 13/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,35 @@
 
 import Foundation
 import UIKit
+import SceneKit
 
-protocol RecordableView: AnyObject {
-    
-    #if !targetEnvironment(simulator)
+public protocol RecordableView: Recordable {
+  
+  #if !targetEnvironment(simulator)
+  var recordableLayer: RecordableLayer? { get }
+  #endif // !targetEnvironment(simulator)
+  
+  var eaglContext: EAGLContext? { get }
+  
+  var api: API { get }
+}
 
-    var metalLayer: CAMetalRecordableLayer? { get }
-    
-    var lastDrawable: CAMetalDrawable? { get }
-    
-    #endif
-    
-    var recorder: SCNRecorder? { get set }
+public extension RecordableView where Self: UIView {
+  
+  #if !targetEnvironment(simulator)
+  var recordableLayer: RecordableLayer? { return layer as? RecordableLayer }
+  #endif // !targetEnvironment(simulator)
+}
+
+public extension RecordableView where Self: SCNView {
+  
+  var api: API {
+    switch renderingAPI {
+    case .metal: return .metal
+    case .openGLES2: return .openGLES
+    #if compiler(>=5)
+    @unknown default: return .unknown
+    #endif // compiler(>=5)
+    }
+  }
 }

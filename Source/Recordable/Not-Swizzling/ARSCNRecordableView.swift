@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,49 +26,32 @@
 import Foundation
 import ARKit
 
+#if DO_NOT_SWIZZLE
+
 open class ARSCNRecordableView: ARSCNView, RecordableView {
-    
-    #if !targetEnvironment(simulator)
-    
-    override open class var layerClass: AnyClass {
-        return CAMetalRecordableLayer.self
+  
+  #if !targetEnvironment(simulator)
+  override open class var layerClass: AnyClass {
+    guard super.layerClass is CAMetalLayer.Type else { return super.layerClass }
+    return CAMetalRecordableLayer.self
+  }
+  #endif // !targetEnvironment(simulator)
+  
+  open override weak var delegate: ARSCNViewDelegate? {
+    get { return super.delegate }
+    set {
+      guard let recorder = recorder else {
+        super.delegate = newValue
+        return
+      }
+      recorder.arSceneViewDelegate = newValue
     }
-    
-    var metalLayer: CAMetalRecordableLayer? {
-        return layer as? CAMetalRecordableLayer
-    }
-    
-    var lastDrawable: CAMetalDrawable? {
-        return metalLayer?.lastDrawable
-    }
-    
-    #endif
-    
-    weak var recorder: SCNRecorder? {
-        didSet {
-            if let oldRecorder = oldValue {
-                super.delegate = oldRecorder.arSceneViewDelegate
-            }
-            
-            guard let recorder = recorder else {
-                return
-            }
-            
-            recorder.arSceneViewDelegate = super.delegate
-            super.delegate = recorder
-        }
-    }
-    
-    open override weak var delegate: ARSCNViewDelegate? {
-        get {
-            return super.delegate
-        }
-        set {
-            guard let recorder = recorder else {
-                super.delegate = newValue
-                return
-            }
-            recorder.arSceneViewDelegate = newValue
-        }
-    }
+  }
 }
+
+#else // DO_NOT_SWIZZLE
+
+@available(*, deprecated, message: "With swizzling you don't have to use ARSCNRecordableView")
+open class ARSCNRecordableView: ARSCNView { }
+
+#endif // DO_NOT_SWIZZLE

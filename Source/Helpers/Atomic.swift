@@ -1,9 +1,9 @@
 //
-//  Recorder.swift
+//  Atomic.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 29.12.2019.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,42 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
 
-public protocol Recorder: AnyObject {
+final class Atomic<Value> {
+  
+  let lock = UnfairLock()
+  
+  var _value: Value
+  
+  var value: Value {
+    get { return withValue { $0 } }
+    set { swap(newValue) }
+  }
+  
+  init(_ value: Value) { _value = value }
+  
+  @discardableResult
+  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+    lock.lock()
+    defer { lock.unlock() }
     
-    static var defaultTimeScale: CMTimeScale { get }
+    return try action(&_value)
+  }
+  
+  @discardableResult
+  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
+    lock.lock()
+    defer { lock.unlock() }
     
-    var filters: [Filter] { get set }
-    
-    func makeVideoRecording(to url: URL,
-                            fileType: AVFileType,
-                            timeScale: CMTimeScale) throws -> VideoRecording
-    
-    func takePhoto(scale: CGFloat,
-                   orientation: UIImage.Orientation,
-                   completionHandler handler: @escaping (UIImage) -> Void)
-    
-    func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void)
-    
-    func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void)
+    return try action(_value)
+  }
+  
+  @discardableResult
+  func swap(_ newValue: Value) -> Value {
+    return modify { (value: inout Value) in
+      let oldValue = value
+      value = newValue
+      return oldValue
+    }
+  }
 }

@@ -1,9 +1,9 @@
 //
-//  Filter.swift
+//  AVFileType+FilenameExtension.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 04.01.2020.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,49 +24,17 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
+import MobileCoreServices
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
-
-public protocol Filter {
+extension AVFileType {
   
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
-  }
-}
-
-extension CIFilter: Filter {
-  
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
-    }
-    try copiedFilter.setImage(image)
-    return copiedFilter
+  var fileExtension: String {
+    guard let fileExtension = UTTypeCopyPreferredTagWithClass(
+      self as CFString,
+      kUTTagClassFilenameExtension
+    )?.takeRetainedValue()
+      else { return "none" }
+    return fileExtension as String
   }
 }

@@ -1,8 +1,8 @@
 //
-//  Filter.swift
-//  SCNRecorder
+//  ViewController.swift
+//  Example
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 12/03/2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,50 +23,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
+import UIKit
+import SceneKit
+import ARKit
+import SCNRecorder
+import AVKit
 
-public protocol Filter {
+class ARSCNViewController: ViewController {
   
-  typealias Error = FilterError
+  var arSceneView: ARSCNView { return sceneView as! ARSCNView }
   
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    // Create a session configuration
+    let configuration = ARWorldTrackingConfiguration()
+    
+    // We want to record audio as well
+    configuration.providesAudioData = true
+    
+    // Run the view's session
+    arSceneView.session.run(configuration)
   }
-}
-
-extension CIFilter: Filter {
   
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
-    }
-    try copiedFilter.setImage(image)
-    return copiedFilter
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    // Pause the view's session
+    arSceneView.session.pause()
   }
 }

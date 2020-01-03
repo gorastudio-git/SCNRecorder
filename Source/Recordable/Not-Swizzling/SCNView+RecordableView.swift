@@ -1,9 +1,9 @@
 //
-//  Filter.swift
+//  SCNView+RecordableView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 30.12.2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,49 +24,28 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
+#if !DO_NOT_SWIZZLE
 
-public protocol Filter {
+extension SCNView: RecordableView {
   
-  typealias Error = FilterError
+  static let swizzleSetDelegateImplementation: Void = {
+    let aClass: AnyClass = SCNView.self
+    
+    guard let originalMethod = class_getInstanceMethod(aClass, #selector(setter: delegate)),
+          let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_setDelegate))
+    else { return }
+    
+    method_exchangeImplementations(originalMethod, swizzledMethod)
+  }()
   
-  typealias Composite = CompositeFilter
+  static func swizzle() { _ = swizzleSetDelegateImplementation }
   
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
+  @objc dynamic func swizzled_setDelegate(_ delegate: SCNSceneRendererDelegate) {
+    if let recorder = recorder { recorder.delegate = delegate }
+    else { swizzled_setDelegate(delegate) }
   }
 }
 
-extension CIFilter: Filter {
-  
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
-    }
-    try copiedFilter.setImage(image)
-    return copiedFilter
-  }
-}
+#endif // !DO_NOT_SWIZZLE

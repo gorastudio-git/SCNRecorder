@@ -1,9 +1,9 @@
 //
-//  PixelBufferProducer.swift
+//  CIContext+Render.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 03.01.2020.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,39 +24,16 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
+import CoreImage
 
-enum PixelBufferProducerError: Swift.Error {
+extension CIContext {
+  
+  func render(_ image: CIImage, to pixelBuffer: CVPixelBuffer) {
+    let attachments = CVBufferGetAttachments(pixelBuffer, .shouldPropagate)
+    let colorSpace = attachments.map {
+      CVImageBufferCreateColorSpaceFromAttachments($0)
+    }??.takeRetainedValue()
     
-    case lockBaseAddress(errorCode: CVReturn)
-    
-    case getBaseAddress
-    
-    case emptySource
-    
-    case unlockBaseAddress(errorCode: CVReturn)
-}
-
-protocol PixelBufferProducer {
-    
-    typealias Error = PixelBufferProducerError
-    
-    var recommendedVideoSettings: [String: Any] { get }
-    
-    var recommendedPixelBufferAttributes: [String: Any] { get }
-    
-    var context: CIContext { get }
-    
-    func startWriting()
-    
-    func writeIn(pixelBuffer: inout CVPixelBuffer) throws
-    
-    func stopWriting()
-}
-
-extension PixelBufferProducer {
-    
-    func startWriting() { }
-    
-    func stopWriting() { }
+    render(image, to: pixelBuffer, bounds: image.extent, colorSpace: colorSpace)
+  }
 }

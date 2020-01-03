@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,119 +27,33 @@ import Foundation
 import AVFoundation
 
 extension VideoRecorder {
+  
+  final class Recording: VideoRecording {
     
-    final class Recording {
-        
-        let notificationQueue: DispatchQueue = DispatchQueue(label: "VideoRecording.NotificationQueue", qos: .userInteractive)
-        
-        var _duration: TimeInterval = 0.0
-        
-        var _state: VideoRecording.State = .preparing
-
-        var _error: Swift.Error?
-
-        var onDurationChanged: ((TimeInterval) -> Void)?
-        
-        var onStateChanged: ((VideoRecording.State) -> Void)?
-        
-        var onError: ((Swift.Error) -> Void)?
-        
-        let videoRecorder: VideoRecorder
-        
-        init(videoRecorder: VideoRecorder) {
-            self.videoRecorder = videoRecorder
-        }
-    }
-}
-
-extension VideoRecorder.Recording: VideoRecording {
-
-    var duration: TimeInterval {
-        get {
-            var duration: TimeInterval = 0.0
-            notificationQueue.sync {
-                duration = _duration
-            }
-            return duration
-        }
-        set {
-            notificationQueue.async { [weak self] in
-                guard let `self` = self, self._duration != newValue else {
-                    return
-                }
-                
-                self._duration = newValue
-                self.onDurationChanged?(newValue)
-            }
-        }
-    }
+    let duration = Property<TimeInterval>(0.0)
     
-    var state: VideoRecording.State {
-        get {
-            var state: VideoRecording.State = .recording
-            notificationQueue.sync {
-                state = _state
-            }
-            return state
-        }
-        set {
-            notificationQueue.async { [weak self] in
-                guard let `self` = self, self._state != newValue else {
-                    return
-                }
-                
-                self._state = newValue
-                self.onStateChanged?(newValue)
-            }
-        }
-    }
+    var state = Property(VideoRecording.State.preparing)
     
-    var error: Swift.Error? {
-        get {
-            var error: Swift.Error? = nil
-            notificationQueue.sync {
-                error = _error
-            }
-            return error
-        }
-        set {
-            notificationQueue.async { [weak self] in
-                guard let `self` = self, let error = newValue else {
-                    return
-                }
-                self._error = error
-                self.onError?(error)
-            }
-        }
-    }
+    var error = Property<Swift.Error?>(nil)
     
-    var url: URL {
-        return videoRecorder.url
-    }
+    let videoRecorder: VideoRecorder
     
-    var fileType: AVFileType {
-        return videoRecorder.fileType
-    }
+    var url: URL { return videoRecorder.url }
     
-    var timeScale: CMTimeScale {
-        return videoRecorder.timeScale
-    }
+    var fileType: AVFileType { return videoRecorder.fileType }
     
-    func resume() {
-        videoRecorder.resume { [weak self] (error) in
-            self?.error = error
-        }
-    }
+    var timeScale: CMTimeScale { return videoRecorder.timeScale }
     
-    func pause() {
-        videoRecorder.pause()
-    }
+    init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
+    
+    func resume() { videoRecorder.resume { [weak self] (error) in self?.error.value = error } }
+    
+    func pause() { videoRecorder.pause() }
     
     func finish(completionHandler handler: @escaping (_ recording: VideoRecording) -> Void) {
-        videoRecorder.finish { handler(self) }
+      videoRecorder.finish { handler(self) }
     }
     
-    func cancel() {
-        videoRecorder.cancel()
-    }
+    func cancel() { videoRecorder.cancel() }
+  }
 }

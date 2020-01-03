@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,46 +27,82 @@ import Foundation
 import UIKit
 
 final class ImageRecorder {
-    
-    static func takeUIImage(scale: CGFloat,
-                            orientation: UIImage.Orientation,
-                            context: CIContext,
-                            completionHandler handler: @escaping (UIImage) -> Void) -> ImageRecorder {
-        return takeCGImage(context: context, completionHandler: { (cgImage) in
-            handler(UIImage(cgImage: cgImage, scale: scale, orientation: orientation))
-        })
+  
+  static func takeUIImage(
+    scale: CGFloat,
+    orientation: UIImage.Orientation,
+    transform: CGAffineTransform,
+    context: CIContext,
+    completionHandler handler: @escaping (ImageRecorder, UIImage) -> Void
+  ) -> ImageRecorder {
+    return takeCGImage(transform: transform, context: context) {
+      handler($0, UIImage(cgImage: $1, scale: scale, orientation: orientation))
     }
-    
-    static func takeCGImage(context: CIContext,
-                            completionHandler handler: @escaping (CGImage) -> Void) -> ImageRecorder {
-        return takeCIImage(completionHandler: { (ciImage) in
-            handler(context.createCGImage(ciImage, from: ciImage.extent)!)
-        })
+  }
+  
+  static func takeCGImage(
+    transform: CGAffineTransform,
+    context: CIContext,
+    completionHandler handler: @escaping (ImageRecorder, CGImage) -> Void
+  ) -> ImageRecorder {
+    return takeCIImage(transform: transform, context: context) {
+      handler($0, context.createCGImage($1, from: $1.extent)!)
     }
-    
-    static func takeCIImage(completionHandler handler: @escaping (CIImage) -> Void) -> ImageRecorder {
-        return takePixelBuffer { (pixelBuffer) in
-            handler(CIImage(cvPixelBuffer: pixelBuffer))
-        }
+  }
+  
+  static func takeCIImage(
+    transform: CGAffineTransform,
+    context: CIContext,
+    completionHandler handler: @escaping (ImageRecorder, CIImage) -> Void
+  ) -> ImageRecorder {
+    return takePixelBuffer(transform: transform, context: context) {
+      handler($0, CIImage(cvPixelBuffer: $1))
     }
-    
-    static func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) -> ImageRecorder {
-        return ImageRecorder(completionHandler: handler)
+  }
+  
+  static func takePixelBuffer(
+    transform: CGAffineTransform,
+    context: CIContext,
+    completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
+  ) -> ImageRecorder {
+    return ImageRecorder(
+      transform: transform,
+      context: context,
+      completionHandler: handler
+    )
+  }
+  
+  var handler: ((ImageRecorder, CVPixelBuffer) -> Void)?
+  
+  init(
+    transform: CGAffineTransform,
+    context: CIContext,
+    completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
+  ) {
+    self.handler = { (imageRecorder, pixelBuffer) in
+      if !transform.isIdentity {
+        try? pixelBuffer.applyFilters(
+          [
+            GeometryFilter.affineTransform(
+              transform: transform.translatedBy(
+                x: (transform.a - CGAffineTransform.identity.a) / 2.0 * CGFloat(pixelBuffer.width),
+                y: (transform.d - CGAffineTransform.identity.d) / 2.0 * CGFloat(pixelBuffer.height)
+              )
+            )
+          ],
+          using: context
+        )
+      }
+      
+      handler(imageRecorder, pixelBuffer)
+      self.handler = nil
     }
-    
-    var handler: ((CVPixelBuffer) -> Void)?
-    
-    init(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
-        self.handler = { (pixelBuffer) in
-            handler(pixelBuffer)
-            self.handler = nil
-        }
-    }
+  }
 }
 
 extension ImageRecorder: PixelBufferConsumer {
-    
-    func setPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval) {
-        handler?(pixelBuffer)
-    }
+  
+  func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval) {
+    handler?(self, pixelBuffer)
+  }
 }

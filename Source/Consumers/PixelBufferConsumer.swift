@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,6 @@
 import Foundation
 
 protocol PixelBufferConsumer: AnyObject {
-    
-    func setPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval)
+  
+  func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval)
 }

@@ -1,10 +1,12 @@
 # SCNRecorder
 
-SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share media content of your augmented reality app or SceneKit based game.
+SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share the media content of your augmented reality app or SceneKit based game.
+
+SCNRecorder supports Metal and OpenGL.
 
 ![Sample](/images/sample2.gif?raw=true )
 
-(Don't worry! The bottom line is a part of the content, not the user's interface!)
+(Don't worry! The bottom line is a part of the content, not the user interface!)
 
 ## Requirements
 
@@ -14,8 +16,8 @@ SCNRecorder allows you to record videos and to capture images from ARSCNView and
 
 ## Installation
 
-For now, the only approved way to install the library is using CocoaPods.
-But the framework has no external dependencies, so you may just install it by cloning repository.
+For now, the only available way to install the library is to use CocoaPods.
+But the framework has no external dependencies, so you can install it by cloning the repository.
 
 ### Installation with CocoaPods
 
@@ -23,106 +25,144 @@ But the framework has no external dependencies, so you may just install it by cl
 
 #### Podfile
 ```
-pod 'SCNRecorder', '~> 1.0'
+pod 'SCNRecorder', '~> 1.1'
 ```
 
 ## Usage
 
-At every file where you need the functionality, you need to import the module.
+Import the SCNRecorder module.
 
 ```
 import SCNRecorder
 ```
 
-### Configure view
+At `viewDidLoad` it is recomended to prepare a `sceneView` for recording.
+
+```
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  do { try sceneView.prepareForRecording() }
+  catch { print("Something went wrong during recording preparation: \(error)") }
+}
+```
+
+And now you can use new functions to capture videos.
+```
+do { try sceneView.startVideoRecording() }
+catch { print("Something went wrong during video-recording preparation: \(error)") }
+```
+```
+sceneView.finishVideoRecording { (videoRecording) in 
+  /* Process the captured video. Main thread. */
+}
+```
+
+For example, you can play the video in a different controller.
+```
+sceneView.finishVideoRecording { (recording) in
+  let controller = AVPlayerViewController()
+  controller.player = AVPlayer(url: recording.url)
+  self.navigationController?.pushViewController(controller, animated: true)
+}
+```
+
+To capture an image it is enough to call:
+```
+do {
+  try sceneView.takePhoto { (photo) in
+    /* Your photo is now here. Main thread. */
+  }
+}
+catch { print("Something went wrong during photo-capture preparation: \(error)") }
+```
+
+Look at the Example project for more details.
+
+### Audio capture
+
+To capture video with audio from `ARSCNView` enable it in the `ARConfiguration`.
+```
+let configuration = ARWorldTrackingConfiguration()
+configuration.providesAudioData = true
+sceneView.session.run(configuration)
+```
+
+To capture audio from `SCNView` you have to implement it by yourself.
+For example:
+
+```
+var captureSession: AVCaptureSession?
+
+override func viewDidLoad() {
+  super.viewDidLoad()
+  
+  do { try sceneView.prepareForRecording() }
+  catch { print("Something went wrong during recording preparation: \(error)") }
+  
+  guard let recorder = sceneView.recorder else { return }
+  let captureSession = AVCaptureSession()
+  
+  guard let captureDevice = AVCaptureDevice.default(for: .audio) else { return }
+  
+  do {
+    let captureInput = try AVCaptureDeviceInput(device: captureDevice)
+    
+    guard captureSession.canAddInput(captureInput) else { return }
+    captureSession.addInput(captureInput)
+  }
+  catch { print("Can't create AVCaptureDeviceInput: \(error)")}
+  
+  guard captureSession.canAddRecorder(recorder) else { return }
+  captureSession.addRecorder(recorder)
+  
+  captureSession.startRunning()
+  self.captureSession = captureSession
+}
+```
+
+### Swizzling
+
+To achieve the simplest integration SCNRecorder internally swizzles a few functions.
+
+<details><summary>What if you strongly prefer not to have swizzlings in the code?</summary>
+<p>
+
+You can disable it by adding the `DO_NOT_SWIZZLE` compiler flag to the framework.
+But this way, you have to perform some additional setup.
 
 #### Interface Builder
 
-Using Interface Builder you need to set a class of a scene view to ARSCNRecordableView or SCNRecordableView and choose SCNRecorder as a module. 
-You may inherit from the recorder's views and use them instead.
+Using Interface Builder you have to set a class of a scene view to `ARSCNRecordableView` or `SCNRecordableView` and choose SCNRecorder as a module. 
+You can inherit from the recorder's views and use them instead.
 
 ![SCNRecorder IB integration](/images/InterfaceBuilder.png?raw=true )
 
 #### Code
 
-When initializing your ARSCNView or SCNView, you need to add SCNRecorder before the name of an inherited class.
-SCNRecorder.ARSCNView and SCNRecorder.SCNView is a shortcut to ARSCNRecordableView and SCNRecordableView respectively.
+You have to use `SCNRecordableView` or `ARSCNRecordableView` instead of `SCNView` or `ARSCNView` respectively.
 
 ```
-let sceneView: ARSCNView = SCNRecorder.ARSCNView(...)
-```
-or 
-
-```
-let sceneView: SCNView = SCNRecorder.SCNView(...)
-```
-
-If your classes inherit from ARSCNView or SCNView just inherit them from SCNRecorder.ARSCNView or SCNRecorder.SCNView.
-
-```
-class MyArSceneView: SCNRecorder.ARSCNView { ... }
+let sceneView: SCNView = SCNRecordableView(...)
 ```
 or
 
 ```
-class MySceneView: SCNRecorder.SCNView { ... }
+let sceneView: ARSCNView = ARSCNRecordableView(...)
 ```
 
-### Preparing recorder
-
-For example, if you are going to add an ability to capture videos to a ViewControler with ARSCNView on it, your code will look like the snippet below.
+If your classes inherit from `SCNView`  or `ARSCNView` just inherit them from `SCNRecordableView` or `ARSCNRecordableView`.
 
 ```
-import Foundation
-import UIKit
-import ARKit
-import SCNRecorder
-
-class ViewController: UIViewController, ARSCNViewDelegate {
-
-    @IBOutlet var sceneView: ARSCNView!
-    
-    var recorder: ARSCNRecorder!
-    
-    var videoRecording: VideoRecording? {
-        didSet {
-            // You may subscribe to different notifications
-            videoRecording?.onDurationChanged = { duration in print(duration) }
-            videoRecording?.onStateChanged = { state in print(state) }
-            videoRecording?.onError = { error in print(error) }
-        }
-    } 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        recorder = try! SCNRecorder(sceneView)
-    }
-    
-    @IBAction func startVideoRecording(_ sender: Any) {
-
-        let fileManager = FileManager.default
-        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let url = documentsDirectory.appendingPathComponent("video.mov", isDirectory: false)
-        
-        // Be sure that the file isn't exist
-        try? fileManager.removeItem(at: url)
-
-        // You must store a strong reference to a video recording
-        videoRecording = try! recorder.makeVideoRecording(to: url)
-        
-        // Don't forget to resume recording
-        videoRecording?.resume()
-    }
-    
-    @IBAction func finishVideoRecording(_ sender: Any) {
-        videoRecording?.finish(completionHandler: { (recording) in
-            // Captured video is ready
-            print(recording.url)
-        })
-    }
-}
+class MySceneView: SCNRecordableView { ... }
 ```
+or
+
+```
+class MyArSceneView: ARSCNRecordableView { ... }
+```
+</p>
+</details>
 
 ### That's it!
 

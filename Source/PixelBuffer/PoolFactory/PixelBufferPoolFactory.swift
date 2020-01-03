@@ -1,9 +1,9 @@
 //
-//  API.swift
+//  PixelBufferPoolFactory.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 29.12.2019.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,25 +24,31 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-enum API {
-    
-    #if !targetEnvironment(simulator)
-    case metal(_ layer: CAMetalRecordableLayer)
-    #endif
-    
-    case openGLES2(_ context: EAGLContext)
-    
-    func makePixelBufferProducer() -> PixelBufferProducer {
-        switch self {
-            
-            #if !targetEnvironment(simulator)
-        case .metal(let layer):
-            return MetalPixelBufferProducer(metalLayer: layer)
-            #endif
-            
-        case .openGLES2(let context):
-            return EAGLPixelBufferProducer(eaglContext: context)
-        }
+final class PixelBufferPoolFactory {
+  
+  let pixelBufferPools = Atomic([String: CVPixelBufferPool]())
+  
+  func makeWithAttributes(
+    _ attributes: [String: Any]
+  ) throws -> CVPixelBufferPool {
+    let key = makeKeyWithAttributes(attributes)
+    return try pixelBufferPools.modify {
+      if let pixelBufferPool = $0[key] { return pixelBufferPool }
+      let pixelBufferPool = try CVPixelBufferPool.makeWithAttributes(attributes)
+      $0[key] = pixelBufferPool
+      return pixelBufferPool
     }
+  }
+  
+  func makeKeyWithAttributes(
+    _ attributes: [String: Any]
+  ) -> String {
+    return """
+      Width: \(String(describing: attributes[kCVPixelBufferWidthKey as String])),
+      Height: \(String(describing: attributes[kCVPixelBufferHeightKey as String])),
+      PixelFormatType: \(String(describing: attributes[kCVPixelBufferPixelFormatTypeKey as String]))
+    """
+  }
 }

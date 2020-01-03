@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,30 +26,25 @@
 import Foundation
 
 struct SwappingFilter {
-    
-    let filter: Filter
+  
+  let filter: Filter
 }
 
 extension SwappingFilter: Filter {
+  
+  public var name: String { return filter.name }
+  
+  public var inputKeys: [String] { return filter.inputKeys }
+  
+  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
+    let ciFilter = try filter.makeCIFilter(for: image)
     
-    public var name: String {
-        return filter.name
-    }
+    guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
+      else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
     
-    public var inputKeys: [String] {
-        return filter.inputKeys
-    }
+    try ciFilter.setImage(backgroundImage)
+    try ciFilter.setBackgroundImage(image)
     
-    public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-        let ciFilter = try filter.makeCIFilter(for: image)
-        
-        guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage else {
-            throw Error.notSpecified(key: kCIInputBackgroundImageKey)
-        }
-        
-        try ciFilter.setImage(backgroundImage)
-        try ciFilter.setBackgroundImage(image)
-        
-        return ciFilter
-    }
+    return ciFilter
+  }
 }
