@@ -1,8 +1,8 @@
 //
-//  Filter.swift
+//  SCNRecorder.AudioAdapter.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 29.12.2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,49 +24,35 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
-
-public protocol Filter {
+extension SCNRecorder {
   
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
+  final class AudioAdapter: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
+    
+    typealias Callback = (_ sampleBuffer: CMSampleBuffer) -> Void
+    
+    let output: AVCaptureAudioDataOutput
+    
+    let queue: DispatchQueue
+    
+    let callback: Callback
+    
+    init(queue: DispatchQueue, callback: @escaping Callback) {
+      self.queue = queue
+      self.callback = callback
+      output = AVCaptureAudioDataOutput()
+      
+      super.init()
+      output.setSampleBufferDelegate(self, queue: queue)
     }
-    return SwappingFilter(filter: self)
-  }
-}
-
-extension CIFilter: Filter {
-  
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
+    
+    @objc func captureOutput(
+      _ output: AVCaptureOutput,
+      didOutput sampleBuffer: CMSampleBuffer,
+      from connection: AVCaptureConnection
+    ) {
+      callback(sampleBuffer)
     }
-    try copiedFilter.setImage(image)
-    return copiedFilter
   }
 }

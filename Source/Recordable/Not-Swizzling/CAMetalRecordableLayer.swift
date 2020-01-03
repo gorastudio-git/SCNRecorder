@@ -3,7 +3,7 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,45 +28,47 @@ import UIKit
 
 #if !targetEnvironment(simulator)
 
-open class CAMetalRecordableLayer: UIKit.CAMetalLayer {
-    
-    lazy var lastFramebufferOnly: Bool = framebufferOnly
-    
-    open override var framebufferOnly: Bool {
-        get {
-            return super.framebufferOnly
-        }
-        set {
-            if recording {
-                lastFramebufferOnly = newValue
-            }
-            else {
-                super.framebufferOnly = newValue
-            }
-        }
-    }
-    
-    var recording: Bool = false
-    
-    open var lastDrawable: CAMetalDrawable?
-    
-    open override func nextDrawable() -> CAMetalDrawable? {
-        lastDrawable = super.nextDrawable()
-        return lastDrawable
-    }
-    
-    func startRecording() {
-        guard !recording else { return }
-        lastFramebufferOnly = framebufferOnly
-        framebufferOnly = false
-        recording = true
-    }
-    
-    func stopRecording() {
-        guard recording else { return }
-        recording = false
-        framebufferOnly = lastFramebufferOnly
-    }
+#if DO_NOT_SWIZZLE
+
+open class CAMetalRecordableLayer: CAMetalLayer, RecordableLayer {
+  
+  lazy var lastFramebufferOnly: Bool = framebufferOnly
+  
+  var recording: Bool = false
+  
+  open var lastDrawable: CAMetalDrawable?
+  
+  open override var framebufferOnly: Bool {
+    get { return super.framebufferOnly }
+    set { if recording { lastFramebufferOnly = newValue } else { super.framebufferOnly = newValue } }
+  }
+  
+  open override func nextDrawable() -> CAMetalDrawable? {
+    lastDrawable = super.nextDrawable()
+    return lastDrawable
+  }
+  
+  open func prepareForRecording() { }
+  
+  open func onStartRecording() {
+    guard !recording else { return }
+    lastFramebufferOnly = framebufferOnly
+    framebufferOnly = false
+    recording = true
+  }
+  
+  open func onStopRecording() {
+    guard recording else { return }
+    recording = false
+    framebufferOnly = lastFramebufferOnly
+  }
 }
 
-#endif
+#else // DO_NOT_SWIZZLE
+
+@available(*, deprecated, message: "With swizzling you don't have to use CAMetalRecordableLayer")
+open class CAMetalRecordableLayer: CAMetalLayer { }
+
+#endif // DO_NOT_SWIZZLE
+
+#endif // !targetEnvironment(simulator)

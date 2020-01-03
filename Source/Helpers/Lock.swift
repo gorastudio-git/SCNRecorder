@@ -1,8 +1,8 @@
 //
-//  Filter.swift
+//  Lock.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 29.12.2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,48 +25,29 @@
 
 import Foundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
+final class UnfairLock {
+  
+  let unfairLock: os_unfair_lock_t
 
-public protocol Filter {
-  
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
+  init() {
+    unfairLock = .allocate(capacity: 1)
+    unfairLock.initialize(to: os_unfair_lock())
   }
-}
-
-extension CIFilter: Filter {
   
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
-    }
-    try copiedFilter.setImage(image)
-    return copiedFilter
+  deinit {
+    unfairLock.deinitialize(count: 1)
+    unfairLock.deallocate()
+  }
+
+  func lock() {
+    os_unfair_lock_lock(unfairLock)
+  }
+
+  func unlock() {
+    os_unfair_lock_unlock(unfairLock)
+  }
+
+  func `try`() -> Bool {
+    return os_unfair_lock_trylock(unfairLock)
   }
 }

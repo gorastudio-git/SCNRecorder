@@ -1,9 +1,9 @@
 //
-//  AVCaptureSession.swift
+//  SCNRecordableView.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,34 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
+import SceneKit
 
-public extension AVCaptureSession {
-    
-    func canAddRecorder(_ recorder: SCNRecorder) -> Bool {
-        return canAddOutput(recorder.audioAdapter.output)
+#if DO_NOT_SWIZZLE
+
+open class SCNRecordableView: SCNView, RecordableView {
+  
+  #if !targetEnvironment(simulator)
+  override open class var layerClass: AnyClass {
+    guard super.layerClass is CAMetalLayer.Type else { return super.layerClass }
+    return CAMetalRecordableLayer.self
+  }
+  #endif // !targetEnvironment(simulator)
+
+  open override weak var delegate: SCNSceneRendererDelegate? {
+    get { return super.delegate }
+    set {
+      guard let recorder = recorder else {
+        super.delegate = newValue
+        return
+      }
+      recorder.sceneViewDelegate = newValue
     }
-    
-    func addRecorder(_ recorder: SCNRecorder) {
-        addOutput(recorder.audioAdapter.output)
-    }
+  }
 }
+
+#else // DO_NOT_SWIZZLE
+
+@available(*, deprecated, message: "With swizzling you don't have to use SCNRecordableView")
+open class SCNRecordableView: SCNView { }
+
+#endif // DO_NOT_SWIZZLE

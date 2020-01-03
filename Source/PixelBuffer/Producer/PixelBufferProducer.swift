@@ -1,5 +1,5 @@
 //
-//  Filter.swift
+//  PixelBufferProducer.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -24,49 +24,43 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
+enum PixelBufferProducerError: Swift.Error {
+  
+  case lockBaseAddress(errorCode: CVReturn)
+  
+  case getBaseAddress
+  
+  case emptySource
+  
+  case unlockBaseAddress(errorCode: CVReturn)
+  
+  case wrongSize
 }
 
-public protocol Filter {
+protocol PixelBufferProducer {
   
-  typealias Error = FilterError
+  typealias Error = PixelBufferProducerError
   
-  typealias Composite = CompositeFilter
+  var recommendedVideoSettings: [String: Any] { get }
   
-  typealias Geometry = GeometryFilter
+  var recommendedPixelBufferAttributes: [String: Any] { get }
   
-  typealias Watermark = WatermarkFilter
+  var transform: CGAffineTransform { get }
   
-  var name: String { get }
+  var context: CIContext { get }
   
-  var inputKeys: [String] { get }
+  func startWriting()
   
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
+  func writeIn(pixelBuffer: inout CVPixelBuffer) throws
+  
+  func stopWriting()
 }
 
-public extension Filter {
+extension PixelBufferProducer {
   
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
-  }
-}
-
-extension CIFilter: Filter {
+  func startWriting() { }
   
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
-    }
-    try copiedFilter.setImage(image)
-    return copiedFilter
-  }
+  func stopWriting() { }
 }

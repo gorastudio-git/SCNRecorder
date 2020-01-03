@@ -1,9 +1,9 @@
 //
-//  VideoInfoProvider.swift
+//  RecordableLayer.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 30.12.2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,37 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
+import UIKit
 
-protocol VideoInfoProvider {
-    
-    var url: URL { get }
-    
-    var fileType: AVFileType { get }
-    
-    var timeScale: CMTimeScale { get }
+#if !targetEnvironment(simulator)
+
+public protocol RecordableLayer: AnyObject {
+  
+  var lastDrawable: CAMetalDrawable? { get }
+  
+  var device: MTLDevice? { get }
+
+  var pixelFormat: MTLPixelFormat { get }
+  
+  var drawableSize: CGSize { get }
+
+  /// Is called before starting any recording
+  /// Might be used for any preparation
+  /// Might be called several times
+  func prepareForRecording()
+  
+  func onStartRecording()
+  
+  func onStopRecording()
 }
+
+extension RecordableLayer {
+  
+  func prepareForRecording() { }
+  
+  func onStartRecording() { }
+  
+  func onStopRecording() { }
+}
+
+#endif // !targetEnvironment(simulator)

@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Example
 //
-//  Created by Vladislav Grigoryev on 12/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 01/07/2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,163 +23,145 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
-import UIKit
+import Foundation
 import SceneKit
 import ARKit
-import SCNRecorder
 import AVKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+import SCNRecorder
 
-    @IBOutlet var sceneView: ARSCNView!
+class ViewController: UIViewController {
+  
+  @IBOutlet var sceneView: SCNView!
+  
+  @IBOutlet var durationLabel: UILabel!
+  
+  @IBOutlet var photoButton: UIButton!
+  
+  @IBOutlet var videoButton: UIButton!
+  
+  var lastRecordingURL: URL?
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+        
+    // Show statistics such as fps and timing information
+    sceneView.showsStatistics = true
     
-    @IBOutlet var durationLabel: UILabel!
+    // Create a new scene
+    let scene = SCNScene(named: "art.scnassets/ship.scn")!
     
-    @IBOutlet var photoButton: UIButton!
+    // Set the scene to the view
+    sceneView.scene = scene
+    sceneView.rendersContinuously = true
     
-    @IBOutlet var videoButton: UIButton!
-    
-    var recorder: SCNRecorder!
-    
-    var videoRecording: VideoRecording? {
-        didSet {
-            videoRecording?.onDurationChanged = { [weak self] (duration) in
-                DispatchQueue.main.async {
-                    let seconds = Int(duration)
-                    self?.durationLabel.text = String(format: "%02d:%02d", seconds / 60, seconds % 60)
-                }
-            }
+    do {
+      try sceneView.prepareForRecording()
+    }
+    catch {
+      print("Something went wrong during recording preparation: \(error)")
+    }
+  }
+  
+  @IBAction func takePhoto(_ sender: UIButton) {
+    do {
+      // A fastest way to capture photo
+      try sceneView.takePhoto { (photo) in
+        DispatchQueue.main.async {
+          
+          // Create and present photo preview controller
+          let controller = PhotoPreviewController(photo: photo)
+          self.navigationController?.pushViewController(controller, animated: true)
+          
+          // Enable buttons
+          self.photoButton.isEnabled = true
+          self.videoButton.isEnabled = true
         }
+      }
+      
+      // Disable buttons for a while
+      photoButton.isEnabled = false
+      videoButton.isEnabled = false
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        recorder = try! SCNRecorder(sceneView)
-        
-        // Set the view's delegate
-        sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
-        
-        // Make our navigation bar transparent
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    catch {
+      print("Something went wrong during photo-capture preparation: \(error)")
     }
+  }
+  
+  @IBAction func startVideoRecording() {
+    let fileManager = FileManager.default
+    let url = fileManager.urls(
+      for: .documentDirectory,
+      in: .userDomainMask
+    )[0].appendingPathComponent("video.mov", isDirectory: false)
+    try? fileManager.removeItem(at: url)
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-        
-        // We want to record audio as well
-        configuration.providesAudioData = true
-        
-        // Run the view's session
-        sceneView.session.run(configuration)
+    
+    do {
+      try sceneView.startVideoRecording(to: url)
+      
+      // Observe for duration
+      sceneView.videoRecording?.duration.observer = { [weak self] duration in
+        DispatchQueue.main.async {
+          let seconds = Int(duration)
+          self?.durationLabel.text = String(format: "%02d:%02d", seconds / 60, seconds % 60)
+        }
+      }
+      
+      // Update UI
+      photoButton.isEnabled = false
+      videoButton.setTitle("Finish Video", for: .normal)
+      videoButton.removeTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
+      videoButton.addTarget(self, action: #selector(finishVideoRecording), for: .touchUpInside)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Pause the view's session
-        sceneView.session.pause()
+    catch {
+      print("Something went wrong during video-recording preparation: \(error)")
     }
-    
-    @IBAction func takePhoto(_ sender: UIButton) {
-        // A fastest way to capture photo
-        recorder?.takePhoto(completionHandler: { (photo) in
-            DispatchQueue.main.async {
-                
-                // Create and present photo preview controller
-                let controller = PhotoPreviewController(photo: photo)
-                self.navigationController?.pushViewController(controller, animated: true)
-                
-                // Enable buttons
-                self.photoButton.isEnabled = true
-                self.videoButton.isEnabled = true
-            }
-        })
+  }
+  
+  @objc func finishVideoRecording() {
+    // Finish recording
+    sceneView.finishVideoRecording { (recording) in
+      DispatchQueue.main.async {
+        // Create a controller to preview captured video
+        let controller = AVPlayerViewController()
         
-        // Disable buttons for a while
-        photoButton.isEnabled = false
-        videoButton.isEnabled = false
-    }
-    
-    @IBAction func startVideoRecording() {
-        let fileManager = FileManager.default
-        let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("video.mov", isDirectory: false)
-        try? fileManager.removeItem(at: url)
+        // Use an url from the recording
+        // The url is the same you passed to makeVideoRecording
+        controller.player = AVPlayer(url: recording.url)
         
-        // Store a strong reference to a viddeo recording
-        videoRecording = try! recorder.makeVideoRecording(to: url)
+        // I don't recommend you to do this in an real app
+        self.lastRecordingURL = recording.url
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
+          barButtonSystemItem: .action,
+          target: self,
+          action: #selector(ARSCNViewController.share(_:))
+        )
         
-        // Don't forget to resume recording
-        videoRecording?.resume()
+        // Present the controller
+        self.navigationController?.pushViewController(controller, animated: true)
         
         // Update UI
-        photoButton.isEnabled = false
-        videoButton.setTitle("Finish Video", for: .normal)
-        videoButton.removeTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
-        videoButton.addTarget(self, action: #selector(finishVideoRecording), for: .touchUpInside)
+        self.durationLabel.text = nil
+        self.photoButton.isEnabled = true
+        self.videoButton.isEnabled = true
+      }
     }
     
-    @objc func finishVideoRecording() {
-        // Finish recording
-        videoRecording?.finish(completionHandler: { (recording) in
-            DispatchQueue.main.async {
-                // Create a controller to preview captured video
-                let controller = AVPlayerViewController()
-                
-                // Use an url from the recording
-                // The url is the same you passed to makeVideoRecording
-                controller.player = AVPlayer(url: recording.url)
-                
-                // I don't recommend you to do this in an real app
-                controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action,
-                                                                               target: self,
-                                                                               action: #selector(ViewController.share(_:)))
-                
-                // Present the controller
-                self.navigationController?.pushViewController(controller, animated: true)
-                
-                // Update UI
-                self.durationLabel.text = nil
-                self.photoButton.isEnabled = true
-                self.videoButton.isEnabled = true
-            }
-        })
-        
-        // Update UI
-        videoButton.isEnabled = false
-        videoButton.setTitle("Start Video", for: .normal)
-        videoButton.removeTarget(self, action: #selector(finishVideoRecording), for: .touchUpInside)
-        videoButton.addTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
-    }
+    // Update UI
+    videoButton.isEnabled = false
+    videoButton.setTitle("Start Video", for: .normal)
+    videoButton.removeTarget(self, action: #selector(finishVideoRecording), for: .touchUpInside)
+    videoButton.addTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
+  }
+  
+  @objc func share(_ sender: Any) {
+    guard let url = lastRecordingURL else { return }
     
-    @objc func share(_ sender: Any) {
-        guard let url = videoRecording?.url else {
-            return
-        }
-        
-        present(UIActivityViewController(activityItems: [url],
-                                         applicationActivities: nil),
-                animated: true,
-                completion: nil)
-    }
-
-    // MARK: - ARSCNViewDelegate
-    func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        // Do you need to perform any actions when renderer get finished?
-    }
+    present(
+      UIActivityViewController(activityItems: [url], applicationActivities: nil),
+      animated: true,
+      completion: nil
+    )
+  }
 }

@@ -3,7 +3,7 @@
 //  Example
 //
 //  Created by Vladislav Grigoryev on 12/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,41 +28,46 @@ import Foundation
 import UIKit
 
 final class PhotoPreviewController: UIViewController {
+  
+  let photo: UIImage
+  
+  override var navigationItem: UINavigationItem {
+    let navigationItem = super.navigationItem
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      barButtonSystemItem: .action,
+      target: self,
+      action: #selector(share(_:))
+    )
+    return navigationItem
+  }
+  
+  init(photo: UIImage) {
+    self.photo = photo
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    let photo: UIImage
+    let imageView = UIImageView(image: photo)
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(imageView)
     
-    override var navigationItem: UINavigationItem {
-        let navigationItem = super.navigationItem
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
-        return navigationItem
-    }
-    
-    init(photo: UIImage) {
-        self.photo = photo
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let imageView = UIImageView(image: photo)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        
-        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        imageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        imageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-    }
-    
-    @objc func share(_ sender: Any) {
-        present(UIActivityViewController(activityItems: [photo],
-                                         applicationActivities: nil),
-                animated: true,
-                completion: nil)
-    }
+    imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    imageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+    imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    imageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+  }
+  
+  @objc func share(_ sender: Any) {
+    present(
+      UIActivityViewController(activityItems: [photo], applicationActivities: nil),
+      animated: true,
+      completion: nil
+    )
+  }
 }

@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		BE4C34712237C827007AE1EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34702237C827007AE1EE /* AppDelegate.swift */; };
 		BE4C34732237C827007AE1EE /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34722237C827007AE1EE /* art.scnassets */; };
-		BE4C34752237C827007AE1EE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34742237C827007AE1EE /* ViewController.swift */; };
+		BE4C34752237C827007AE1EE /* ARSCNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34742237C827007AE1EE /* ARSCNViewController.swift */; };
 		BE4C34782237C827007AE1EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34762237C827007AE1EE /* Main.storyboard */; };
 		BE4C347A2237C828007AE1EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34792237C828007AE1EE /* Assets.xcassets */; };
 		BE4C347D2237C828007AE1EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE4C347B2237C828007AE1EE /* LaunchScreen.storyboard */; };
 		BE4C348A2237C843007AE1EE /* SCNRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE4C34892237C83D007AE1EE /* SCNRecorder.framework */; };
 		BE4C348B2237C843007AE1EE /* SCNRecorder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BE4C34892237C83D007AE1EE /* SCNRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BE4C34902237CA8E007AE1EE /* PhotoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C348F2237CA8E007AE1EE /* PhotoPreviewController.swift */; };
+		BE79CB5A22CA4BD6006058AA /* SCNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE79CB5922CA4BD6006058AA /* SCNViewController.swift */; };
+		BE79CB5C22CA4CE1006058AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE79CB5B22CA4CE1006058AA /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +55,15 @@
 		BE4C346D2237C827007AE1EE /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE4C34702237C827007AE1EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE4C34722237C827007AE1EE /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		BE4C34742237C827007AE1EE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BE4C34742237C827007AE1EE /* ARSCNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSCNViewController.swift; sourceTree = "<group>"; };
 		BE4C34772237C827007AE1EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BE4C34792237C828007AE1EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE4C347C2237C828007AE1EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE4C347E2237C828007AE1EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE4C34842237C83D007AE1EE /* SCNRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SCNRecorder.xcodeproj; path = ../SCNRecorder.xcodeproj; sourceTree = "<group>"; };
 		BE4C348F2237CA8E007AE1EE /* PhotoPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewController.swift; sourceTree = "<group>"; };
+		BE79CB5922CA4BD6006058AA /* SCNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNViewController.swift; sourceTree = "<group>"; };
+		BE79CB5B22CA4CE1006058AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +85,9 @@
 				BE4C346E2237C827007AE1EE /* Products */,
 				BE4C34842237C83D007AE1EE /* SCNRecorder.xcodeproj */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		BE4C346E2237C827007AE1EE /* Products */ = {
 			isa = PBXGroup;
@@ -96,7 +102,9 @@
 			children = (
 				BE4C34702237C827007AE1EE /* AppDelegate.swift */,
 				BE4C34722237C827007AE1EE /* art.scnassets */,
-				BE4C34742237C827007AE1EE /* ViewController.swift */,
+				BE4C34742237C827007AE1EE /* ARSCNViewController.swift */,
+				BE79CB5922CA4BD6006058AA /* SCNViewController.swift */,
+				BE79CB5B22CA4CE1006058AA /* ViewController.swift */,
 				BE4C348F2237CA8E007AE1EE /* PhotoPreviewController.swift */,
 				BE4C34762237C827007AE1EE /* Main.storyboard */,
 				BE4C34792237C828007AE1EE /* Assets.xcassets */,
@@ -148,6 +156,7 @@
 				TargetAttributes = {
 					BE4C346C2237C827007AE1EE = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -204,7 +213,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE4C34752237C827007AE1EE /* ViewController.swift in Sources */,
+				BE79CB5C22CA4CE1006058AA /* ViewController.swift in Sources */,
+				BE4C34752237C827007AE1EE /* ARSCNViewController.swift in Sources */,
+				BE79CB5A22CA4BD6006058AA /* SCNViewController.swift in Sources */,
 				BE4C34712237C827007AE1EE /* AppDelegate.swift in Sources */,
 				BE4C34902237CA8E007AE1EE /* PhotoPreviewController.swift in Sources */,
 			);
@@ -368,9 +379,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "gora.studio.SCNRecorder.Example.$(DEVELOPMENT_TEAM)";
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gora.studio.SCNRecorder.Example.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -387,9 +399,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "gora.studio.SCNRecorder.Example.$(DEVELOPMENT_TEAM)";
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gora.studio.SCNRecorder.Example.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -1,9 +1,9 @@
 //
-//  Weak.swift
+//  SCNView+Recordable.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright (c) 2019 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 31.12.2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,29 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
 
-final class Weak<T> {
-    
-    private weak var object: AnyObject?
-    
-    init(_ object: T) {
-        self.object = object as AnyObject
+private var recorderKey: UInt8 = 0
+private var videoRecordingKey: UInt8 = 0
+
+extension SCNView: Recordable {
+  
+  public var recorder: SCNRecorder? {
+    get { return objc_getAssociatedObject(self, &recorderKey) as? SCNRecorder }
+    set {
+      let oldRecorder = recorder
+      objc_setAssociatedObject(self, &recorderKey, nil, .OBJC_ASSOCIATION_RETAIN)
+      if delegate === oldRecorder { delegate = oldRecorder?.sceneViewDelegate }
+      
+      guard let recorder = newValue else { return }
+      recorder.sceneViewDelegate = delegate
+      delegate = recorder
+      objc_setAssociatedObject(self, &recorderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
     }
-    
-    func get() -> T? {
-        return object as? T
-    }
+  }
+  
+  public var videoRecording: VideoRecording? {
+    get { return objc_getAssociatedObject(self, &videoRecordingKey) as? VideoRecording }
+    set { objc_setAssociatedObject(self, &videoRecordingKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
+  }
 }

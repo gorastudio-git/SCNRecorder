@@ -1,5 +1,5 @@
 //
-//  Filter.swift
+//  AVCaptureSession+SCNRecorder.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -24,49 +24,15 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
-
-public protocol Filter {
+public extension AVCaptureSession {
   
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
+  func canAddRecorder(_ recorder: SCNRecorder) -> Bool {
+    return canAddOutput(recorder.audioAdapter.output)
   }
-}
-
-extension CIFilter: Filter {
   
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
-    }
-    try copiedFilter.setImage(image)
-    return copiedFilter
+  func addRecorder(_ recorder: SCNRecorder) {
+    addOutput(recorder.audioAdapter.output)
   }
 }

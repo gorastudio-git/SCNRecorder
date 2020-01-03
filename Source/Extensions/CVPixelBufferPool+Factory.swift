@@ -1,8 +1,8 @@
 //
-//  Filter.swift
+//  CVPixelBufferPool+Factory.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 30.12.2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,49 +24,35 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
-
-public protocol Filter {
+extension CVPixelBufferPool {
   
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
-    }
-    return SwappingFilter(filter: self)
+  enum Error: Swift.Error {
+    case zeroWidth
+    case zeroHeight
+    case creation(errorCode: CVReturn)
   }
-}
-
-extension CIFilter: Filter {
   
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else {
-      throw Error.copy
+  static func makeWithAttributes(_ attributes: [String: Any]) throws -> CVPixelBufferPool {
+    guard attributes[kCVPixelBufferWidthKey as String] as? Int ?? 0 > 0 else {
+      throw Error.zeroWidth
     }
-    try copiedFilter.setImage(image)
-    return copiedFilter
+    
+    guard attributes[kCVPixelBufferHeightKey as String] as? Int ?? 0 > 0 else {
+       throw Error.zeroHeight
+    }
+    
+    var unmanagedPixelBufferPool: CVPixelBufferPool?
+    let errorCode = CVPixelBufferPoolCreate(
+      nil,
+      nil,
+      attributes as CFDictionary,
+      &unmanagedPixelBufferPool
+    )
+    guard errorCode == kCVReturnSuccess,
+          let pixelBufferPool = unmanagedPixelBufferPool
+    else { throw Error.creation(errorCode: errorCode) }
+    return pixelBufferPool
   }
 }
