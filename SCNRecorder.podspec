@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'SCNRecorder'
-  s.version               = '1.0.0'
+  s.version               = '1.1.0'
   s.summary               = 'A lags-free recorder of ARKit and SceneKit for iOS in Swift'
   s.homepage              = 'https://github.com/gorastudio/SCNRecorder'
   s.license               = { :type => 'MIT', :file => 'LICENSE' }
@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.swift_version         = '4.2'
   s.ios.deployment_target = '11.0'
   s.source_files          = 'Source/**/*.swift'
-  s.frameworks            = 'UIKit', 'AVFoundation', 'AVKit', 'ARKit', 'SceneKit'
+  s.frameworks            = 'UIKit', 'AVFoundation', 'AVKit', 'ARKit', 'SceneKit', 'CoreImage', 'MobileCoreServices'
 end
