@@ -254,6 +254,7 @@ extension SCNRecorder: ARSCNViewDelegate {
     internalRecorder.produceAudioSampleBuffer(audioSampleBuffer)
   }
   
+  #if compiler(>=5.1)
   @available(iOS 13.0, *)
   @objc
   public func session(
@@ -262,4 +263,5 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.session?(session, didOutputCollaborationData: data)
   }
+  #endif
 }

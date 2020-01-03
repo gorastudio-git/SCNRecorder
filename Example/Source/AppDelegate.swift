@@ -37,9 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   ) -> Bool {
     
     if #available(iOS 13.0, *) {
+      #if compiler(>=5.1)
       let appearance = UINavigationBarAppearance()
       appearance.configureWithTransparentBackground()
       UINavigationBar.appearance().standardAppearance = appearance
+      #endif
     } else {
       UINavigationBar.appearance().isTranslucent = true
       UINavigationBar.appearance().shadowImage = UIImage()
