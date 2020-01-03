@@ -106,7 +106,8 @@ extension VideoRecorder {
       switch self {
       case .preparing:
         videoRecorder.startSession(at: time)
-        fallthrough
+        videoRecorder.append(pixelBuffer, withSeconds: time)
+        return .recording(seconds: time)
       case .recording:
         videoRecorder.append(pixelBuffer, withSeconds: time)
         return .recording(seconds: time)
