@@ -41,7 +41,7 @@ public protocol Recordable: AnyObject {
 }
 
 public extension Recordable {
-  
+    
   func prepareForRecording() throws {
     #if !DO_NOT_SWIZZLE
     if self is SCNView { SCNView.swizzle() }
@@ -59,24 +59,47 @@ public extension Recordable {
     if recorder == nil { recorder = try SCNRecorder(recordableView) }
   }
   
+  @discardableResult
+  func startVideoRecording(
+    fileType: AVFileType = .mov,
+    timeScale: CMTimeScale = SCNRecorder.defaultTimeScale
+  ) throws -> VideoRecording {
+    return try startVideoRecording(
+      to: FileManager.default.temporaryDirectory.appendingPathComponent(
+        "\(UUID().uuidString).\(fileType.fileExtension)",
+        isDirectory: false
+      ),
+      fileType: fileType,
+      timeScale: timeScale
+    )
+  }
+  
+  @discardableResult
   func startVideoRecording(
     to url: URL,
     fileType: AVFileType = .mov,
     timeScale: CMTimeScale = SCNRecorder.defaultTimeScale
-  ) throws {
+  ) throws -> VideoRecording {
     guard videoRecording == nil else { throw RecordableError.alreadyStarted }
     
     try prepareForRecording()
-    videoRecording = try recorder?.makeVideoRecording(
+    guard let recorder = recorder else { throw RecordableError.preparing }
+    
+    let videoRecording = try recorder.makeVideoRecording(
       to: url,
       fileType: fileType,
       timeScale: timeScale
     )
-    videoRecording?.resume()
+    videoRecording.resume()
+    
+    self.videoRecording = videoRecording
+    return videoRecording
   }
   
   func finishVideoRecording(completionHandler handler: @escaping (VideoRecording) -> Void) {
-    videoRecording?.finish(completionHandler: handler)
+    videoRecording?.finish { videoRecording in
+      DispatchQueue.main.async { handler(videoRecording) }
+    }
     videoRecording = nil
   }
   
@@ -88,18 +111,19 @@ public extension Recordable {
     try prepareForRecording()
     recorder?.takePhoto(
       scale: scale,
-      orientation: orientation,
-      completionHandler: handler
-    )
+      orientation: orientation
+    ) { photo in
+      DispatchQueue.main.async { handler(photo) }
+    }
   }
   
   func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) throws {
     try prepareForRecording()
-    recorder?.takeCoreImage(completionHandler: handler)
+    recorder?.takeCoreImage { coreImage in DispatchQueue.main.async { handler(coreImage) } }
   }
   
   func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) throws {
     try prepareForRecording()
-    recorder?.takePixelBuffer(completionHandler: handler)
+    recorder?.takePixelBuffer { pixelBuffer in DispatchQueue.main.async { handler(pixelBuffer) } }
   }
 }

@@ -48,6 +48,7 @@
 		BE7BE39623BF8FC500DB38B6 /* CIContext+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7BE39523BF8FC500DB38B6 /* CIContext+Render.swift */; };
 		BE7BE39723BF91F300DB38B6 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE09E6AB23B94D900021FC32 /* CVPixelBuffer+Helpers.swift */; };
 		BE86D1C122395F8D0047914A /* RecordableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE86D1C022395F8D0047914A /* RecordableView.swift */; };
+		BE874AD223BFE79E00C0365E /* AVFileType+FilenameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE874AD123BFE79E00C0365E /* AVFileType+FilenameExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		BE70C51D224641A500539893 /* MTLPixelFormat+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLPixelFormat+Helpers.swift"; sourceTree = "<group>"; };
 		BE7BE39523BF8FC500DB38B6 /* CIContext+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
 		BE86D1C022395F8D0047914A /* RecordableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordableView.swift; sourceTree = "<group>"; };
+		BE874AD123BFE79E00C0365E /* AVFileType+FilenameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVFileType+FilenameExtension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 				BE4C33EF2236B0E3007AE1EE /* AVCaptureSession+SCNRecorder.swift */,
 				BE4C33F12236B0EA007AE1EE /* CIFilter+Helpers.swift */,
 				BE7BE39523BF8FC500DB38B6 /* CIContext+Render.swift */,
+				BE874AD123BFE79E00C0365E /* AVFileType+FilenameExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				BE4C33F22236B0EA007AE1EE /* CIFilter+Helpers.swift in Sources */,
 				BE09E69823B902180021FC32 /* Property.swift in Sources */,
 				BE7BE39623BF8FC500DB38B6 /* CIContext+Render.swift in Sources */,
+				BE874AD223BFE79E00C0365E /* AVFileType+FilenameExtension.swift in Sources */,
 				BE4C33F72236B22F007AE1EE /* ARSCNRecordableView.swift in Sources */,
 				BE4C33ED2236AB99007AE1EE /* WatermarkFilter.swift in Sources */,
 				BE4C33E72236AB6B007AE1EE /* SwappingFilter.swift in Sources */,

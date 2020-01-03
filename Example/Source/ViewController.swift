@@ -55,53 +55,37 @@ class ViewController: UIViewController {
     sceneView.scene = scene
     sceneView.rendersContinuously = true
     
-    do {
-      try sceneView.prepareForRecording()
-    }
-    catch {
-      print("Something went wrong during recording preparation: \(error)")
-    }
+    // It is recommended to prepare the view for recording at viewDidLoad
+    do { try sceneView.prepareForRecording() }
+    catch { print("Something went wrong during recording preparation: \(error)") }
   }
   
   @IBAction func takePhoto(_ sender: UIButton) {
     do {
       // A fastest way to capture photo
       try sceneView.takePhoto { (photo) in
-        DispatchQueue.main.async {
-          
-          // Create and present photo preview controller
-          let controller = PhotoPreviewController(photo: photo)
-          self.navigationController?.pushViewController(controller, animated: true)
-          
-          // Enable buttons
-          self.photoButton.isEnabled = true
-          self.videoButton.isEnabled = true
-        }
+        // Create and present photo preview controller
+        let controller = PhotoPreviewController(photo: photo)
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+        // Enable buttons
+        self.photoButton.isEnabled = true
+        self.videoButton.isEnabled = true
       }
       
       // Disable buttons for a while
       photoButton.isEnabled = false
       videoButton.isEnabled = false
     }
-    catch {
-      print("Something went wrong during photo-capture preparation: \(error)")
-    }
+    catch { print("Something went wrong during photo-capture preparation: \(error)") }
   }
   
   @IBAction func startVideoRecording() {
-    let fileManager = FileManager.default
-    let url = fileManager.urls(
-      for: .documentDirectory,
-      in: .userDomainMask
-    )[0].appendingPathComponent("video.mov", isDirectory: false)
-    try? fileManager.removeItem(at: url)
-    
-    
     do {
-      try sceneView.startVideoRecording(to: url)
+      let videoRecording = try sceneView.startVideoRecording()
       
       // Observe for duration
-      sceneView.videoRecording?.duration.observer = { [weak self] duration in
+      videoRecording.duration.observer = { [weak self] duration in
         DispatchQueue.main.async {
           let seconds = Int(duration)
           self?.durationLabel.text = String(format: "%02d:%02d", seconds / 60, seconds % 60)
@@ -114,38 +98,34 @@ class ViewController: UIViewController {
       videoButton.removeTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
       videoButton.addTarget(self, action: #selector(finishVideoRecording), for: .touchUpInside)
     }
-    catch {
-      print("Something went wrong during video-recording preparation: \(error)")
-    }
+    catch { print("Something went wrong during video-recording preparation: \(error)") }
   }
   
   @objc func finishVideoRecording() {
     // Finish recording
     sceneView.finishVideoRecording { (recording) in
-      DispatchQueue.main.async {
-        // Create a controller to preview captured video
-        let controller = AVPlayerViewController()
-        
-        // Use an url from the recording
-        // The url is the same you passed to makeVideoRecording
-        controller.player = AVPlayer(url: recording.url)
-        
-        // I don't recommend you to do this in an real app
-        self.lastRecordingURL = recording.url
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
-          barButtonSystemItem: .action,
-          target: self,
-          action: #selector(ARSCNViewController.share(_:))
-        )
-        
-        // Present the controller
-        self.navigationController?.pushViewController(controller, animated: true)
-        
-        // Update UI
-        self.durationLabel.text = nil
-        self.photoButton.isEnabled = true
-        self.videoButton.isEnabled = true
-      }
+      // Create a controller to preview captured video
+      let controller = AVPlayerViewController()
+      
+      // Use an url from the recording
+      // The url is the same you passed to makeVideoRecording
+      controller.player = AVPlayer(url: recording.url)
+      
+      // I don't recommend you to do this in an real app
+      self.lastRecordingURL = recording.url
+      controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
+        barButtonSystemItem: .action,
+        target: self,
+        action: #selector(ARSCNViewController.share(_:))
+      )
+      
+      // Present the controller
+      self.navigationController?.pushViewController(controller, animated: true)
+      
+      // Update UI
+      self.durationLabel.text = nil
+      self.photoButton.isEnabled = true
+      self.videoButton.isEnabled = true
     }
     
     // Update UI
