@@ -26,15 +26,15 @@
 import Foundation
 
 public struct WatermarkFilter: Filter {
-  
+
   public enum VerticalAligment {
-    
+
     case top(padding: CGFloat)
-    
+
     case center(padding: CGFloat)
-    
+
     case bottom(padding: CGFloat)
-    
+
     var padding: CGFloat {
       switch self {
       case .top(let padding),
@@ -43,18 +43,18 @@ public struct WatermarkFilter: Filter {
         return padding
       }
     }
-    
+
     func getTranslation(of originExtent: CGRect, on targetExtent: CGRect) -> CGFloat {
       var translation: CGFloat
       switch self {
       case .top:
         // Top difference
         translation = targetExtent.maxY - originExtent.maxY
-        
+
       case .center:
         // Center difference
         translation = targetExtent.midY - originExtent.midY
-        
+
       case .bottom:
         // Bottom difference
         translation = targetExtent.minY - originExtent.minY
@@ -62,41 +62,41 @@ public struct WatermarkFilter: Filter {
       return translation + padding
     }
   }
-  
+
   public enum HorizontalAligment {
-    
+
     case left(padding: CGFloat)
-    
+
     case center(padding: CGFloat)
-    
+
     case right(padding: CGFloat)
-    
+
     var padding: CGFloat {
       switch self {
-        
+
       case .left(let padding),
            .center(let padding),
            .right(let padding):
-        
+
         return padding
       }
     }
-    
+
     func getTranslation(of originExtent: CGRect, on targetExtent: CGRect) -> CGFloat {
       let padding: CGFloat
       var translation: CGFloat
-      
+
       switch self {
       case .left:
         // Left difference
         padding = self.padding
         translation = targetExtent.minX - originExtent.minX
-        
+
       case .center:
         // Center difference
         padding = self.padding
         translation = targetExtent.midX - originExtent.midX
-        
+
       case .right:
         // Right difference
         padding = -self.padding
@@ -105,17 +105,17 @@ public struct WatermarkFilter: Filter {
       return translation + padding
     }
   }
-  
+
   public let compositeFilter: Filter.Composite
-  
+
   public let verticalAligment: VerticalAligment
-  
+
   public let horizontalAligment: HorizontalAligment
-  
+
   public var name: String { return "Recorder.WatermarkFilter" }
-  
+
   public var inputKeys: [String] { return [] }
-  
+
   public init(
     compositeFilter: Filter.Composite,
     verticalAligment: VerticalAligment = .center(padding: 0.0),
@@ -125,7 +125,7 @@ public struct WatermarkFilter: Filter {
     self.verticalAligment = verticalAligment
     self.horizontalAligment = horizontalAligment
   }
-  
+
   public init(
     watermark: CIImage,
     verticalAligment: VerticalAligment = .center(padding: 0.0),
@@ -137,30 +137,30 @@ public struct WatermarkFilter: Filter {
       horizontalAligment: horizontalAligment
     )
   }
-  
+
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     var compositeFilter = self.compositeFilter
-    
+
     let watermark = compositeFilter.backgroundImage
     let originExtent = watermark.extent
     let targetExtent = image.extent
-    
+
     let translationX = horizontalAligment.getTranslation(
       of: originExtent,
       on: targetExtent
     )
-    
+
     let translationY = verticalAligment.getTranslation(
       of: originExtent,
       on: targetExtent
     )
-    
+
     let transform = CGAffineTransform(translationX: translationX, y: translationY)
     let tranformFilter = Geometry.affineTransform(transform: transform)
     let ciTransformFilter = try tranformFilter.makeCIFilter(for: watermark)
-    
+
     guard let transformedWatermark = ciTransformFilter.outputImage else { throw Error.noOutput }
-    
+
     compositeFilter.setBackgroundImage(transformedWatermark)
     let swappedCompositeFilter = try compositeFilter.swapped()
     return try swappedCompositeFilter.makeCIFilter(for: image)

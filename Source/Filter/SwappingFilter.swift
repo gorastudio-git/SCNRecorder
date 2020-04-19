@@ -26,25 +26,25 @@
 import Foundation
 
 struct SwappingFilter {
-  
+
   let filter: Filter
 }
 
 extension SwappingFilter: Filter {
-  
+
   public var name: String { return filter.name }
-  
+
   public var inputKeys: [String] { return filter.inputKeys }
-  
+
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     let ciFilter = try filter.makeCIFilter(for: image)
-    
+
     guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
     else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
-    
+
     try ciFilter.setImage(backgroundImage)
     try ciFilter.setBackgroundImage(image)
-    
+
     return ciFilter
   }
 }

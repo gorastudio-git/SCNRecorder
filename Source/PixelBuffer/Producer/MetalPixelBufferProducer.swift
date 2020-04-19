@@ -36,96 +36,96 @@ extension MetalPixelBufferProducer {
 }
 
 final class MetalPixelBufferProducer: PixelBufferProducer {
-  
-  var recommendedVideoSettings: [String : Any] {
+
+  var recommendedVideoSettings: [String: Any] {
     [
       AVVideoWidthKey: recordableLayer.drawableSize.width,
       AVVideoHeightKey: recordableLayer.drawableSize.height,
       AVVideoCodecKey: AVVideoCodecType.h264,
-      AVVideoColorPropertiesKey: recordableLayer.pixelFormat.videoColorProperties,
+      AVVideoColorPropertiesKey: recordableLayer.pixelFormat.videoColorProperties
     ]
   }
-  
-  var recommendedPixelBufferAttributes: [String : Any] {
-    var attributes: [String : Any] = [
+
+  var recommendedPixelBufferAttributes: [String: Any] {
+    var attributes: [String: Any] = [
       kCVPixelBufferWidthKey as String: Int(recordableLayer.drawableSize.width),
       kCVPixelBufferHeightKey as String: Int(recordableLayer.drawableSize.height),
       kCVPixelBufferPixelFormatTypeKey as String: recordableLayer.pixelFormat.pixelFormatType,
-      kCVPixelBufferIOSurfacePropertiesKey as String : [:]
+      kCVPixelBufferIOSurfacePropertiesKey as String: [:]
     ]
-    
+
     if let iccData = recordableLayer.pixelFormat.iccData {
       attributes[kCVBufferPropagatedAttachmentsKey as String] = [
         kCVImageBufferICCProfileKey: iccData
       ]
     }
-    
+
     return attributes
   }
-  
+
   let transform = CGAffineTransform.identity
-  
+
   var emptyBufferSize: Int = 0
-  
+
   var emptyBuffer: UnsafeMutableRawPointer?
-  
+
   let recordableLayer: RecordableLayer
-  
+
   let context: CIContext
-  
+
   init(recordableLayer: RecordableLayer) {
     self.recordableLayer = recordableLayer
     self.context = CIContext(mtlDevice: recordableLayer.device ?? MTLCreateSystemDefaultDevice()!)
   }
-  
+
   deinit { emptyBuffer.map({ free($0) }) }
-  
+
   func startWriting() {
     guard Thread.isMainThread else { return DispatchQueue.main.sync(execute: startWriting) }
     recordableLayer.onStartRecording()
   }
-  
+
   func writeIn(pixelBuffer: inout CVPixelBuffer) throws {
-    
+
     guard let lastDrawable = recordableLayer.lastDrawable else { throw MetalError.lastDrawable }
-    
+
     let texture = lastDrawable.texture
     guard !texture.isFramebufferOnly else { throw MetalError.framebufferOnly }
-    
+
     try pixelBuffer.locked { (pixelBuffer) in
       guard let baseAddress = pixelBuffer.baseAddress else { throw Error.getBaseAddress }
-      
+
       let bytesPerRow = pixelBuffer.bytesPerRow
       let height = pixelBuffer.height
       let width = pixelBuffer.width
-      
+
       guard texture.width == width, texture.height == height else { throw Error.wrongSize }
-      
+
       texture.getBytes(
         baseAddress,
         bytesPerRow: bytesPerRow,
         from: MTLRegionMake2D(0, 0, width, height),
         mipmapLevel: 0
       )
-      
+
       guard !isEmpty(baseAddress, size: bytesPerRow * height) else {
         throw PixelBufferProducer.Error.emptySource
       }
     }
   }
-  
+
   func stopWriting() {
     guard Thread.isMainThread else { return DispatchQueue.main.sync(execute: stopWriting) }
     recordableLayer.onStopRecording()
   }
-  
+
   func isEmpty(_ buffer: UnsafeMutableRawPointer, size: Int) -> Bool {
     if emptyBufferSize != size || emptyBuffer == nil {
       emptyBufferSize = size
       emptyBuffer.map({ free($0) })
       emptyBuffer = calloc(size, 1)
     }
-    
+
     guard let emptyBuffer = emptyBuffer else { return false }
     return memcmp(buffer, emptyBuffer, size) == 0
   }

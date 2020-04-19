@@ -27,40 +27,40 @@ import Foundation
 import AVFoundation
 
 enum PixelBufferProducerError: Swift.Error {
-  
+
   case lockBaseAddress(errorCode: CVReturn)
-  
+
   case getBaseAddress
-  
+
   case emptySource
-  
+
   case unlockBaseAddress(errorCode: CVReturn)
-  
+
   case wrongSize
 }
 
 protocol PixelBufferProducer {
-  
+
   typealias Error = PixelBufferProducerError
-  
+
   var recommendedVideoSettings: [String: Any] { get }
-  
+
   var recommendedPixelBufferAttributes: [String: Any] { get }
-  
+
   var transform: CGAffineTransform { get }
-  
+
   var context: CIContext { get }
-  
+
   func startWriting()
-  
+
   func writeIn(pixelBuffer: inout CVPixelBuffer) throws
-  
+
   func stopWriting()
 }
 
 extension PixelBufferProducer {
-  
+
   func startWriting() { }
-  
+
   func stopWriting() { }
 }

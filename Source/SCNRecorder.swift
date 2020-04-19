@@ -34,15 +34,15 @@ public extension SCNRecorder {
 }
 
 public final class SCNRecorder: NSObject {
-    
+
   weak var delegate: AnyObject?
-  
+
   let internalRecorder: InternalRecorder
-  
+
   let audioAdapter: AudioAdapter
-  
+
   let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
-  
+
   public init(_ recordableView: RecordableView) throws {
     self.internalRecorder = try InternalRecorder(recordableView, queue: queue)
     self.audioAdapter = AudioAdapter(queue: queue) { [internalRecorder] in
@@ -52,18 +52,18 @@ public final class SCNRecorder: NSObject {
 }
 
 public extension SCNRecorder {
-  
+
   static let defaultTimeScale: CMTimeScale = InternalRecorder.defaultTimeScale
-  
+
   var filters: [Filter] {
     get { internalRecorder.filters.value }
     set { internalRecorder.filters.value = newValue }
   }
-  
+
   /// Generic recorder error
   /// Should be used for debug purpose only
   var error: Property<Swift.Error?> { return internalRecorder.error }
-  
+
   func makeVideoRecording(
     to url: URL,
     fileType: AVFileType = .mov,
@@ -75,7 +75,7 @@ public extension SCNRecorder {
       timeScale: timeScale
     )
   }
-  
+
   func takePhoto(
     scale: CGFloat = UIScreen.main.scale,
     orientation: UIImage.Orientation = .up,
@@ -83,11 +83,11 @@ public extension SCNRecorder {
   ) {
     internalRecorder.takePhoto(scale: scale, orientation: orientation, completionHandler: handler)
   }
-  
+
   func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
     internalRecorder.takeCoreImage(completionHandler: handler)
   }
-  
+
   func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
     internalRecorder.takePixelBuffer(completionHandler: handler)
   }
@@ -95,12 +95,12 @@ public extension SCNRecorder {
 
 // MARK: - SCNSceneRendererDelegate
 extension SCNRecorder: SCNSceneRendererDelegate {
-  
+
   var sceneViewDelegate: SCNSceneRendererDelegate? {
     get { delegate as? SCNSceneRendererDelegate }
     set { delegate = newValue }
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -108,7 +108,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
   ) {
     sceneViewDelegate?.renderer?(renderer, updateAtTime: time)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -116,7 +116,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
   ) {
     sceneViewDelegate?.renderer?(renderer, didApplyAnimationsAtTime: time)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -124,7 +124,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
   ) {
     sceneViewDelegate?.renderer?(renderer, didSimulatePhysicsAtTime: time)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -132,7 +132,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
   ) {
     sceneViewDelegate?.renderer?(renderer, didApplyConstraintsAtTime: time)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -141,7 +141,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
   ) {
     sceneViewDelegate?.renderer?(renderer, willRenderScene: scene, atTime: time)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -155,12 +155,12 @@ extension SCNRecorder: SCNSceneRendererDelegate {
 
 // MARK: - ARSCNViewDelegate
 extension SCNRecorder: ARSCNViewDelegate {
-  
+
   var arSceneViewDelegate: ARSCNViewDelegate? {
     get { delegate as? ARSCNViewDelegate }
     set { delegate = newValue }
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -168,7 +168,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) -> SCNNode? {
     return arSceneViewDelegate?.renderer?(renderer, nodeFor: anchor) ?? SCNNode(geometry: nil)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -177,7 +177,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.renderer?(renderer, didAdd: node, for: anchor)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -186,7 +186,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.renderer?(renderer, willUpdate: node, for: anchor)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -195,7 +195,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.renderer?(renderer, didUpdate: node, for: anchor)
   }
-  
+
   @objc
   public func renderer(
     _ renderer: SCNSceneRenderer,
@@ -204,8 +204,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.renderer?(renderer, didRemove: node, for: anchor)
   }
-  
-  
+
   // MARK: ARSessionObserver
   @objc
   public func session(
@@ -214,7 +213,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.session?(session, didFailWithError: error)
   }
-  
+
   @objc
   public func session(
     _ session: ARSession,
@@ -222,21 +221,21 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) {
     arSceneViewDelegate?.session?(session, cameraDidChangeTrackingState: camera)
   }
-  
+
   @objc
   public func sessionWasInterrupted(
     _ session: ARSession
   ) {
     arSceneViewDelegate?.sessionWasInterrupted?(session)
   }
-  
+
   @objc
   public func sessionInterruptionEnded(
     _ session: ARSession
   ) {
     arSceneViewDelegate?.sessionInterruptionEnded?(session)
   }
-  
+
   @available(iOS 11.3, *)
   @objc
   public func sessionShouldAttemptRelocalization(
@@ -244,7 +243,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   ) -> Bool {
     return arSceneViewDelegate?.sessionShouldAttemptRelocalization?(session) ?? false
   }
-  
+
   @objc
   public func session(
     _ session: ARSession,
@@ -253,7 +252,7 @@ extension SCNRecorder: ARSCNViewDelegate {
     arSceneViewDelegate?.session?(session, didOutputAudioSampleBuffer: audioSampleBuffer)
     internalRecorder.produceAudioSampleBuffer(audioSampleBuffer)
   }
-  
+
   #if compiler(>=5.1)
   @available(iOS 13.0, *)
   @objc

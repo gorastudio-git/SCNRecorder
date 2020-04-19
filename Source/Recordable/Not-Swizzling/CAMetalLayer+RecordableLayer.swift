@@ -33,67 +33,67 @@ private var lastDrawableKey: UInt8 = 0
 private var isRecordingKey: UInt8 = 0
 
 extension CAMetalLayer: RecordableLayer {
-  
+
   static let swizzleNextDrawableImplementation: Void = {
       let aClass: AnyClass = CAMetalLayer.self
-    
+
       guard let originalMethod = class_getInstanceMethod(aClass, #selector(nextDrawable)),
             let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_nextDrawable))
       else { return }
-      
+
       method_exchangeImplementations(originalMethod, swizzledMethod)
   }()
-  
+
   static let swizzleSetFramebufferOnlyImplementation: Void = {
       let aClass: AnyClass = CAMetalLayer.self
-  
+
       guard let originalMethod = class_getInstanceMethod(aClass, #selector(setter: framebufferOnly)),
             let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_setFramebufferOnly))
       else { return }
-  
+
       method_exchangeImplementations(originalMethod, swizzledMethod)
   }()
-  
+
   static func swizzle() {
     _ = swizzleNextDrawableImplementation
     _ = swizzleSetFramebufferOnlyImplementation
   }
-  
+
   var lastFramebufferOnly: Bool {
     get { objc_getAssociatedObject(self, &lastFramebufferOnlyKey) as? Bool ?? framebufferOnly }
     set { objc_setAssociatedObject(self, &lastFramebufferOnlyKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
   }
-  
+
   public var lastDrawable: CAMetalDrawable? {
     get { objc_getAssociatedObject(self, &lastDrawableKey) as? CAMetalDrawable }
     set { objc_setAssociatedObject(self, &lastDrawableKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
   }
-  
+
   var isRecording: Bool {
     get { objc_getAssociatedObject(self, &isRecordingKey) as? Bool ?? false }
     set { objc_setAssociatedObject(self, &isRecordingKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
   }
-  
+
   public func prepareForRecording() { CAMetalLayer.swizzle() }
-  
+
   public func onStartRecording() {
     guard !isRecording else { return }
     lastFramebufferOnly = framebufferOnly
     framebufferOnly = false
     isRecording = true
   }
-  
+
   public func onStopRecording() {
     guard isRecording else { return }
     isRecording = false
     framebufferOnly = lastFramebufferOnly
   }
-  
+
   @objc dynamic func swizzled_nextDrawable() -> CAMetalDrawable? {
     lastDrawable = swizzled_nextDrawable()
     return lastDrawable
   }
-  
+
   @objc dynamic func swizzled_setFramebufferOnly(_ framebufferOnly: Bool) {
     if isRecording { lastFramebufferOnly = framebufferOnly }
     else { swizzled_setFramebufferOnly(framebufferOnly) }

@@ -34,24 +34,24 @@ public enum FilterError: Swift.Error {
 }
 
 public protocol Filter {
-  
+
   typealias Error = FilterError
-  
+
   typealias Composite = CompositeFilter
-  
+
   typealias Geometry = GeometryFilter
-  
+
   typealias Watermark = WatermarkFilter
-  
+
   var name: String { get }
-  
+
   var inputKeys: [String] { get }
-  
+
   func makeCIFilter(for image: CIImage) throws -> CIFilter
 }
 
 public extension Filter {
-  
+
   func swapped() throws -> Filter {
     guard inputKeys.contains(kCIInputBackgroundImageKey) else {
       throw Error.notApplicable(key: kCIInputBackgroundImageKey)
@@ -61,7 +61,7 @@ public extension Filter {
 }
 
 extension CIFilter: Filter {
-  
+
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     guard let copiedFilter = copy() as? CIFilter else { throw Error.copy }
     try copiedFilter.setImage(image)

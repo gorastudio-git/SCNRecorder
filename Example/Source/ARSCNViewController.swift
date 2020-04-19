@@ -23,7 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import UIKit
 import SceneKit
 import ARKit
@@ -31,25 +30,27 @@ import SCNRecorder
 import AVKit
 
 class ARSCNViewController: ViewController {
-  
+
+  // swiftlint:disable force_cast
   var arSceneView: ARSCNView { return sceneView as! ARSCNView }
-  
+  // swiftlint:enable force_cast
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+
     // Create a session configuration
     let configuration = ARWorldTrackingConfiguration()
-    
+
     // We want to record audio as well
     configuration.providesAudioData = true
-    
+
     // Run the view's session
     arSceneView.session.run(configuration)
   }
-  
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
+
     // Pause the view's session
     arSceneView.session.pause()
   }

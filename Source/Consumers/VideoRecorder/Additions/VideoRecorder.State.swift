@@ -27,7 +27,7 @@ import Foundation
 import AVFoundation
 
 extension VideoRecorder {
-  
+
   /// Finite-State Machine
   enum State {
     case ready
@@ -38,7 +38,7 @@ extension VideoRecorder {
     case canceled
     case finished
     case failed(error: Swift.Error)
-    
+
     var isFinal: Bool {
       switch self {
       case .ready,
@@ -53,7 +53,7 @@ extension VideoRecorder {
         return true
       }
     }
-    
+
     var recordingState: SCNVideoRecording.State {
       switch self {
       case .ready: return .ready
@@ -65,7 +65,7 @@ extension VideoRecorder {
       case .failed(let error): return .failed(error)
       }
     }
-    
+
     func resume(_ videoRecorder: VideoRecorder) -> State {
       switch self {
 
@@ -85,7 +85,7 @@ extension VideoRecorder {
         return self
       }
     }
-    
+
     func pause(_ videoRecorder: VideoRecorder) -> State {
       switch  self {
 
@@ -104,7 +104,7 @@ extension VideoRecorder {
         return self
       }
     }
-    
+
     func finish(_ videoRecorder: VideoRecorder, completionHandler handler: @escaping () -> Void) -> State {
       switch self {
 
@@ -125,7 +125,7 @@ extension VideoRecorder {
         return self
       }
     }
-    
+
     func cancel(_ videoRecorder: VideoRecorder) -> State {
       switch  self {
 
@@ -144,7 +144,7 @@ extension VideoRecorder {
         return self
       }
     }
-    
+
     func appendPixelBuffer(
       _ pixelBuffer: CVPixelBuffer,
       at time: TimeInterval,
@@ -153,7 +153,7 @@ extension VideoRecorder {
       do { return try _appendPixelBuffer(pixelBuffer, at: time, to: videoRecorder) }
       catch { return .failed(error: error) }
     }
-    
+
     func appendAudioSampleBuffer(
       _ audioSampleBuffer: CMSampleBuffer,
       to videoRecorder: VideoRecorder

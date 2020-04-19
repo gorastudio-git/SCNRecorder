@@ -27,7 +27,7 @@ import Foundation
 import UIKit
 
 final class ImageRecorder {
-  
+
   static func takeUIImage(
     scale: CGFloat,
     orientation: UIImage.Orientation,
@@ -39,7 +39,7 @@ final class ImageRecorder {
       handler($0, UIImage(cgImage: $1, scale: scale, orientation: orientation))
     }
   }
-  
+
   static func takeCGImage(
     transform: CGAffineTransform,
     context: CIContext,
@@ -49,7 +49,7 @@ final class ImageRecorder {
       handler($0, context.createCGImage($1, from: $1.extent)!)
     }
   }
-  
+
   static func takeCIImage(
     transform: CGAffineTransform,
     context: CIContext,
@@ -59,7 +59,7 @@ final class ImageRecorder {
       handler($0, CIImage(cvPixelBuffer: $1))
     }
   }
-  
+
   static func takePixelBuffer(
     transform: CGAffineTransform,
     context: CIContext,
@@ -71,9 +71,9 @@ final class ImageRecorder {
       completionHandler: handler
     )
   }
-  
+
   var handler: ((ImageRecorder, CVPixelBuffer) -> Void)?
-  
+
   init(
     transform: CGAffineTransform,
     context: CIContext,
@@ -93,7 +93,7 @@ final class ImageRecorder {
           using: context
         )
       }
-      
+
       handler(imageRecorder, pixelBuffer)
       self.handler = nil
     }
@@ -101,7 +101,7 @@ final class ImageRecorder {
 }
 
 extension ImageRecorder: PixelBufferConsumer {
-  
+
   func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval) {
     handler?(self, pixelBuffer)
   }

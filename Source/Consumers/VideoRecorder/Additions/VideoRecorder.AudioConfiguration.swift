@@ -23,7 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import Foundation
 import AVFoundation
 
@@ -33,9 +32,9 @@ extension VideoRecorder {
 
     final class Builder {
 
-      var audioSettings: [String: Any]? = nil
+      var audioSettings: [String: Any]?
 
-      var audioSourceFormatHint: CMFormatDescription? = nil
+      var audioSourceFormatHint: CMFormatDescription?
 
       func build() -> AudioConfiguration {
         return AudioConfiguration(
@@ -50,4 +49,3 @@ extension VideoRecorder {
     let audioSourceFormatHint: CMFormatDescription?
   }
 }
-

@@ -23,7 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import Foundation
 import AVFoundation
 
@@ -36,7 +35,7 @@ extension VideoRecorder {
     init(
       input: VideoInput,
       timeScale: CMTimeScale,
-      sourcePixelBufferAttributes: [String : Any]? = nil
+      sourcePixelBufferAttributes: [String: Any]? = nil
     ) {
       self.timeScale = timeScale
       super.init(

@@ -29,24 +29,24 @@ import AVFoundation
 final class VideoRecorder {
 
   let assetWriter: AssetWriter
-  
+
   let pixelBufferAdaptor: PixelBufferAdaptor
-  
+
   let audioInput: AudioInput
 
   let queue: DispatchQueue
-  
+
   var state: State {
     didSet {
       recording?.state.value = state.recordingState
       if state.isFinal { onFinalState(self) }
     }
   }
-  
+
   var duration: TimeInterval = 0.0 {
     didSet { recording?.duration.value = duration }
   }
-  
+
   var lastSeconds: TimeInterval = 0.0
 
   var onFinalState: (VideoRecorder) -> Void = { _ in }
@@ -54,7 +54,7 @@ final class VideoRecorder {
   weak var recording: Recording? {
     didSet { recording?.state.value = state.recordingState }
   }
-  
+
   init(
     url: URL,
     fileType: AVFileType,
@@ -79,29 +79,29 @@ final class VideoRecorder {
     self.queue = queue
     self.state = .ready
   }
-  
+
   deinit { state = state.cancel(self) }
 }
 
 extension VideoRecorder {
-  
+
   func startSession(at seconds: TimeInterval) {
     lastSeconds = seconds
     assetWriter.startSession(at: seconds)
   }
-  
+
   func endSession(at seconds: TimeInterval) {
     assetWriter.endSession(at: seconds)
   }
-  
+
   func finishWriting(completionHandler handler: @escaping () -> Void) {
     assetWriter.finishWriting(completionHandler: handler)
   }
-  
+
   func cancelWriting() {
     assetWriter.cancelWriting()
   }
-  
+
   func append(_ pixelBuffer: CVPixelBuffer, withSeconds seconds: TimeInterval) throws {
     guard pixelBufferAdaptor.assetWriterInput.isReadyForMoreMediaData else { return }
     guard pixelBufferAdaptor.append(pixelBuffer, at: seconds) else {
@@ -111,7 +111,7 @@ extension VideoRecorder {
     duration += seconds - lastSeconds
     lastSeconds = seconds
   }
-  
+
   func append(_ sampleBuffer: CMSampleBuffer) throws {
     guard audioInput.isReadyForMoreMediaData else { return }
     guard audioInput.append(sampleBuffer) else {
@@ -122,7 +122,7 @@ extension VideoRecorder {
 }
 
 extension VideoRecorder {
-  
+
   func makeRecording() -> Recording {
     let recording = Recording(videoRecorder: self)
     self.recording = recording
@@ -142,19 +142,19 @@ extension VideoRecorder {
 
 // - MARK: Lifecycle
 extension VideoRecorder {
-  
+
   func resume() {
     queue.async { [weak self] in self?.unsafeResume() }
   }
-  
+
   func pause() {
     queue.async { [weak self] in self?.unsafePause() }
   }
-  
+
   func finish(completionHandler handler: @escaping () -> Void) {
     queue.async { [weak self] in self?.unsafeFinish(completionHandler: handler) }
   }
-  
+
   func cancel() {
     queue.async { [weak self] in self?.unsafeCancel() }
   }
@@ -176,7 +176,7 @@ private extension VideoRecorder {
 
 // - MARK: PixelBufferConsumer
 extension VideoRecorder: PixelBufferConsumer {
-  
+
   func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval) {
     state = state.appendPixelBuffer(pixelBuffer, at: time, to: self)
   }
@@ -184,7 +184,7 @@ extension VideoRecorder: PixelBufferConsumer {
 
 // - MARK: AudioSampleBufferConsumer
 extension VideoRecorder: AudioSampleBufferConsumer {
-  
+
   func appendAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer) {
     state = state.appendAudioSampleBuffer(audioSampleBuffer, to: self)
   }

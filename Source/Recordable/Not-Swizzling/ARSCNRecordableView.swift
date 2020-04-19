@@ -29,14 +29,14 @@ import ARKit
 #if DO_NOT_SWIZZLE
 
 open class ARSCNRecordableView: ARSCNView, RecordableView {
-  
+
   #if !targetEnvironment(simulator)
   override open class var layerClass: AnyClass {
     guard super.layerClass is CAMetalLayer.Type else { return super.layerClass }
     return CAMetalRecordableLayer.self
   }
   #endif // !targetEnvironment(simulator)
-  
+
   open override weak var delegate: ARSCNViewDelegate? {
     get { super.delegate }
     set {

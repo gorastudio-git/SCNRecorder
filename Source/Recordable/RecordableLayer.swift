@@ -29,31 +29,31 @@ import UIKit
 #if !targetEnvironment(simulator)
 
 public protocol RecordableLayer: AnyObject {
-  
+
   var lastDrawable: CAMetalDrawable? { get }
-  
+
   var device: MTLDevice? { get }
 
   var pixelFormat: MTLPixelFormat { get }
-  
+
   var drawableSize: CGSize { get }
 
   /// Is called before starting any recording
   /// Might be used for any preparation
   /// Might be called several times
   func prepareForRecording()
-  
+
   func onStartRecording()
-  
+
   func onStopRecording()
 }
 
 extension RecordableLayer {
-  
+
   func prepareForRecording() { }
-  
+
   func onStartRecording() { }
-  
+
   func onStopRecording() { }
 }
 

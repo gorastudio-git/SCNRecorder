@@ -1,0 +1,7 @@
+disabled_rules:
+  - statement_position
+  - nesting
+included:
+  - Source
+  - ../Source
+reporter: "xcode"

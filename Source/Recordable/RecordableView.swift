@@ -28,25 +28,25 @@ import UIKit
 import SceneKit
 
 public protocol RecordableView: Recordable {
-  
+
   #if !targetEnvironment(simulator)
   var recordableLayer: RecordableLayer? { get }
   #endif // !targetEnvironment(simulator)
-  
+
   var eaglContext: EAGLContext? { get }
-  
+
   var api: API { get }
 }
 
 public extension RecordableView where Self: UIView {
-  
+
   #if !targetEnvironment(simulator)
   var recordableLayer: RecordableLayer? { return layer as? RecordableLayer }
   #endif // !targetEnvironment(simulator)
 }
 
 public extension RecordableView where Self: SCNView {
-  
+
   var api: API {
     switch renderingAPI {
     case .metal: return .metal

@@ -26,6 +26,6 @@
 import Foundation
 
 protocol PixelBufferConsumer: AnyObject {
-  
+
   func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval)
 }

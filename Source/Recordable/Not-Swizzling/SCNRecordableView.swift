@@ -29,7 +29,7 @@ import SceneKit
 #if DO_NOT_SWIZZLE
 
 open class SCNRecordableView: SCNView, RecordableView {
-  
+
   #if !targetEnvironment(simulator)
   override open class var layerClass: AnyClass {
     guard super.layerClass is CAMetalLayer.Type else { return super.layerClass }

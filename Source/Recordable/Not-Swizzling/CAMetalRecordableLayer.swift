@@ -31,32 +31,32 @@ import UIKit
 #if DO_NOT_SWIZZLE
 
 open class CAMetalRecordableLayer: CAMetalLayer, RecordableLayer {
-  
+
   lazy var lastFramebufferOnly: Bool = framebufferOnly
-  
+
   var recording: Bool = false
-  
+
   open var lastDrawable: CAMetalDrawable?
-  
+
   open override var framebufferOnly: Bool {
     get { super.framebufferOnly }
     set { if recording { lastFramebufferOnly = newValue } else { super.framebufferOnly = newValue } }
   }
-  
+
   open override func nextDrawable() -> CAMetalDrawable? {
     lastDrawable = super.nextDrawable()
     return lastDrawable
   }
-  
+
   open func prepareForRecording() { }
-  
+
   open func onStartRecording() {
     guard !recording else { return }
     lastFramebufferOnly = framebufferOnly
     framebufferOnly = false
     recording = true
   }
-  
+
   open func onStopRecording() {
     guard recording else { return }
     recording = false

@@ -27,31 +27,31 @@ import Foundation
 import AVFoundation
 
 extension VideoRecorder {
-  
+
   final class Recording: SCNVideoRecording {
-    
+
     let duration = Property<TimeInterval>(0.0)
-    
+
     var state = Property(SCNVideoRecording.State.preparing)
-        
+
     let videoRecorder: VideoRecorder
-    
+
     var url: URL { videoRecorder.url }
-    
+
     var fileType: AVFileType { videoRecorder.fileType }
-    
+
     var timeScale: CMTimeScale { videoRecorder.timeScale }
-    
+
     init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
-    
+
     func resume() { videoRecorder.resume() }
-    
+
     func pause() { videoRecorder.pause() }
-    
+
     func finish(completionHandler handler: @escaping (_ recording: SCNVideoRecordingOptions) -> Void) {
       videoRecorder.finish { handler(self) }
     }
-    
+
     func cancel() { videoRecorder.cancel() }
   }
 }

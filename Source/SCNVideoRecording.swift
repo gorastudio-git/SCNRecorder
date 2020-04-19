@@ -38,32 +38,32 @@ public protocol SCNVideoRecordingOptions: AnyObject {
 }
 
 public protocol SCNVideoRecording: SCNVideoRecordingOptions {
-  
+
   typealias State = SCNVideoRecordingState
 
   var state: Property<State> { get }
 
   func resume()
-  
+
   func pause()
-  
+
   func finish(completionHandler handler: @escaping (_ options: SCNVideoRecordingOptions) -> Void)
-  
+
   func cancel()
 }
 
 public enum SCNVideoRecordingState {
-  
+
   case ready
-  
+
   case preparing
-  
+
   case recording
-  
+
   case paused
-  
+
   case canceled
-  
+
   case finished
 
   case failed(_ error: Swift.Error)

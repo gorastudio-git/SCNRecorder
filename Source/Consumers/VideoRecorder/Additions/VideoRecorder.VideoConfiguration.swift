@@ -23,7 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import Foundation
 import AVFoundation
 
@@ -35,7 +34,7 @@ extension VideoRecorder {
 
       var videoSettings: [String: Any] = [:]
 
-      var videoSourceFormatHint: CMFormatDescription? = nil
+      var videoSourceFormatHint: CMFormatDescription?
 
       var transform: CGAffineTransform = .identity
 
@@ -55,4 +54,3 @@ extension VideoRecorder {
     let transform: CGAffineTransform
   }
 }
-

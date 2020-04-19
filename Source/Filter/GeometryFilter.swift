@@ -27,16 +27,16 @@ import Foundation
 
 ///CICategoryGeometryAdjustment
 public enum GeometryFilter {
-  
+
   ///CIAffineTransform
   case affineTransform(transform: CGAffineTransform)
-  
+
   ///CICrop
   case crop(rectangle: CGRect)
-  
+
   ///CILanczosScaleTransform
   case lanczosScale(scale: CGFloat, aspectRatio: CGFloat)
-  
+
   ///CIPerspectiveCorrection
   case perspectiveCorrection(
     topLeft: CGPoint,
@@ -44,7 +44,7 @@ public enum GeometryFilter {
     bottomRight: CGPoint,
     bottomLeft: CGPoint
   )
-  
+
   ///CIPerspectiveTransform
   case perspectiveTransform(
     topLeft: CGPoint,
@@ -52,7 +52,7 @@ public enum GeometryFilter {
     bottomRight: CGPoint,
     bottomLeft: CGPoint
   )
-  
+
   ///CIPerspectiveTransformWithExtent
   case perspectiveTransformWithExtent(
     extent: CGRect,
@@ -61,24 +61,24 @@ public enum GeometryFilter {
     bottomRight: CGPoint,
     bottomLeft: CGPoint
   )
-  
+
   ///CIStraightenFilter
   case strainghten(angle: CGFloat)
-  
+
   func makeCIFilter() throws -> CIFilter {
     guard let filter = CIFilter(name: name) else { throw Error.notFound }
-    
+
     switch self {
     case .affineTransform(let transform):
       try filter.setAffineTransform(transform)
-      
+
     case .crop(let rectangle):
       try filter.setRectangle(rectangle)
-      
+
     case .lanczosScale(let scale, let aspectRatio):
       try filter.setScale(scale)
       try filter.setAspectRatio(aspectRatio)
-      
+
     case .perspectiveTransformWithExtent(
       let extent,
       let topLeft,
@@ -88,26 +88,26 @@ public enum GeometryFilter {
     ):
       try filter.setExtent(extent)
       fallthrough
-      
+
     case .perspectiveCorrection(let topLeft, let topRight, let bottomRight, let bottomLeft),
          .perspectiveTransform(let topLeft, let topRight, let bottomRight, let bottomLeft):
       try filter.setTopLeft(topLeft)
       try filter.setTopRight(topRight)
       try filter.setBottomRight(bottomRight)
       try filter.setBottomLeft(bottomLeft)
-      
+
     case .strainghten(let angle):
       try filter.setAngle(angle)
     }
-    
+
     return filter
   }
 }
 
 extension GeometryFilter: Filter {
-  
+
   public var inputKeys: [String] { return (try? makeCIFilter().inputKeys) ?? [] }
-  
+
   public var name: String {
     switch self {
     case .affineTransform: return "CIAffineTransform"
@@ -119,7 +119,7 @@ extension GeometryFilter: Filter {
     case .strainghten: return "CIStraightenFilter"
     }
   }
-  
+
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     let filter = try makeCIFilter()
     try filter.setImage(image)

@@ -27,91 +27,91 @@ import Foundation
 
 ///CICategoryCompositeOperation
 public enum CompositeFilter {
-  
+
   ///CIAdditionCompositing
   case addition(backgroundImage: CIImage)
-  
+
   ///CIColorBlendMode
   case colorBlend(backgroundImage: CIImage)
-  
+
   ///CIColorBurnBlendMode
   case colorBurnBlend(backgroundImage: CIImage)
-  
+
   ///CIColorDodgeBlendMode
   case colorDodgeBlend(backgroundImage: CIImage)
-  
+
   ///CIDarkenBlendMode
   case darkenBlend(backgroundImage: CIImage)
-  
+
   ///CIDifferenceBlendMode
   case differenceBlend(backgroundImage: CIImage)
-  
+
   ///CIDivideBlendMode
   case divideBlend(backgroundImage: CIImage)
-  
+
   ///CIExclusionBlendMode
   case exclusionBlend(backgroundImage: CIImage)
-  
+
   ///CIHardLightBlendMode
   case hardLightBlend(backgroundImage: CIImage)
-  
+
   ///CIHueBlendMode
   case hueBlend(backgroundImage: CIImage)
-  
+
   ///CILightenBlendMode
   case lightenBlend(backgroundImage: CIImage)
-  
+
   ///CILinearBurnBlendMode
   case linearBurnBlend(backgroundImage: CIImage)
-  
+
   ///CILinearDodgeBlendMode
   case linearDodgeBlend(backgroundImage: CIImage)
-  
+
   ///CILuminosityBlendMode
   case luminosityBlend(backgroundImage: CIImage)
-  
+
   ///CIMaximumCompositing
   case maximum(backgroundImage: CIImage)
-  
+
   ///CIMinimumCompositing
   case minimum(backgroundImage: CIImage)
-  
+
   ///CIMultiplyBlendMode
   case multiplyBlend(backgroundImage: CIImage)
-  
+
   ///CIMultiplyCompositing
   case multiply(backgroundImage: CIImage)
-  
+
   ///CIOverlayBlendMode
   case overlay(backgroundImage: CIImage)
-  
+
   ///CIPinLightBlendMode
   case pinLightBlend(backgroundImage: CIImage)
-  
+
   ///CISaturationBlendMode
   case saturationBlend(backgroundImage: CIImage)
-  
+
   ///CIScreenBlendMode
   case screenBlend(backgroundImage: CIImage)
-  
+
   ///CISoftLightBlendMode
   case softLightBlend(backgroundImage: CIImage)
-  
+
   ///CISourceAtopCompositing
   case sourceAtop(backgroundImage: CIImage)
-  
+
   ///CISourceInCompositing
   case sourceIn(backgroundImage: CIImage)
-  
+
   ///CISourceOutCompositing
   case sourceOut(backgroundImage: CIImage)
-  
+
   ///CISourceOverCompositing
   case sourceOver(backgroundImage: CIImage)
-  
+
   ///CISubtractBlendMode
   case subtractBlend(backgroundImage: CIImage)
-  
+
   var backgroundImage: CIImage {
     switch self {
     case .addition(let backgroundImage),
@@ -145,7 +145,7 @@ public enum CompositeFilter {
       return backgroundImage
     }
   }
-  
+
   func makeCIFilter() throws -> CIFilter {
     guard let filter = CIFilter(name: name) else { throw Error.notFound }
     try filter.setBackgroundImage(backgroundImage)
@@ -154,7 +154,8 @@ public enum CompositeFilter {
 }
 
 public extension CompositeFilter {
-  
+
+  // swiftlint:disable cyclomatic_complexity
   mutating func setBackgroundImage(_ backgroundImage: CIImage) {
     switch self {
     case .addition: self = .addition(backgroundImage: backgroundImage)
@@ -187,12 +188,13 @@ public extension CompositeFilter {
     case .subtractBlend: self = .subtractBlend(backgroundImage: backgroundImage)
     }
   }
+  // swiftlint:enable cyclomatic_complexity
 }
 
 extension CompositeFilter: Filter {
-  
+
   public var inputKeys: [String] { return (try? makeCIFilter())?.inputKeys ?? [] }
-  
+
   public var name: String {
     switch self {
     case .addition: return "CIAdditionCompositing"
@@ -225,7 +227,7 @@ extension CompositeFilter: Filter {
     case .subtractBlend: return "CISubtractBlendMode"
     }
   }
-  
+
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     let filter = try makeCIFilter()
     try filter.setImage(image)

@@ -29,19 +29,19 @@ import SceneKit
 #if !DO_NOT_SWIZZLE
 
 extension SCNView: RecordableView {
-  
+
   static let swizzleSetDelegateImplementation: Void = {
     let aClass: AnyClass = SCNView.self
-    
+
     guard let originalMethod = class_getInstanceMethod(aClass, #selector(setter: delegate)),
           let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_setDelegate))
     else { return }
-    
+
     method_exchangeImplementations(originalMethod, swizzledMethod)
   }()
-  
+
   static func swizzle() { _ = swizzleSetDelegateImplementation }
-  
+
   @objc dynamic func swizzled_setDelegate(_ delegate: SCNSceneRendererDelegate) {
     if let recorder = recorder { recorder.delegate = delegate }
     else { swizzled_setDelegate(delegate) }

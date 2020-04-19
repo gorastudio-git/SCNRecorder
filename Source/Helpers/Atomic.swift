@@ -26,34 +26,36 @@
 import Foundation
 
 final class Atomic<Value> {
-  
+
   let lock = UnfairLock()
-  
+
+  // swiftlint:disable identifier_name
   var _value: Value
-  
+  // swiftlint:enable identifier_name
+
   var value: Value {
     get { withValue { $0 } }
     set { swap(newValue) }
   }
-  
+
   init(_ value: Value) { _value = value }
-  
+
   @discardableResult
   func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
     lock.lock()
     defer { lock.unlock() }
-    
+
     return try action(&_value)
   }
-  
+
   @discardableResult
   func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
     lock.lock()
     defer { lock.unlock() }
-    
+
     return try action(_value)
   }
-  
+
   @discardableResult
   func swap(_ newValue: Value) -> Value {
     return modify { (value: inout Value) in

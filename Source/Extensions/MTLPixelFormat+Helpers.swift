@@ -29,13 +29,15 @@ import AVFoundation
 #if !targetEnvironment(simulator)
 
 extension MTLPixelFormat {
-  
+
   // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
+  // swiftlint:disable identifier_name
   static let undocumented_bgr10_xr_srgb = MTLPixelFormat(rawValue: 551) ?? .bgr10_xr_srgb
-  
+  // swiftlint:enable identifier_name
+
   var colorSpace: CGColorSpace {
     var colorSpace: CGColorSpace?
-    
+
     switch self {
     case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
       colorSpace = CGColorSpace(name: CGColorSpace.extendedLinearSRGB)
@@ -44,9 +46,9 @@ extension MTLPixelFormat {
     }
     return colorSpace ?? CGColorSpaceCreateDeviceRGB()
   }
-  
+
   var iccData: CFData? { return colorSpace.copyICCData() }
-  
+
   var videoColorProperties: [String: String] {
     switch self {
     case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
@@ -59,7 +61,7 @@ extension MTLPixelFormat {
                AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2 ]
     }
   }
-  
+
   var pixelFormatType: OSType {
     switch self {
     case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:

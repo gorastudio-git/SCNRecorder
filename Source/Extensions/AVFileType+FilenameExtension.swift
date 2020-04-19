@@ -28,7 +28,7 @@ import AVFoundation
 import MobileCoreServices
 
 extension AVFileType {
-  
+
   var fileExtension: String {
     guard let fileExtension = UTTypeCopyPreferredTagWithClass(
       self as CFString,

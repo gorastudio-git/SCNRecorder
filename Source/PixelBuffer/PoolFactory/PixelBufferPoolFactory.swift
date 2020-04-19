@@ -27,9 +27,9 @@ import Foundation
 import AVFoundation
 
 final class PixelBufferPoolFactory {
-  
+
   let pixelBufferPools = Atomic([String: CVPixelBufferPool]())
-  
+
   func makeWithAttributes(
     _ attributes: [String: Any]
   ) throws -> CVPixelBufferPool {
@@ -41,7 +41,7 @@ final class PixelBufferPoolFactory {
       return pixelBufferPool
     }
   }
-  
+
   func makeKeyWithAttributes(
     _ attributes: [String: Any]
   ) -> String {

@@ -28,44 +28,44 @@ import AVFoundation
 import SceneKit
 
 extension InternalRecorder {
-  
+
   enum Error: Swift.Error {
-    
+
     case recordableLayer
-    
+
     case eaglContext
-    
+
     case metalSimulator
-    
+
     case pixelBuffer(errorCode: CVReturn)
-    
+
     case pixelBufferFactory
-    
+
     case unknownAPI
   }
 }
 
 final class InternalRecorder {
-  
+
   public static let defaultTimeScale: CMTimeScale = 600
-    
+
   let queue: DispatchQueue
-          
+
   var filters = Atomic([Filter]())
-  
+
   var pixelBufferConsumers = Atomic([PixelBufferConsumer]())
-  
+
   var audioSampleBufferConsumers = Atomic([AudioSampleBufferConsumer]())
-  
+
   let pixelBufferProducer: PixelBufferProducer
-  
+
   let pixelBufferPoolFactory = PixelBufferPoolFactory()
-  
+
   let error = Property<Swift.Error?>(nil)
-    
+
   public init(_ recordableView: RecordableView, queue: DispatchQueue) throws {
     self.queue = queue
-    
+
     switch recordableView.api {
     case .metal:
       #if !targetEnvironment(simulator)
@@ -104,17 +104,17 @@ extension InternalRecorder {
       timeScale: timeScale,
       queue: queue
     )
-    
+
     videoRecorder.onFinalState = { [weak self] in
       self?.removePixelBufferConsumer($0)
       self?.removeAudioSampleBufferConsumer($0)
     }
-    
+
     addPixelBufferConsumer(videoRecorder)
     addAudioSampleBufferConsumer(videoRecorder)
     return videoRecorder.makeRecording()
   }
-  
+
   func takePhoto(
     scale: CGFloat,
     orientation: UIImage.Orientation,
@@ -133,7 +133,7 @@ extension InternalRecorder {
       )
     )
   }
-  
+
   func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
     addPixelBufferConsumer(
       ImageRecorder.takeCIImage(
@@ -146,7 +146,7 @@ extension InternalRecorder {
       )
     )
   }
-  
+
   func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
     addPixelBufferConsumer(
       ImageRecorder.takePixelBuffer(
@@ -162,32 +162,32 @@ extension InternalRecorder {
 }
 
 extension InternalRecorder {
-  
+
   func addPixelBufferConsumer(_ pixelBufferConsumer: PixelBufferConsumer) {
     pixelBufferConsumers.modify {
       $0.append(pixelBufferConsumer)
       if $0.count == 1 { pixelBufferProducer.startWriting() }
     }
   }
-  
+
   func removePixelBufferConsumer(_ pixelBufferConsumer: PixelBufferConsumer) {
     pixelBufferConsumers.modify {
       $0 = $0.filter { $0 !== pixelBufferConsumer }
       if $0.count == 0 { pixelBufferProducer.stopWriting() }
     }
   }
-  
+
   func addAudioSampleBufferConsumer(_ audioSampleBufferConsumer: AudioSampleBufferConsumer) {
     audioSampleBufferConsumers.modify { $0.append(audioSampleBufferConsumer)}
   }
-  
+
   func removeAudioSampleBufferConsumer(_ audioSampleBufferConsumer: AudioSampleBufferConsumer) {
     audioSampleBufferConsumers.modify { $0 = $0.filter { $0 !== audioSampleBufferConsumer }}
   }
 }
 
 extension InternalRecorder {
-  
+
   func producePixelBuffer(at time: TimeInterval) {
     guard !pixelBufferConsumers.value.isEmpty else { return }
 
@@ -220,7 +220,7 @@ extension InternalRecorder {
       self.error.value = error
     }
   }
-  
+
   func produceAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer) {
     guard !audioSampleBufferConsumers.value.isEmpty else { return }
 

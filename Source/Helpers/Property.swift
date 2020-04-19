@@ -26,10 +26,10 @@
 import Foundation
 
 public final class Property<Value> {
-  
+
   public internal(set) var value: Value { didSet { observer?(value) } }
-  
+
   public var observer: ((Value) -> Void)?
-  
+
   init(_ value: Value) { self.value = value }
 }

@@ -27,13 +27,13 @@ import Foundation
 import CoreImage
 
 extension CIContext {
-  
+
   func render(_ image: CIImage, to pixelBuffer: CVPixelBuffer) {
     let attachments = CVBufferGetAttachments(pixelBuffer, .shouldPropagate)
     let colorSpace = attachments.map {
       CVImageBufferCreateColorSpaceFromAttachments($0)
     }??.takeRetainedValue()
-    
+
     render(image, to: pixelBuffer, bounds: image.extent, colorSpace: colorSpace)
   }
 }

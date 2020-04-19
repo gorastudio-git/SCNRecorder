@@ -27,21 +27,21 @@ import Foundation
 import AVFoundation
 
 extension CVPixelBuffer {
-  
+
   enum Error: Swift.Error {
     case creation(errorCode: CVReturn)
     case lockBaseAddress(errorCode: CVReturn)
     case unlockBaseAddress(errorCode: CVReturn)
   }
-    
+
   var baseAddress: UnsafeMutableRawPointer? { return CVPixelBufferGetBaseAddress(self) }
-  
+
   var bytesPerRow: Int { return CVPixelBufferGetBytesPerRow(self) }
-  
+
   var width: Int { return CVPixelBufferGetWidth(self) }
-  
+
   var height: Int { return CVPixelBufferGetHeight(self) }
-  
+
   var bytesCount: Int { return bytesPerRow * height }
 
   static func makeWithPixelBufferPool(_ pixelBufferPool: CVPixelBufferPool) throws -> CVPixelBuffer {
@@ -56,39 +56,39 @@ extension CVPixelBuffer {
     else { throw Error.creation(errorCode: errorCode) }
     return pixelBuffer
   }
-  
+
   func locked(readOnly: Bool = false, handler: (CVPixelBuffer) throws -> Void) throws {
     try lock(readOnly: readOnly)
     defer { try? unlock(readOnly: readOnly) }
     try handler(self)
   }
-  
+
   func lock(readOnly: Bool = false) throws {
     let errorCode = CVPixelBufferLockBaseAddress(self, readOnly ? [.readOnly] : [])
     guard errorCode == kCVReturnSuccess else { throw Error.lockBaseAddress(errorCode: errorCode) }
   }
-  
+
   func unlock(readOnly: Bool = false) throws {
     let errorCode = CVPixelBufferUnlockBaseAddress(self, readOnly ? [.readOnly] : [])
     guard errorCode == kCVReturnSuccess else { throw Error.unlockBaseAddress(errorCode: errorCode) }
   }
-  
+
   func applyFilters(_ filters: [Filter], using context: CIContext) throws {
     guard !filters.isEmpty else { return }
-    
+
     var image = CIImage(cvPixelBuffer: self)
     for filter in filters {
       let ciFilter = try filter.makeCIFilter(for: image)
       guard let outputImage = ciFilter.outputImage else { throw Filter.Error.noOutput }
       image = outputImage
     }
-    
+
     context.render(image, to: self)
   }
-  
+
   func copyWithPixelBufferPool(_ pixelBufferPool: CVPixelBufferPool) throws -> CVPixelBuffer {
     let copyPixelBuffer = try CVPixelBuffer.makeWithPixelBufferPool(pixelBufferPool)
-    
+
     try locked(readOnly: true) { (pixelBuffer) in
       try copyPixelBuffer.locked { (copyPixelBuffer) in
         memcpy(copyPixelBuffer.baseAddress, pixelBuffer.baseAddress, pixelBuffer.bytesCount)

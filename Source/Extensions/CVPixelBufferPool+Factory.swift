@@ -27,22 +27,22 @@ import Foundation
 import AVFoundation
 
 extension CVPixelBufferPool {
-  
+
   enum Error: Swift.Error {
     case zeroWidth
     case zeroHeight
     case creation(errorCode: CVReturn)
   }
-  
+
   static func makeWithAttributes(_ attributes: [String: Any]) throws -> CVPixelBufferPool {
     guard attributes[kCVPixelBufferWidthKey as String] as? Int ?? 0 > 0 else {
       throw Error.zeroWidth
     }
-    
+
     guard attributes[kCVPixelBufferHeightKey as String] as? Int ?? 0 > 0 else {
        throw Error.zeroHeight
     }
-    
+
     var unmanagedPixelBufferPool: CVPixelBufferPool?
     let errorCode = CVPixelBufferPoolCreate(
       nil,

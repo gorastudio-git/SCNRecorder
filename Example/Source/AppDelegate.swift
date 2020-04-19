@@ -23,19 +23,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
+
   var window: UIWindow?
-  
+
   func application(
     _ application: UIApplication,
-    willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+    willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
-    
+
     if #available(iOS 13.0, *) {
       #if compiler(>=5.1)
       let appearance = UINavigationBarAppearance()
@@ -47,8 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       UINavigationBar.appearance().shadowImage = UIImage()
       UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
     }
-    
+
     return true
   }
 }
-
