@@ -34,17 +34,27 @@ extension VideoRecorder {
     case preparing
     case recording(seconds: TimeInterval)
     case paused
+
     case canceled
     case finished
+    case failed(error: Swift.Error)
     
     var isFinal: Bool {
       switch self {
-      case .ready, .preparing, .recording, .paused: return false
-      case .canceled, .finished: return true
+      case .ready,
+           .preparing,
+           .recording,
+           .paused:
+        return false
+
+      case .canceled,
+           .finished,
+           .failed:
+        return true
       }
     }
     
-    var recordingState: VideoRecording.State {
+    var recordingState: SCNVideoRecording.State {
       switch self {
       case .ready: return .ready
       case .preparing: return .preparing
@@ -52,37 +62,65 @@ extension VideoRecorder {
       case .paused: return .paused
       case .canceled: return .canceled
       case .finished: return .finished
+      case .failed(let error): return .failed(error)
       }
     }
     
-    func resume(_ videoRecorder: VideoRecorder) throws -> State {
+    func resume(_ videoRecorder: VideoRecorder) -> State {
       switch self {
-      case .ready, .preparing: return .preparing
-      case .recording(let seconds): return .recording(seconds: seconds)
-      case .paused: return .preparing
-      case .canceled, .finished: throw Error.wrongState
+
+      case .ready,
+           .preparing:
+        return .preparing
+
+      case .recording(let seconds):
+        return .recording(seconds: seconds)
+
+      case .paused:
+        return .preparing
+
+      case .canceled,
+           .finished,
+           .failed:
+        return self
       }
     }
     
     func pause(_ videoRecorder: VideoRecorder) -> State {
       switch  self {
-      case .ready, .preparing: return .ready
-      case .paused, .canceled, .finished: return self
+
+      case .ready,
+           .preparing:
+        return .ready
+
       case .recording(let seconds):
         videoRecorder.endSession(at: seconds)
         return .paused
+
+      case .paused,
+           .canceled,
+           .finished,
+           .failed:
+        return self
       }
     }
     
     func finish(_ videoRecorder: VideoRecorder, completionHandler handler: @escaping () -> Void) -> State {
       switch self {
-      case .ready, .preparing:
+
+      case .ready,
+           .preparing:
         handler()
         return .canceled
-      case .recording, .paused:
+
+      case .recording,
+           .paused:
         videoRecorder.finishWriting(completionHandler: handler)
         return .finished
-      case .canceled, .finished:
+
+      case .canceled,
+           .finished,
+           .failed:
         handler()
         return self
       }
@@ -90,11 +128,20 @@ extension VideoRecorder {
     
     func cancel(_ videoRecorder: VideoRecorder) -> State {
       switch  self {
-      case .ready, .preparing: return .canceled
-      case .canceled, .finished: return self
-      case .recording, .paused:
+
+      case .ready,
+           .preparing:
+        return .canceled
+
+      case .recording,
+           .paused:
         videoRecorder.cancelWriting()
         return .canceled
+
+      case .canceled,
+           .finished,
+           .failed:
+        return self
       }
     }
     
@@ -103,28 +150,68 @@ extension VideoRecorder {
       at time: TimeInterval,
       to videoRecorder: VideoRecorder
     ) -> State {
-      switch self {
-      case .preparing:
-        videoRecorder.startSession(at: time)
-        videoRecorder.append(pixelBuffer, withSeconds: time)
-        return .recording(seconds: time)
-      case .recording:
-        videoRecorder.append(pixelBuffer, withSeconds: time)
-        return .recording(seconds: time)
-      case .ready, .paused, .canceled, .finished: return self
-      }
+      do { return try _appendPixelBuffer(pixelBuffer, at: time, to: videoRecorder) }
+      catch { return .failed(error: error) }
     }
     
     func appendAudioSampleBuffer(
       _ audioSampleBuffer: CMSampleBuffer,
       to videoRecorder: VideoRecorder
     ) -> State {
-      switch self {
-      case .recording(let seconds):
-        videoRecorder.append(audioSampleBuffer)
-        return .recording(seconds: seconds)
-      case .ready, .preparing, .paused, .canceled, .finished: return self
-      }
+      do { return try _appendAudioSampleBuffer(audioSampleBuffer, to: videoRecorder) }
+      catch { return .failed(error: error) }
+    }
+  }
+}
+
+private extension VideoRecorder.State {
+
+  func _appendPixelBuffer(
+    _ pixelBuffer: CVPixelBuffer,
+    at time: TimeInterval,
+    to videoRecorder: VideoRecorder
+  ) throws -> VideoRecorder.State {
+    switch self {
+
+    case .ready:
+      return self
+
+    case .preparing:
+      videoRecorder.startSession(at: time)
+      try videoRecorder.append(pixelBuffer, withSeconds: time)
+      return .recording(seconds: time)
+
+    case .recording:
+      try videoRecorder.append(pixelBuffer, withSeconds: time)
+      return .recording(seconds: time)
+
+    case .paused,
+         .canceled,
+         .finished,
+         .failed:
+      return self
+    }
+  }
+
+  func _appendAudioSampleBuffer(
+    _ audioSampleBuffer: CMSampleBuffer,
+    to videoRecorder: VideoRecorder
+  ) throws -> VideoRecorder.State {
+    switch self {
+
+    case .ready,
+         .preparing:
+      return self
+
+    case .recording(let seconds):
+      try videoRecorder.append(audioSampleBuffer)
+      return .recording(seconds: seconds)
+
+    case .paused,
+         .canceled,
+         .finished,
+         .failed:
+      return self
     }
   }
 }

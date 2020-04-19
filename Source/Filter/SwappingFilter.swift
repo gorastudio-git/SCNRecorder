@@ -40,7 +40,7 @@ extension SwappingFilter: Filter {
     let ciFilter = try filter.makeCIFilter(for: image)
     
     guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
-      else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
+    else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
     
     try ciFilter.setImage(backgroundImage)
     try ciFilter.setBackgroundImage(image)

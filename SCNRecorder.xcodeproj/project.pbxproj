@@ -40,7 +40,7 @@
 		BE4C34122236B6E0007AE1EE /* ImageRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34112236B6E0007AE1EE /* ImageRecorder.swift */; };
 		BE4C34142236B6F0007AE1EE /* VideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34132236B6F0007AE1EE /* VideoRecorder.swift */; };
 		BE4C34162236B6FE007AE1EE /* VideoRecorder.Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34152236B6FE007AE1EE /* VideoRecorder.Recording.swift */; };
-		BE4C341A2236B718007AE1EE /* VideoRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34192236B718007AE1EE /* VideoRecording.swift */; };
+		BE4C341A2236B718007AE1EE /* SCNVideoRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34192236B718007AE1EE /* SCNVideoRecording.swift */; };
 		BE4C341E2236B73D007AE1EE /* VideoRecorder.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C341D2236B73D007AE1EE /* VideoRecorder.State.swift */; };
 		BE4C34242236BAB2007AE1EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34232236BAB2007AE1EE /* README.md */; };
 		BE4C34262236C034007AE1EE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34252236C034007AE1EE /* LICENSE */; };
@@ -49,6 +49,14 @@
 		BE7BE39723BF91F300DB38B6 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE09E6AB23B94D900021FC32 /* CVPixelBuffer+Helpers.swift */; };
 		BE86D1C122395F8D0047914A /* RecordableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE86D1C022395F8D0047914A /* RecordableView.swift */; };
 		BE874AD223BFE79E00C0365E /* AVFileType+FilenameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE874AD123BFE79E00C0365E /* AVFileType+FilenameExtension.swift */; };
+		BE92DD27244C7CC800FC12FA /* VideoRecorder.VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD26244C7CC800FC12FA /* VideoRecorder.VideoConfiguration.swift */; };
+		BE92DD29244C7CE200FC12FA /* VideoRecorder.AudioConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD28244C7CE200FC12FA /* VideoRecorder.AudioConfiguration.swift */; };
+		BE92DD2D244C819400FC12FA /* VideoRecorder.PixelBufferAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD2C244C819400FC12FA /* VideoRecorder.PixelBufferAdaptor.swift */; };
+		BE92DD2F244C835100FC12FA /* VideoRecorder.AssterWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD2E244C835100FC12FA /* VideoRecorder.AssterWriter.swift */; };
+		BE92DD32244C845200FC12FA /* TimeScalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD31244C845200FC12FA /* TimeScalable.swift */; };
+		BE92DD35244C859A00FC12FA /* VideoRecorder.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD34244C859A00FC12FA /* VideoRecorder.Error.swift */; };
+		BE92DD37244C88EE00FC12FA /* VideoRecorder.AudioInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD36244C88EE00FC12FA /* VideoRecorder.AudioInput.swift */; };
+		BE92DD39244C890400FC12FA /* VideoRecorder.VideoInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92DD38244C890400FC12FA /* VideoRecorder.VideoInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,7 +96,7 @@
 		BE4C34112236B6E0007AE1EE /* ImageRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRecorder.swift; sourceTree = "<group>"; };
 		BE4C34132236B6F0007AE1EE /* VideoRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.swift; sourceTree = "<group>"; };
 		BE4C34152236B6FE007AE1EE /* VideoRecorder.Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.Recording.swift; sourceTree = "<group>"; };
-		BE4C34192236B718007AE1EE /* VideoRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecording.swift; sourceTree = "<group>"; };
+		BE4C34192236B718007AE1EE /* SCNVideoRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVideoRecording.swift; sourceTree = "<group>"; };
 		BE4C341D2236B73D007AE1EE /* VideoRecorder.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.State.swift; sourceTree = "<group>"; };
 		BE4C34232236BAB2007AE1EE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BE4C34252236C034007AE1EE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -96,6 +104,14 @@
 		BE7BE39523BF8FC500DB38B6 /* CIContext+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
 		BE86D1C022395F8D0047914A /* RecordableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordableView.swift; sourceTree = "<group>"; };
 		BE874AD123BFE79E00C0365E /* AVFileType+FilenameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVFileType+FilenameExtension.swift"; sourceTree = "<group>"; };
+		BE92DD26244C7CC800FC12FA /* VideoRecorder.VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.VideoConfiguration.swift; sourceTree = "<group>"; };
+		BE92DD28244C7CE200FC12FA /* VideoRecorder.AudioConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.AudioConfiguration.swift; sourceTree = "<group>"; };
+		BE92DD2C244C819400FC12FA /* VideoRecorder.PixelBufferAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.PixelBufferAdaptor.swift; sourceTree = "<group>"; };
+		BE92DD2E244C835100FC12FA /* VideoRecorder.AssterWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.AssterWriter.swift; sourceTree = "<group>"; };
+		BE92DD31244C845200FC12FA /* TimeScalable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeScalable.swift; sourceTree = "<group>"; };
+		BE92DD34244C859A00FC12FA /* VideoRecorder.Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.Error.swift; sourceTree = "<group>"; };
+		BE92DD36244C88EE00FC12FA /* VideoRecorder.AudioInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.AudioInput.swift; sourceTree = "<group>"; };
+		BE92DD38244C890400FC12FA /* VideoRecorder.VideoInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.VideoInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,14 +185,15 @@
 		BE4C33D22236A6BA007AE1EE /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BE4C34192236B718007AE1EE /* VideoRecording.swift */,
 				BE4C33DB2236A7AB007AE1EE /* SCNRecorder.swift */,
 				BE09E69923B910260021FC32 /* SCNRecorder.AudioAdapter.swift */,
+				BE4C34192236B718007AE1EE /* SCNVideoRecording.swift */,
 				BE86D1C222395FA60047914A /* Recordable */,
 				BE4C33FB2236B3F9007AE1EE /* InternalRecorder */,
 				BE4C34032236B5DD007AE1EE /* PixelBuffer */,
 				BE4C340A2236B657007AE1EE /* Consumers */,
 				BE4C33E22236A9BD007AE1EE /* Filter */,
+				BE92DD30244C842D00FC12FA /* Protocols */,
 				BE4C34002236B4A8007AE1EE /* Helpers */,
 				BE4C33EE2236B0C4007AE1EE /* Extensions */,
 				BE4C33D32236A6BA007AE1EE /* SCNRecorder.h */,
@@ -244,28 +261,27 @@
 			children = (
 				BE4C340B2236B66C007AE1EE /* PixelBufferConsumer.swift */,
 				BE4C340D2236B677007AE1EE /* AudioSampleBufferConsumer.swift */,
-				BE4C34102236B6C1007AE1EE /* Image */,
-				BE4C340F2236B6BA007AE1EE /* Video */,
+				BE4C34102236B6C1007AE1EE /* ImageRecorder */,
+				BE4C340F2236B6BA007AE1EE /* VideoRecorder */,
 			);
 			path = Consumers;
 			sourceTree = "<group>";
 		};
-		BE4C340F2236B6BA007AE1EE /* Video */ = {
+		BE4C340F2236B6BA007AE1EE /* VideoRecorder */ = {
 			isa = PBXGroup;
 			children = (
+				BE92DD33244C856B00FC12FA /* Additions */,
 				BE4C34132236B6F0007AE1EE /* VideoRecorder.swift */,
-				BE4C34152236B6FE007AE1EE /* VideoRecorder.Recording.swift */,
-				BE4C341D2236B73D007AE1EE /* VideoRecorder.State.swift */,
 			);
-			path = Video;
+			path = VideoRecorder;
 			sourceTree = "<group>";
 		};
-		BE4C34102236B6C1007AE1EE /* Image */ = {
+		BE4C34102236B6C1007AE1EE /* ImageRecorder */ = {
 			isa = PBXGroup;
 			children = (
 				BE4C34112236B6E0007AE1EE /* ImageRecorder.swift */,
 			);
-			path = Image;
+			path = ImageRecorder;
 			sourceTree = "<group>";
 		};
 		BE86D1C222395FA60047914A /* Recordable */ = {
@@ -279,6 +295,30 @@
 				BE09E6C523BAB7160021FC32 /* Not-Swizzling */,
 			);
 			path = Recordable;
+			sourceTree = "<group>";
+		};
+		BE92DD30244C842D00FC12FA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BE92DD31244C845200FC12FA /* TimeScalable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		BE92DD33244C856B00FC12FA /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				BE92DD28244C7CE200FC12FA /* VideoRecorder.AudioConfiguration.swift */,
+				BE92DD36244C88EE00FC12FA /* VideoRecorder.AudioInput.swift */,
+				BE92DD2E244C835100FC12FA /* VideoRecorder.AssterWriter.swift */,
+				BE92DD34244C859A00FC12FA /* VideoRecorder.Error.swift */,
+				BE92DD2C244C819400FC12FA /* VideoRecorder.PixelBufferAdaptor.swift */,
+				BE4C34152236B6FE007AE1EE /* VideoRecorder.Recording.swift */,
+				BE4C341D2236B73D007AE1EE /* VideoRecorder.State.swift */,
+				BE92DD26244C7CC800FC12FA /* VideoRecorder.VideoConfiguration.swift */,
+				BE92DD38244C890400FC12FA /* VideoRecorder.VideoInput.swift */,
+			);
+			path = Additions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,14 +404,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE09E6C923BABA700021FC32 /* SCNView+Recordable.swift in Sources */,
+				BE92DD2D244C819400FC12FA /* VideoRecorder.PixelBufferAdaptor.swift in Sources */,
 				BE4C340C2236B66C007AE1EE /* PixelBufferConsumer.swift in Sources */,
-				BE4C341A2236B718007AE1EE /* VideoRecording.swift in Sources */,
+				BE4C341A2236B718007AE1EE /* SCNVideoRecording.swift in Sources */,
+				BE92DD35244C859A00FC12FA /* VideoRecorder.Error.swift in Sources */,
 				BE4C33E52236A9D8007AE1EE /* Filter.swift in Sources */,
 				BE4C33DC2236A7AB007AE1EE /* SCNRecorder.swift in Sources */,
 				BE4C33EB2236AB88007AE1EE /* GeometryFilter.swift in Sources */,
+				BE92DD32244C845200FC12FA /* TimeScalable.swift in Sources */,
 				BE70C51E224641A500539893 /* MTLPixelFormat+Helpers.swift in Sources */,
 				BE09E69A23B910260021FC32 /* SCNRecorder.AudioAdapter.swift in Sources */,
 				BE4C341E2236B73D007AE1EE /* VideoRecorder.State.swift in Sources */,
+				BE92DD2F244C835100FC12FA /* VideoRecorder.AssterWriter.swift in Sources */,
 				BE4C33FD2236B412007AE1EE /* InternalRecorder.swift in Sources */,
 				BE09E6BD23BA83EB0021FC32 /* RecordableLayer.swift in Sources */,
 				BE4C33F02236B0E3007AE1EE /* AVCaptureSession+SCNRecorder.swift in Sources */,
@@ -383,8 +427,10 @@
 				BE7BE39623BF8FC500DB38B6 /* CIContext+Render.swift in Sources */,
 				BE874AD223BFE79E00C0365E /* AVFileType+FilenameExtension.swift in Sources */,
 				BE4C33F72236B22F007AE1EE /* ARSCNRecordableView.swift in Sources */,
+				BE92DD39244C890400FC12FA /* VideoRecorder.VideoInput.swift in Sources */,
 				BE4C33ED2236AB99007AE1EE /* WatermarkFilter.swift in Sources */,
 				BE4C33E72236AB6B007AE1EE /* SwappingFilter.swift in Sources */,
+				BE92DD37244C88EE00FC12FA /* VideoRecorder.AudioInput.swift in Sources */,
 				BE09E6C123BA8DC40021FC32 /* API.swift in Sources */,
 				BE09E69623B8FF9C0021FC32 /* Lock.swift in Sources */,
 				BE09E6C323BA94F80021FC32 /* Recordable.swift in Sources */,
@@ -395,6 +441,8 @@
 				BE4C33FA2236B326007AE1EE /* CAMetalRecordableLayer.swift in Sources */,
 				BE86D1C122395F8D0047914A /* RecordableView.swift in Sources */,
 				BE4C34142236B6F0007AE1EE /* VideoRecorder.swift in Sources */,
+				BE92DD27244C7CC800FC12FA /* VideoRecorder.VideoConfiguration.swift in Sources */,
+				BE92DD29244C7CE200FC12FA /* VideoRecorder.AudioConfiguration.swift in Sources */,
 				BE4C34122236B6E0007AE1EE /* ImageRecorder.swift in Sources */,
 				BE09E6B623BA76D20021FC32 /* CAMetalLayer+RecordableLayer.swift in Sources */,
 				BE09E6B423BA76570021FC32 /* SCNView+RecordableView.swift in Sources */,

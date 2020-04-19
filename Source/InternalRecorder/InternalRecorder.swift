@@ -88,17 +88,20 @@ extension InternalRecorder {
     to url: URL,
     fileType: AVFileType = .mov,
     timeScale: CMTimeScale = defaultTimeScale
-  ) throws -> VideoRecording {
-    
+  ) throws -> SCNVideoRecording {
+
+    let videoConfiguration = VideoRecorder.VideoConfiguration.Builder()
+    videoConfiguration.videoSettings = pixelBufferProducer.recommendedVideoSettings
+    videoConfiguration.transform = pixelBufferProducer.transform
+
+    let audioConfiguration = VideoRecorder.AudioConfiguration.Builder()
+
     let videoRecorder = try VideoRecorder(
       url: url,
       fileType: fileType,
-      videoSettings: pixelBufferProducer.recommendedVideoSettings,
-      videoSourceFormatHint: nil,
-      audioSettings: [:],
-      audioSourceFormatHint: nil,
+      videoConfiguration: videoConfiguration.build(),
+      audioConfiguration: audioConfiguration.build(),
       timeScale: timeScale,
-      transform: pixelBufferProducer.transform,
       queue: queue
     )
     

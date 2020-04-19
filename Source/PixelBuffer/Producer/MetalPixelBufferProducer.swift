@@ -38,7 +38,7 @@ extension MetalPixelBufferProducer {
 final class MetalPixelBufferProducer: PixelBufferProducer {
   
   var recommendedVideoSettings: [String : Any] {
-    return [
+    [
       AVVideoWidthKey: recordableLayer.drawableSize.width,
       AVVideoHeightKey: recordableLayer.drawableSize.height,
       AVVideoCodecKey: AVVideoCodecType.h264,

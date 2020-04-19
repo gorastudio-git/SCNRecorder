@@ -38,13 +38,29 @@ public enum GeometryFilter {
   case lanczosScale(scale: CGFloat, aspectRatio: CGFloat)
   
   ///CIPerspectiveCorrection
-  case perspectiveCorrection(topLeft: CGPoint, topRight: CGPoint, bottomRight: CGPoint, bottomLeft: CGPoint)
+  case perspectiveCorrection(
+    topLeft: CGPoint,
+    topRight: CGPoint,
+    bottomRight: CGPoint,
+    bottomLeft: CGPoint
+  )
   
   ///CIPerspectiveTransform
-  case perspectiveTransform(topLeft: CGPoint, topRight: CGPoint, bottomRight: CGPoint, bottomLeft: CGPoint)
+  case perspectiveTransform(
+    topLeft: CGPoint,
+    topRight: CGPoint,
+    bottomRight: CGPoint,
+    bottomLeft: CGPoint
+  )
   
   ///CIPerspectiveTransformWithExtent
-  case perspectiveTransformWithExtent(extent: CGRect, topLeft: CGPoint, topRight: CGPoint, bottomRight: CGPoint, bottomLeft: CGPoint)
+  case perspectiveTransformWithExtent(
+    extent: CGRect,
+    topLeft: CGPoint,
+    topRight: CGPoint,
+    bottomRight: CGPoint,
+    bottomLeft: CGPoint
+  )
   
   ///CIStraightenFilter
   case strainghten(angle: CGFloat)
@@ -69,7 +85,7 @@ public enum GeometryFilter {
       let topRight,
       let bottomRight,
       let bottomLeft
-      ):
+    ):
       try filter.setExtent(extent)
       fallthrough
       

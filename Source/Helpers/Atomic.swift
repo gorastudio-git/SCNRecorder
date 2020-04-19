@@ -32,7 +32,7 @@ final class Atomic<Value> {
   var _value: Value
   
   var value: Value {
-    get { return withValue { $0 } }
+    get { withValue { $0 } }
     set { swap(newValue) }
   }
   

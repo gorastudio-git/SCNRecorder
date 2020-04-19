@@ -1,8 +1,8 @@
 //
-//  Filter.swift
+//  VideoRecorder.VideoConfiguration.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 19.04.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,48 +23,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+
 import Foundation
+import AVFoundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
+extension VideoRecorder {
 
-public protocol Filter {
-  
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
+  struct VideoConfiguration {
 
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
+    final class Builder {
+
+      var videoSettings: [String: Any] = [:]
+
+      var videoSourceFormatHint: CMFormatDescription? = nil
+
+      var transform: CGAffineTransform = .identity
+
+      func build() -> VideoConfiguration {
+        return VideoConfiguration(
+          videoSettings: videoSettings,
+          videoSourceFormatHint: videoSourceFormatHint,
+          transform: transform
+        )
+      }
     }
-    return SwappingFilter(filter: self)
+
+    let videoSettings: [String: Any]
+
+    let videoSourceFormatHint: CMFormatDescription?
+
+    let transform: CGAffineTransform
   }
 }
 
-extension CIFilter: Filter {
-  
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else { throw Error.copy }
-    try copiedFilter.setImage(image)
-    return copiedFilter
-  }
-}

@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
 extension CVPixelBuffer {
   
@@ -58,14 +59,8 @@ extension CVPixelBuffer {
   
   func locked(readOnly: Bool = false, handler: (CVPixelBuffer) throws -> Void) throws {
     try lock(readOnly: readOnly)
-
-    do { try handler(self) }
-    catch {
-      try? unlock(readOnly: readOnly)
-      throw error
-    }
-    
-    try unlock(readOnly: readOnly)
+    defer { try? unlock(readOnly: readOnly) }
+    try handler(self)
   }
   
   func lock(readOnly: Bool = false) throws {

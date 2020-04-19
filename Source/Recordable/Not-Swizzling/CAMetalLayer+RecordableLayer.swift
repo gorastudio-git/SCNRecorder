@@ -60,17 +60,17 @@ extension CAMetalLayer: RecordableLayer {
   }
   
   var lastFramebufferOnly: Bool {
-    get { return objc_getAssociatedObject(self, &lastFramebufferOnlyKey) as? Bool ?? framebufferOnly }
+    get { objc_getAssociatedObject(self, &lastFramebufferOnlyKey) as? Bool ?? framebufferOnly }
     set { objc_setAssociatedObject(self, &lastFramebufferOnlyKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
   }
   
   public var lastDrawable: CAMetalDrawable? {
-    get { return objc_getAssociatedObject(self, &lastDrawableKey) as? CAMetalDrawable }
+    get { objc_getAssociatedObject(self, &lastDrawableKey) as? CAMetalDrawable }
     set { objc_setAssociatedObject(self, &lastDrawableKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
   }
   
   var isRecording: Bool {
-    get { return objc_getAssociatedObject(self, &isRecordingKey) as? Bool ?? false }
+    get { objc_getAssociatedObject(self, &isRecordingKey) as? Bool ?? false }
     set { objc_setAssociatedObject(self, &isRecordingKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
   }
   

@@ -38,7 +38,7 @@ open class ARSCNRecordableView: ARSCNView, RecordableView {
   #endif // !targetEnvironment(simulator)
   
   open override weak var delegate: ARSCNViewDelegate? {
-    get { return super.delegate }
+    get { super.delegate }
     set {
       guard let recorder = recorder else {
         super.delegate = newValue

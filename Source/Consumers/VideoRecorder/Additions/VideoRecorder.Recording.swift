@@ -1,5 +1,5 @@
 //
-//  Filter.swift
+//  VideoRecorder.Recording.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -24,47 +24,34 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum FilterError: Swift.Error {
-  case copy
-  case notFound
-  case notApplicable(key: String)
-  case notSpecified(key: String)
-  case noOutput
-}
-
-public protocol Filter {
+extension VideoRecorder {
   
-  typealias Error = FilterError
-  
-  typealias Composite = CompositeFilter
-  
-  typealias Geometry = GeometryFilter
-  
-  typealias Watermark = WatermarkFilter
-  
-  var name: String { get }
-  
-  var inputKeys: [String] { get }
-  
-  func makeCIFilter(for image: CIImage) throws -> CIFilter
-}
-
-public extension Filter {
-  
-  func swapped() throws -> Filter {
-    guard inputKeys.contains(kCIInputBackgroundImageKey) else {
-      throw Error.notApplicable(key: kCIInputBackgroundImageKey)
+  final class Recording: SCNVideoRecording {
+    
+    let duration = Property<TimeInterval>(0.0)
+    
+    var state = Property(SCNVideoRecording.State.preparing)
+        
+    let videoRecorder: VideoRecorder
+    
+    var url: URL { videoRecorder.url }
+    
+    var fileType: AVFileType { videoRecorder.fileType }
+    
+    var timeScale: CMTimeScale { videoRecorder.timeScale }
+    
+    init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
+    
+    func resume() { videoRecorder.resume() }
+    
+    func pause() { videoRecorder.pause() }
+    
+    func finish(completionHandler handler: @escaping (_ recording: SCNVideoRecordingOptions) -> Void) {
+      videoRecorder.finish { handler(self) }
     }
-    return SwappingFilter(filter: self)
-  }
-}
-
-extension CIFilter: Filter {
-  
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    guard let copiedFilter = copy() as? CIFilter else { throw Error.copy }
-    try copiedFilter.setImage(image)
-    return copiedFilter
+    
+    func cancel() { videoRecorder.cancel() }
   }
 }

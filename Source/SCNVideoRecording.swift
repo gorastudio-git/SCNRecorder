@@ -26,59 +26,33 @@
 import Foundation
 import AVFoundation
 
-public protocol VideoRecording: AnyObject {
-  
-  typealias State = VideoRecordingState
-  
+public protocol SCNVideoRecordingOptions: AnyObject {
+
   var url: URL { get }
-  
+
   var fileType: AVFileType { get }
-  
+
   var timeScale: CMTimeScale { get }
-  
+
   var duration: Property<TimeInterval> { get }
+}
+
+public protocol SCNVideoRecording: SCNVideoRecordingOptions {
   
+  typealias State = SCNVideoRecordingState
+
   var state: Property<State> { get }
-  
-  var error: Property<Swift.Error?> { get }
-  
+
   func resume()
   
   func pause()
   
-  func finish(completionHandler handler: @escaping (_ recording: VideoRecording) -> Void)
+  func finish(completionHandler handler: @escaping (_ options: SCNVideoRecordingOptions) -> Void)
   
   func cancel()
-  
-  @available(*, deprecated, renamed: "duration.observer")
-  var onDurationChanged: ((_ duration: TimeInterval) -> Void)? { get set }
-  
-  @available(*, deprecated, renamed: "state.observer")
-  var onStateChanged: ((_ state: State) -> Void)? { get set }
-  
-  @available(*, deprecated, renamed: "error.observer")
-  var onError: ((_ error: Swift.Error) -> Void)? { get set }
 }
 
-extension VideoRecording {
-
-  var onDurationChanged: ((_ duration: TimeInterval) -> Void)? {
-    get { return duration.observer }
-    set { duration.observer = newValue }
-  }
-  
-  var onStateChanged: ((_ state: State) -> Void)? {
-    get { return state.observer }
-    set { state.observer = newValue }
-  }
-
-  var onError: ((_ error: Swift.Error) -> Void)? {
-    get { return error.observer }
-    set { error.observer = { $0.map { newValue?($0) } } }
-  }
-}
-
-public enum VideoRecordingState {
+public enum SCNVideoRecordingState {
   
   case ready
   
@@ -91,4 +65,6 @@ public enum VideoRecordingState {
   case canceled
   
   case finished
+
+  case failed(_ error: Swift.Error)
 }

@@ -39,7 +39,7 @@ open class CAMetalRecordableLayer: CAMetalLayer, RecordableLayer {
   open var lastDrawable: CAMetalDrawable?
   
   open override var framebufferOnly: Bool {
-    get { return super.framebufferOnly }
+    get { super.framebufferOnly }
     set { if recording { lastFramebufferOnly = newValue } else { super.framebufferOnly = newValue } }
   }
   

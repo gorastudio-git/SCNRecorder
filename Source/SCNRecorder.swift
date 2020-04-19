@@ -56,7 +56,7 @@ public extension SCNRecorder {
   static let defaultTimeScale: CMTimeScale = InternalRecorder.defaultTimeScale
   
   var filters: [Filter] {
-    get { return internalRecorder.filters.value }
+    get { internalRecorder.filters.value }
     set { internalRecorder.filters.value = newValue }
   }
   
@@ -68,7 +68,7 @@ public extension SCNRecorder {
     to url: URL,
     fileType: AVFileType = .mov,
     timeScale: CMTimeScale = defaultTimeScale
-  ) throws -> VideoRecording {
+  ) throws -> SCNVideoRecording {
     return try internalRecorder.makeVideoRecording(
       to: url,
       fileType: fileType,
@@ -97,7 +97,7 @@ public extension SCNRecorder {
 extension SCNRecorder: SCNSceneRendererDelegate {
   
   var sceneViewDelegate: SCNSceneRendererDelegate? {
-    get { return delegate as? SCNSceneRendererDelegate }
+    get { delegate as? SCNSceneRendererDelegate }
     set { delegate = newValue }
   }
   
@@ -157,7 +157,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
 extension SCNRecorder: ARSCNViewDelegate {
   
   var arSceneViewDelegate: ARSCNViewDelegate? {
-    get { return delegate as? ARSCNViewDelegate }
+    get { delegate as? ARSCNViewDelegate }
     set { delegate = newValue }
   }
   

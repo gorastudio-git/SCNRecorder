@@ -37,7 +37,7 @@ public protocol Recordable: AnyObject {
   
   var recorder: SCNRecorder? { get set }
   
-  var videoRecording: VideoRecording? { get set }
+  var videoRecording: SCNVideoRecording? { get set }
 }
 
 public extension Recordable {
@@ -63,7 +63,7 @@ public extension Recordable {
   func startVideoRecording(
     fileType: AVFileType = .mov,
     timeScale: CMTimeScale = SCNRecorder.defaultTimeScale
-  ) throws -> VideoRecording {
+  ) throws -> SCNVideoRecording {
     return try startVideoRecording(
       to: FileManager.default.temporaryDirectory.appendingPathComponent(
         "\(UUID().uuidString).\(fileType.fileExtension)",
@@ -79,7 +79,7 @@ public extension Recordable {
     to url: URL,
     fileType: AVFileType = .mov,
     timeScale: CMTimeScale = SCNRecorder.defaultTimeScale
-  ) throws -> VideoRecording {
+  ) throws -> SCNVideoRecording {
     guard videoRecording == nil else { throw RecordableError.alreadyStarted }
     
     try prepareForRecording()
@@ -96,9 +96,9 @@ public extension Recordable {
     return videoRecording
   }
   
-  func finishVideoRecording(completionHandler handler: @escaping (VideoRecording) -> Void) {
-    videoRecording?.finish { videoRecording in
-      DispatchQueue.main.async { handler(videoRecording) }
+  func finishVideoRecording(completionHandler handler: @escaping (SCNVideoRecordingOptions) -> Void) {
+    videoRecording?.finish { videoRecordingOptions in
+      DispatchQueue.main.async { handler(videoRecordingOptions) }
     }
     videoRecording = nil
   }

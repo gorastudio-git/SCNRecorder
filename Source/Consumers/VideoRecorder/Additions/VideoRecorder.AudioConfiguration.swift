@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.Recording.swift
+//  VideoRecorder.AudioConfiguration.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 19.04.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,37 +23,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+
 import Foundation
 import AVFoundation
 
 extension VideoRecorder {
-  
-  final class Recording: VideoRecording {
-    
-    let duration = Property<TimeInterval>(0.0)
-    
-    var state = Property(VideoRecording.State.preparing)
-    
-    var error = Property<Swift.Error?>(nil)
-    
-    let videoRecorder: VideoRecorder
-    
-    var url: URL { return videoRecorder.url }
-    
-    var fileType: AVFileType { return videoRecorder.fileType }
-    
-    var timeScale: CMTimeScale { return videoRecorder.timeScale }
-    
-    init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
-    
-    func resume() { videoRecorder.resume { [weak self] (error) in self?.error.value = error } }
-    
-    func pause() { videoRecorder.pause() }
-    
-    func finish(completionHandler handler: @escaping (_ recording: VideoRecording) -> Void) {
-      videoRecorder.finish { handler(self) }
+
+  struct AudioConfiguration {
+
+    final class Builder {
+
+      var audioSettings: [String: Any]? = nil
+
+      var audioSourceFormatHint: CMFormatDescription? = nil
+
+      func build() -> AudioConfiguration {
+        return AudioConfiguration(
+          audioSettings: audioSettings,
+          audioSourceFormatHint: audioSourceFormatHint
+        )
+      }
     }
-    
-    func cancel() { videoRecorder.cancel() }
+
+    let audioSettings: [String: Any]?
+
+    let audioSourceFormatHint: CMFormatDescription?
   }
 }
+
