@@ -189,47 +189,41 @@ extension InternalRecorder {
 extension InternalRecorder {
   
   func producePixelBuffer(at time: TimeInterval) {
+    guard !pixelBufferConsumers.value.isEmpty else { return }
+
     do {
       let attributes = pixelBufferProducer.recommendedPixelBufferAttributes
       let pixelBufferPool = try pixelBufferPoolFactory.makeWithAttributes(attributes)
-      
-      guard !pixelBufferConsumers.value.isEmpty else { return }
-      
       var pixelBuffer = try CVPixelBuffer.makeWithPixelBufferPool(pixelBufferPool)
       try pixelBufferProducer.writeIn(pixelBuffer: &pixelBuffer)
-      
+      try pixelBuffer.applyFilters(filters.value, using: pixelBufferProducer.context)
+
       queue.async { [weak self] in
         guard let this = self else { return }
-        do {
-          try pixelBuffer.applyFilters(
-            this.filters.value,
-            using: this.pixelBufferProducer.context
-          )
-          
-          let consumers = this.pixelBufferConsumers.value
-          let shouldCopy = consumers.count > 1
-                    
-          consumers.forEach {
-            do {
-              $0.appendPixelBuffer(
-                shouldCopy ? try pixelBuffer.copyWithPixelBufferPool(pixelBufferPool) : pixelBuffer,
-                at: time
-              )
-            }
-            catch {
-              this.error.value = error
-            }
+        let consumers = this.pixelBufferConsumers.value
+        let shouldCopy = consumers.count > 1
+
+        consumers.forEach {
+          do {
+            $0.appendPixelBuffer(
+              shouldCopy ? try pixelBuffer.copyWithPixelBufferPool(pixelBufferPool) : pixelBuffer,
+              at: time
+            )
           }
-        }
-        catch {
-          this.error.value = error
+          catch {
+            this.error.value = error
+          }
         }
       }
     }
-    catch { self.error.value = error }
+    catch {
+      self.error.value = error
+    }
   }
   
   func produceAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer) {
+    guard !audioSampleBufferConsumers.value.isEmpty else { return }
+
     queue.async { [weak self] in
       guard let this = self else { return }
       this.audioSampleBufferConsumers.value.forEach {
