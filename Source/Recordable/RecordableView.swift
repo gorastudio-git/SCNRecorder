@@ -41,7 +41,7 @@ public protocol RecordableView: Recordable {
 public extension RecordableView where Self: UIView {
 
   #if !targetEnvironment(simulator)
-  var recordableLayer: RecordableLayer? { return layer as? RecordableLayer }
+  var recordableLayer: RecordableLayer? { layer as? RecordableLayer }
   #endif // !targetEnvironment(simulator)
 }
 

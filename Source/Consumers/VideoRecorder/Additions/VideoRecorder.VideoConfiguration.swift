@@ -39,7 +39,7 @@ extension VideoRecorder {
       var transform: CGAffineTransform = .identity
 
       func build() -> VideoConfiguration {
-        return VideoConfiguration(
+        VideoConfiguration(
           videoSettings: videoSettings,
           videoSourceFormatHint: videoSourceFormatHint,
           transform: transform

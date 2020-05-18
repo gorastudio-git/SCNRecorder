@@ -34,15 +34,15 @@ extension CVPixelBuffer {
     case unlockBaseAddress(errorCode: CVReturn)
   }
 
-  var baseAddress: UnsafeMutableRawPointer? { return CVPixelBufferGetBaseAddress(self) }
+  var baseAddress: UnsafeMutableRawPointer? { CVPixelBufferGetBaseAddress(self) }
 
-  var bytesPerRow: Int { return CVPixelBufferGetBytesPerRow(self) }
+  var bytesPerRow: Int { CVPixelBufferGetBytesPerRow(self) }
 
-  var width: Int { return CVPixelBufferGetWidth(self) }
+  var width: Int { CVPixelBufferGetWidth(self) }
 
-  var height: Int { return CVPixelBufferGetHeight(self) }
+  var height: Int { CVPixelBufferGetHeight(self) }
 
-  var bytesCount: Int { return bytesPerRow * height }
+  var bytesCount: Int { bytesPerRow * height }
 
   static func makeWithPixelBufferPool(_ pixelBufferPool: CVPixelBufferPool) throws -> CVPixelBuffer {
     var unmanagedPixelBuffer: CVPixelBuffer?

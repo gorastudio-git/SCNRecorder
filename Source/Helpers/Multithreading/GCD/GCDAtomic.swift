@@ -1,8 +1,8 @@
 //
-//  SwappingFilter.swift
+//  GCDAtomic.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 17.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,26 +25,41 @@
 
 import Foundation
 
-struct SwappingFilter {
+@propertyWrapper
+final class GCDAtomic<Value>: Atomic {
 
-  let filter: Filter
-}
+  private var _wrappedValue: Value
 
-extension SwappingFilter: Filter {
+  let queue: DispatchQueue
 
-  public var name: String { filter.name }
+  var wrappedValue: Value {
+    get { value }
+    set { value = newValue }
+  }
 
-  public var inputKeys: [String] { filter.inputKeys }
+  var projectedValue: GCDAtomic<Value> { self }
 
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    let ciFilter = try filter.makeCIFilter(for: image)
+  init(wrappedValue: Value) {
+    self._wrappedValue = wrappedValue
+    self.queue = DispatchQueue(label: "\(type(of: self))", attributes: [.concurrent])
+  }
 
-    guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
-    else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
+  init(wrappedValue: Value, queue: DispatchQueue) {
+    self._wrappedValue = wrappedValue
+    self.queue = queue
+  }
 
-    try ciFilter.setImage(backgroundImage)
-    try ciFilter.setBackgroundImage(image)
+  @discardableResult
+  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
+    try queue.sync { try action(_wrappedValue) }
+  }
 
-    return ciFilter
+  @discardableResult
+  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+    try queue.sync(flags: .barrier) { try action(&_wrappedValue) }
+  }
+
+  func asyncModify(_ action: @escaping (inout Value) -> Void) {
+    queue.async(flags: .barrier) { action(&self._wrappedValue) }
   }
 }

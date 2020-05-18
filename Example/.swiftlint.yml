@@ -5,3 +5,8 @@ included:
   - Source
   - ../Source
 reporter: "xcode"
+
+identifier_name:
+  min_length: 1
+  allowed_symbols: ["_"]
+  

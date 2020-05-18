@@ -32,7 +32,7 @@ import AVKit
 class ARSCNViewController: ViewController {
 
   // swiftlint:disable force_cast
-  var arSceneView: ARSCNView { return sceneView as! ARSCNView }
+  var arSceneView: ARSCNView { sceneView as! ARSCNView }
   // swiftlint:enable force_cast
 
   override func viewWillAppear(_ animated: Bool) {

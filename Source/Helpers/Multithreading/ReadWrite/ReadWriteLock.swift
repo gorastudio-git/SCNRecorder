@@ -1,8 +1,8 @@
 //
-//  SwappingFilter.swift
+//  ReadWriteLock.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 17.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,26 +25,41 @@
 
 import Foundation
 
-struct SwappingFilter {
+final class ReadWriteLock {
 
-  let filter: Filter
+  private var readWriteLock: pthread_rwlock_t
+
+  init() {
+    readWriteLock = pthread_rwlock_t()
+    pthread_rwlock_init(&readWriteLock, nil)
+  }
+
+  deinit { pthread_rwlock_destroy(&readWriteLock) }
+
+  func readLock() { pthread_rwlock_rdlock(&readWriteLock) }
+
+  func writeLock() { pthread_rwlock_wrlock(&readWriteLock) }
+
+  func unlock() { pthread_rwlock_unlock(&readWriteLock) }
+
+  func tryRead() -> Bool { pthread_rwlock_tryrdlock(&readWriteLock) == 0 }
+
+  func tryWrite() -> Bool { pthread_rwlock_trywrlock(&readWriteLock) == 0 }
 }
 
-extension SwappingFilter: Filter {
+extension ReadWriteLock {
 
-  public var name: String { filter.name }
+  @discardableResult
+  func readLocked<Result>(_ action: () throws -> Result) rethrows -> Result {
+    readLock()
+    defer { unlock() }
+    return try action()
+  }
 
-  public var inputKeys: [String] { filter.inputKeys }
-
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    let ciFilter = try filter.makeCIFilter(for: image)
-
-    guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
-    else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
-
-    try ciFilter.setImage(backgroundImage)
-    try ciFilter.setBackgroundImage(image)
-
-    return ciFilter
+  @discardableResult
+  func writeLocked<Result>(_ action: () throws -> Result) rethrows -> Result {
+    writeLock()
+    defer { unlock() }
+    return try action()
   }
 }

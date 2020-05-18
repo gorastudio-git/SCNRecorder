@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE3FF70A24713FBF00BD3589 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF70924713FBF00BD3589 /* .swiftlint.yml */; };
 		BE4C34712237C827007AE1EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34702237C827007AE1EE /* AppDelegate.swift */; };
 		BE4C34732237C827007AE1EE /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34722237C827007AE1EE /* art.scnassets */; };
 		BE4C34752237C827007AE1EE /* ARSCNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C34742237C827007AE1EE /* ARSCNViewController.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BE3FF70924713FBF00BD3589 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		BE4C346D2237C827007AE1EE /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE4C34702237C827007AE1EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE4C34722237C827007AE1EE /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		BE4C346F2237C827007AE1EE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BE3FF70924713FBF00BD3589 /* .swiftlint.yml */,
 				BE4C34702237C827007AE1EE /* AppDelegate.swift */,
 				BE4C34722237C827007AE1EE /* art.scnassets */,
 				BE4C34742237C827007AE1EE /* ARSCNViewController.swift */,
@@ -200,6 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE3FF70A24713FBF00BD3589 /* .swiftlint.yml in Resources */,
 				BE4C34732237C827007AE1EE /* art.scnassets in Resources */,
 				BE4C347D2237C828007AE1EE /* LaunchScreen.storyboard in Resources */,
 				BE4C347A2237C828007AE1EE /* Assets.xcassets in Resources */,

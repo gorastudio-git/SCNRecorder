@@ -37,7 +37,7 @@ extension VideoRecorder {
       var audioSourceFormatHint: CMFormatDescription?
 
       func build() -> AudioConfiguration {
-        return AudioConfiguration(
+        AudioConfiguration(
           audioSettings: audioSettings,
           audioSourceFormatHint: audioSourceFormatHint
         )

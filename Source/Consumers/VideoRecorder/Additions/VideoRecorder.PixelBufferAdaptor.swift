@@ -45,7 +45,7 @@ extension VideoRecorder {
     }
 
     func append(_ pixelBuffer: CVPixelBuffer, at seconds: TimeInterval) -> Bool {
-      return append(pixelBuffer, withPresentationTime: timeFromSeconds(seconds))
+      append(pixelBuffer, withPresentationTime: timeFromSeconds(seconds))
     }
   }
 }

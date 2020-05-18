@@ -35,7 +35,7 @@ final class ImageRecorder {
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, UIImage) -> Void
   ) -> ImageRecorder {
-    return takeCGImage(transform: transform, context: context) {
+    takeCGImage(transform: transform, context: context) {
       handler($0, UIImage(cgImage: $1, scale: scale, orientation: orientation))
     }
   }
@@ -45,7 +45,7 @@ final class ImageRecorder {
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CGImage) -> Void
   ) -> ImageRecorder {
-    return takeCIImage(transform: transform, context: context) {
+    takeCIImage(transform: transform, context: context) {
       handler($0, context.createCGImage($1, from: $1.extent)!)
     }
   }
@@ -55,7 +55,7 @@ final class ImageRecorder {
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CIImage) -> Void
   ) -> ImageRecorder {
-    return takePixelBuffer(transform: transform, context: context) {
+    takePixelBuffer(transform: transform, context: context) {
       handler($0, CIImage(cvPixelBuffer: $1))
     }
   }
@@ -65,7 +65,7 @@ final class ImageRecorder {
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
   ) -> ImageRecorder {
-    return ImageRecorder(
+    ImageRecorder(
       transform: transform,
       context: context,
       completionHandler: handler

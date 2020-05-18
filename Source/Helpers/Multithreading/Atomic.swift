@@ -1,8 +1,8 @@
 //
-//  SwappingFilter.swift
+//  Atomic.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 17.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,26 +25,30 @@
 
 import Foundation
 
-struct SwappingFilter {
+protocol Atomic: AnyObject {
 
-  let filter: Filter
+  associatedtype Value
+
+  @discardableResult
+  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result
+
+  @discardableResult
+  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result
 }
 
-extension SwappingFilter: Filter {
+extension Atomic {
 
-  public var name: String { filter.name }
+  var value: Value {
+    get { withValue { $0 } }
+    set { swap(newValue) }
+  }
 
-  public var inputKeys: [String] { filter.inputKeys }
-
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    let ciFilter = try filter.makeCIFilter(for: image)
-
-    guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
-    else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
-
-    try ciFilter.setImage(backgroundImage)
-    try ciFilter.setBackgroundImage(image)
-
-    return ciFilter
+  @discardableResult
+  func swap(_ newValue: Value) -> Value {
+    modify { (value: inout Value) in
+      let oldValue = value
+      value = newValue
+      return oldValue
+    }
   }
 }

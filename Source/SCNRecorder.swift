@@ -56,20 +56,20 @@ public extension SCNRecorder {
   static let defaultTimeScale: CMTimeScale = InternalRecorder.defaultTimeScale
 
   var filters: [Filter] {
-    get { internalRecorder.filters.value }
-    set { internalRecorder.filters.value = newValue }
+    get { internalRecorder.filters }
+    set { internalRecorder.filters = newValue }
   }
 
   /// Generic recorder error
   /// Should be used for debug purpose only
-  var error: Property<Swift.Error?> { return internalRecorder.error }
+  var error: Property<Swift.Error?> { internalRecorder.error }
 
   func makeVideoRecording(
     to url: URL,
     fileType: AVFileType = .mov,
     timeScale: CMTimeScale = defaultTimeScale
   ) throws -> SCNVideoRecording {
-    return try internalRecorder.makeVideoRecording(
+    try internalRecorder.makeVideoRecording(
       to: url,
       fileType: fileType,
       timeScale: timeScale
@@ -166,7 +166,7 @@ extension SCNRecorder: ARSCNViewDelegate {
     _ renderer: SCNSceneRenderer,
     nodeFor anchor: ARAnchor
   ) -> SCNNode? {
-    return arSceneViewDelegate?.renderer?(renderer, nodeFor: anchor) ?? SCNNode(geometry: nil)
+    arSceneViewDelegate?.renderer?(renderer, nodeFor: anchor) ?? SCNNode(geometry: nil)
   }
 
   @objc
@@ -241,7 +241,7 @@ extension SCNRecorder: ARSCNViewDelegate {
   public func sessionShouldAttemptRelocalization(
     _ session: ARSession
   ) -> Bool {
-    return arSceneViewDelegate?.sessionShouldAttemptRelocalization?(session) ?? false
+    arSceneViewDelegate?.sessionShouldAttemptRelocalization?(session) ?? false
   }
 
   @objc

@@ -17,6 +17,6 @@ protocol TimeScalable {
 extension TimeScalable {
 
   func timeFromSeconds(_ seconds: TimeInterval) -> CMTime {
-    return CMTime(seconds: seconds, preferredTimescale: timeScale)
+    CMTime(seconds: seconds, preferredTimescale: timeScale)
   }
 }

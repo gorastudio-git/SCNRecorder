@@ -28,13 +28,13 @@ import AVFoundation
 
 final class PixelBufferPoolFactory {
 
-  let pixelBufferPools = Atomic([String: CVPixelBufferPool]())
+  @UnfairAtomic var pixelBufferPools = [String: CVPixelBufferPool]()
 
   func makeWithAttributes(
     _ attributes: [String: Any]
   ) throws -> CVPixelBufferPool {
     let key = makeKeyWithAttributes(attributes)
-    return try pixelBufferPools.modify {
+    return try $pixelBufferPools.modify {
       if let pixelBufferPool = $0[key] { return pixelBufferPool }
       let pixelBufferPool = try CVPixelBufferPool.makeWithAttributes(attributes)
       $0[key] = pixelBufferPool

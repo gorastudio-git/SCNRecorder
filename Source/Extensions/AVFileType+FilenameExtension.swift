@@ -34,7 +34,7 @@ extension AVFileType {
       self as CFString,
       kUTTagClassFilenameExtension
     )?.takeRetainedValue()
-      else { return "none" }
+      else { return "unknown" }
     return fileExtension as String
   }
 }

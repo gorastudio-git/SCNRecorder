@@ -1,8 +1,8 @@
 //
-//  SwappingFilter.swift
+//  ReadWriteAtomic.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 17.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,26 +25,29 @@
 
 import Foundation
 
-struct SwappingFilter {
+@propertyWrapper
+final class ReadWriteAtomic<Value>: Atomic {
 
-  let filter: Filter
-}
+  private let lock = ReadWriteLock()
 
-extension SwappingFilter: Filter {
+  private var _wrappedValue: Value
 
-  public var name: String { filter.name }
+  var wrappedValue: Value {
+    get { value }
+    set { value = newValue }
+  }
 
-  public var inputKeys: [String] { filter.inputKeys }
+  var projectedValue: ReadWriteAtomic<Value> { self }
 
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    let ciFilter = try filter.makeCIFilter(for: image)
+  init(wrappedValue: Value) { self._wrappedValue = wrappedValue }
 
-    guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
-    else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
+  @discardableResult
+  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
+    try lock.readLocked { try action(_wrappedValue) }
+  }
 
-    try ciFilter.setImage(backgroundImage)
-    try ciFilter.setBackgroundImage(image)
-
-    return ciFilter
+  @discardableResult
+  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+    try lock.writeLocked { try action(&_wrappedValue) }
   }
 }

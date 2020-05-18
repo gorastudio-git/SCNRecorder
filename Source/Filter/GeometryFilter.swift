@@ -65,7 +65,7 @@ public enum GeometryFilter {
   ///CIStraightenFilter
   case strainghten(angle: CGFloat)
 
-  func makeCIFilter() throws -> CIFilter {
+  public func makeCIFilter() throws -> CIFilter {
     guard let filter = CIFilter(name: name) else { throw Error.notFound }
 
     switch self {

@@ -1,5 +1,5 @@
 //
-//  Lock.swift
+//  UnfairLock.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 29.12.2019.
@@ -39,15 +39,19 @@ final class UnfairLock {
     unfairLock.deallocate()
   }
 
-  func lock() {
-    os_unfair_lock_lock(unfairLock)
-  }
+  func `try`() -> Bool { os_unfair_lock_trylock(unfairLock) }
 
-  func unlock() {
-    os_unfair_lock_unlock(unfairLock)
-  }
+  func lock() { os_unfair_lock_lock(unfairLock) }
 
-  func `try`() -> Bool {
-    return os_unfair_lock_trylock(unfairLock)
+  func unlock() { os_unfair_lock_unlock(unfairLock) }
+}
+
+extension UnfairLock {
+
+  @discardableResult
+  func locked<Result>(_ action: () throws -> Result) rethrows -> Result {
+    lock()
+    defer { unlock() }
+    return try action()
   }
 }

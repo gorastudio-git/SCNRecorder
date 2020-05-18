@@ -51,11 +51,11 @@ final class InternalRecorder {
 
   let queue: DispatchQueue
 
-  var filters = Atomic([Filter]())
+  @UnfairAtomic var filters = [Filter]()
 
-  var pixelBufferConsumers = Atomic([PixelBufferConsumer]())
+  @UnfairAtomic var pixelBufferConsumers = [PixelBufferConsumer]()
 
-  var audioSampleBufferConsumers = Atomic([AudioSampleBufferConsumer]())
+  @UnfairAtomic var audioSampleBufferConsumers = [AudioSampleBufferConsumer]()
 
   let pixelBufferProducer: PixelBufferProducer
 
@@ -164,43 +164,43 @@ extension InternalRecorder {
 extension InternalRecorder {
 
   func addPixelBufferConsumer(_ pixelBufferConsumer: PixelBufferConsumer) {
-    pixelBufferConsumers.modify {
+    $pixelBufferConsumers.modify {
       $0.append(pixelBufferConsumer)
       if $0.count == 1 { pixelBufferProducer.startWriting() }
     }
   }
 
   func removePixelBufferConsumer(_ pixelBufferConsumer: PixelBufferConsumer) {
-    pixelBufferConsumers.modify {
+    $pixelBufferConsumers.modify {
       $0 = $0.filter { $0 !== pixelBufferConsumer }
       if $0.count == 0 { pixelBufferProducer.stopWriting() }
     }
   }
 
   func addAudioSampleBufferConsumer(_ audioSampleBufferConsumer: AudioSampleBufferConsumer) {
-    audioSampleBufferConsumers.modify { $0.append(audioSampleBufferConsumer)}
+    $audioSampleBufferConsumers.modify { $0.append(audioSampleBufferConsumer) }
   }
 
   func removeAudioSampleBufferConsumer(_ audioSampleBufferConsumer: AudioSampleBufferConsumer) {
-    audioSampleBufferConsumers.modify { $0 = $0.filter { $0 !== audioSampleBufferConsumer }}
+    $audioSampleBufferConsumers.modify { $0 = $0.filter { $0 !== audioSampleBufferConsumer }}
   }
 }
 
 extension InternalRecorder {
 
   func producePixelBuffer(at time: TimeInterval) {
-    guard !pixelBufferConsumers.value.isEmpty else { return }
+    guard !pixelBufferConsumers.isEmpty else { return }
 
     do {
       let attributes = pixelBufferProducer.recommendedPixelBufferAttributes
       let pixelBufferPool = try pixelBufferPoolFactory.makeWithAttributes(attributes)
       var pixelBuffer = try CVPixelBuffer.makeWithPixelBufferPool(pixelBufferPool)
       try pixelBufferProducer.writeIn(pixelBuffer: &pixelBuffer)
-      try pixelBuffer.applyFilters(filters.value, using: pixelBufferProducer.context)
+      try pixelBuffer.applyFilters(filters, using: pixelBufferProducer.context)
 
       queue.async { [weak self] in
         guard let this = self else { return }
-        let consumers = this.pixelBufferConsumers.value
+        let consumers = this.pixelBufferConsumers
         let shouldCopy = consumers.count > 1
 
         consumers.forEach {
@@ -222,11 +222,11 @@ extension InternalRecorder {
   }
 
   func produceAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer) {
-    guard !audioSampleBufferConsumers.value.isEmpty else { return }
+    guard !audioSampleBufferConsumers.isEmpty else { return }
 
     queue.async { [weak self] in
       guard let this = self else { return }
-      this.audioSampleBufferConsumers.value.forEach {
+      this.audioSampleBufferConsumers.forEach {
         $0.appendAudioSampleBuffer(audioSampleBuffer)
       }
     }

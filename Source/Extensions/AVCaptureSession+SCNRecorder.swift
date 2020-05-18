@@ -29,7 +29,7 @@ import AVFoundation
 public extension AVCaptureSession {
 
   func canAddRecorder(_ recorder: SCNRecorder) -> Bool {
-    return canAddOutput(recorder.audioAdapter.output)
+    canAddOutput(recorder.audioAdapter.output)
   }
 
   func addRecorder(_ recorder: SCNRecorder) {

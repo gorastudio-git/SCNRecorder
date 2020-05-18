@@ -112,9 +112,9 @@ public struct WatermarkFilter: Filter {
 
   public let horizontalAligment: HorizontalAligment
 
-  public var name: String { return "Recorder.WatermarkFilter" }
+  public var name: String { "Recorder.WatermarkFilter" }
 
-  public var inputKeys: [String] { return [] }
+  public var inputKeys: [String] { [] }
 
   public init(
     compositeFilter: Filter.Composite,

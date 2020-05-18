@@ -1,5 +1,5 @@
 //
-//  Atomic.swift
+//  UnfairAtomic.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 29.12.2019.
@@ -25,43 +25,29 @@
 
 import Foundation
 
-final class Atomic<Value> {
+@propertyWrapper
+final class UnfairAtomic<Value>: Atomic {
 
-  let lock = UnfairLock()
+  private let lock = UnfairLock()
 
-  // swiftlint:disable identifier_name
-  var _value: Value
-  // swiftlint:enable identifier_name
+  private var _wrappedValue: Value
 
-  var value: Value {
-    get { withValue { $0 } }
-    set { swap(newValue) }
+  var wrappedValue: Value {
+    get { value }
+    set { value = newValue }
   }
 
-  init(_ value: Value) { _value = value }
+  var projectedValue: UnfairAtomic<Value> { self }
 
-  @discardableResult
-  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
-    lock.lock()
-    defer { lock.unlock() }
-
-    return try action(&_value)
-  }
+  init(wrappedValue: Value) { self._wrappedValue = wrappedValue }
 
   @discardableResult
   func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
-    lock.lock()
-    defer { lock.unlock() }
-
-    return try action(_value)
+    try lock.locked { try action(_wrappedValue) }
   }
 
   @discardableResult
-  func swap(_ newValue: Value) -> Value {
-    return modify { (value: inout Value) in
-      let oldValue = value
-      value = newValue
-      return oldValue
-    }
+  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+    try lock.locked { try action(&_wrappedValue) }
   }
 }
