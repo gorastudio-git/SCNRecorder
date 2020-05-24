@@ -157,17 +157,17 @@ extension InternalRecorder {
 extension InternalRecorder {
 
   func addPixelBufferConsumer(_ pixelBufferConsumer: PixelBufferConsumer) {
-    $pixelBufferConsumers.modify {
+    if ($pixelBufferConsumers.modify {
       $0.append(pixelBufferConsumer)
-      if $0.count == 1 { pixelBufferProducer.startWriting() }
-    }
+      return $0.count == 1
+    }) { pixelBufferProducer.startWriting() }
   }
 
   func removePixelBufferConsumer(_ pixelBufferConsumer: PixelBufferConsumer) {
-    $pixelBufferConsumers.modify {
+    if ($pixelBufferConsumers.modify {
       $0 = $0.filter { $0 !== pixelBufferConsumer }
-      if $0.count == 0 { pixelBufferProducer.stopWriting() }
-    }
+      return $0.count == 0
+    }) { pixelBufferProducer.stopWriting() }
   }
 
   func addAudioSampleBufferConsumer(_ audioSampleBufferConsumer: AudioSampleBufferConsumer) {
