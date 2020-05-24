@@ -31,42 +31,37 @@ final class ImageRecorder {
   static func takeUIImage(
     scale: CGFloat,
     orientation: UIImage.Orientation,
-    transform: CGAffineTransform,
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, UIImage) -> Void
   ) -> ImageRecorder {
-    takeCGImage(transform: transform, context: context) {
+    takeCGImage(context: context) {
       handler($0, UIImage(cgImage: $1, scale: scale, orientation: orientation))
     }
   }
 
   static func takeCGImage(
-    transform: CGAffineTransform,
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CGImage) -> Void
   ) -> ImageRecorder {
-    takeCIImage(transform: transform, context: context) {
+    takeCIImage(context: context) {
       handler($0, context.createCGImage($1, from: $1.extent)!)
     }
   }
 
   static func takeCIImage(
-    transform: CGAffineTransform,
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CIImage) -> Void
   ) -> ImageRecorder {
-    takePixelBuffer(transform: transform, context: context) {
+    takePixelBuffer(context: context) {
       handler($0, CIImage(cvPixelBuffer: $1))
     }
   }
 
   static func takePixelBuffer(
-    transform: CGAffineTransform,
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
   ) -> ImageRecorder {
     ImageRecorder(
-      transform: transform,
       context: context,
       completionHandler: handler
     )
@@ -75,25 +70,10 @@ final class ImageRecorder {
   var handler: ((ImageRecorder, CVPixelBuffer) -> Void)?
 
   init(
-    transform: CGAffineTransform,
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
   ) {
     self.handler = { (imageRecorder, pixelBuffer) in
-      if !transform.isIdentity {
-        try? pixelBuffer.applyFilters(
-          [
-            GeometryFilter.affineTransform(
-              transform: transform.translatedBy(
-                x: (transform.a - CGAffineTransform.identity.a) / 2.0 * CGFloat(pixelBuffer.width),
-                y: (transform.d - CGAffineTransform.identity.d) / 2.0 * CGFloat(pixelBuffer.height)
-              )
-            )
-          ],
-          using: context
-        )
-      }
-
       handler(imageRecorder, pixelBuffer)
       self.handler = nil
     }

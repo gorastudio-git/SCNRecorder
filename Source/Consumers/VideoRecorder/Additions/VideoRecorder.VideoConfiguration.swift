@@ -36,13 +36,10 @@ struct VideoConfiguration {
 
       var videoSourceFormatHint: CMFormatDescription?
 
-      var transform: CGAffineTransform = .identity
-
       func build() -> VideoConfiguration {
         VideoConfiguration(
           videoSettings: videoSettings,
-          videoSourceFormatHint: videoSourceFormatHint,
-          transform: transform
+          videoSourceFormatHint: videoSourceFormatHint
         )
       }
     }
@@ -50,7 +47,5 @@ struct VideoConfiguration {
     let videoSettings: [String: Any]
 
     let videoSourceFormatHint: CMFormatDescription?
-
-    let transform: CGAffineTransform
   }
 }

@@ -47,8 +47,6 @@ protocol PixelBufferProducer {
 
   var recommendedPixelBufferAttributes: [String: Any] { get }
 
-  var transform: CGAffineTransform { get }
-
   var context: CIContext { get }
 
   func startWriting()

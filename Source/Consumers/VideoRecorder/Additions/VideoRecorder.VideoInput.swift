@@ -36,7 +36,6 @@ extension VideoRecorder {
         outputSettings: configuration.videoSettings,
         sourceFormatHint: configuration.videoSourceFormatHint
       )
-      transform = configuration.transform
       expectsMediaDataInRealTime = true
     }
   }

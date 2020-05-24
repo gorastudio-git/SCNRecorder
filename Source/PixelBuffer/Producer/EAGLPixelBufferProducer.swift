@@ -35,6 +35,8 @@ extension EAGLPixelBufferProducer {
 
 final class EAGLPixelBufferProducer: PixelBufferProducer {
 
+  static let alignment = 4
+
   var recommendedVideoSettings: [String: Any] {
     let size = getSize()
     return [
@@ -62,7 +64,7 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
     return attributes
   }
 
-  let transform = CGAffineTransform(scaleX: 1.0, y: -1.0)
+  var buffer = Buffer(size: 0, alignment: EAGLPixelBufferProducer.alignment)
 
   let eaglContext: EAGLContext
 
@@ -83,9 +85,12 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
         throw EAGLError.framebufferStatusOES(status: status)
       }
 
+      let alignment = EAGLPixelBufferProducer.alignment
+      let buffer = getBuffer(size: pixelBuffer.bytesCount, alignment: alignment)
+
       glPixelStorei(
         GLenum(GL_PACK_ALIGNMENT),
-        4
+        GLint(alignment)
       )
 
       glReadPixels(
@@ -95,8 +100,17 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
         GLsizei(pixelBuffer.height),
         GLenum(GL_BGRA),
         GLenum(GL_UNSIGNED_BYTE),
-        baseAddress
+        buffer.ptr
       )
+
+      let bytesPerRow = pixelBuffer.bytesPerRow
+      for row in 0..<pixelBuffer.height {
+        memcpy(
+          baseAddress.advanced(by: row * bytesPerRow),
+          buffer.ptr .advanced(by: (pixelBuffer.height - row - 1) * bytesPerRow),
+          bytesPerRow
+        )
+      }
     }
   }
 }
@@ -109,6 +123,11 @@ private extension EAGLPixelBufferProducer {
     guard currentContext != context else { return { } }
     guard EAGLContext.setCurrent(context) else { throw EAGLError.setCurrentContext }
     return { EAGLContext.setCurrent(currentContext) }
+  }
+
+  func getBuffer(size: Int, alignment: Int) -> Buffer {
+    if buffer.size != size { buffer = Buffer(size: size, alignment: alignment) }
+    return buffer
   }
 
   func getSize() -> (width: Int, height: Int) {

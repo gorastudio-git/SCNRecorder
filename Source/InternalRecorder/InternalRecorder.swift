@@ -92,7 +92,6 @@ extension InternalRecorder {
 
     let videoConfiguration = VideoRecorder.VideoConfiguration.Builder()
     videoConfiguration.videoSettings = pixelBufferProducer.recommendedVideoSettings
-    videoConfiguration.transform = pixelBufferProducer.transform
 
     let videoRecorder = try VideoRecorder(
       url: url,
@@ -121,7 +120,6 @@ extension InternalRecorder {
       ImageRecorder.takeUIImage(
         scale: scale,
         orientation: orientation,
-        transform: pixelBufferProducer.transform,
         context: pixelBufferProducer.context,
         completionHandler: { [weak self] in
           self?.removePixelBufferConsumer($0)
@@ -134,7 +132,6 @@ extension InternalRecorder {
   func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
     addPixelBufferConsumer(
       ImageRecorder.takeCIImage(
-        transform: pixelBufferProducer.transform,
         context: pixelBufferProducer.context,
         completionHandler: { [weak self] in
           self?.removePixelBufferConsumer($0)
@@ -147,7 +144,6 @@ extension InternalRecorder {
   func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
     addPixelBufferConsumer(
       ImageRecorder.takePixelBuffer(
-        transform: pixelBufferProducer.transform,
         context: pixelBufferProducer.context,
         completionHandler: { [weak self] in
           self?.removePixelBufferConsumer($0)

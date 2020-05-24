@@ -63,11 +63,7 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
     return attributes
   }
 
-  let transform = CGAffineTransform.identity
-
-  var emptyBufferSize: Int = 0
-
-  var emptyBuffer: UnsafeMutableRawPointer?
+  var emptyBuffer = Buffer.zeroed(size: 0)
 
   let recordableLayer: RecordableLayer
 
@@ -77,8 +73,6 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
     self.recordableLayer = recordableLayer
     self.context = CIContext(mtlDevice: recordableLayer.device ?? MTLCreateSystemDefaultDevice()!)
   }
-
-  deinit { emptyBuffer.map({ free($0) }) }
 
   func startWriting() {
     guard Thread.isMainThread else { return DispatchQueue.main.sync(execute: startWriting) }
@@ -120,14 +114,8 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
   }
 
   func isEmpty(_ buffer: UnsafeMutableRawPointer, size: Int) -> Bool {
-    if emptyBufferSize != size || emptyBuffer == nil {
-      emptyBufferSize = size
-      emptyBuffer.map({ free($0) })
-      emptyBuffer = calloc(size, 1)
-    }
-
-    guard let emptyBuffer = emptyBuffer else { return false }
-    return memcmp(buffer, emptyBuffer, size) == 0
+    if emptyBuffer.size != size { emptyBuffer = Buffer.zeroed(size: size) }
+    return memcmp(buffer, emptyBuffer.ptr, size) == 0
   }
 }
 
