@@ -62,7 +62,7 @@ public final class SceneRecorder: NSObject {
 
   let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
 
-  public init(_ recordableView: RecordableView, timeScale: CMTimeScale = 600) throws {
+  public init(_ recordableView: SceneRecordableView, timeScale: CMTimeScale = 600) throws {
     self.videoInput = try SceneVideoInput(recordableView: recordableView, timeScale: timeScale)
     self.mediaRecorder = MediaRecorder(queue: queue)
     self.mediaRecorder.videoInput = self.videoInput

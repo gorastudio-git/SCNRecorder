@@ -30,7 +30,7 @@ import UIKit
 
 #if DO_NOT_SWIZZLE
 
-open class CAMetalRecordableLayer: CAMetalLayer, RecordableLayer {
+open class CAMetalRecordableLayer: CAMetalLayer, SceneRecordableLayer {
 
   lazy var lastFramebufferOnly: Bool = framebufferOnly
 

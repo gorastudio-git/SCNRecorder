@@ -1,5 +1,5 @@
 //
-//  SCNView+RecordableView.swift
+//  SceneRecordableLayer.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 30.12.2019.
@@ -24,28 +24,37 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
+import UIKit
 
-#if !DO_NOT_SWIZZLE
+#if !targetEnvironment(simulator)
 
-extension SCNView: RecordableView {
+public protocol SceneRecordableLayer: AnyObject {
 
-  static let swizzleSetDelegateImplementation: Void = {
-    let aClass: AnyClass = SCNView.self
+  var lastDrawable: CAMetalDrawable? { get }
 
-    guard let originalMethod = class_getInstanceMethod(aClass, #selector(setter: delegate)),
-          let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_setDelegate))
-    else { return }
+  var device: MTLDevice? { get }
 
-    method_exchangeImplementations(originalMethod, swizzledMethod)
-  }()
+  var pixelFormat: MTLPixelFormat { get }
 
-  static func swizzle() { _ = swizzleSetDelegateImplementation }
+  var drawableSize: CGSize { get }
 
-  @objc dynamic func swizzled_setDelegate(_ delegate: SCNSceneRendererDelegate) {
-    if let recorder = recorder { recorder.delegate = delegate }
-    else { swizzled_setDelegate(delegate) }
-  }
+  /// Is called before starting any recording
+  /// Might be used for any preparation
+  /// Might be called several times
+  func prepareForRecording()
+
+  func onStartRecording()
+
+  func onStopRecording()
 }
 
-#endif // !DO_NOT_SWIZZLE
+extension SceneRecordableLayer {
+
+  func prepareForRecording() { }
+
+  func onStartRecording() { }
+
+  func onStopRecording() { }
+}
+
+#endif // !targetEnvironment(simulator)

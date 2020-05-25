@@ -1,5 +1,5 @@
 //
-//  SCNRecordableView.swift
+//  ARSCNRecordableView.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -24,11 +24,11 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
+import ARKit
 
 #if DO_NOT_SWIZZLE
 
-open class SCNRecordableView: SCNView, RecordableView {
+open class ARSCNRecordableView: ARSCNView, SceneRecordableView {
 
   #if !targetEnvironment(simulator)
   override open class var layerClass: AnyClass {
@@ -37,21 +37,21 @@ open class SCNRecordableView: SCNView, RecordableView {
   }
   #endif // !targetEnvironment(simulator)
 
-  open override weak var delegate: SCNSceneRendererDelegate? {
+  open override weak var delegate: ARSCNViewDelegate? {
     get { super.delegate }
     set {
       guard let recorder = recorder else {
         super.delegate = newValue
         return
       }
-      recorder.sceneViewDelegate = newValue
+      recorder.arSceneViewDelegate = newValue
     }
   }
 }
 
 #else // DO_NOT_SWIZZLE
 
-@available(*, deprecated, message: "With swizzling you don't have to use SCNRecordableView")
-open class SCNRecordableView: SCNView { }
+@available(*, deprecated, message: "With swizzling you don't have to use ARSCNRecordableView")
+open class ARSCNRecordableView: ARSCNView { }
 
 #endif // DO_NOT_SWIZZLE

@@ -65,11 +65,11 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
 
   var emptyBuffer = Buffer.zeroed(size: 0)
 
-  let recordableLayer: RecordableLayer
+  let recordableLayer: SceneRecordableLayer
 
   let context: CIContext
 
-  init(recordableLayer: RecordableLayer) {
+  init(recordableLayer: SceneRecordableLayer) {
     self.recordableLayer = recordableLayer
     self.context = CIContext(mtlDevice: recordableLayer.device ?? MTLCreateSystemDefaultDevice()!)
   }

@@ -61,7 +61,7 @@ final class SceneVideoInput: VideoInput, BufferInput, TimeScalable {
 
   @UnfairAtomic var started: Bool = false
 
-  init(recordableView: RecordableView, timeScale: CMTimeScale) throws {
+  init(recordableView: SceneRecordableView, timeScale: CMTimeScale) throws {
     self.timeScale = timeScale
 
     switch recordableView.api {

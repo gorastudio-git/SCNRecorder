@@ -32,7 +32,7 @@ private var lastFramebufferOnlyKey: UInt8 = 0
 private var lastDrawableKey: UInt8 = 0
 private var isRecordingKey: UInt8 = 0
 
-extension CAMetalLayer: RecordableLayer {
+extension CAMetalLayer: SceneRecordableLayer {
 
   static let swizzleNextDrawableImplementation: Void = {
       let aClass: AnyClass = CAMetalLayer.self

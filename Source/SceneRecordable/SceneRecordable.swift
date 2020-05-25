@@ -1,5 +1,5 @@
 //
-//  Recordable.swift
+//  SceneRecordable.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 30.12.2019.
@@ -33,21 +33,21 @@ enum RecordableError: Swift.Error {
   case alreadyStarted
 }
 
-public protocol Recordable: AnyObject {
+public protocol SceneRecordable: AnyObject {
 
   var recorder: SceneRecorder? { get set }
 
   var videoRecording: VideoRecording? { get set }
 }
 
-public extension Recordable {
+public extension SceneRecordable {
 
   func prepareForRecording() throws {
     #if !DO_NOT_SWIZZLE
     if self is SCNView { SCNView.swizzle() }
     #endif //DO_NOT_SWIZZLE
 
-    guard let recordableView = self as? RecordableView else {
+    guard let recordableView = self as? SceneRecordableView else {
       guard recorder != nil else { throw RecordableError.preparing }
       return
     }

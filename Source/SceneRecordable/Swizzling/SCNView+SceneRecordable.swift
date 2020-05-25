@@ -1,8 +1,8 @@
 //
-//  RecordableLayer.swift
+//  SCNView+SceneRecordable.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 30.12.2019.
+//  Created by Vladislav Grigoryev on 31.12.2019.
 //  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,37 +24,29 @@
 //  THE SOFTWARE.
 
 import Foundation
-import UIKit
+import SceneKit
 
-#if !targetEnvironment(simulator)
+private var recorderKey: UInt8 = 0
+private var videoRecordingKey: UInt8 = 0
 
-public protocol RecordableLayer: AnyObject {
+extension SCNView: SceneRecordable {
 
-  var lastDrawable: CAMetalDrawable? { get }
+  public var recorder: SceneRecorder? {
+    get { objc_getAssociatedObject(self, &recorderKey) as? SceneRecorder }
+    set {
+      let oldRecorder = recorder
+      objc_setAssociatedObject(self, &recorderKey, nil, .OBJC_ASSOCIATION_RETAIN)
+      if delegate === oldRecorder { delegate = oldRecorder?.sceneViewDelegate }
 
-  var device: MTLDevice? { get }
+      guard let recorder = newValue else { return }
+      recorder.sceneViewDelegate = delegate
+      delegate = recorder
+      objc_setAssociatedObject(self, &recorderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+    }
+  }
 
-  var pixelFormat: MTLPixelFormat { get }
-
-  var drawableSize: CGSize { get }
-
-  /// Is called before starting any recording
-  /// Might be used for any preparation
-  /// Might be called several times
-  func prepareForRecording()
-
-  func onStartRecording()
-
-  func onStopRecording()
+  public var videoRecording: VideoRecording? {
+    get { objc_getAssociatedObject(self, &videoRecordingKey) as? VideoRecording }
+    set { objc_setAssociatedObject(self, &videoRecordingKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
+  }
 }
-
-extension RecordableLayer {
-
-  func prepareForRecording() { }
-
-  func onStartRecording() { }
-
-  func onStopRecording() { }
-}
-
-#endif // !targetEnvironment(simulator)

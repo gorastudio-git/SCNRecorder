@@ -1,5 +1,5 @@
 //
-//  RecordableView.swift
+//  SceneRecordableView.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 13/03/2019.
@@ -27,10 +27,10 @@ import Foundation
 import UIKit
 import SceneKit
 
-public protocol RecordableView: Recordable {
+public protocol SceneRecordableView: SceneRecordable {
 
   #if !targetEnvironment(simulator)
-  var recordableLayer: RecordableLayer? { get }
+  var recordableLayer: SceneRecordableLayer? { get }
   #endif // !targetEnvironment(simulator)
 
   var eaglContext: EAGLContext? { get }
@@ -38,14 +38,14 @@ public protocol RecordableView: Recordable {
   var api: API { get }
 }
 
-public extension RecordableView where Self: UIView {
+public extension SceneRecordableView where Self: UIView {
 
   #if !targetEnvironment(simulator)
-  var recordableLayer: RecordableLayer? { layer as? RecordableLayer }
+  var recordableLayer: SceneRecordableLayer? { layer as? SceneRecordableLayer }
   #endif // !targetEnvironment(simulator)
 }
 
-public extension RecordableView where Self: SCNView {
+public extension SceneRecordableView where Self: SCNView {
 
   var api: API {
     switch renderingAPI {

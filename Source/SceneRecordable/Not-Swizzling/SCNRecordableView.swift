@@ -1,9 +1,9 @@
 //
-//  SCNView+Recordable.swift
+//  SCNRecordableView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 31.12.2019.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,27 +26,32 @@
 import Foundation
 import SceneKit
 
-private var recorderKey: UInt8 = 0
-private var videoRecordingKey: UInt8 = 0
+#if DO_NOT_SWIZZLE
 
-extension SCNView: Recordable {
+open class SCNRecordableView: SCNView, SceneRecordableView {
 
-  public var recorder: SceneRecorder? {
-    get { objc_getAssociatedObject(self, &recorderKey) as? SceneRecorder }
+  #if !targetEnvironment(simulator)
+  override open class var layerClass: AnyClass {
+    guard super.layerClass is CAMetalLayer.Type else { return super.layerClass }
+    return CAMetalRecordableLayer.self
+  }
+  #endif // !targetEnvironment(simulator)
+
+  open override weak var delegate: SCNSceneRendererDelegate? {
+    get { super.delegate }
     set {
-      let oldRecorder = recorder
-      objc_setAssociatedObject(self, &recorderKey, nil, .OBJC_ASSOCIATION_RETAIN)
-      if delegate === oldRecorder { delegate = oldRecorder?.sceneViewDelegate }
-
-      guard let recorder = newValue else { return }
-      recorder.sceneViewDelegate = delegate
-      delegate = recorder
-      objc_setAssociatedObject(self, &recorderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+      guard let recorder = recorder else {
+        super.delegate = newValue
+        return
+      }
+      recorder.sceneViewDelegate = newValue
     }
   }
-
-  public var videoRecording: VideoRecording? {
-    get { objc_getAssociatedObject(self, &videoRecordingKey) as? VideoRecording }
-    set { objc_setAssociatedObject(self, &videoRecordingKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
-  }
 }
+
+#else // DO_NOT_SWIZZLE
+
+@available(*, deprecated, message: "With swizzling you don't have to use SCNRecordableView")
+open class SCNRecordableView: SCNView { }
+
+#endif // DO_NOT_SWIZZLE

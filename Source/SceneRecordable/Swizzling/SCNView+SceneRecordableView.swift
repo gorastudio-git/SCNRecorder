@@ -1,9 +1,9 @@
 //
-//  ARSCNRecordableView.swift
+//  SCNView+SceneRecordableView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 30.12.2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,28 @@
 //  THE SOFTWARE.
 
 import Foundation
-import ARKit
+import SceneKit
 
-#if DO_NOT_SWIZZLE
+#if !DO_NOT_SWIZZLE
 
-open class ARSCNRecordableView: ARSCNView, RecordableView {
+extension SCNView: SceneRecordableView {
 
-  #if !targetEnvironment(simulator)
-  override open class var layerClass: AnyClass {
-    guard super.layerClass is CAMetalLayer.Type else { return super.layerClass }
-    return CAMetalRecordableLayer.self
-  }
-  #endif // !targetEnvironment(simulator)
+  static let swizzleSetDelegateImplementation: Void = {
+    let aClass: AnyClass = SCNView.self
 
-  open override weak var delegate: ARSCNViewDelegate? {
-    get { super.delegate }
-    set {
-      guard let recorder = recorder else {
-        super.delegate = newValue
-        return
-      }
-      recorder.arSceneViewDelegate = newValue
-    }
+    guard let originalMethod = class_getInstanceMethod(aClass, #selector(setter: delegate)),
+          let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_setDelegate))
+    else { return }
+
+    method_exchangeImplementations(originalMethod, swizzledMethod)
+  }()
+
+  static func swizzle() { _ = swizzleSetDelegateImplementation }
+
+  @objc dynamic func swizzled_setDelegate(_ delegate: SCNSceneRendererDelegate) {
+    if let recorder = recorder { recorder.delegate = delegate }
+    else { swizzled_setDelegate(delegate) }
   }
 }
 
-#else // DO_NOT_SWIZZLE
-
-@available(*, deprecated, message: "With swizzling you don't have to use ARSCNRecordableView")
-open class ARSCNRecordableView: ARSCNView { }
-
-#endif // DO_NOT_SWIZZLE
+#endif // !DO_NOT_SWIZZLE
