@@ -1,8 +1,8 @@
 //
-//  AVFileType+FilenameExtension.swift
+//  VideoRecorder.AssterWriter.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 04.01.2020.
+//  Created by Vladislav Grigoryev on 19.04.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,16 +25,13 @@
 
 import Foundation
 import AVFoundation
-import MobileCoreServices
 
-extension AVFileType {
+extension VideoRecorder {
 
-  var fileExtension: String {
-    guard let fileExtension = UTTypeCopyPreferredTagWithClass(
-      self as CFString,
-      kUTTagClassFilenameExtension
-    )?.takeRetainedValue()
-      else { return "unknown" }
-    return fileExtension as String
+  final class AssetWriter: AVAssetWriter {
+
+    init(url: URL, fileType outputFileType: AVFileType) throws {
+      try super.init(outputURL: url, fileType: outputFileType)
+    }
   }
 }

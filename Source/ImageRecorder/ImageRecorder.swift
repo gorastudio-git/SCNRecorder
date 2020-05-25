@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 import UIKit
 
 final class ImageRecorder {
@@ -43,36 +44,28 @@ final class ImageRecorder {
     context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CGImage) -> Void
   ) -> ImageRecorder {
-    takeCIImage(context: context) {
+    takeCIImage {
       handler($0, context.createCGImage($1, from: $1.extent)!)
     }
   }
 
   static func takeCIImage(
-    context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CIImage) -> Void
   ) -> ImageRecorder {
-    takePixelBuffer(context: context) {
+    takePixelBuffer {
       handler($0, CIImage(cvPixelBuffer: $1))
     }
   }
 
   static func takePixelBuffer(
-    context: CIContext,
     completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
   ) -> ImageRecorder {
-    ImageRecorder(
-      context: context,
-      completionHandler: handler
-    )
+    ImageRecorder(completionHandler: handler)
   }
 
   var handler: ((ImageRecorder, CVPixelBuffer) -> Void)?
 
-  init(
-    context: CIContext,
-    completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
-  ) {
+  init(completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void) {
     self.handler = { (imageRecorder, pixelBuffer) in
       handler(imageRecorder, pixelBuffer)
       self.handler = nil
@@ -80,9 +73,20 @@ final class ImageRecorder {
   }
 }
 
-extension ImageRecorder: PixelBufferConsumer {
+extension ImageRecorder: VideoOutput {
 
-  func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval) {
-    handler?(self, pixelBuffer)
+  func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
+    guard let imageBuffer: CVImageBuffer = {
+      if #available(iOS 13.0, *) {
+        return sampleBuffer.imageBuffer
+      } else {
+        return CMSampleBufferGetImageBuffer(sampleBuffer)
+      }
+    }() else { return }
+    handler?(self, imageBuffer)
+  }
+
+  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
+    handler?(self, buffer)
   }
 }

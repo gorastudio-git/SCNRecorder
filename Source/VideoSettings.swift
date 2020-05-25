@@ -49,7 +49,6 @@ public struct VideoSettings {
   var scalingMode: ScalingMode
 }
 
-
 extension VideoSettings {
 
   enum Codec {
@@ -72,10 +71,13 @@ extension VideoSettings {
     case resizeAspectFill
   }
 
-
   /**
-
-   AVVideoCleanApertureWidthKey and AVVideoCleanApertureHeightKey define a clean rectangle which is centered on the video frame.  To offset this rectangle from center, use AVVideoCleanApertureHorizontalOffsetKey and AVVideoCleanApertureVerticalOffsetKey.  A positive value for AVVideoCleanApertureHorizontalOffsetKey moves the clean aperture region to the right, and a positive value for AVVideoCleanApertureVerticalOffsetKey moves the clean aperture region down.
+   AVVideoCleanApertureWidthKey and AVVideoCleanApertureHeightKey define a
+   clean rectangle which is centered on the video frame.  To offset this
+   rectangle from center, use AVVideoCleanApertureHorizontalOffsetKey and
+   AVVideoCleanApertureVerticalOffsetKey.  A positive value for
+   AVVideoCleanApertureHorizontalOffsetKey moves the clean aperture region to the
+   right, and a positive value for AVVideoCleanApertureVerticalOffsetKey moves the clean aperture region down.
    */
 
   struct CleanApreture {

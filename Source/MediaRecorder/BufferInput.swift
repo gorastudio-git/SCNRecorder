@@ -1,8 +1,8 @@
 //
-//  PixelBufferConsumer.swift
+//  BufferInput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 24.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,8 +24,22 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-protocol PixelBufferConsumer: AnyObject {
+protocol BufferInputDelegate: MediaRecorderInputDelegate {
 
-  func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval)
+  func input(_ input: BufferInput, didOutput buffer: CVBuffer, at time: CMTime)
+}
+
+protocol BufferInput: MediaRecorderInput {
+
+  var bufferDelegate: BufferInputDelegate? { get set }
+}
+
+extension BufferInput {
+
+  var bufferDelegate: BufferInputDelegate? {
+    get { delegate as? BufferInputDelegate }
+    set { delegate = newValue }
+  }
 }

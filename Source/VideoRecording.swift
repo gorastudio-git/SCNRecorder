@@ -32,8 +32,6 @@ public protocol VideoRecordingInfo: AnyObject {
 
   var fileType: AVFileType { get }
 
-  var timeScale: CMTimeScale { get }
-
   var duration: Property<TimeInterval> { get }
 }
 

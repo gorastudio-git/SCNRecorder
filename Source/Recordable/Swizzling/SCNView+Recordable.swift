@@ -31,8 +31,8 @@ private var videoRecordingKey: UInt8 = 0
 
 extension SCNView: Recordable {
 
-  public var recorder: Recorder? {
-    get { objc_getAssociatedObject(self, &recorderKey) as? Recorder }
+  public var recorder: SceneRecorder? {
+    get { objc_getAssociatedObject(self, &recorderKey) as? SceneRecorder }
     set {
       let oldRecorder = recorder
       objc_setAssociatedObject(self, &recorderKey, nil, .OBJC_ASSOCIATION_RETAIN)

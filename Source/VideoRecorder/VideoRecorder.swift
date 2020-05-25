@@ -30,9 +30,11 @@ final class VideoRecorder {
 
   let assetWriter: AssetWriter
 
-  let pixelBufferAdaptor: PixelBufferAdaptor
+  let videoInput: VideoInput
 
   let audioInput: AudioInput
+
+  let pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor
 
   let queue: DispatchQueue
 
@@ -59,12 +61,11 @@ final class VideoRecorder {
     url: URL,
     fileType: AVFileType,
     videoConfiguration: VideoConfiguration,
-    timeScale: CMTimeScale,
     queue: DispatchQueue
   ) throws {
-    assetWriter = try AssetWriter(url: url, fileType: fileType, timeScale: timeScale)
+    assetWriter = try AssetWriter(url: url, fileType: fileType)
 
-    let videoInput = VideoInput(videoConfiguration)
+    videoInput = VideoInput(videoConfiguration)
     guard assetWriter.canAdd(videoInput) else { throw Error.cantAddVideoAssetWriterInput }
     assetWriter.add(videoInput)
 
@@ -72,7 +73,7 @@ final class VideoRecorder {
     guard assetWriter.canAdd(audioInput) else { throw Error.cantAddAudioAssterWriterInput }
     assetWriter.add(audioInput)
 
-    pixelBufferAdaptor = PixelBufferAdaptor(input: videoInput, timeScale: timeScale)
+    pixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: videoInput)
     guard assetWriter.startWriting() else { throw assetWriter.error ?? Error.cantStartWriting }
 
     self.queue = queue
@@ -84,13 +85,13 @@ final class VideoRecorder {
 
 extension VideoRecorder {
 
-  func startSession(at seconds: TimeInterval) {
-    lastSeconds = seconds
-    assetWriter.startSession(at: seconds)
+  func startSession(at sourceTime: CMTime) {
+    lastSeconds = sourceTime.seconds
+    assetWriter.startSession(atSourceTime: sourceTime)
   }
 
-  func endSession(at seconds: TimeInterval) {
-    assetWriter.endSession(at: seconds)
+  func endSession(at sourceTime: CMTime) {
+    assetWriter.endSession(atSourceTime: sourceTime)
   }
 
   func finishWriting(completionHandler handler: @escaping () -> Void) {
@@ -101,17 +102,41 @@ extension VideoRecorder {
     assetWriter.cancelWriting()
   }
 
-  func append(_ pixelBuffer: CVPixelBuffer, withSeconds seconds: TimeInterval) throws {
+  func append(pixelBuffer: CVPixelBuffer, withPresentationTime time: CMTime) throws {
     guard pixelBufferAdaptor.assetWriterInput.isReadyForMoreMediaData else { return }
-    guard pixelBufferAdaptor.append(pixelBuffer, at: seconds) else {
+    guard pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: time) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
       return
     }
+
+    let seconds = time.seconds
     duration += seconds - lastSeconds
     lastSeconds = seconds
   }
 
-  func append(_ sampleBuffer: CMSampleBuffer) throws {
+  func appendVideo(sampleBuffer: CMSampleBuffer) throws {
+    guard videoInput.isReadyForMoreMediaData else { return }
+    guard videoInput.append(sampleBuffer) else {
+      if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
+      return
+    }
+
+    let timeStamp: CMTime
+    let duration: CMTime
+
+    if #available(iOS 13.0, *) {
+      timeStamp = sampleBuffer.presentationTimeStamp
+      duration = sampleBuffer.duration
+    } else {
+      timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+      duration = CMSampleBufferGetDuration(sampleBuffer)
+    }
+
+    self.duration += duration.seconds
+    lastSeconds = (timeStamp + duration).seconds
+  }
+
+  func appendAudio(sampleBuffer: CMSampleBuffer) throws {
     guard audioInput.isReadyForMoreMediaData else { return }
     guard audioInput.append(sampleBuffer) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
@@ -135,8 +160,6 @@ extension VideoRecorder {
   var url: URL { assetWriter.outputURL }
 
   var fileType: AVFileType { assetWriter.outputFileType }
-
-  var timeScale: CMTimeScale { assetWriter.timeScale }
 }
 
 // - MARK: Lifecycle
@@ -173,18 +196,22 @@ private extension VideoRecorder {
   func unsafeCancel() { state = state.cancel(self) }
 }
 
-// - MARK: PixelBufferConsumer
-extension VideoRecorder: PixelBufferConsumer {
+// - MARK: VideoOutput
+extension VideoRecorder: VideoOutput {
 
-  func appendPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: TimeInterval) {
-    state = state.appendPixelBuffer(pixelBuffer, at: time, to: self)
+  func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
+    state = state.appendVideoSampleBuffer(sampleBuffer, to: self)
+  }
+
+  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
+    state = state.appendVideoBuffer(buffer, at: time, to: self)
   }
 }
 
-// - MARK: AudioSampleBufferConsumer
-extension VideoRecorder: AudioSampleBufferConsumer {
+// - MARK: AudioOutput
+extension VideoRecorder: AudioOutput {
 
-  func appendAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer) {
-    state = state.appendAudioSampleBuffer(audioSampleBuffer, to: self)
+  func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
+    state = state.appendAudioSampleBuffer(sampleBuffer, to: self)
   }
 }

@@ -1,5 +1,5 @@
 //
-//  AudioSampleBufferConsumer.swift
+//  VideoRecorder.Recording.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -26,7 +26,30 @@
 import Foundation
 import AVFoundation
 
-protocol AudioSampleBufferConsumer: AnyObject {
+extension VideoRecorder {
 
-  func appendAudioSampleBuffer(_ audioSampleBuffer: CMSampleBuffer)
+  final class Recording: VideoRecording {
+
+    let duration = Property<TimeInterval>(0.0)
+
+    var state = Property(VideoRecording.State.preparing)
+
+    let videoRecorder: VideoRecorder
+
+    var url: URL { videoRecorder.url }
+
+    var fileType: AVFileType { videoRecorder.fileType }
+
+    init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
+
+    func resume() { videoRecorder.resume() }
+
+    func pause() { videoRecorder.pause() }
+
+    func finish(completionHandler handler: @escaping (_ info: VideoRecordingInfo) -> Void) {
+      videoRecorder.finish { handler(self) }
+    }
+
+    func cancel() { videoRecorder.cancel() }
+  }
 }

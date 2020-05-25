@@ -1,8 +1,8 @@
 //
-//  AVFileType+FilenameExtension.swift
+//  SceneAudioInput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 04.01.2020.
+//  Created by Vladislav Grigoryev on 25.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,16 +25,37 @@
 
 import Foundation
 import AVFoundation
-import MobileCoreServices
+import ARKit
 
-extension AVFileType {
+final class SceneAudioInput: NSObject, AudioInput, SampleBufferInput {
 
-  var fileExtension: String {
-    guard let fileExtension = UTTypeCopyPreferredTagWithClass(
-      self as CFString,
-      kUTTagClassFilenameExtension
-    )?.takeRetainedValue()
-      else { return "unknown" }
-    return fileExtension as String
+  let queue: DispatchQueue
+
+  weak var delegate: MediaRecorderInputDelegate?
+
+  lazy var output: AVCaptureAudioDataOutput = {
+    let output = AVCaptureAudioDataOutput()
+    output.setSampleBufferDelegate(self, queue: queue)
+    return output
+  }()
+
+  init(queue: DispatchQueue) { self.queue = queue }
+
+  func session(
+    _ session: ARSession,
+    didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
+  ) {
+    sampleBufferDelegate?.input(self, didOutput: audioSampleBuffer)
+  }
+}
+
+extension SceneAudioInput: AVCaptureAudioDataOutputSampleBufferDelegate {
+
+  @objc func captureOutput(
+    _ output: AVCaptureOutput,
+    didOutput sampleBuffer: CMSampleBuffer,
+    from connection: AVCaptureConnection
+  ) {
+    sampleBufferDelegate?.input(self, didOutput: sampleBuffer)
   }
 }

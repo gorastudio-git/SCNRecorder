@@ -67,10 +67,10 @@ extension SCNViewController {
 
     case canNotAddInput(input: AVCaptureInput)
 
-    case canNotAddRecorder(recorder: SCNRecorder)
+    case canNotAddRecorder(recorder: SceneRecorder)
   }
 
-  static func makeAudioCaptureSessionForRecorder(recorder: SCNRecorder) throws -> AVCaptureSession {
+  static func makeAudioCaptureSessionForRecorder(recorder: SceneRecorder) throws -> AVCaptureSession {
     let captureSession = AVCaptureSession()
 
     let mediaType = AVMediaType.audio

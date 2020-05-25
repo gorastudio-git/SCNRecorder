@@ -35,7 +35,7 @@ enum RecordableError: Swift.Error {
 
 public protocol Recordable: AnyObject {
 
-  var recorder: Recorder? { get set }
+  var recorder: SceneRecorder? { get set }
 
   var videoRecording: VideoRecording? { get set }
 }
@@ -56,40 +56,28 @@ public extension Recordable {
     recordableView.recordableLayer?.prepareForRecording()
     #endif // !targetEnvironment(simulator)
 
-    if recorder == nil { recorder = try Recorder(recordableView) }
+    if recorder == nil { recorder = try SceneRecorder(recordableView) }
   }
 
   @discardableResult
-  func startVideoRecording(
-    fileType: AVFileType = .mov,
-    timeScale: CMTimeScale = Recorder.defaultTimeScale
-  ) throws -> VideoRecording {
+  func startVideoRecording(fileType: AVFileType = .mov) throws -> VideoRecording {
     return try startVideoRecording(
       to: FileManager.default.temporaryDirectory.appendingPathComponent(
         "\(UUID().uuidString).\(fileType.fileExtension)",
         isDirectory: false
       ),
-      fileType: fileType,
-      timeScale: timeScale
+      fileType: fileType
     )
   }
 
   @discardableResult
-  func startVideoRecording(
-    to url: URL,
-    fileType: AVFileType = .mov,
-    timeScale: CMTimeScale = Recorder.defaultTimeScale
-  ) throws -> VideoRecording {
+  func startVideoRecording(to url: URL, fileType: AVFileType = .mov) throws -> VideoRecording {
     guard videoRecording == nil else { throw RecordableError.alreadyStarted }
 
     try prepareForRecording()
     guard let recorder = recorder else { throw RecordableError.preparing }
 
-    let videoRecording = try recorder.makeVideoRecording(
-      to: url,
-      fileType: fileType,
-      timeScale: timeScale
-    )
+    let videoRecording = try recorder.makeVideoRecording(to: url, fileType: fileType)
     videoRecording.resume()
 
     self.videoRecording = videoRecording

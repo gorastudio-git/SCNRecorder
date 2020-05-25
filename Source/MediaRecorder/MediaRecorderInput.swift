@@ -1,8 +1,8 @@
 //
-//  AVFileType+FilenameExtension.swift
+//  MediaRecorderInput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 04.01.2020.
+//  Created by Vladislav Grigoryev on 24.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,16 +25,26 @@
 
 import Foundation
 import AVFoundation
-import MobileCoreServices
 
-extension AVFileType {
+protocol MediaRecorderInputDelegate: AnyObject { }
 
-  var fileExtension: String {
-    guard let fileExtension = UTTypeCopyPreferredTagWithClass(
-      self as CFString,
-      kUTTagClassFilenameExtension
-    )?.takeRetainedValue()
-      else { return "unknown" }
-    return fileExtension as String
-  }
+protocol MediaRecorderInput: AnyObject {
+
+  var delegate: MediaRecorderInputDelegate? { get set }
+
+  func start()
+
+  func stop()
 }
+
+extension MediaRecorderInput {
+
+  func start() { }
+
+  func stop() { }
+}
+
+// swiftlint:disable operator_whitespace
+func ~=(pattern: MediaRecorderInput, value: MediaRecorderInput) -> Bool { value === pattern }
+func ~=(pattern: MediaRecorderInput?, value: MediaRecorderInput) -> Bool { value === pattern }
+// swiftlint:enable operator_whitespace

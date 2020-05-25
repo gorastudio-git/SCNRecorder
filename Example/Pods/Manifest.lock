@@ -1,0 +1,16 @@
+PODS:
+  - SCNRecorder (1.2.0)
+
+DEPENDENCIES:
+  - SCNRecorder (from `../`)
+
+EXTERNAL SOURCES:
+  SCNRecorder:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SCNRecorder: d851e2a840a1adf01ce044f74d16d1e2338215f0
+
+PODFILE CHECKSUM: 37b2284aa204af843c132b14b01f53e8965290c4
+
+COCOAPODS: 1.9.1

@@ -1,0 +1,6 @@
+framework module SCNRecorder {
+  umbrella header "SCNRecorder-umbrella.h"
+
+  export *
+  module * { export * }
+}

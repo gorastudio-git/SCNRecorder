@@ -23,7 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import Foundation
 import AVFoundation
 
@@ -44,7 +43,6 @@ public extension VideoSettings {
     ///
     /// Files are identified with the .mp4 extension.
     case mp4
-
 
     /// A UTI for video container format very similar to the MP4 format.
     ///

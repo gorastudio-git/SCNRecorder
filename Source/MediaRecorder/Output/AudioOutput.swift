@@ -1,8 +1,8 @@
 //
-//  AVFileType+FilenameExtension.swift
+//  AudioOutput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 04.01.2020.
+//  Created by Vladislav Grigoryev on 24.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,16 +25,8 @@
 
 import Foundation
 import AVFoundation
-import MobileCoreServices
 
-extension AVFileType {
+protocol AudioOutput: MediaRecorderOutput {
 
-  var fileExtension: String {
-    guard let fileExtension = UTTypeCopyPreferredTagWithClass(
-      self as CFString,
-      kUTTagClassFilenameExtension
-    )?.takeRetainedValue()
-      else { return "unknown" }
-    return fileExtension as String
-  }
+  func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer)
 }

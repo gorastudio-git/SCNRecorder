@@ -32,7 +32,7 @@ extension VideoRecorder {
   enum State {
     case ready
     case preparing
-    case recording(seconds: TimeInterval)
+    case recording(time: CMTime)
     case paused
 
     case canceled
@@ -73,8 +73,8 @@ extension VideoRecorder {
            .preparing:
         return .preparing
 
-      case .recording(let seconds):
-        return .recording(seconds: seconds)
+      case .recording(let time):
+        return .recording(time: time)
 
       case .paused:
         return .preparing
@@ -145,20 +145,28 @@ extension VideoRecorder {
       }
     }
 
-    func appendPixelBuffer(
-      _ pixelBuffer: CVPixelBuffer,
-      at time: TimeInterval,
+    func appendVideoSampleBuffer(
+      _ sampleBuffer: CMSampleBuffer,
       to videoRecorder: VideoRecorder
     ) -> State {
-      do { return try _appendPixelBuffer(pixelBuffer, at: time, to: videoRecorder) }
+      do { return try _appendVideoSampleBuffer(sampleBuffer, to: videoRecorder) }
+      catch { return .failed(error: error) }
+    }
+
+    func appendVideoBuffer(
+      _ buffer: CVBuffer,
+      at time: CMTime,
+      to videoRecorder: VideoRecorder
+    ) -> State {
+      do { return try _appendVideoBuffer(buffer, at: time, to: videoRecorder) }
       catch { return .failed(error: error) }
     }
 
     func appendAudioSampleBuffer(
-      _ audioSampleBuffer: CMSampleBuffer,
+      _ sampleBuffer: CMSampleBuffer,
       to videoRecorder: VideoRecorder
     ) -> State {
-      do { return try _appendAudioSampleBuffer(audioSampleBuffer, to: videoRecorder) }
+      do { return try _appendAudioSampleBuffer(sampleBuffer, to: videoRecorder) }
       catch { return .failed(error: error) }
     }
   }
@@ -166,9 +174,42 @@ extension VideoRecorder {
 
 private extension VideoRecorder.State {
 
-  func _appendPixelBuffer(
-    _ pixelBuffer: CVPixelBuffer,
-    at time: TimeInterval,
+  func _appendVideoSampleBuffer(
+    _ sampleBuffer: CMSampleBuffer,
+    to videoRecorder: VideoRecorder
+  ) throws -> VideoRecorder.State {
+    switch self {
+
+    case .ready:
+      return self
+
+    case .preparing:
+      let time: CMTime
+      if #available(iOS 13.0, *) {
+        time = sampleBuffer.presentationTimeStamp
+      } else {
+        time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+      }
+
+      videoRecorder.startSession(at: time)
+      try videoRecorder.appendVideo(sampleBuffer: sampleBuffer)
+      return .recording(time: time)
+
+    case .recording(let time):
+      try videoRecorder.appendVideo(sampleBuffer: sampleBuffer)
+      return .recording(time: time)
+
+    case .paused,
+         .canceled,
+         .finished,
+         .failed:
+      return self
+    }
+  }
+
+  func _appendVideoBuffer(
+    _ buffer: CVBuffer,
+    at time: CMTime,
     to videoRecorder: VideoRecorder
   ) throws -> VideoRecorder.State {
     switch self {
@@ -178,12 +219,12 @@ private extension VideoRecorder.State {
 
     case .preparing:
       videoRecorder.startSession(at: time)
-      try videoRecorder.append(pixelBuffer, withSeconds: time)
-      return .recording(seconds: time)
+      try videoRecorder.append(pixelBuffer: buffer, withPresentationTime: time)
+      return .recording(time: time)
 
     case .recording:
-      try videoRecorder.append(pixelBuffer, withSeconds: time)
-      return .recording(seconds: time)
+      try videoRecorder.append(pixelBuffer: buffer, withPresentationTime: time)
+      return .recording(time: time)
 
     case .paused,
          .canceled,
@@ -194,7 +235,7 @@ private extension VideoRecorder.State {
   }
 
   func _appendAudioSampleBuffer(
-    _ audioSampleBuffer: CMSampleBuffer,
+    _ sampleBuffer: CMSampleBuffer,
     to videoRecorder: VideoRecorder
   ) throws -> VideoRecorder.State {
     switch self {
@@ -203,9 +244,9 @@ private extension VideoRecorder.State {
          .preparing:
       return self
 
-    case .recording(let seconds):
-      try videoRecorder.append(audioSampleBuffer)
-      return .recording(seconds: seconds)
+    case .recording(let time):
+      try videoRecorder.appendAudio(sampleBuffer: sampleBuffer)
+      return .recording(time: time)
 
     case .paused,
          .canceled,

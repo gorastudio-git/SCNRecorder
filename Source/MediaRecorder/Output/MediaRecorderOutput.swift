@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.AssterWriter.swift
+//  MediaRecorderOutput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 19.04.2020.
+//  Created by Vladislav Grigoryev on 24.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,29 +24,5 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
 
-extension VideoRecorder {
-
-  final class AssetWriter: AVAssetWriter, TimeScalable {
-
-    let timeScale: CMTimeScale
-
-    init(
-      url: URL,
-      fileType outputFileType: AVFileType,
-      timeScale: CMTimeScale
-    ) throws {
-      self.timeScale = timeScale
-      try super.init(outputURL: url, fileType: outputFileType)
-    }
-
-    func startSession(at seconds: TimeInterval) {
-      startSession(atSourceTime: timeFromSeconds(seconds))
-    }
-
-    func endSession(at seconds: TimeInterval) {
-      endSession(atSourceTime: timeFromSeconds(seconds))
-    }
-  }
-}
+protocol MediaRecorderOutput: AnyObject { }

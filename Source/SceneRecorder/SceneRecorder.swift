@@ -1,6 +1,6 @@
 //
-//  Recorder.swift
-//  Recorder
+//  SceneRecorder.swift
+//  SceneRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
@@ -27,52 +27,60 @@ import Foundation
 import SceneKit
 import ARKit
 
-public extension Recorder {
+public extension SceneRecorder {
   enum Error: Swift.Error {
+
     case notRecordableView
+
+    case recordableLayer
+
+    case eaglContext
+
+    case metalSimulator
+
+    case pixelBuffer(errorCode: CVReturn)
+
+    case pixelBufferFactory
+
+    case unknownAPI
   }
 }
 
-public final class Recorder: NSObject {
+public final class SceneRecorder: NSObject {
 
   weak var delegate: AnyObject?
 
-  let internalRecorder: InternalRecorder
+  let mediaRecorder: MediaRecorder
 
-  let audioAdapter: AudioAdapter
+  let videoInput: SceneVideoInput
+
+  lazy var audioInput: SceneAudioInput = {
+    let audioInput = SceneAudioInput(queue: queue)
+    mediaRecorder.audioInput = audioInput
+    return audioInput
+  }()
 
   let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
 
-  public init(_ recordableView: RecordableView) throws {
-    self.internalRecorder = try InternalRecorder(recordableView, queue: queue)
-    self.audioAdapter = AudioAdapter(queue: queue) { [internalRecorder] in
-      internalRecorder.produceAudioSampleBuffer($0)
-    }
+  public init(_ recordableView: RecordableView, timeScale: CMTimeScale = 600) throws {
+    self.videoInput = try SceneVideoInput(recordableView: recordableView, timeScale: timeScale)
+    self.mediaRecorder = MediaRecorder(queue: queue)
+    self.mediaRecorder.videoInput = self.videoInput
   }
 }
 
-public extension Recorder {
-
-  static let defaultTimeScale: CMTimeScale = InternalRecorder.defaultTimeScale
+public extension SceneRecorder {
 
   var filters: [Filter] {
-    get { internalRecorder.filters }
-    set { internalRecorder.filters = newValue }
+    get { mediaRecorder.filters }
+    set { mediaRecorder.filters = newValue }
   }
 
   /// Can be used for debug
-  var error: Property<Swift.Error?> { internalRecorder.error }
+  var error: Property<Swift.Error?> { mediaRecorder.error }
 
-  func makeVideoRecording(
-    to url: URL,
-    fileType: AVFileType = .mov,
-    timeScale: CMTimeScale = defaultTimeScale
-  ) throws -> SCNVideoRecording {
-    try internalRecorder.makeVideoRecording(
-      to: url,
-      fileType: fileType,
-      timeScale: timeScale
-    )
+  func makeVideoRecording(to url: URL, fileType: AVFileType = .mov) throws -> VideoRecording {
+    try mediaRecorder.makeVideoRecording(to: url, fileType: fileType)
   }
 
   func takePhoto(
@@ -80,20 +88,20 @@ public extension Recorder {
     orientation: UIImage.Orientation = .up,
     completionHandler handler: @escaping (UIImage) -> Void
   ) {
-    internalRecorder.takePhoto(scale: scale, orientation: orientation, completionHandler: handler)
+    mediaRecorder.takePhoto(scale: scale, orientation: orientation, completionHandler: handler)
   }
 
   func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
-    internalRecorder.takeCoreImage(completionHandler: handler)
+    mediaRecorder.takeCoreImage(completionHandler: handler)
   }
 
   func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
-    internalRecorder.takePixelBuffer(completionHandler: handler)
+    mediaRecorder.takePixelBuffer(completionHandler: handler)
   }
 }
 
 // MARK: - SCNSceneRendererDelegate
-extension Recorder: SCNSceneRendererDelegate {
+extension SceneRecorder: SCNSceneRendererDelegate {
 
   var sceneViewDelegate: SCNSceneRendererDelegate? {
     get { delegate as? SCNSceneRendererDelegate }
@@ -148,12 +156,14 @@ extension Recorder: SCNSceneRendererDelegate {
     atTime time: TimeInterval
   ) {
     sceneViewDelegate?.renderer?(renderer, didRenderScene: scene, atTime: time)
-    internalRecorder.producePixelBuffer(at: time)
+
+    do { try videoInput.renderer(renderer, didRenderScene: scene, atTime: time) }
+    catch { self.error.value = error }
   }
 }
 
 // MARK: - ARSCNViewDelegate
-extension Recorder: ARSCNViewDelegate {
+extension SceneRecorder: ARSCNViewDelegate {
 
   var arSceneViewDelegate: ARSCNViewDelegate? {
     get { delegate as? ARSCNViewDelegate }
@@ -249,7 +259,7 @@ extension Recorder: ARSCNViewDelegate {
     didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
   ) {
     arSceneViewDelegate?.session?(session, didOutputAudioSampleBuffer: audioSampleBuffer)
-    internalRecorder.produceAudioSampleBuffer(audioSampleBuffer)
+    audioInput.session(session, didOutputAudioSampleBuffer: audioSampleBuffer)
   }
 
   #if compiler(>=5.1)

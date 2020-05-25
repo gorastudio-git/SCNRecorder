@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.PixelBufferAdaptor.swift
+//  SampleBufferInput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 19.04.2020.
+//  Created by Vladislav Grigoryev on 24.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,26 +26,20 @@
 import Foundation
 import AVFoundation
 
-extension VideoRecorder {
+protocol SampleBufferInputDelegate: MediaRecorderInputDelegate {
 
-  final class PixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor, TimeScalable {
+  func input(_ input: SampleBufferInput, didOutput sampleBuffer: CMSampleBuffer)
+}
 
-    let timeScale: CMTimeScale
+protocol SampleBufferInput: MediaRecorderInput {
 
-    init(
-      input: VideoInput,
-      timeScale: CMTimeScale,
-      sourcePixelBufferAttributes: [String: Any]? = nil
-    ) {
-      self.timeScale = timeScale
-      super.init(
-        assetWriterInput: input,
-        sourcePixelBufferAttributes: sourcePixelBufferAttributes
-      )
-    }
+  var sampleBufferDelegate: SampleBufferInputDelegate? { get set }
+}
 
-    func append(_ pixelBuffer: CVPixelBuffer, at seconds: TimeInterval) -> Bool {
-      append(pixelBuffer, withPresentationTime: timeFromSeconds(seconds))
-    }
+extension SampleBufferInput {
+
+  var sampleBufferDelegate: SampleBufferInputDelegate? {
+    get { delegate as? SampleBufferInputDelegate }
+    set { delegate = newValue }
   }
 }
