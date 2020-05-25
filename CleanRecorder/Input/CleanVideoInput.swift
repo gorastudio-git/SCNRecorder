@@ -1,5 +1,5 @@
 //
-//  SceneInput.swift
+//  CleanVideoInput.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 25.05.2020.
@@ -27,62 +27,33 @@ import Foundation
 import AVFoundation
 import SceneKit
 
-extension SceneVideoInput {
+final class CleanVideoInput: VideoInput, BufferInput, TimeScalable {
 
-  enum Error: Swift.Error {
-
-    case recordableLayer
-
-    case eaglContext
-
-    case metalSimulator
-
-    case pixelBuffer(errorCode: CVReturn)
-
-    case pixelBufferFactory
-
-    case unknownAPI
-  }
-}
-
-final class SceneVideoInput: VideoInput, BufferInput, TimeScalable {
+  let cleanRecordable: CleanRecordable
 
   let timeScale: CMTimeScale
 
-  let producer: PixelBufferProducer
+  var recommendedVideoSettings: [String: Any] {
+    guard let buffer = cleanRecordable.cleanPixelBuffer else { return [:] }
+    return [
+      AVVideoWidthKey: buffer.width,
+      AVVideoHeightKey: buffer.height,
+      AVVideoCodecKey: AVVideoCodecType.h264,
+    ]
+  }
 
-  let pixelBufferPoolFactory = PixelBufferPoolFactory()
-
-  var recommendedVideoSettings: [String: Any] { producer.recommendedVideoSettings }
-
-  var context: CIContext { producer.context }
+  var context: CIContext { CIContext() }
 
   weak var delegate: MediaRecorderInputDelegate?
 
   @UnfairAtomic var started: Bool = false
 
-  init(recordableView: SceneRecordableView, timeScale: CMTimeScale) throws {
+  init(cleanRecordable: CleanRecordable, timeScale: CMTimeScale) {
+    self.cleanRecordable = cleanRecordable
     self.timeScale = timeScale
-
-    switch recordableView.api {
-    case .metal:
-      #if !targetEnvironment(simulator)
-      guard let recordableLayer = recordableView.recordableLayer else { throw Error.recordableLayer }
-      self.producer = MetalPixelBufferProducer(recordableLayer: recordableLayer)
-      #else // !targetEnvironment(simulator)
-      throw Error.metalSimulator
-      #endif // !targetEnvironment(simulator)
-    case .openGLES:
-      guard let eaglContext = recordableView.eaglContext else { throw Error.eaglContext }
-      self.producer = EAGLPixelBufferProducer(eaglContext: eaglContext)
-    case .unknown: throw Error.unknownAPI
-    }
   }
 
-  func start() {
-    producer.startWriting()
-    started = true
-  }
+  func start() { started = true }
 
   func renderer(
     _ renderer: SCNSceneRenderer,
@@ -90,17 +61,9 @@ final class SceneVideoInput: VideoInput, BufferInput, TimeScalable {
     atTime time: TimeInterval
   ) throws {
     guard started else { return }
-    
-    let attributes = producer.recommendedPixelBufferAttributes
-    let pixelBufferPool = try pixelBufferPoolFactory.makeWithAttributes(attributes)
-    var pixelBuffer = try CVPixelBuffer.makeWithPixelBufferPool(pixelBufferPool)
-    try producer.writeIn(pixelBuffer: &pixelBuffer)
-
+    guard let pixelBuffer = cleanRecordable.cleanPixelBuffer else { return }
     bufferDelegate?.input(self, didOutput: pixelBuffer, at: timeFromSeconds(time))
   }
 
-  func stop() {
-    producer.stopWriting()
-    started = false
-  }
+  func stop() { started = false }
 }

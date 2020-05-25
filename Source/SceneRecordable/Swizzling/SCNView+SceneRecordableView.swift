@@ -28,6 +28,8 @@ import SceneKit
 
 #if !DO_NOT_SWIZZLE
 
+private var sceneRecorderKey: UInt8 = 0
+
 extension SCNView: SceneRecordableView {
 
   static let swizzleSetDelegateImplementation: Void = {
@@ -42,8 +44,22 @@ extension SCNView: SceneRecordableView {
 
   static func swizzle() { _ = swizzleSetDelegateImplementation }
 
+  public var sceneRecorder: SceneRecorder? {
+    get { objc_getAssociatedObject(self, &sceneRecorderKey) as? SceneRecorder }
+    set {
+      let oldRecorder = sceneRecorder
+      objc_setAssociatedObject(self, &sceneRecorderKey, nil, .OBJC_ASSOCIATION_RETAIN)
+      if delegate === oldRecorder { delegate = oldRecorder?.sceneViewDelegate }
+
+      guard let recorder = newValue else { return }
+      recorder.sceneViewDelegate = delegate
+      delegate = recorder
+      objc_setAssociatedObject(self, &sceneRecorderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+    }
+  }
+  
   @objc dynamic func swizzled_setDelegate(_ delegate: SCNSceneRendererDelegate) {
-    if let recorder = recorder { recorder.delegate = delegate }
+    if let sceneRecorder = sceneRecorder { sceneRecorder.delegate = delegate }
     else { swizzled_setDelegate(delegate) }
   }
 }

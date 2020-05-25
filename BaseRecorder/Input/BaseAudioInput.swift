@@ -1,8 +1,8 @@
 //
-//  AVCaptureSession+SCNRecorder.swift
+//  BaseAudioInput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 25.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,14 +25,37 @@
 
 import Foundation
 import AVFoundation
+import ARKit
 
-public extension AVCaptureSession {
+final class BaseAudioInput: NSObject, AudioInput, SampleBufferInput {
 
-  func canAddRecorder(_ recorder: SceneRecorder) -> Bool {
-    return canAddOutput(recorder.audioInput.output)
+  let queue: DispatchQueue
+
+  weak var delegate: MediaRecorderInputDelegate?
+
+  lazy var output: AVCaptureAudioDataOutput = {
+    let output = AVCaptureAudioDataOutput()
+    output.setSampleBufferDelegate(self, queue: queue)
+    return output
+  }()
+
+  init(queue: DispatchQueue) { self.queue = queue }
+
+  func session(
+    _ session: ARSession,
+    didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
+  ) {
+    sampleBufferDelegate?.input(self, didOutput: audioSampleBuffer)
   }
+}
 
-  func addRecorder(_ recorder: SceneRecorder) {
-    addOutput(recorder.audioInput.output)
+extension BaseAudioInput: AVCaptureAudioDataOutputSampleBufferDelegate {
+
+  @objc func captureOutput(
+    _ output: AVCaptureOutput,
+    didOutput sampleBuffer: CMSampleBuffer,
+    from connection: AVCaptureConnection
+  ) {
+    sampleBufferDelegate?.input(self, didOutput: sampleBuffer)
   }
 }

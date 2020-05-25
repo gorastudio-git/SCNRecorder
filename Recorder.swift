@@ -1,9 +1,9 @@
 //
-//  SceneRecordable.swift
+//  Recorder.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 25.05.2020.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,26 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public protocol SceneRecordable: Recordable {
+public protocol Recorder {
 
-  var sceneRecorder: SceneRecorder? { get set }
+  func makeVideoRecording(to url: URL, fileType: AVFileType) throws -> VideoRecording
+
+  func takePhoto(
+    scale: CGFloat,
+    orientation: UIImage.Orientation,
+    completionHandler handler: @escaping (UIImage) -> Void
+  )
+
+  func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void)
+
+  func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void)
 }
 
-extension SceneRecordable {
+extension Recorder {
 
-  var recorder: Recorder? { sceneRecorder }
+  func makeVideoRecording(to url: URL) throws -> VideoRecording {
+    try makeVideoRecording(to: url, fileType: .mov)
+  }
 }

@@ -26,7 +26,7 @@
 import Foundation
 import AVFoundation
 
-final class MediaRecorder {
+final class MediaRecorder: Recorder {
 
   let queue: DispatchQueue
 

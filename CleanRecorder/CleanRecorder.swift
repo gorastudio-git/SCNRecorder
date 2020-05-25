@@ -1,5 +1,5 @@
 //
-//  SceneAudioInput.swift
+//  CleanRecorder.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 25.05.2020.
@@ -24,38 +24,27 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
 import ARKit
 
-final class SceneAudioInput: NSObject, AudioInput, SampleBufferInput {
+public final class CleanRecorder: BaseRecorder, Recorder {
 
-  let queue: DispatchQueue
+  let videoInput: CleanVideoInput
 
-  weak var delegate: MediaRecorderInputDelegate?
-
-  lazy var output: AVCaptureAudioDataOutput = {
-    let output = AVCaptureAudioDataOutput()
-    output.setSampleBufferDelegate(self, queue: queue)
-    return output
-  }()
-
-  init(queue: DispatchQueue) { self.queue = queue }
-
-  func session(
-    _ session: ARSession,
-    didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
-  ) {
-    sampleBufferDelegate?.input(self, didOutput: audioSampleBuffer)
+  public init(_ cleanRecordable: CleanRecordable, timeScale: CMTimeScale = 600) {
+    self.videoInput = CleanVideoInput(cleanRecordable: cleanRecordable, timeScale: timeScale)
+    super.init()
+    self.mediaRecorder.videoInput = self.videoInput
   }
-}
 
-extension SceneAudioInput: AVCaptureAudioDataOutputSampleBufferDelegate {
-
-  @objc func captureOutput(
-    _ output: AVCaptureOutput,
-    didOutput sampleBuffer: CMSampleBuffer,
-    from connection: AVCaptureConnection
+  @objc
+  public override func renderer(
+    _ renderer: SCNSceneRenderer,
+    didRenderScene scene: SCNScene,
+    atTime time: TimeInterval
   ) {
-    sampleBufferDelegate?.input(self, didOutput: sampleBuffer)
+    super.renderer(renderer, didRenderScene: scene, atTime: time)
+
+    do { try videoInput.renderer(renderer, didRenderScene: scene, atTime: time) }
+    catch { self.error.value = error }
   }
 }

@@ -1,5 +1,5 @@
 //
-//  SceneRecordable.swift
+//  CleanRecordable.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 25.05.2020.
@@ -25,12 +25,46 @@
 
 import Foundation
 
-public protocol SceneRecordable: Recordable {
+private var cleanRecorderKey: UInt8 = 0
 
-  var sceneRecorder: SceneRecorder? { get set }
+public protocol CleanRecordable: AnyObject {
+
+  var cleanRecorder: CleanRecorder? { get set }
+
+  var cleanVideoRecording: VideoRecording? { get set }
+
+  var cleanPixelBuffer: CVPixelBuffer? { get }
+
+  var clean: Recordable { get }
 }
 
-extension SceneRecordable {
+extension CleanRecordable {
 
-  var recorder: Recorder? { sceneRecorder }
+  public var clean: Recordable { Clean(clean: self) }
+}
+
+private final class Clean: CleanRecordable, Recordable {
+
+  var cleanRecorder: CleanRecorder? {
+    get { clean?.cleanRecorder }
+    set { clean?.cleanRecorder = newValue }
+  }
+
+  var cleanPixelBuffer: CVPixelBuffer? { clean?.cleanPixelBuffer }
+
+  var recorder: Recorder? { clean?.cleanRecorder }
+
+  var videoRecording: VideoRecording? {
+    get { cleanVideoRecording }
+    set { cleanVideoRecording = newValue }
+  }
+
+  var cleanVideoRecording: VideoRecording? {
+    get { clean?.cleanVideoRecording }
+    set { clean?.cleanVideoRecording = newValue }
+  }
+
+  weak var clean: CleanRecordable?
+
+  init(clean: CleanRecordable) { self.clean = clean }
 }

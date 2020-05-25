@@ -1,9 +1,9 @@
 //
-//  SceneRecordable.swift
+//  AVCaptureSession+BaseRecorder.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 25.05.2020.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,15 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public protocol SceneRecordable: Recordable {
+public extension AVCaptureSession {
 
-  var sceneRecorder: SceneRecorder? { get set }
-}
+  func canAddRecorder(_ recorder: BaseRecorder) -> Bool {
+    return canAddOutput(recorder.audioInput.output)
+  }
 
-extension SceneRecordable {
-
-  var recorder: Recorder? { sceneRecorder }
+  func addRecorder(_ recorder: BaseRecorder) {
+    addOutput(recorder.audioInput.output)
+  }
 }

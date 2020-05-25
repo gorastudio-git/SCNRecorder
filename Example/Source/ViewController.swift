@@ -34,6 +34,8 @@ class ViewController: UIViewController {
 
   @IBOutlet var sceneView: SCNView!
 
+  var arView: ARSCNView! { sceneView as? ARSCNView }
+
   @IBOutlet var durationLabel: UILabel!
 
   @IBOutlet var photoButton: UIButton!
@@ -56,14 +58,14 @@ class ViewController: UIViewController {
     sceneView.rendersContinuously = true
 
     // It is recommended to prepare the view for recording at viewDidLoad
-    do { try sceneView.prepareForRecording() }
+    do { try arView.clean.prepareForRecording() }
     catch { print("Something went wrong during recording preparation: \(error)") }
   }
 
   @IBAction func takePhoto(_ sender: UIButton) {
     do {
       // A fastest way to capture photo
-      try sceneView.takePhoto { (photo) in
+      try arView.clean.takePhoto { (photo) in
         // Create and present photo preview controller
         let controller = PhotoPreviewController(photo: photo)
         self.navigationController?.pushViewController(controller, animated: true)
@@ -82,7 +84,7 @@ class ViewController: UIViewController {
 
   @IBAction func startVideoRecording() {
     do {
-      let videoRecording = try sceneView.startVideoRecording()
+      let videoRecording = try arView.clean.startVideoRecording()
 
       // Observe for duration
       videoRecording.duration.observer = { [weak self] duration in
@@ -103,7 +105,7 @@ class ViewController: UIViewController {
 
   @objc func finishVideoRecording() {
     // Finish recording
-    sceneView.finishVideoRecording { (recording) in
+    arView.clean.finishVideoRecording { (recording) in
       // Create a controller to preview captured video
       let controller = AVPlayerViewController()
 

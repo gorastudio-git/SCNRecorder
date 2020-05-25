@@ -26,24 +26,11 @@
 import Foundation
 import SceneKit
 
-private var recorderKey: UInt8 = 0
 private var videoRecordingKey: UInt8 = 0
 
-extension SCNView: SceneRecordable {
+extension SCNView: Recordable {
 
-  public var recorder: SceneRecorder? {
-    get { objc_getAssociatedObject(self, &recorderKey) as? SceneRecorder }
-    set {
-      let oldRecorder = recorder
-      objc_setAssociatedObject(self, &recorderKey, nil, .OBJC_ASSOCIATION_RETAIN)
-      if delegate === oldRecorder { delegate = oldRecorder?.sceneViewDelegate }
-
-      guard let recorder = newValue else { return }
-      recorder.sceneViewDelegate = delegate
-      delegate = recorder
-      objc_setAssociatedObject(self, &recorderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
-    }
-  }
+  public var recorder: Recorder? { sceneRecorder }
 
   public var videoRecording: VideoRecording? {
     get { objc_getAssociatedObject(self, &videoRecordingKey) as? VideoRecording }

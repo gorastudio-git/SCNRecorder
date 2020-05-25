@@ -1,5 +1,8 @@
 //
-//  SceneRecordable.swift
+//  ARSCNView+CleanRecordable.swift
+//  SCNRecorder
+//
+//  Created by Vladislav Grigoryev on 25.05.2020.
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 25.05.2020.
@@ -24,13 +27,31 @@
 //  THE SOFTWARE.
 
 import Foundation
+import ARKit
 
-public protocol SceneRecordable: Recordable {
+private var cleanRecorderKey: UInt8 = 0
+private var cleanVideoRecordingKey: UInt8 = 0
 
-  var sceneRecorder: SceneRecorder? { get set }
-}
+extension ARSCNView: CleanRecordable {
 
-extension SceneRecordable {
+  public var cleanRecorder: CleanRecorder? {
+    get { objc_getAssociatedObject(self, &cleanRecorderKey) as? CleanRecorder }
+    set {
+      let oldRecorder = cleanRecorder
+      objc_setAssociatedObject(self, &cleanRecorderKey, nil, .OBJC_ASSOCIATION_RETAIN)
+      if delegate === oldRecorder { delegate = oldRecorder?.arSceneViewDelegate }
 
-  var recorder: Recorder? { sceneRecorder }
+      guard let recorder = newValue else { return }
+      recorder.sceneViewDelegate = delegate
+      delegate = recorder
+      objc_setAssociatedObject(self, &cleanRecorderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+    }
+  }
+
+  public var cleanVideoRecording: VideoRecording? {
+    get { objc_getAssociatedObject(self, &cleanVideoRecordingKey) as? VideoRecording }
+    set { objc_setAssociatedObject(self, &cleanVideoRecordingKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
+  }
+
+  public var cleanPixelBuffer: CVPixelBuffer? { session.currentFrame?.capturedImage }
 }

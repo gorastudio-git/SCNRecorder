@@ -39,7 +39,7 @@ class SCNViewController: ViewController {
     sceneView.allowsCameraControl = true
 
     do {
-      guard let recorder = sceneView.recorder else { return }
+      guard let recorder = sceneView.sceneRecorder else { return }
       captureSession = try SCNViewController.makeAudioCaptureSessionForRecorder(recorder: recorder)
       captureSession?.startRunning()
     }
