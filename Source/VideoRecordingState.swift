@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.AudioConfiguration.swift
+//  VideoRecordingState.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 19.04.2020.
+//  Created by Vladislav Grigoryev on 26.04.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,28 +24,20 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
 
-extension VideoRecorder {
+public enum VideoRecordingState {
 
-  struct AudioConfiguration {
+  case ready
 
-    final class Builder {
+  case preparing
 
-      var audioSettings: [String: Any]?
+  case recording
 
-      var audioSourceFormatHint: CMFormatDescription?
+  case paused
 
-      func build() -> AudioConfiguration {
-        AudioConfiguration(
-          audioSettings: audioSettings,
-          audioSourceFormatHint: audioSourceFormatHint
-        )
-      }
-    }
+  case canceled
 
-    let audioSettings: [String: Any]?
+  case finished
 
-    let audioSourceFormatHint: CMFormatDescription?
-  }
+  case failed(_ error: Swift.Error)
 }

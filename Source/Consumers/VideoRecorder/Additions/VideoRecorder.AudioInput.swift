@@ -30,12 +30,8 @@ extension VideoRecorder {
 
   final class AudioInput: AVAssetWriterInput {
 
-    init(_ configuration: AudioConfiguration) {
-      super.init(
-        mediaType: .audio,
-        outputSettings: configuration.audioSettings,
-        sourceFormatHint: configuration.audioSourceFormatHint
-      )
+    init(_ settings: Any? = nil) {
+      super.init(mediaType: .audio, outputSettings: nil, sourceFormatHint: nil)
       expectsMediaDataInRealTime = true
     }
   }

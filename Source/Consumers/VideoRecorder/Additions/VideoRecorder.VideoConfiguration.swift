@@ -28,7 +28,7 @@ import AVFoundation
 
 extension VideoRecorder {
 
-  struct VideoConfiguration {
+struct VideoConfiguration {
 
     final class Builder {
 

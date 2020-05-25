@@ -54,7 +54,7 @@ extension VideoRecorder {
       }
     }
 
-    var recordingState: SCNVideoRecording.State {
+    var recordingState: VideoRecording.State {
       switch self {
       case .ready: return .ready
       case .preparing: return .preparing

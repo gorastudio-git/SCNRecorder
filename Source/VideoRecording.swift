@@ -26,7 +26,7 @@
 import Foundation
 import AVFoundation
 
-public protocol SCNVideoRecordingOptions: AnyObject {
+public protocol VideoRecordingInfo: AnyObject {
 
   var url: URL { get }
 
@@ -37,9 +37,9 @@ public protocol SCNVideoRecordingOptions: AnyObject {
   var duration: Property<TimeInterval> { get }
 }
 
-public protocol SCNVideoRecording: SCNVideoRecordingOptions {
+public protocol VideoRecording: VideoRecordingInfo {
 
-  typealias State = SCNVideoRecordingState
+  typealias State = VideoRecordingState
 
   var state: Property<State> { get }
 
@@ -47,24 +47,7 @@ public protocol SCNVideoRecording: SCNVideoRecordingOptions {
 
   func pause()
 
-  func finish(completionHandler handler: @escaping (_ options: SCNVideoRecordingOptions) -> Void)
+  func finish(completionHandler handler: @escaping (_ info: VideoRecordingInfo) -> Void)
 
   func cancel()
-}
-
-public enum SCNVideoRecordingState {
-
-  case ready
-
-  case preparing
-
-  case recording
-
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
 }

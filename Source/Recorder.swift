@@ -1,6 +1,6 @@
 //
-//  SCNRecorder.swift
-//  SCNRecorder
+//  Recorder.swift
+//  Recorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
@@ -27,13 +27,13 @@ import Foundation
 import SceneKit
 import ARKit
 
-public extension SCNRecorder {
+public extension Recorder {
   enum Error: Swift.Error {
     case notRecordableView
   }
 }
 
-public final class SCNRecorder: NSObject {
+public final class Recorder: NSObject {
 
   weak var delegate: AnyObject?
 
@@ -51,7 +51,7 @@ public final class SCNRecorder: NSObject {
   }
 }
 
-public extension SCNRecorder {
+public extension Recorder {
 
   static let defaultTimeScale: CMTimeScale = InternalRecorder.defaultTimeScale
 
@@ -60,8 +60,7 @@ public extension SCNRecorder {
     set { internalRecorder.filters = newValue }
   }
 
-  /// Generic recorder error
-  /// Should be used for debug purpose only
+  /// Can be used for debug
   var error: Property<Swift.Error?> { internalRecorder.error }
 
   func makeVideoRecording(
@@ -94,7 +93,7 @@ public extension SCNRecorder {
 }
 
 // MARK: - SCNSceneRendererDelegate
-extension SCNRecorder: SCNSceneRendererDelegate {
+extension Recorder: SCNSceneRendererDelegate {
 
   var sceneViewDelegate: SCNSceneRendererDelegate? {
     get { delegate as? SCNSceneRendererDelegate }
@@ -154,7 +153,7 @@ extension SCNRecorder: SCNSceneRendererDelegate {
 }
 
 // MARK: - ARSCNViewDelegate
-extension SCNRecorder: ARSCNViewDelegate {
+extension Recorder: ARSCNViewDelegate {
 
   var arSceneViewDelegate: ARSCNViewDelegate? {
     get { delegate as? ARSCNViewDelegate }

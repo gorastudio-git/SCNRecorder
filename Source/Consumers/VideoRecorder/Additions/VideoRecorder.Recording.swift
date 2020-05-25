@@ -28,11 +28,11 @@ import AVFoundation
 
 extension VideoRecorder {
 
-  final class Recording: SCNVideoRecording {
+  final class Recording: VideoRecording {
 
     let duration = Property<TimeInterval>(0.0)
 
-    var state = Property(SCNVideoRecording.State.preparing)
+    var state = Property(VideoRecording.State.preparing)
 
     let videoRecorder: VideoRecorder
 
@@ -48,7 +48,7 @@ extension VideoRecorder {
 
     func pause() { videoRecorder.pause() }
 
-    func finish(completionHandler handler: @escaping (_ recording: SCNVideoRecordingOptions) -> Void) {
+    func finish(completionHandler handler: @escaping (_ info: VideoRecordingInfo) -> Void) {
       videoRecorder.finish { handler(self) }
     }
 

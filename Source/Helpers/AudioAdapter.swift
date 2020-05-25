@@ -1,8 +1,8 @@
 //
-//  SCNRecorder.AudioAdapter.swift
+//  AudioAdapter.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 29.12.2019.
+//  Created by Vladislav Grigoryev on 26.04.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,33 +26,30 @@
 import Foundation
 import AVFoundation
 
-extension SCNRecorder {
+final class AudioAdapter: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
 
-  final class AudioAdapter: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
+  typealias Callback = (_ sampleBuffer: CMSampleBuffer) -> Void
 
-    typealias Callback = (_ sampleBuffer: CMSampleBuffer) -> Void
+  let output: AVCaptureAudioDataOutput
 
-    let output: AVCaptureAudioDataOutput
+  let queue: DispatchQueue
 
-    let queue: DispatchQueue
+  let callback: Callback
 
-    let callback: Callback
+  init(queue: DispatchQueue, callback: @escaping Callback) {
+    self.queue = queue
+    self.callback = callback
+    output = AVCaptureAudioDataOutput()
 
-    init(queue: DispatchQueue, callback: @escaping Callback) {
-      self.queue = queue
-      self.callback = callback
-      output = AVCaptureAudioDataOutput()
+    super.init()
+    output.setSampleBufferDelegate(self, queue: queue)
+  }
 
-      super.init()
-      output.setSampleBufferDelegate(self, queue: queue)
-    }
-
-    @objc func captureOutput(
-      _ output: AVCaptureOutput,
-      didOutput sampleBuffer: CMSampleBuffer,
-      from connection: AVCaptureConnection
-    ) {
-      callback(sampleBuffer)
-    }
+  @objc func captureOutput(
+    _ output: AVCaptureOutput,
+    didOutput sampleBuffer: CMSampleBuffer,
+    from connection: AVCaptureConnection
+  ) {
+    callback(sampleBuffer)
   }
 }

@@ -35,9 +35,9 @@ enum RecordableError: Swift.Error {
 
 public protocol Recordable: AnyObject {
 
-  var recorder: SCNRecorder? { get set }
+  var recorder: Recorder? { get set }
 
-  var videoRecording: SCNVideoRecording? { get set }
+  var videoRecording: VideoRecording? { get set }
 }
 
 public extension Recordable {
@@ -56,14 +56,14 @@ public extension Recordable {
     recordableView.recordableLayer?.prepareForRecording()
     #endif // !targetEnvironment(simulator)
 
-    if recorder == nil { recorder = try SCNRecorder(recordableView) }
+    if recorder == nil { recorder = try Recorder(recordableView) }
   }
 
   @discardableResult
   func startVideoRecording(
     fileType: AVFileType = .mov,
-    timeScale: CMTimeScale = SCNRecorder.defaultTimeScale
-  ) throws -> SCNVideoRecording {
+    timeScale: CMTimeScale = Recorder.defaultTimeScale
+  ) throws -> VideoRecording {
     return try startVideoRecording(
       to: FileManager.default.temporaryDirectory.appendingPathComponent(
         "\(UUID().uuidString).\(fileType.fileExtension)",
@@ -78,8 +78,8 @@ public extension Recordable {
   func startVideoRecording(
     to url: URL,
     fileType: AVFileType = .mov,
-    timeScale: CMTimeScale = SCNRecorder.defaultTimeScale
-  ) throws -> SCNVideoRecording {
+    timeScale: CMTimeScale = Recorder.defaultTimeScale
+  ) throws -> VideoRecording {
     guard videoRecording == nil else { throw RecordableError.alreadyStarted }
 
     try prepareForRecording()
@@ -96,7 +96,7 @@ public extension Recordable {
     return videoRecording
   }
 
-  func finishVideoRecording(completionHandler handler: @escaping (SCNVideoRecordingOptions) -> Void) {
+  func finishVideoRecording(completionHandler handler: @escaping (VideoRecordingInfo) -> Void) {
     videoRecording?.finish { videoRecordingOptions in
       DispatchQueue.main.async { handler(videoRecordingOptions) }
     }

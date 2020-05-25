@@ -59,7 +59,6 @@ final class VideoRecorder {
     url: URL,
     fileType: AVFileType,
     videoConfiguration: VideoConfiguration,
-    audioConfiguration: AudioConfiguration,
     timeScale: CMTimeScale,
     queue: DispatchQueue
   ) throws {
@@ -69,7 +68,7 @@ final class VideoRecorder {
     guard assetWriter.canAdd(videoInput) else { throw Error.cantAddVideoAssetWriterInput }
     assetWriter.add(videoInput)
 
-    audioInput = AudioInput(audioConfiguration)
+    audioInput = AudioInput()
     guard assetWriter.canAdd(audioInput) else { throw Error.cantAddAudioAssterWriterInput }
     assetWriter.add(audioInput)
 
