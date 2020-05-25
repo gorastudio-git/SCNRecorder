@@ -59,8 +59,22 @@ extension SCNView: SceneRecordableView {
   }
   
   @objc dynamic func swizzled_setDelegate(_ delegate: SCNSceneRendererDelegate) {
-    if let sceneRecorder = sceneRecorder { sceneRecorder.delegate = delegate }
-    else { swizzled_setDelegate(delegate) }
+    if let baseRecorder = delegate as? BaseRecorder {
+        if let sceneRecorder = self.sceneRecorder {
+            baseRecorder.delegate = sceneRecorder.delegate
+            sceneRecorder.delegate = baseRecorder
+        }
+        else {
+            baseRecorder.delegate = self.delegate
+            swizzled_setDelegate(delegate)
+        }
+    }
+    else if let sceneRecorder = sceneRecorder {
+        sceneRecorder.delegate = delegate
+    }
+    else {
+        swizzled_setDelegate(delegate)
+    }
   }
 }
 
