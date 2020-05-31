@@ -15,10 +15,19 @@
     "tag": "1.2.0"
   },
   "module_name": "SCNRecorder",
+  "module_map": "SCNRecorder.modulemap",
   "swift_versions": "5.2",
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "Source/**/*.swift",
+  "source_files": [
+    "SCNRecorder.h",
+    "Source/**/*.{h,m,swift}"
+  ],
+  "public_header_files": [
+    "SCNRecorder.h",
+    "Source/**/*.h"
+  ],
+  "private_header_files": "Source/**/*.h",
   "swift_version": "5.2"
 }

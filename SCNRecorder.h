@@ -23,10 +23,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#ifdef __OBJC__
 #import <UIKit/UIKit.h>
+#else
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
+#endif
 
-//! Project version number for SCNRecorder.
 FOUNDATION_EXPORT double SCNRecorderVersionNumber;
-
-//! Project version string for SCNRecorder.
 FOUNDATION_EXPORT const unsigned char SCNRecorderVersionString[];

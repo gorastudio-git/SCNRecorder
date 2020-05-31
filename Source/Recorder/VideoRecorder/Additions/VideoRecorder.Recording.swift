@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
+//  VideoRecorder.Recording.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 11/03/2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,36 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum VideoRecordingState {
+extension VideoRecorder {
 
-  case ready
+  final class Recording: VideoRecording {
 
-  case preparing
+    @Observable var duration: TimeInterval = 0.0
 
-  case recording
+    var durationObserver: Observable<TimeInterval> { $duration }
 
-  case paused
+    @Observable var state: VideoRecording.State = .preparing
 
-  case canceled
+    var stateObserver: Observable<VideoRecording.State> { $state }
 
-  case finished
+    let videoRecorder: VideoRecorder
 
-  case failed(_ error: Swift.Error)
-}
+    var url: URL { videoRecorder.url }
 
-extension VideoRecordingState: Equatable {
+    var fileType: AVFileType { videoRecorder.fileType }
 
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
+    init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
 
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
+    func resume() { videoRecorder.resume() }
 
-    default: return false
+    func pause() { videoRecorder.pause() }
+
+    func finish(completionHandler handler: @escaping (_ info: VideoRecordingInfo) -> Void) {
+      videoRecorder.finish { handler(self) }
     }
+
+    func cancel() { videoRecorder.cancel() }
   }
 }

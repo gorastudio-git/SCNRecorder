@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
+//  BaseRecorder.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 25.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,36 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
+import ARKit
 
-public enum VideoRecordingState {
+public class BaseRecorder: NSObject, Recorder {
 
-  case ready
+  let mediaRecorder: MediaRecorder
 
-  case preparing
+  lazy var audioInput: AudioInput = {
+    let audioInput = AudioInput(queue: queue)
+    mediaRecorder.audioInput = audioInput
+    return audioInput
+  }()
 
-  case recording
+  let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
 
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
+  public override init() { self.mediaRecorder = MediaRecorder(queue: queue) }
 }
 
-extension VideoRecordingState: Equatable {
+extension BaseRecorder: CompositeRecorder {
 
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
+  var composedRecorder: InternalRecorder { mediaRecorder }
+}
 
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
+// MARK: - ARSCNViewDelegate
+extension BaseRecorder: ARSCNViewDelegate {
 
-    default: return false
-    }
+  @objc public func session(
+    _ session: ARSession,
+    didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
+  ) {
+    audioInput.session(session, didOutputAudioSampleBuffer: audioSampleBuffer)
   }
 }

@@ -32,14 +32,18 @@ public protocol VideoRecordingInfo: AnyObject {
 
   var fileType: AVFileType { get }
 
-  var duration: Property<TimeInterval> { get }
+  var duration: TimeInterval { get }
 }
 
 public protocol VideoRecording: VideoRecordingInfo {
 
   typealias State = VideoRecordingState
 
-  var state: Property<State> { get }
+  var durationObserver: Observable<TimeInterval> { get }
+
+  var state: State { get }
+
+  var stateObserver: Observable<State> { get }
 
   func resume()
 

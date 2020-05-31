@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
-//  SCNRecorder
+//  SceneRecorder.swift
+//  SceneRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 11/03/2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,25 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
+import ARKit
 
-public enum VideoRecordingState {
+public final class SceneRecorder: BaseRecorder {
 
-  case ready
+  let videoInput: VideoInput
 
-  case preparing
+  public init(_ recordableView: SceneRecordableView, timeScale: CMTimeScale = 600) throws {
+    self.videoInput = try VideoInput(recordableView: recordableView, timeScale: timeScale)
+    super.init()
+    self.mediaRecorder.videoInput = videoInput
+  }
 
-  case recording
-
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
-}
-
-extension VideoRecordingState: Equatable {
-
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
-    }
+  public func renderer(
+    _ renderer: SCNSceneRenderer,
+    didRenderScene scene: SCNScene,
+    atTime time: TimeInterval
+  ) {
+    do { try videoInput.renderer(renderer, didRenderScene: scene, atTime: time) }
+    catch { self.error = error }
   }
 }

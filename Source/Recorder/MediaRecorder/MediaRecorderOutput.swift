@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
+//  MediaRecorderOutput.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 24.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,23 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum VideoRecordingState {
+protocol MediaRecorderOutput: AnyObject {
 
-  case ready
+  typealias Audio = AudioMediaRecorderOutput
 
-  case preparing
-
-  case recording
-
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
+  typealias Video = VideoMediaRecorderOutput
 }
 
-extension VideoRecordingState: Equatable {
+protocol AudioMediaRecorderOutput: MediaRecorderOutput {
 
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
+  func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer)
+}
 
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
+protocol VideoMediaRecorderOutput: MediaRecorderOutput {
 
-    default: return false
-    }
-  }
+  func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer)
+
+  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime)
 }

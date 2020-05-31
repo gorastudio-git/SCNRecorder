@@ -10,7 +10,6 @@
 #endif
 #endif
 
-
 FOUNDATION_EXPORT double SCNRecorderVersionNumber;
 FOUNDATION_EXPORT const unsigned char SCNRecorderVersionString[];
 

@@ -36,15 +36,21 @@ extension SwappingFilter: Filter {
 
   public var inputKeys: [String] { filter.inputKeys }
 
+  public func makeCIFilter() throws -> CIFilter {
+    let ciFilter = try filter.makeCIFilter()
+
+    let image = ciFilter.value(forKey: kCIInputImageKey) as? CIImage
+    let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
+
+    if let image = image { try ciFilter.setBackgroundImage(image) }
+    if let backgroundImage = backgroundImage { try ciFilter.setImage(backgroundImage) }
+
+    return ciFilter
+  }
+
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     let ciFilter = try filter.makeCIFilter(for: image)
-
-    guard let backgroundImage = ciFilter.value(forKey: kCIInputBackgroundImageKey) as? CIImage
-    else { throw Error.notSpecified(key: kCIInputBackgroundImageKey) }
-
-    try ciFilter.setImage(backgroundImage)
     try ciFilter.setBackgroundImage(image)
-
     return ciFilter
   }
 }

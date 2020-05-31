@@ -1,9 +1,9 @@
 //
-//  VideoRecordingState.swift
+//  SCNView+SceneRecordable.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 31.12.2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,20 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
 
-public enum VideoRecordingState {
+private var videoRecordingKey: UInt8 = 0
 
-  case ready
+extension SCNView: Recordable {
 
-  case preparing
+  var videoRecordingStorage: AssociatedStorage<VideoRecording> {
+    AssociatedStorage(object: self, key: &videoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  }
 
-  case recording
+  public var recorder: Recorder? { sceneRecorder }
 
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
-}
-
-extension VideoRecordingState: Equatable {
-
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
-    }
+  public var videoRecording: VideoRecording? {
+    get { videoRecordingStorage.get() }
+    set { videoRecordingStorage.set(newValue) }
   }
 }

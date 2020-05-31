@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
+//  Weak.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 29.12.2019.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,39 +25,20 @@
 
 import Foundation
 
-public enum VideoRecordingState {
+@propertyWrapper
+final class Weak<Object: AnyObject> {
 
-  case ready
+  private weak var _wrappedValue: AnyObject?
 
-  case preparing
-
-  case recording
-
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
-}
-
-extension VideoRecordingState: Equatable {
-
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
-    }
+  var wrappedValue: Object? {
+    get { _wrappedValue as? Object }
+    set { _wrappedValue = newValue }
   }
+
+  init(_ object: Object) { self._wrappedValue = object }
+
+  init(wrappedValue: Object?) { self._wrappedValue = wrappedValue }
+
+  func get() -> Object? { wrappedValue }
 }
+

@@ -26,211 +26,81 @@
 import Foundation
 
 ///CICategoryCompositeOperation
-public enum CompositeFilter {
+public struct CompositeFilter {
 
-  ///CIAdditionCompositing
-  case addition(backgroundImage: CIImage)
+  enum `Type`: String {
 
-  ///CIColorBlendMode
-  case colorBlend(backgroundImage: CIImage)
+    case addition = "CIAdditionCompositing"
 
-  ///CIColorBurnBlendMode
-  case colorBurnBlend(backgroundImage: CIImage)
+    case colorBlend = "CIColorBlendMode"
 
-  ///CIColorDodgeBlendMode
-  case colorDodgeBlend(backgroundImage: CIImage)
+    case colorBurnBlend = "CIColorBurnBlendMode"
 
-  ///CIDarkenBlendMode
-  case darkenBlend(backgroundImage: CIImage)
+    case colorDodgeBlend = "CIColorDodgeBlendMode"
 
-  ///CIDifferenceBlendMode
-  case differenceBlend(backgroundImage: CIImage)
+    case darkenBlend = "CIDarkenBlendMode"
 
-  ///CIDivideBlendMode
-  case divideBlend(backgroundImage: CIImage)
+    case differenceBlend = "CIDifferenceBlendMode"
 
-  ///CIExclusionBlendMode
-  case exclusionBlend(backgroundImage: CIImage)
+    case divideBlend = "CIDivideBlendMode"
 
-  ///CIHardLightBlendMode
-  case hardLightBlend(backgroundImage: CIImage)
+    case exclusionBlend = "CIExclusionBlendMode"
 
-  ///CIHueBlendMode
-  case hueBlend(backgroundImage: CIImage)
+    case hardLightBlend = "CIHardLightBlendMode"
 
-  ///CILightenBlendMode
-  case lightenBlend(backgroundImage: CIImage)
+    case hueBlend = "CIHueBlendMode"
 
-  ///CILinearBurnBlendMode
-  case linearBurnBlend(backgroundImage: CIImage)
+    case lightenBlend = "CILightenBlendMode"
 
-  ///CILinearDodgeBlendMode
-  case linearDodgeBlend(backgroundImage: CIImage)
+    case linearBurnBlend = "CILinearBurnBlendMode"
 
-  ///CILuminosityBlendMode
-  case luminosityBlend(backgroundImage: CIImage)
+    case linearDodgeBlend = "CILinearDodgeBlendMode"
 
-  ///CIMaximumCompositing
-  case maximum(backgroundImage: CIImage)
+    case luminosityBlend = "CILuminosityBlendMode"
 
-  ///CIMinimumCompositing
-  case minimum(backgroundImage: CIImage)
+    case maximum = "CIMaximumCompositing"
 
-  ///CIMultiplyBlendMode
-  case multiplyBlend(backgroundImage: CIImage)
+    case minimum = "CIMinimumCompositing"
 
-  ///CIMultiplyCompositing
-  case multiply(backgroundImage: CIImage)
+    case multiplyBlend = "CIMultiplyBlendMode"
 
-  ///CIOverlayBlendMode
-  case overlay(backgroundImage: CIImage)
+    case multiply = "CIMultiplyCompositing"
 
-  ///CIPinLightBlendMode
-  case pinLightBlend(backgroundImage: CIImage)
+    case overlay = "CIOverlayBlendMode"
 
-  ///CISaturationBlendMode
-  case saturationBlend(backgroundImage: CIImage)
+    case pinLightBlend = "CIPinLightBlendMode"
 
-  ///CIScreenBlendMode
-  case screenBlend(backgroundImage: CIImage)
+    case saturationBlend = "CISaturationBlendMode"
 
-  ///CISoftLightBlendMode
-  case softLightBlend(backgroundImage: CIImage)
+    case screenBlend = "CIScreenBlendMode"
 
-  ///CISourceAtopCompositing
-  case sourceAtop(backgroundImage: CIImage)
+    case softLightBlend = "CISoftLightBlendMode"
 
-  ///CISourceInCompositing
-  case sourceIn(backgroundImage: CIImage)
+    case sourceAtop = "CISourceAtopCompositing"
 
-  ///CISourceOutCompositing
-  case sourceOut(backgroundImage: CIImage)
+    case sourceIn = "CISourceInCompositing"
 
-  ///CISourceOverCompositing
-  case sourceOver(backgroundImage: CIImage)
+    case sourceOut = "CISourceOutCompositing"
 
-  ///CISubtractBlendMode
-  case subtractBlend(backgroundImage: CIImage)
+    case sourceOver = "CISourceOverCompositing"
 
-  var backgroundImage: CIImage {
-    switch self {
-    case .addition(let backgroundImage),
-         .colorBlend(let backgroundImage),
-         .colorBurnBlend(let backgroundImage),
-         .colorDodgeBlend(let backgroundImage),
-         .darkenBlend(let backgroundImage),
-         .differenceBlend(let backgroundImage),
-         .divideBlend(let backgroundImage),
-         .exclusionBlend(let backgroundImage),
-         .hardLightBlend(let backgroundImage),
-         .hueBlend(let backgroundImage),
-         .lightenBlend(let backgroundImage),
-         .linearBurnBlend(let backgroundImage),
-         .linearDodgeBlend(let backgroundImage),
-         .luminosityBlend(let backgroundImage),
-         .maximum(let backgroundImage),
-         .minimum(let backgroundImage),
-         .multiplyBlend(let backgroundImage),
-         .multiply(let backgroundImage),
-         .overlay(let backgroundImage),
-         .pinLightBlend(let backgroundImage),
-         .saturationBlend(let backgroundImage),
-         .screenBlend(let backgroundImage),
-         .softLightBlend(let backgroundImage),
-         .sourceAtop(let backgroundImage),
-         .sourceIn(let backgroundImage),
-         .sourceOut(let backgroundImage),
-         .sourceOver(let backgroundImage),
-         .subtractBlend(let backgroundImage):
-      return backgroundImage
-    }
+    case subtractBlend = "CISubtractBlendMode"
   }
 
-  func makeCIFilter() throws -> CIFilter {
-    guard let filter = CIFilter(name: name) else { throw Error.notFound }
-    try filter.setBackgroundImage(backgroundImage)
-    return filter
-  }
-}
+  var type: Type
 
-public extension CompositeFilter {
-
-  // swiftlint:disable cyclomatic_complexity
-  mutating func setBackgroundImage(_ backgroundImage: CIImage) {
-    switch self {
-    case .addition: self = .addition(backgroundImage: backgroundImage)
-    case .colorBlend: self = .colorBlend(backgroundImage: backgroundImage)
-    case .colorBurnBlend: self = .colorBurnBlend(backgroundImage: backgroundImage)
-    case .colorDodgeBlend: self = .colorDodgeBlend(backgroundImage: backgroundImage)
-    case .darkenBlend: self = .darkenBlend(backgroundImage: backgroundImage)
-    case .differenceBlend: self = .differenceBlend(backgroundImage: backgroundImage)
-    case .divideBlend: self = .divideBlend(backgroundImage: backgroundImage)
-    case .exclusionBlend: self = .exclusionBlend(backgroundImage: backgroundImage)
-    case .hardLightBlend: self = .hardLightBlend(backgroundImage: backgroundImage)
-    case .hueBlend: self = .hueBlend(backgroundImage: backgroundImage)
-    case .lightenBlend: self = .lightenBlend(backgroundImage: backgroundImage)
-    case .linearBurnBlend: self = .linearBurnBlend(backgroundImage: backgroundImage)
-    case .linearDodgeBlend: self = .linearDodgeBlend(backgroundImage: backgroundImage)
-    case .luminosityBlend: self = .luminosityBlend(backgroundImage: backgroundImage)
-    case .maximum: self = .maximum(backgroundImage: backgroundImage)
-    case .minimum: self = .minimum(backgroundImage: backgroundImage)
-    case .multiplyBlend: self = .multiplyBlend(backgroundImage: backgroundImage)
-    case .multiply: self = .multiply(backgroundImage: backgroundImage)
-    case .overlay: self = .overlay(backgroundImage: backgroundImage)
-    case .pinLightBlend: self = .pinLightBlend(backgroundImage: backgroundImage)
-    case .saturationBlend: self = .saturationBlend(backgroundImage: backgroundImage)
-    case .screenBlend: self = .screenBlend(backgroundImage: backgroundImage)
-    case .softLightBlend: self = .softLightBlend(backgroundImage: backgroundImage)
-    case .sourceAtop: self = .sourceAtop(backgroundImage: backgroundImage)
-    case .sourceIn: self = .sourceIn(backgroundImage: backgroundImage)
-    case .sourceOut: self = .sourceOut(backgroundImage: backgroundImage)
-    case .sourceOver: self = .sourceOver(backgroundImage: backgroundImage)
-    case .subtractBlend: self = .subtractBlend(backgroundImage: backgroundImage)
-    }
-  }
-  // swiftlint:enable cyclomatic_complexity
+  var backgroundImage: CIImage
 }
 
 extension CompositeFilter: Filter {
 
-  public var inputKeys: [String] { return (try? makeCIFilter())?.inputKeys ?? [] }
+  public var inputKeys: [String] { (try? makeCIFilter())?.inputKeys ?? [] }
 
-  public var name: String {
-    switch self {
-    case .addition: return "CIAdditionCompositing"
-    case .colorBlend: return "CIColorBlendMode"
-    case .colorBurnBlend: return "CIColorBurnBlendMode"
-    case .colorDodgeBlend: return "CIColorDodgeBlendMode"
-    case .darkenBlend: return "CIDarkenBlendMode"
-    case .differenceBlend: return "CIDifferenceBlendMode"
-    case .divideBlend: return "CIDivideBlendMode"
-    case .exclusionBlend: return "CIExclusionBlendMode"
-    case .hardLightBlend: return "CIHardLightBlendMode"
-    case .hueBlend: return "CIHueBlendMode"
-    case .lightenBlend: return "CILightenBlendMode"
-    case .linearBurnBlend: return "CILinearBurnBlendMode"
-    case .linearDodgeBlend: return "CILinearDodgeBlendMode"
-    case .luminosityBlend: return "CILuminosityBlendMode"
-    case .maximum: return "CIMaximumCompositing"
-    case .minimum: return "CIMinimumCompositing"
-    case .multiplyBlend: return "CIMultiplyBlendMode"
-    case .multiply: return "CIMultiplyCompositing"
-    case .overlay: return "CIOverlayBlendMode"
-    case .pinLightBlend: return "CIPinLightBlendMode"
-    case .saturationBlend: return "CISaturationBlendMode"
-    case .screenBlend: return "CIScreenBlendMode"
-    case .softLightBlend: return "CISoftLightBlendMode"
-    case .sourceAtop: return "CISourceAtopCompositing"
-    case .sourceIn: return "CISourceInCompositing"
-    case .sourceOut: return "CISourceOutCompositing"
-    case .sourceOver: return "CISourceOverCompositing"
-    case .subtractBlend: return "CISubtractBlendMode"
-    }
-  }
+  public var name: String { type.rawValue }
 
-  public func makeCIFilter(for image: CIImage) throws -> CIFilter {
-    let filter = try makeCIFilter()
-    try filter.setImage(image)
+  public func makeCIFilter() throws -> CIFilter {
+    guard let filter = CIFilter(name: name) else { throw Error.notFound }
+    try filter.setBackgroundImage(backgroundImage)
     return filter
   }
 }

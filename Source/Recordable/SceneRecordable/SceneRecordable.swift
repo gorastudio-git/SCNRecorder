@@ -1,9 +1,9 @@
 //
-//  VideoRecordingState.swift
+//  SceneRecordable.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 25.05.2020.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,39 +25,12 @@
 
 import Foundation
 
-public enum VideoRecordingState {
+public protocol SceneRecordable: Recordable {
 
-  case ready
-
-  case preparing
-
-  case recording
-
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
+  var sceneRecorder: SceneRecorder? { get set }
 }
 
-extension VideoRecordingState: Equatable {
+extension SceneRecordable {
 
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
-    }
-  }
+  public var recorder: Recorder? { sceneRecorder }
 }

@@ -121,49 +121,6 @@ override func viewDidLoad() {
 }
 ```
 
-### Swizzling
-
-To achieve the simplest integration SCNRecorder internally swizzles a few functions.
-
-<details><summary>What if you strongly prefer not to have swizzlings in the code?</summary>
-<p>
-
-You can disable it by adding the `DO_NOT_SWIZZLE` compiler flag to the framework.
-But this way, you have to perform some additional setup.
-
-#### Interface Builder
-
-Using Interface Builder you have to set a class of a scene view to `ARSCNRecordableView` or `SCNRecordableView` and choose SCNRecorder as a module. 
-You can inherit from the recorder's views and use them instead.
-
-![SCNRecorder IB integration](/images/InterfaceBuilder.png?raw=true )
-
-#### Code
-
-You have to use `SCNRecordableView` or `ARSCNRecordableView` instead of `SCNView` or `ARSCNView` respectively.
-
-```
-let sceneView: SCNView = SCNRecordableView(...)
-```
-or
-
-```
-let sceneView: ARSCNView = ARSCNRecordableView(...)
-```
-
-If your classes inherit from `SCNView`  or `ARSCNView` just inherit them from `SCNRecordableView` or `ARSCNRecordableView`.
-
-```
-class MySceneView: SCNRecordableView { ... }
-```
-or
-
-```
-class MyArSceneView: ARSCNRecordableView { ... }
-```
-</p>
-</details>
-
 ### That's it!
 
 Look at the Example project for more details.

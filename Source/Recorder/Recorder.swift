@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
+//  Recorder.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 25.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,32 @@
 //  THE SOFTWARE.
 
 import Foundation
+import AVFoundation
 
-public enum VideoRecordingState {
+public protocol Recorder: AnyObject {
 
-  case ready
+  var filters: [Filter] { get set }
 
-  case preparing
+  var error: Swift.Error? { get }
+  
+  var errorObserver: Observable<Swift.Error?> { get }
 
-  case recording
+  func makeVideoRecording(to url: URL, fileType: AVFileType) throws -> VideoRecording
 
-  case paused
+  func takePhoto(
+    scale: CGFloat,
+    orientation: UIImage.Orientation,
+    completionHandler handler: @escaping (UIImage) -> Void
+  )
 
-  case canceled
+  func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void)
 
-  case finished
-
-  case failed(_ error: Swift.Error)
+  func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void)
 }
 
-extension VideoRecordingState: Equatable {
+extension Recorder {
 
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
-    }
+  func makeVideoRecording(to url: URL) throws -> VideoRecording {
+    try makeVideoRecording(to: url, fileType: .mov)
   }
 }

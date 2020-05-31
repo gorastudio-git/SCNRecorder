@@ -132,11 +132,13 @@ public struct WatermarkFilter: Filter {
     horizontalAligment: HorizontalAligment = .center(padding: 0.0)
   ) {
     self.init(
-      compositeFilter: .sourceOver(backgroundImage: watermark),
+      compositeFilter: CompositeFilter(type: .sourceOver, backgroundImage: watermark),
       verticalAligment: verticalAligment,
       horizontalAligment: horizontalAligment
     )
   }
+
+  public func makeCIFilter() throws -> CIFilter { throw Error.noOutput }
 
   public func makeCIFilter(for image: CIImage) throws -> CIFilter {
     var compositeFilter = self.compositeFilter
@@ -156,12 +158,12 @@ public struct WatermarkFilter: Filter {
     )
 
     let transform = CGAffineTransform(translationX: translationX, y: translationY)
-    let tranformFilter = Geometry.affineTransform(transform: transform)
+    let tranformFilter = GeometryFilter.affineTransform(transform: transform)
     let ciTransformFilter = try tranformFilter.makeCIFilter(for: watermark)
 
     guard let transformedWatermark = ciTransformFilter.outputImage else { throw Error.noOutput }
 
-    compositeFilter.setBackgroundImage(transformedWatermark)
+    compositeFilter.backgroundImage = transformedWatermark
     let swappedCompositeFilter = try compositeFilter.swapped()
     return try swappedCompositeFilter.makeCIFilter(for: image)
   }

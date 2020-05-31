@@ -34,8 +34,6 @@ class ViewController: UIViewController {
 
   @IBOutlet var sceneView: SCNView!
 
-  var arView: ARSCNView! { sceneView as? ARSCNView }
-
   @IBOutlet var durationLabel: UILabel!
 
   @IBOutlet var photoButton: UIButton!
@@ -56,16 +54,17 @@ class ViewController: UIViewController {
     // Set the scene to the view
     sceneView.scene = scene
     sceneView.rendersContinuously = true
+    sceneView.delegate = self
 
     // It is recommended to prepare the view for recording at viewDidLoad
-    do { try arView.clean.prepareForRecording() }
+    do { try sceneView.prepareForRecording() }
     catch { print("Something went wrong during recording preparation: \(error)") }
   }
 
   @IBAction func takePhoto(_ sender: UIButton) {
     do {
       // A fastest way to capture photo
-      try arView.clean.takePhoto { (photo) in
+      try sceneView.takePhoto { (photo) in
         // Create and present photo preview controller
         let controller = PhotoPreviewController(photo: photo)
         self.navigationController?.pushViewController(controller, animated: true)
@@ -84,12 +83,12 @@ class ViewController: UIViewController {
 
   @IBAction func startVideoRecording() {
     do {
-      let videoRecording = try arView.clean.startVideoRecording()
+      let videoRecording = try sceneView.startVideoRecording()
 
       // Observe for duration
-      videoRecording.duration.observer = { [weak self] duration in
+      videoRecording.durationObserver.didSet = { [weak self] duration in
         DispatchQueue.main.async {
-          let seconds = Int(duration)
+          let seconds = Int(duration.value)
           self?.durationLabel.text = String(format: "%02d:%02d", seconds / 60, seconds % 60)
         }
       }
@@ -105,7 +104,7 @@ class ViewController: UIViewController {
 
   @objc func finishVideoRecording() {
     // Finish recording
-    arView.clean.finishVideoRecording { (recording) in
+    sceneView.finishVideoRecording { (recording) in
       // Create a controller to preview captured video
       let controller = AVPlayerViewController()
 
@@ -146,4 +145,11 @@ class ViewController: UIViewController {
       completion: nil
     )
   }
+}
+
+extension ViewController: ARSCNViewDelegate {
+
+//  func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
+//    print("Update")
+//  }
 }

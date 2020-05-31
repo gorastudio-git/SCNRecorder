@@ -37,7 +37,6 @@ public struct VideoSettings {
   /// The size of the output video.
   ///
   /// If `.zero` the size of the video source will be used.
-  ///
   /// Look at `ScalingMode` for possible scaling modes.
   var size: CGSize = .zero
 

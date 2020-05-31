@@ -1,9 +1,9 @@
 //
-//  VideoRecordingState.swift
+//  SCNView+SceneRecordableView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 30.12.2019.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,27 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
+import ARKit
+import SCNRecorder.Private
 
-public enum VideoRecordingState {
+private var sceneRecorderKey: UInt8 = 0
 
-  case ready
+extension SCNView: SceneRecordableView {
 
-  case preparing
+  var sceneRecorderStorage: AssociatedStorage<SceneRecorder> {
+    AssociatedStorage(object: self, key: &sceneRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  }
 
-  case recording
+  public var sceneRecorder: SceneRecorder? {
+    get { sceneRecorderStorage.get() }
+    set {
+      let sceneRecorder = self.sceneRecorder
+      guard sceneRecorder !== newValue else { return }
 
-  case paused
-
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
-}
-
-extension VideoRecordingState: Equatable {
-
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
+      if let recorder = sceneRecorder { removeDelegate(recorder) }
+      sceneRecorderStorage.set(newValue)
+      if let recorder = newValue { addDelegate(recorder) }
     }
   }
 }

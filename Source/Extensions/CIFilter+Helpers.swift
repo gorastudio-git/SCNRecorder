@@ -28,66 +28,62 @@ import Foundation
 public extension CIFilter {
 
   func testIfApplicable(key: String) throws {
-    guard inputKeys.contains(key) else { throw Error.notApplicable(key: key) }
+    guard inputKeys.contains(key) else { throw Filter.Error.notApplicable(key: key) }
+  }
+
+  func setValue(_ value: @autoclosure () -> Any, ifApplicableForKey key: String) throws {
+    try testIfApplicable(key: key)
+    setValue(value(), forKey: key)
   }
 
   func setImage(_ image: CIImage) throws {
-    try testIfApplicable(key: kCIInputImageKey)
-    setValue(image, forKey: kCIInputImageKey)
+    try setValue(image, ifApplicableForKey: kCIInputImageKey)
   }
 
   func setBackgroundImage(_ backgroundImage: CIImage) throws {
-    try testIfApplicable(key: kCIInputBackgroundImageKey)
-    setValue(backgroundImage, forKey: kCIInputBackgroundImageKey)
+    try setValue(backgroundImage, ifApplicableForKey: kCIInputBackgroundImageKey)
   }
 
   func setAffineTransform(_ affineTransform: CGAffineTransform) throws {
-    try testIfApplicable(key: kCIInputTransformKey)
-    setValue(NSValue(cgAffineTransform: affineTransform), forKey: kCIInputTransformKey)
+    try setValue(
+      NSValue(cgAffineTransform: affineTransform),
+      ifApplicableForKey: kCIInputTransformKey
+    )
   }
 
   func setRectangle(_ rectange: CGRect) throws {
-    try testIfApplicable(key: "inputRectangle")
-    setValue(CIVector(cgRect: rectange), forKey: "inputRectangle")
+    try setValue(CIVector(cgRect: rectange), ifApplicableForKey: "inputRectangle")
   }
 
   func setScale(_ scale: CGFloat) throws {
-    try testIfApplicable(key: kCIInputScaleKey)
-    setValue(scale, forKey: kCIInputScaleKey)
+    try setValue(scale, ifApplicableForKey: kCIInputScaleKey)
   }
 
   func setAspectRatio(_ aspectRatio: CGFloat) throws {
-    try testIfApplicable(key: kCIInputAspectRatioKey)
-    setValue(aspectRatio, forKey: kCIInputAspectRatioKey)
+    try setValue(aspectRatio, ifApplicableForKey: kCIInputAspectRatioKey)
   }
 
   func setTopLeft(_ topLeft: CGPoint) throws {
-    try testIfApplicable(key: "inputTopLeft")
-    setValue(CIVector(cgPoint: topLeft), forKey: "inputTopLeft")
+    try setValue(CIVector(cgPoint: topLeft), ifApplicableForKey: "inputTopLeft")
   }
 
   func setTopRight(_ topRight: CGPoint) throws {
-    try testIfApplicable(key: "inputTopRight")
-    setValue(CIVector(cgPoint: topRight), forKey: "inputTopRight")
+    try setValue(CIVector(cgPoint: topRight), ifApplicableForKey: "inputTopRight")
   }
 
   func setBottomLeft(_ bottomLeft: CGPoint) throws {
-    try testIfApplicable(key: "inputBottomRight")
-    setValue(CIVector(cgPoint: bottomLeft), forKey: "inputBottomRight")
+    try setValue(CIVector(cgPoint: bottomLeft), ifApplicableForKey: "inputBottomLeft")
   }
 
   func setBottomRight(_ bottomRight: CGPoint) throws {
-    try testIfApplicable(key: "inputBottomLeft")
-    setValue(CIVector(cgPoint: bottomRight), forKey: "inputBottomLeft")
+    try setValue(CIVector(cgPoint: bottomRight), ifApplicableForKey: "inputBottomRight")
   }
 
   func setExtent(_ extent: CGRect) throws {
-    try testIfApplicable(key: kCIInputExtentKey)
-    setValue(CIVector(cgRect: extent), forKey: kCIInputExtentKey)
+    try setValue(CIVector(cgRect: extent), ifApplicableForKey: kCIInputExtentKey)
   }
 
   func setAngle(_ angle: CGFloat) throws {
-    try testIfApplicable(key: kCIInputAngleKey)
-    setValue(angle, forKey: kCIInputAngleKey)
+    try setValue(angle, ifApplicableForKey: kCIInputAngleKey)
   }
 }
