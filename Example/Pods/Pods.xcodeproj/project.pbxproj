@@ -241,7 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				5F001F3FD50B5A8E7598E4C9825A6DE4 /* CleanRecordable.swift */,
-				F630143AFB9264E77733B783DFE6F588 /* Swizzling */,
+				F2BBC3F8D73C10A5F825F388CF8161D4 /* ARSCNView+CleanRecordable.swift */,
 			);
 			path = CleanRecordable;
 			sourceTree = "<group>";
@@ -577,14 +577,6 @@
 				504F26D8F8E1575AFEE09BD19D890909 /* ImageRecorder.swift */,
 			);
 			path = ImageRecorder;
-			sourceTree = "<group>";
-		};
-		F630143AFB9264E77733B783DFE6F588 /* Swizzling */ = {
-			isa = PBXGroup;
-			children = (
-				F2BBC3F8D73C10A5F825F388CF8161D4 /* ARSCNView+CleanRecordable.swift */,
-			);
-			path = Swizzling;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
