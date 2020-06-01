@@ -47,7 +47,7 @@ public protocol Recorder: AnyObject {
   func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void)
 }
 
-extension Recorder {
+public extension Recorder {
 
   func makeVideoRecording(to url: URL) throws -> VideoRecording {
     try makeVideoRecording(to: url, fileType: .mov)

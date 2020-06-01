@@ -52,9 +52,13 @@ public extension Recordable {
 
       this.sceneRecorder = try this.sceneRecorder ?? SceneRecorder(this)
     }
-
+    
     if let this = self as? CleanRecordable {
-      this.cleanRecorder = this.cleanRecorder ?? CleanRecorder(this)
+      this.cleanRecorder = this.cleanRecorder ?? {
+        let cleanRecorder = CleanRecorder(this)
+        this.scnView.addDelegate(cleanRecorder)
+        return cleanRecorder
+      }()
     }
 
     if recorder == nil { throw RecordableError.preparation }

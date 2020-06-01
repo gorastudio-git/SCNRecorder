@@ -57,5 +57,6 @@ extension SCNView {
       return
     }
     multicastDelegate.origin = delegate
+    swizzled_setDelegate(multicastDelegate)
   }
 }

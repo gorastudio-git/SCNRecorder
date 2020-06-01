@@ -34,6 +34,8 @@ private var cleanVideoRecordingKey: UInt8 = 0
 
 extension ARSCNView: CleanRecordable {
 
+  public var scnView: SCNView { self }
+
   var cleanRecorderStorage: AssociatedStorage<CleanRecorder> {
     AssociatedStorage(object: self, key: &cleanRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
   }

@@ -24,10 +24,13 @@
 //  THE SOFTWARE.
 
 import Foundation
+import SceneKit
 
 private var cleanRecorderKey: UInt8 = 0
 
 public protocol CleanRecordable: AnyObject {
+
+  var scnView: SCNView { get }
 
   var cleanRecorder: CleanRecorder? { get set }
 
@@ -44,6 +47,8 @@ extension CleanRecordable {
 }
 
 private final class Clean: CleanRecordable, Recordable {
+
+  var scnView: SCNView { clean?.scnView ?? SCNView() }
 
   var cleanRecorder: CleanRecorder? {
     get { clean?.cleanRecorder }
