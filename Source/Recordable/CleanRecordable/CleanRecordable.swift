@@ -41,12 +41,14 @@ public protocol CleanRecordable: AnyObject {
   var clean: Recordable { get }
 }
 
+protocol InternalCleanRecordable: CleanRecordable { }
+
 extension CleanRecordable {
 
   public var clean: Recordable { Clean(clean: self) }
 }
 
-private final class Clean: CleanRecordable, Recordable {
+private final class Clean: InternalCleanRecordable, Recordable {
 
   var scnView: SCNView { clean?.scnView ?? SCNView() }
 

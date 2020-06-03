@@ -53,7 +53,7 @@ public extension Recordable {
       this.sceneRecorder = try this.sceneRecorder ?? SceneRecorder(this)
     }
     
-    if let this = self as? CleanRecordable {
+    if let this = self as? InternalCleanRecordable {
       this.cleanRecorder = this.cleanRecorder ?? {
         let cleanRecorder = CleanRecorder(this)
         this.scnView.addDelegate(cleanRecorder)
