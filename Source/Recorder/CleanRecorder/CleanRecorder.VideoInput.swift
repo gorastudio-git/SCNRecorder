@@ -13,12 +13,12 @@ extension CleanRecorder {
 
   final class VideoInput: MediaRecorder.Input.PixelBufferVideo, TimeScalable {
 
-    weak var cleanRecordable: CleanRecordable?
+    let cleanRecordable: CleanRecordable
 
     let timeScale: CMTimeScale
 
     var recommendedVideoSettings: [String: Any] {
-      guard let buffer = cleanRecordable?.cleanPixelBuffer else { return [:] }
+      guard let buffer = cleanRecordable.cleanPixelBuffer else { return [:] }
       return [
         AVVideoWidthKey: buffer.width,
         AVVideoHeightKey: buffer.height,
@@ -52,7 +52,7 @@ extension CleanRecorder.VideoInput {
     atTime time: TimeInterval
   ) throws {
     guard started, bufferDelegate != nil else { return }
-    guard let pixelBuffer = cleanRecordable?.cleanPixelBuffer else { return }
+    guard let pixelBuffer = cleanRecordable.cleanPixelBuffer else { return }
 
     bufferDelegate?.input(self, didOutput: pixelBuffer, at: timeFromSeconds(time))
   }
