@@ -29,37 +29,37 @@
 import Foundation
 import ARKit
 
-private var cleanRecorderKey: UInt8 = 0
-private var cleanVideoRecordingKey: UInt8 = 0
-
-extension ARSCNView: CleanRecordable {
-
-  public var scnView: SCNView { self }
-
-  var cleanRecorderStorage: AssociatedStorage<CleanRecorder> {
-    AssociatedStorage(object: self, key: &cleanRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
-  }
-
-  public var cleanRecorder: CleanRecorder? {
-    get { cleanRecorderStorage.get() }
-    set {
-      let cleanRecorder = self.cleanRecorder
-      guard cleanRecorder !== newValue else { return }
-
-      if let recorder = cleanRecorder { removeDelegate(recorder) }
-      cleanRecorderStorage.set(newValue)
-      if let recorder = newValue { addDelegate(recorder) }
-    }
-  }
-
-  var cleanVideoRecordingStorage: AssociatedStorage<VideoRecording> {
-    AssociatedStorage(object: self, key: &cleanVideoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
-  }
-
-  public var cleanVideoRecording: VideoRecording? {
-    get { cleanVideoRecordingStorage.get() }
-    set { cleanVideoRecordingStorage.set(newValue) }
-  }
-
-  public var cleanPixelBuffer: CVPixelBuffer? { session.currentFrame?.capturedImage }
-}
+//private var cleanRecorderKey: UInt8 = 0
+//private var cleanVideoRecordingKey: UInt8 = 0
+//
+//extension ARSCNView: CleanRecordable {
+//
+//  public var scnView: SCNView { self }
+//
+//  var cleanRecorderStorage: AssociatedStorage<CleanRecorder> {
+//    AssociatedStorage(object: self, key: &cleanRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
+//  }
+//
+//  public var cleanRecorder: CleanRecorder? {
+//    get { cleanRecorderStorage.get() }
+//    set {
+//      let cleanRecorder = self.cleanRecorder
+//      guard cleanRecorder !== newValue else { return }
+//
+//      if let recorder = cleanRecorder { removeDelegate(recorder) }
+//      cleanRecorderStorage.set(newValue)
+//      if let recorder = newValue { addDelegate(recorder) }
+//    }
+//  }
+//
+//  var cleanVideoRecordingStorage: AssociatedStorage<VideoRecording> {
+//    AssociatedStorage(object: self, key: &cleanVideoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
+//  }
+//
+//  public var cleanVideoRecording: VideoRecording? {
+//    get { cleanVideoRecordingStorage.get() }
+//    set { cleanVideoRecordingStorage.set(newValue) }
+//  }
+//
+//  public var cleanPixelBuffer: CVPixelBuffer? { session.currentFrame?.capturedImage }
+//}
