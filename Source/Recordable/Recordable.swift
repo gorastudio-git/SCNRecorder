@@ -65,24 +65,27 @@ public extension Recordable {
   }
 
   @discardableResult
-  func startVideoRecording(fileType: AVFileType = .jpg) throws -> VideoRecording {
+  func startVideoRecording(settings: VideoSettings = VideoSettings()) throws -> VideoRecording {
     return try startVideoRecording(
       to: FileManager.default.temporaryDirectory.appendingPathComponent(
-        "\(UUID().uuidString).\(fileType.fileExtension)",
+        "\(UUID().uuidString).\(settings.fileType.fileExtension)",
         isDirectory: false
       ),
-      fileType: fileType
+      settings: settings
     )
   }
-
+  
   @discardableResult
-  func startVideoRecording(to url: URL, fileType: AVFileType = .mov) throws -> VideoRecording {
+  func startVideoRecording(
+    to url: URL,
+    settings: VideoSettings = VideoSettings()
+  ) throws -> VideoRecording {
     guard videoRecording == nil else { throw RecordableError.alreadyStarted }
 
     try prepareForRecording()
     guard let recorder = recorder else { throw RecordableError.preparation }
 
-    let videoRecording = try recorder.makeVideoRecording(to: url, fileType: fileType)
+    let videoRecording = try recorder.makeVideoRecording(to: url, settings: settings)
     videoRecording.resume()
 
     self.videoRecording = videoRecording

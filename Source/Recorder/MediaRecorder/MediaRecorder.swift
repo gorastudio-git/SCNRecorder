@@ -128,19 +128,19 @@ extension MediaRecorder {
 
 extension MediaRecorder {
 
-  func makeVideoRecording(to url: URL, fileType: AVFileType = .mov) throws -> VideoRecording {
+  func makeVideoRecording(to url: URL, settings: VideoSettings = VideoSettings()) throws -> VideoRecording {
     guard let videoInput = videoInput else { throw NSError() }
 
-    let videoConfiguration = VideoRecorder.VideoConfiguration.Builder()
-    videoConfiguration.videoSettings = videoInput.recommendedVideoSettings
-
+    var settings = settings
+    if settings.size == .zero { settings.size = videoInput.size }
+    settings.videoColorProperties = videoInput.videoColorProperties
+    
     let videoRecorder = try VideoRecorder(
       url: url,
-      fileType: fileType,
-      videoConfiguration: videoConfiguration.build(),
+      settings: settings,
       queue: queue
     )
-
+    
     videoRecorder.onFinalState = { [weak self] in
       self?.removeVideoOutput($0)
       self?.removeAudioOutput($0)

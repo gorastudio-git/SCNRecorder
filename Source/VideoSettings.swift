@@ -29,60 +29,33 @@ import AVFoundation
 public struct VideoSettings {
 
   /// The type of the output video file.
-  var fileType: FileType = .mov
+  public var fileType: FileType = .mov
 
   /// The codec used to encode the output video.
-  var codec: Codec = .h264
+  public var codec: Codec = .h264
 
   /// The size of the output video.
   ///
   /// If `.zero` the size of the video source will be used.
   /// Look at `ScalingMode` for possible scaling modes.
-  var size: CGSize = .zero
+  public var size: CGSize = .zero
 
-  /// Defines the region within the video dimensions that will be displayed during playback
-  ///
-  /// If no clean aperture region is specified, the entire frame will be displayed during playback.
-  var cleanApreture: CleanApreture?
-
-  var scalingMode: ScalingMode
+  public var scalingMode: ScalingMode = .resizeAspectFill
+  
+  var videoColorProperties: [String: String]? = nil
+  
+  public init() { }
 }
 
 extension VideoSettings {
-
-  enum Codec {
-
-    case hevc
-
-    case h264
-
-    case jpeg
-  }
-
-  enum ScalingMode {
-
-    case fit
-
-    case resize
-
-    case resizeAspect
-
-    case resizeAspectFill
-  }
-
-  /**
-   AVVideoCleanApertureWidthKey and AVVideoCleanApertureHeightKey define a
-   clean rectangle which is centered on the video frame.  To offset this
-   rectangle from center, use AVVideoCleanApertureHorizontalOffsetKey and
-   AVVideoCleanApertureVerticalOffsetKey.  A positive value for
-   AVVideoCleanApertureHorizontalOffsetKey moves the clean aperture region to the
-   right, and a positive value for AVVideoCleanApertureVerticalOffsetKey moves the clean aperture region down.
-   */
-
-  struct CleanApreture {
-
-    var size: CGSize
-
-    var offset: CGPoint
+  
+  var outputSettings: [String: Any] {
+    ([
+      AVVideoWidthKey: size.width,
+      AVVideoHeightKey: size.height,
+      AVVideoCodecKey: codec.avCodec,
+      AVVideoScalingModeKey: scalingMode.avScalingMode,
+      AVVideoColorPropertiesKey: videoColorProperties
+    ] as [String: Any?]).compactMapValues { $0 }
   }
 }

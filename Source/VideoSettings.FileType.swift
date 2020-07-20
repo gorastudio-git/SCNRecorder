@@ -69,7 +69,7 @@ public extension VideoSettings {
 
 extension VideoSettings.FileType {
 
-  var fileType: AVFileType {
+  var avFileType: AVFileType {
     switch self {
     case .mov: return .mov
     case .mp4: return .mp4
@@ -78,4 +78,6 @@ extension VideoSettings.FileType {
     case .mobile3GPP2: return .mobile3GPP2
     }
   }
+  
+  var fileExtension: String { avFileType.fileExtension }
 }

@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.AudioInput.swift
+//  VideoSettings.Codec.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 19.04.2020.
+//  Created by Vladislav Grigoryev on 20.07.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,13 +26,25 @@
 import Foundation
 import AVFoundation
 
-extension VideoRecorder {
+public extension VideoSettings {
+  
+  enum Codec {
+    
+    case hevc
+    
+    case h264
+    
+    case jpeg
+  }
+}
 
-  final class AudioInput: AVAssetWriterInput {
-
-    init(_ settings: Any? = nil) {
-      super.init(mediaType: .audio, outputSettings: nil, sourceFormatHint: nil)
-      expectsMediaDataInRealTime = true
+extension VideoSettings.Codec {
+  
+  var avCodec: AVVideoCodecType {
+    switch self {
+    case .hevc: return .hevc
+    case .h264: return .h264
+    case .jpeg: return .jpeg
     }
   }
 }

@@ -28,11 +28,11 @@ import AVFoundation
 
 final class VideoRecorder {
 
-  let assetWriter: AssetWriter
+  let assetWriter: AVAssetWriter
 
-  let videoInput: VideoInput
+  let videoInput: AVAssetWriterInput
 
-  let audioInput: AudioInput
+  let audioInput: AVAssetWriterInput
 
   let pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor
 
@@ -59,17 +59,20 @@ final class VideoRecorder {
 
   init(
     url: URL,
-    fileType: AVFileType,
-    videoConfiguration: VideoConfiguration,
+    settings: VideoSettings,
     queue: DispatchQueue
   ) throws {
-    assetWriter = try AssetWriter(url: url, fileType: fileType)
+    assetWriter = try AVAssetWriter(url: url, fileType: settings.fileType.avFileType)
 
-    videoInput = VideoInput(videoConfiguration)
+    videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings.outputSettings)
+    videoInput.expectsMediaDataInRealTime = true
+    
     guard assetWriter.canAdd(videoInput) else { throw Error.cantAddVideoAssetWriterInput }
     assetWriter.add(videoInput)
 
-    audioInput = AudioInput()
+    audioInput = AVAssetWriterInput(mediaType: .audio, outputSettings: nil)
+    audioInput.expectsMediaDataInRealTime = true
+    
     guard assetWriter.canAdd(audioInput) else { throw Error.cantAddAudioAssterWriterInput }
     assetWriter.add(audioInput)
 

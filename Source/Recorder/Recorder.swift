@@ -34,7 +34,7 @@ public protocol Recorder: AnyObject {
   
   var errorObserver: Observable<Swift.Error?> { get }
 
-  func makeVideoRecording(to url: URL, fileType: AVFileType) throws -> VideoRecording
+  func makeVideoRecording(to url: URL, settings: VideoSettings) throws -> VideoRecording
 
   func takePhoto(
     scale: CGFloat,
@@ -50,6 +50,6 @@ public protocol Recorder: AnyObject {
 public extension Recorder {
 
   func makeVideoRecording(to url: URL) throws -> VideoRecording {
-    try makeVideoRecording(to: url, fileType: .mov)
+    try makeVideoRecording(to: url, settings: VideoSettings())
   }
 }

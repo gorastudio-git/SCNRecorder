@@ -37,15 +37,10 @@ extension MetalPixelBufferProducer {
 
 final class MetalPixelBufferProducer: PixelBufferProducer {
 
-  var recommendedVideoSettings: [String: Any] {
-    [
-      AVVideoWidthKey: recordableLayer.drawableSize.width,
-      AVVideoHeightKey: recordableLayer.drawableSize.height,
-      AVVideoCodecKey: AVVideoCodecType.h264,
-      AVVideoColorPropertiesKey: recordableLayer.pixelFormat.videoColorProperties
-    ]
-  }
-
+  var size: CGSize { recordableLayer.drawableSize }
+  
+  var videoColorProperties: [String: String]? { recordableLayer.pixelFormat.videoColorProperties }
+  
   var recommendedPixelBufferAttributes: [String: Any] {
     var attributes: [String: Any] = [
       kCVPixelBufferWidthKey as String: Int(recordableLayer.drawableSize.width),

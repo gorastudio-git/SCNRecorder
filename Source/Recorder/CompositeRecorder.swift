@@ -27,8 +27,8 @@ extension CompositeRecorder {
   
   public var errorObserver: Observable<Error?> { composedRecorder.errorObserver }
 
-  public func makeVideoRecording(to url: URL, fileType: AVFileType) throws -> VideoRecording {
-    try composedRecorder.makeVideoRecording(to: url, fileType: fileType)
+  public func makeVideoRecording(to url: URL, settings: VideoSettings) throws -> VideoRecording {
+    try composedRecorder.makeVideoRecording(to: url, settings: settings)
   }
 
   public func takePhoto(

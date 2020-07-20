@@ -42,8 +42,10 @@ enum PixelBufferProducerError: Swift.Error {
 protocol PixelBufferProducer {
 
   typealias Error = PixelBufferProducerError
-
-  var recommendedVideoSettings: [String: Any] { get }
+  
+  var size: CGSize { get }
+  
+  var videoColorProperties: [String: String]? { get }
 
   var recommendedPixelBufferAttributes: [String: Any] { get }
 
@@ -57,6 +59,8 @@ protocol PixelBufferProducer {
 }
 
 extension PixelBufferProducer {
+  
+  var videoColorProperties: [String: String]? { nil }
 
   func startWriting() { }
 

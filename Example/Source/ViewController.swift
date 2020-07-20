@@ -83,7 +83,9 @@ class ViewController: UIViewController {
 
   @IBAction func startVideoRecording() {
     do {
-      let videoRecording = try sceneView.startVideoRecording()
+      var settings = VideoSettings()
+      settings.size = CGSize(width: 720, height: 1280)
+      let videoRecording = try sceneView.startVideoRecording(settings: settings)
 
       // Observe for duration
       videoRecording.durationObserver.didSet = { [weak self] duration in

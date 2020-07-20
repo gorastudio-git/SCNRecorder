@@ -16,15 +16,16 @@ extension CleanRecorder {
     let cleanRecordable: CleanRecordable
 
     let timeScale: CMTimeScale
-
-    var recommendedVideoSettings: [String: Any] {
-      guard let buffer = cleanRecordable.cleanPixelBuffer else { return [:] }
-      return [
-        AVVideoWidthKey: buffer.width,
-        AVVideoHeightKey: buffer.height,
-        AVVideoCodecKey: AVVideoCodecType.h264,
-      ]
+    
+    var size: CGSize {
+      guard let buffer = cleanRecordable.cleanPixelBuffer else { return .zero }
+      return CGSize(
+        width: buffer.width,
+        height: buffer.height
+      )
     }
+    
+    var videoColorProperties: [String : String]? { nil }
 
     var context: CIContext { CIContext() }
 

@@ -18,8 +18,10 @@ extension SceneRecorder {
     let producer: PixelBufferProducer
 
     let pixelBufferPoolFactory = PixelBufferPoolFactory()
-
-    var recommendedVideoSettings: [String: Any] { producer.recommendedVideoSettings }
+    
+    var size: CGSize { producer.size }
+    
+    var videoColorProperties: [String : String]? { producer.videoColorProperties }
 
     var context: CIContext { producer.context }
 

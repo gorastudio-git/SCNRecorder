@@ -58,9 +58,11 @@ protocol AudioMediaRecorderInput: MediaRecorderInput { }
 
 // MARK: - VideoMediaRecorderInput
 protocol VideoMediaRecorderInput: MediaRecorderInput {
-
-  var recommendedVideoSettings: [String: Any] { get }
-
+  
+  var size: CGSize { get }
+  
+  var videoColorProperties: [String: String]? { get }
+  
   var context: CIContext { get }
 }
 

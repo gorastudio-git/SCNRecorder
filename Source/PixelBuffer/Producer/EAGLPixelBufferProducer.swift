@@ -36,21 +36,35 @@ extension EAGLPixelBufferProducer {
 final class EAGLPixelBufferProducer: PixelBufferProducer {
 
   static let alignment = 4
+  
+  var size: CGSize {
+    let rollback = try? EAGLPixelBufferProducer.setCurrentContext(eaglContext)
+    defer { rollback?() }
 
-  var recommendedVideoSettings: [String: Any] {
-    let size = getSize()
-    return [
-      AVVideoWidthKey: size.width,
-      AVVideoHeightKey: size.height,
-      AVVideoCodecKey: AVVideoCodecType.h264
-    ]
+    var glWidth: GLint = 0
+    var glHeight: GLint = 0
+
+    glGetRenderbufferParameterivOES(
+      GLenum(GL_RENDERBUFFER_OES),
+      GLenum(GL_RENDERBUFFER_WIDTH_OES),
+      &glWidth
+    )
+    glGetRenderbufferParameterivOES(
+      GLenum(GL_RENDERBUFFER_OES),
+      GLenum(GL_RENDERBUFFER_HEIGHT_OES),
+      &glHeight
+    )
+    
+    return CGSize(width: CGFloat(glWidth), height: CGFloat(glHeight))
   }
+  
+  var videoColorProperties: [String : String]? { nil }
 
   var recommendedPixelBufferAttributes: [String: Any] {
-    let size = getSize()
+    let size = self.size
     var attributes: [String: Any] = [
-      kCVPixelBufferWidthKey as String: size.width,
-      kCVPixelBufferHeightKey as String: size.height,
+      kCVPixelBufferWidthKey as String: Int(size.width),
+      kCVPixelBufferHeightKey as String: Int(size.height),
       kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
       kCVPixelBufferBytesPerRowAlignmentKey as String: 4
     ]
@@ -128,26 +142,5 @@ private extension EAGLPixelBufferProducer {
   func getBuffer(size: Int, alignment: Int) -> Buffer {
     if buffer.size != size { buffer = Buffer(size: size, alignment: alignment) }
     return buffer
-  }
-
-  func getSize() -> (width: Int, height: Int) {
-    let rollback = try? EAGLPixelBufferProducer.setCurrentContext(eaglContext)
-    defer { rollback?() }
-
-    var glWidth: GLint = 0
-    var glHeight: GLint = 0
-
-    glGetRenderbufferParameterivOES(
-      GLenum(GL_RENDERBUFFER_OES),
-      GLenum(GL_RENDERBUFFER_WIDTH_OES),
-      &glWidth
-    )
-    glGetRenderbufferParameterivOES(
-      GLenum(GL_RENDERBUFFER_OES),
-      GLenum(GL_RENDERBUFFER_HEIGHT_OES),
-      &glHeight
-    )
-
-    return (Int(glWidth), Int(glHeight))
   }
 }

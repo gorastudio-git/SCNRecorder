@@ -1,8 +1,8 @@
 //
-//  VideoRecorder.AssterWriter.swift
+//  VideoSettings.ScalingMode.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 19.04.2020.
+//  Created by Vladislav Grigoryev on 20.07.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,12 +26,36 @@
 import Foundation
 import AVFoundation
 
-extension VideoRecorder {
+public extension VideoSettings {
 
-  final class AssetWriter: AVAssetWriter {
+  enum ScalingMode {
 
-    init(url: URL, fileType outputFileType: AVFileType) throws {
-      try super.init(outputURL: url, fileType: outputFileType)
+    /// Crop to remove edge processing region.
+    /// Preserve aspect ratio of cropped source by reducing specified width or height if necessary.
+    /// Will not scale a small source up to larger dimensions.
+//    case fit
+
+    /// Crop to remove edge processing region.
+    /// Scale remainder to destination area.
+    /// Does not preserve aspect ratio.
+    case resize
+
+    /// Preserve aspect ratio of the source, and fill remaining areas with black to fit destination dimensions.
+    case resizeAspect
+    
+    /// Preserve aspect ratio of the source, and crop picture to fit destination dimensions.
+    case resizeAspectFill
+  }
+}
+
+extension VideoSettings.ScalingMode {
+  
+  var avScalingMode: String {
+    switch self {
+//    case .fit: return AVVideoScalingModeFit
+    case .resize: return AVVideoScalingModeResize
+    case .resizeAspect: return AVVideoScalingModeResizeAspect
+    case .resizeAspectFill: return AVVideoScalingModeResizeAspectFill
     }
   }
 }
