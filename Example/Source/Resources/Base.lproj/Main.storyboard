@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4q0-jd-nOf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4q0-jd-nOf">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -93,6 +92,26 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="V2a-jg-uBv" kind="show" id="Jfu-N5-SpW"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="SF5-YW-S57" style="IBUITableViewCellStyleDefault" id="fSp-cg-ZKQ">
+                                        <rect key="frame" x="0.0" y="160" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fSp-cg-ZKQ" id="ifx-oU-bfR">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Reality Kit Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SF5-YW-S57">
+                                                    <rect key="frame" x="20" y="0.0" width="355" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="qb6-oX-kdT" kind="show" id="Ua9-o1-hgv"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -303,6 +322,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Rr-1w-Xf4" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="619" y="743"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Dqh-BR-Ddo">
+            <objects>
+                <viewController id="qb6-oX-kdT" customClass="RKViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kd8-MP-3hl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <arView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNr-Hv-UfO">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </arView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0ZP-A8-0VG">
+                                <rect key="frame" x="152.66666666666666" y="722" width="108.99999999999997" height="108"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdH-Pm-DUS">
+                                        <rect key="frame" x="0.0" y="0.0" width="109" height="50"/>
+                                        <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                        <state key="normal" title="Take Photo"/>
+                                        <connections>
+                                            <action selector="takePhoto:" destination="qb6-oX-kdT" eventType="touchUpInside" id="4zH-L8-M3n"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MiR-8q-ErI">
+                                        <rect key="frame" x="0.0" y="58" width="109" height="50"/>
+                                        <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                        <state key="normal" title="Start Video"/>
+                                        <connections>
+                                            <action selector="startVideoRecording" destination="qb6-oX-kdT" eventType="touchUpInside" id="mZe-pW-7gu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clr-Uh-NSs">
+                                <rect key="frame" x="16" y="805" width="136.66666666666666" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="SNr-Hv-UfO" firstAttribute="top" secondItem="8Xf-lc-u8s" secondAttribute="top" id="1Cn-q4-ENp"/>
+                            <constraint firstItem="clr-Uh-NSs" firstAttribute="centerY" secondItem="MiR-8q-ErI" secondAttribute="centerY" id="Ala-sk-eSn"/>
+                            <constraint firstItem="0ZP-A8-0VG" firstAttribute="centerX" secondItem="8Xf-lc-u8s" secondAttribute="centerX" id="Ar4-ZD-KGh"/>
+                            <constraint firstItem="8Xf-lc-u8s" firstAttribute="trailing" secondItem="SNr-Hv-UfO" secondAttribute="trailing" id="JoY-Ao-6ma"/>
+                            <constraint firstItem="clr-Uh-NSs" firstAttribute="leading" secondItem="8Xf-lc-u8s" secondAttribute="leading" constant="16" id="Xxw-sn-Opr"/>
+                            <constraint firstItem="8Xf-lc-u8s" firstAttribute="bottom" secondItem="SNr-Hv-UfO" secondAttribute="bottom" id="Ylp-Lf-up9"/>
+                            <constraint firstItem="clr-Uh-NSs" firstAttribute="trailing" secondItem="0ZP-A8-0VG" secondAttribute="leading" id="frR-ya-mGV"/>
+                            <constraint firstItem="SNr-Hv-UfO" firstAttribute="leading" secondItem="8Xf-lc-u8s" secondAttribute="leading" id="iPX-Fy-MzX"/>
+                            <constraint firstItem="8Xf-lc-u8s" firstAttribute="bottom" secondItem="0ZP-A8-0VG" secondAttribute="bottom" constant="32" id="ieK-om-N5N"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8Xf-lc-u8s"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XXr-gx-DNm"/>
+                    <connections>
+                        <outlet property="durationLabel" destination="clr-Uh-NSs" id="6Pc-xN-dEE"/>
+                        <outlet property="photoButton" destination="xdH-Pm-DUS" id="3Gs-YR-l2W"/>
+                        <outlet property="sceneView" destination="SNr-Hv-UfO" id="nXm-UN-t59"/>
+                        <outlet property="videoButton" destination="MiR-8q-ErI" id="qFU-o7-9um"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wq6-AS-Swk" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1713" y="-33"/>
         </scene>
     </scenes>
 </document>

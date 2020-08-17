@@ -25,20 +25,29 @@
 
 import Foundation
 import RealityKit
+import SCNRecorder
 
 private var videoRecordingKey: UInt8 = 0
 
 @available(iOS 13.0, *)
 extension ARView: Recordable {
 
-  var videoRecordingStorage: AssociatedStorage<VideoRecording> {
-    AssociatedStorage(object: self, key: &videoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  public var videoRecording: VideoRecording? {
+    get {
+      objc_getAssociatedObject(
+        self,
+        &videoRecordingKey
+      ) as? VideoRecording
+    }
+    set {
+      objc_setAssociatedObject(
+        self,
+        &videoRecordingKey,
+        newValue,
+        .OBJC_ASSOCIATION_RETAIN
+      )
+    }
   }
 
   public var recorder: BaseRecorder? { sceneRecorder }
-
-  public var videoRecording: VideoRecording? {
-    get { videoRecordingStorage.get() }
-    set { videoRecordingStorage.set(newValue) }
-  }
 }

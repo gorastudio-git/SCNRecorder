@@ -25,6 +25,7 @@
 
 import Foundation
 import RealityKit
+import SCNRecorder
 import Combine
 
 private var sceneRecorderKey: UInt8 = 0
@@ -33,34 +34,61 @@ private var cancellableKey: UInt8 = 0
 @available(iOS 13.0, *)
 extension ARView: SceneRecordableView {
 
-  public var eaglContext: EAGLContext? { nil }
-
   public var api: API { .metal }
 
-  var sceneRecorderStorage: AssociatedStorage<SceneRecorder> {
-    AssociatedStorage(object: self, key: &sceneRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  public var recordableLayer: SceneRecordableLayer? {
+    layer.sublayers?.first as? SceneRecordableLayer
   }
 
-  var cancelableStorage: AssociatedStorage<Cancellable> {
-    AssociatedStorage(object: self, key: &sceneRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  public var _sceneRecorder: SceneRecorder? {
+    get {
+      objc_getAssociatedObject(
+        self,
+        &sceneRecorderKey
+      ) as? SceneRecorder
+    }
+    set {
+      objc_setAssociatedObject(
+        self,
+        &sceneRecorderKey,
+        newValue,
+        .OBJC_ASSOCIATION_RETAIN
+      )
+    }
+  }
+
+  var cancelable: Cancellable? {
+    get {
+      objc_getAssociatedObject(
+        self,
+        &cancellableKey
+      ) as? Cancellable
+    }
+    set {
+      objc_setAssociatedObject(
+        self,
+        &cancellableKey,
+        newValue,
+        .OBJC_ASSOCIATION_RETAIN
+      )
+    }
   }
 
   public var sceneRecorder: SceneRecorder? {
-    get { sceneRecorderStorage.get() }
+    get { _sceneRecorder }
     set {
-      let sceneRecorder = self.sceneRecorder
+      let sceneRecorder = _sceneRecorder
       guard sceneRecorder !== newValue else { return }
 
-      cancelableStorage.get()?.cancel()
-      sceneRecorderStorage.set(newValue)
+      cancelable?.cancel()
+      _sceneRecorder = newValue
 
       var time = Date().timeIntervalSince1970
-      cancelableStorage.set(
-        scene.subscribe(to: SceneEvents.Update.self
+      cancelable = scene.subscribe(to: SceneEvents.Update.self
       ) { [weak self] (event) in
         time += event.deltaTime
         self?.sceneRecorder?.render(atTime: time)
-      })
+      }
     }
   }
 }

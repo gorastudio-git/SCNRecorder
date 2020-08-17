@@ -1,38 +1,20 @@
 //
-//  ViewController.swift
+//  RKViewController.swift
 //  Example
 //
-//  Created by Vladislav Grigoryev on 01/07/2019.
+//  Created by VG on 17.08.2020.
 //  Copyright © 2020 GORA Studio. All rights reserved.
 //
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
 
 import Foundation
-import SceneKit
-import ARKit
+import RealityKit
 import AVKit
 
 import SCNRecorder
 
-class ViewController: UIViewController {
+class RKViewController: UIViewController {
 
-  @IBOutlet var sceneView: SCNView!
+  @IBOutlet var sceneView: ARView!
 
   @IBOutlet var durationLabel: UILabel!
 
@@ -45,16 +27,14 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Show statistics such as fps and timing information
-    sceneView.showsStatistics = true
+    // Load the "Box" scene from the "Experience" Reality File
+    do {
+      let boxAnchor = try Experience.loadBox()
 
-    // Create a new scene
-    let scene = SCNScene(named: "art.scnassets/ship.scn")!
-
-    // Set the scene to the view
-    sceneView.scene = scene
-    sceneView.rendersContinuously = true
-//    sceneView.delegate = self
+      // Add the box anchor to the scene
+      sceneView.scene.anchors.append(boxAnchor)
+    }
+    catch { }
 
     // It is recommended to prepare the view for recording at viewDidLoad
     do { try sceneView.prepareForRecording() }
