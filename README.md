@@ -129,7 +129,9 @@ Look at the Example project for more details.
 
 - [Vladislav Grigoryev](https://github.com/v-grigoriev)
 
-Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) for testing and clarifying the public interface of the framework.
+Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) and [Dmitry Yurlov](https://github.com/demonukg) for testing and clarifying the public interface of the framework.
+
+Thanks to  for testing and clarifying the public interface of the framework.
 
 ## License
 

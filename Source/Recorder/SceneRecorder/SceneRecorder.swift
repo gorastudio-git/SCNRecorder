@@ -34,15 +34,17 @@ public final class SceneRecorder: BaseRecorder {
   public init(_ recordableView: SceneRecordableView, timeScale: CMTimeScale = 600) throws {
     self.videoInput = try VideoInput(recordableView: recordableView, timeScale: timeScale)
     super.init()
-    self.mediaRecorder.videoInput = videoInput
+    self.mediaRecorder.setVideoInput(videoInput)
+  }
+
+  public func render(atTime time: TimeInterval) {
+    do { try videoInput.render(atTime: time) }
+    catch { self.error = error }
   }
 
   public func renderer(
     _ renderer: SCNSceneRenderer,
     didRenderScene scene: SCNScene,
     atTime time: TimeInterval
-  ) {
-    do { try videoInput.renderer(renderer, didRenderScene: scene, atTime: time) }
-    catch { self.error = error }
-  }
+  ) { render(atTime: time) }
 }

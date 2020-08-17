@@ -59,7 +59,7 @@ private final class Clean: InternalCleanRecordable, Recordable {
 
   var cleanPixelBuffer: CVPixelBuffer? { clean?.cleanPixelBuffer }
 
-  var recorder: Recorder? { clean?.cleanRecorder }
+  var recorder: BaseRecorder? { clean?.cleanRecorder }
 
   var videoRecording: VideoRecording? {
     get { cleanVideoRecording }

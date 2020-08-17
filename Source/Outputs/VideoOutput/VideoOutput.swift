@@ -1,5 +1,5 @@
 //
-//  VideoRecorder.swift
+//  VideoOutput.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -26,7 +26,7 @@
 import Foundation
 import AVFoundation
 
-final class VideoRecorder {
+final class VideoOutput {
 
   let assetWriter: AVAssetWriter
 
@@ -40,22 +40,20 @@ final class VideoRecorder {
 
   var state: State {
     didSet {
-      recording?.state = state.recordingState
+      videoRecording?.state = state.recordingState
       if state.isFinal { onFinalState(self) }
     }
   }
 
   var duration: TimeInterval = 0.0 {
-    didSet { recording?.duration = duration }
+    didSet { videoRecording?.duration = duration }
   }
 
   var lastSeconds: TimeInterval = 0.0
 
-  var onFinalState: (VideoRecorder) -> Void = { _ in }
+  var onFinalState: (VideoOutput) -> Void = { _ in }
 
-  weak var recording: Recording? {
-    didSet { recording?.state = state.recordingState }
-  }
+  weak var videoRecording: VideoRecording?
 
   init(
     url: URL,
@@ -84,9 +82,16 @@ final class VideoRecorder {
   }
 
   deinit { state = state.cancel(self) }
+
+  func startVideoRecording() -> VideoRecording {
+    let videoRecording = VideoRecording(videoOutput: self)
+    videoRecording.state = state.recordingState
+    self.videoRecording = videoRecording
+    return videoRecording
+  }
 }
 
-extension VideoRecorder {
+extension VideoOutput {
 
   func startSession(at sourceTime: CMTime) {
     lastSeconds = sourceTime.seconds
@@ -148,17 +153,8 @@ extension VideoRecorder {
   }
 }
 
-extension VideoRecorder {
-
-  func makeRecording() -> Recording {
-    let recording = Recording(videoRecorder: self)
-    self.recording = recording
-    return recording
-  }
-}
-
 // - MARK: Getters
-extension VideoRecorder {
+extension VideoOutput {
 
   var url: URL { assetWriter.outputURL }
 
@@ -166,7 +162,7 @@ extension VideoRecorder {
 }
 
 // - MARK: Lifecycle
-extension VideoRecorder {
+extension VideoOutput {
 
   func resume() {
     queue.async { [weak self] in self?.unsafeResume() }
@@ -186,7 +182,7 @@ extension VideoRecorder {
 }
 
 // - MARK: Unsafe Lifecycle
-private extension VideoRecorder {
+private extension VideoOutput {
 
   func unsafeResume() { state = state.resume(self) }
 
@@ -200,7 +196,7 @@ private extension VideoRecorder {
 }
 
 // - MARK: VideoOutput
-extension VideoRecorder: MediaRecorder.Output.Video {
+extension VideoOutput: MediaRecorder.Output.Video {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     state = state.appendVideoSampleBuffer(sampleBuffer, to: self)
@@ -212,7 +208,7 @@ extension VideoRecorder: MediaRecorder.Output.Video {
 }
 
 // - MARK: AudioOutput
-extension VideoRecorder: MediaRecorder.Output.Audio {
+extension VideoOutput: MediaRecorder.Output.Audio {
 
   func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     state = state.appendAudioSampleBuffer(sampleBuffer, to: self)

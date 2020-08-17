@@ -38,14 +38,16 @@ public protocol SceneRecordableView: SceneRecordable {
   var api: API { get }
 }
 
-public extension SceneRecordableView where Self: UIView {
+public extension SceneRecordableView {
+
+  var eaglContext: EAGLContext? { nil }
+}
+
+public extension SceneRecordableView where Self: SCNView {
 
   #if !targetEnvironment(simulator)
   var recordableLayer: SceneRecordableLayer? { layer as? SceneRecordableLayer }
   #endif // !targetEnvironment(simulator)
-}
-
-public extension SceneRecordableView where Self: SCNView {
 
   var api: API {
     switch renderingAPI {

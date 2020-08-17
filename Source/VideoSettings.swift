@@ -32,7 +32,7 @@ public struct VideoSettings {
   public var fileType: FileType = .mov
 
   /// The codec used to encode the output video.
-  public var codec: Codec = .h264
+  public var codec: Codec = .h264()
 
   /// The size of the output video.
   ///
@@ -42,20 +42,37 @@ public struct VideoSettings {
 
   public var scalingMode: ScalingMode = .resizeAspectFill
   
-  var videoColorProperties: [String: String]? = nil
+  public var videoColorProperties: [String: String]? = nil
+
+  public var rawSettings: [String: Any] = [:]
   
-  public init() { }
+  public init(
+    fileType: FileType = .mov,
+    codec: Codec = .h264(),
+    size: CGSize = .zero,
+    scalingMode: ScalingMode = .resizeAspectFill,
+    videoColorProperties: [String: String]? = nil
+  ) {
+    self.fileType = fileType
+    self.codec = codec
+    self.size = size
+    self.scalingMode = scalingMode
+    self.videoColorProperties = videoColorProperties
+  }
 }
 
 extension VideoSettings {
   
   var outputSettings: [String: Any] {
+    rawSettings.merging(
     ([
       AVVideoWidthKey: size.width,
       AVVideoHeightKey: size.height,
       AVVideoCodecKey: codec.avCodec,
       AVVideoScalingModeKey: scalingMode.avScalingMode,
       AVVideoColorPropertiesKey: videoColorProperties
-    ] as [String: Any?]).compactMapValues { $0 }
+    ] as [String: Any?]).compactMapValues({ $0 }),
+      uniquingKeysWith: { raw, _ in raw }
+    )
   }
 }

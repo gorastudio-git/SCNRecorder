@@ -1,8 +1,8 @@
 //
-//  Recorder.swift
+//  VideoRecording.Info.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 25.05.2020.
+//  Created by Vladislav Grigoryev on 28.07.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,30 +26,20 @@
 import Foundation
 import AVFoundation
 
-public protocol Recorder: AnyObject {
+public extension VideoRecording {
 
-  var filters: [Filter] { get set }
+  struct Info {
 
-  var error: Swift.Error? { get }
-  
-  var errorObserver: Observable<Swift.Error?> { get }
+    public var url: URL
 
-  func makeVideoRecording(to url: URL, settings: VideoSettings) throws -> VideoRecording
+    public var fileType: AVFileType
 
-  func takePhoto(
-    scale: CGFloat,
-    orientation: UIImage.Orientation,
-    completionHandler handler: @escaping (UIImage) -> Void
-  )
+    public var duration: TimeInterval
 
-  func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void)
-
-  func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void)
-}
-
-public extension Recorder {
-
-  func makeVideoRecording(to url: URL) throws -> VideoRecording {
-    try makeVideoRecording(to: url, settings: VideoSettings())
+    init(_ videoRecording: VideoRecording) {
+      url = videoRecording.url
+      fileType = videoRecording.fileType
+      duration = videoRecording.duration
+    }
   }
 }

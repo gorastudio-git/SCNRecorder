@@ -1,8 +1,8 @@
 //
-//  VideoRecordingState.swift
+//  VideoOutput.Error.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 26.04.2020.
+//  Created by Vladislav Grigoryev on 19.04.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,39 +25,16 @@
 
 import Foundation
 
-public enum VideoRecordingState {
+extension VideoOutput {
 
-  case ready
+  enum Error: Swift.Error {
 
-  case preparing
+    case cantAddVideoAssetWriterInput
 
-  case recording
+    case cantAddAudioAssterWriterInput
 
-  case paused
+    case cantStartWriting
 
-  case canceled
-
-  case finished
-
-  case failed(_ error: Swift.Error)
-}
-
-extension VideoRecordingState: Equatable {
-
-  public static func == (lhs: VideoRecordingState, rhs: VideoRecordingState) -> Bool {
-    switch (lhs, rhs) {
-    case (.ready, .ready),
-         (.preparing, .preparing),
-         (.recording, .recording),
-         (.paused, .paused),
-         (.canceled, .canceled),
-         (.finished, .finished):
-      return true
-
-    case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-      return lhs == rhs
-
-    default: return false
-    }
+    case unknown
   }
 }

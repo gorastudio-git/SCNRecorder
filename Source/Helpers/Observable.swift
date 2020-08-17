@@ -7,25 +7,46 @@
 
 import Foundation
 
+public protocol ObservableInterface: AnyObject {
+
+  associatedtype Property
+
+  typealias Observer = (Property) -> Void
+
+  var observer: Observer? { get set }
+}
+
 @propertyWrapper
-public final class Observable<Property> {
+public final class Observable<Property>: ObservableInterface {
 
-  public typealias WillSetObserver = (_ change: (value: Property, newValue: Property)) -> Void
-
-  public typealias DidSetObserver = (_ change: (oldValue: Property, value: Property)) -> Void
+  public typealias Observer = (Property) -> Void
 
   public internal(set) var wrappedValue: Property {
-    willSet { willSet?((wrappedValue, newValue))}
-    didSet { didSet?((oldValue, wrappedValue))}
+    didSet { observer?(wrappedValue) }
   }
 
   public var value: Property { wrappedValue }
 
-  public var willSet: WillSetObserver?
-
-  public var didSet: DidSetObserver?
-
   public var projectedValue: Observable<Property> { self }
 
+  public var observer: Observer?
+
   public init(wrappedValue: Property) { self.wrappedValue = wrappedValue }
+}
+
+public extension ObservableInterface {
+
+  func observe(_ observer: @escaping Observer) { self.observer = observer }
+}
+
+public extension ObservableInterface where Property: Equatable {
+
+  func observeUnique(_ observer: @escaping Observer) {
+    var oldValue: Property? = nil
+    observe { (value) in
+      guard oldValue != value else { return }
+      observer(value)
+      oldValue = value
+    }
+  }
 }

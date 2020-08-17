@@ -26,15 +26,8 @@
 import Foundation
 import AVFoundation
 
-// swiftlint:disable operator_whitespace
-func ~=(pattern: MediaRecorderInput, value: MediaRecorderInput) -> Bool { value === pattern }
-func ~=(pattern: MediaRecorderInput?, value: MediaRecorderInput) -> Bool { value === pattern }
-// swiftlint:enable operator_whitespace
-
 // MARK: - MediaRecorderInput
-protocol MediaRecorderInputDelegate: AnyObject { }
-
-protocol MediaRecorderInput: AnyObject {
+protocol MediaRecorderInput {
 
   typealias Audio = AudioMediaRecorderInput
 
@@ -46,17 +39,13 @@ protocol MediaRecorderInput: AnyObject {
 
   typealias PixelBufferVideo = Video & BufferInput
 
-  var delegate: MediaRecorderInputDelegate? { get set }
-
   func start()
 
   func stop()
 }
 
-// MARK: - AudioMediaRecorderInput
 protocol AudioMediaRecorderInput: MediaRecorderInput { }
 
-// MARK: - VideoMediaRecorderInput
 protocol VideoMediaRecorderInput: MediaRecorderInput {
   
   var size: CGSize { get }
@@ -66,44 +55,12 @@ protocol VideoMediaRecorderInput: MediaRecorderInput {
   var context: CIContext { get }
 }
 
-// MARK: - SampleBufferInput
+protocol SampleBufferInput: AnyObject {
 
-protocol SampleBufferInputDelegate: MediaRecorderInputDelegate {
-
-  func input(_ input: SampleBufferInput, didOutput sampleBuffer: CMSampleBuffer)
+  var output: ((CMSampleBuffer) -> Void)? { get set }
 }
 
-protocol SampleBufferInput: MediaRecorderInput {
+protocol BufferInput: AnyObject {
 
-  var sampleBufferDelegate: SampleBufferInputDelegate? { get set }
+  var output: ((CVBuffer, CMTime) -> Void)? { get set }
 }
-
-extension SampleBufferInput {
-
-  var sampleBufferDelegate: SampleBufferInputDelegate? {
-    get { delegate as? SampleBufferInputDelegate }
-    set { delegate = newValue }
-  }
-}
-
-// MARK: - BufferInput
-
-protocol BufferInputDelegate: MediaRecorderInputDelegate {
-
-  func input(_ input: BufferInput, didOutput buffer: CVBuffer, at time: CMTime)
-}
-
-protocol BufferInput: MediaRecorderInput {
-
-  var bufferDelegate: BufferInputDelegate? { get set }
-}
-
-extension BufferInput {
-
-  var bufferDelegate: BufferInputDelegate? {
-    get { delegate as? BufferInputDelegate }
-    set { delegate = newValue }
-  }
-}
-
-

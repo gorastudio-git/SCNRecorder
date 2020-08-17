@@ -1,8 +1,8 @@
 //
-//  SCNView+SceneRecordable.swift
+//  ARView+SceneRecordableView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 31.12.2019.
+//  Created by Vladislav Grigoryev on 17.08.2020.
 //  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,20 +24,43 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
+import RealityKit
+import Combine
 
-private var videoRecordingKey: UInt8 = 0
+private var sceneRecorderKey: UInt8 = 0
+private var cancellableKey: UInt8 = 0
 
-extension SCNView: Recordable {
+@available(iOS 13.0, *)
+extension ARView: SceneRecordableView {
 
-  var videoRecordingStorage: AssociatedStorage<VideoRecording> {
-    AssociatedStorage(object: self, key: &videoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  public var eaglContext: EAGLContext? { nil }
+
+  public var api: API { .metal }
+
+  var sceneRecorderStorage: AssociatedStorage<SceneRecorder> {
+    AssociatedStorage(object: self, key: &sceneRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
   }
 
-  public var recorder: BaseRecorder? { sceneRecorder }
+  var cancelableStorage: AssociatedStorage<Cancellable> {
+    AssociatedStorage(object: self, key: &sceneRecorderKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  }
 
-  public var videoRecording: VideoRecording? {
-    get { videoRecordingStorage.get() }
-    set { videoRecordingStorage.set(newValue) }
+  public var sceneRecorder: SceneRecorder? {
+    get { sceneRecorderStorage.get() }
+    set {
+      let sceneRecorder = self.sceneRecorder
+      guard sceneRecorder !== newValue else { return }
+
+      cancelableStorage.get()?.cancel()
+      sceneRecorderStorage.set(newValue)
+
+      var time = Date().timeIntervalSince1970
+      cancelableStorage.set(
+        scene.subscribe(to: SceneEvents.Update.self
+      ) { [weak self] (event) in
+        time += event.deltaTime
+        self?.sceneRecorder?.render(atTime: time)
+      })
+    }
   }
 }

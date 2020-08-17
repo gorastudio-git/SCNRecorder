@@ -1,9 +1,9 @@
 //
-//  VideoRecorder.Recording.swift
+//  ARView.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 17.08.2020.
+//  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,36 +24,21 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
+import RealityKit
 
-extension VideoRecorder {
+private var videoRecordingKey: UInt8 = 0
 
-  final class Recording: VideoRecording {
+@available(iOS 13.0, *)
+extension ARView: Recordable {
 
-    @Observable var duration: TimeInterval = 0.0
+  var videoRecordingStorage: AssociatedStorage<VideoRecording> {
+    AssociatedStorage(object: self, key: &videoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  }
 
-    var durationObserver: Observable<TimeInterval> { $duration }
+  public var recorder: BaseRecorder? { sceneRecorder }
 
-    @Observable var state: VideoRecording.State = .preparing
-
-    var stateObserver: Observable<VideoRecording.State> { $state }
-
-    let videoRecorder: VideoRecorder
-
-    var url: URL { videoRecorder.url }
-
-    var fileType: AVFileType { videoRecorder.fileType }
-
-    init(videoRecorder: VideoRecorder) { self.videoRecorder = videoRecorder }
-
-    func resume() { videoRecorder.resume() }
-
-    func pause() { videoRecorder.pause() }
-
-    func finish(completionHandler handler: @escaping (_ info: VideoRecordingInfo) -> Void) {
-      videoRecorder.finish { handler(self) }
-    }
-
-    func cancel() { videoRecorder.cancel() }
+  public var videoRecording: VideoRecording? {
+    get { videoRecordingStorage.get() }
+    set { videoRecordingStorage.set(newValue) }
   }
 }

@@ -1,5 +1,5 @@
 //
-//  ImageRecorder.swift
+//  ImageOutput.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 11/03/2019.
@@ -27,14 +27,14 @@ import Foundation
 import AVFoundation
 import UIKit
 
-final class ImageRecorder {
+final class ImageOutput {
 
   static func takeUIImage(
     scale: CGFloat,
     orientation: UIImage.Orientation,
     context: CIContext,
-    completionHandler handler: @escaping (ImageRecorder, UIImage) -> Void
-  ) -> ImageRecorder {
+    completionHandler handler: @escaping (ImageOutput, UIImage) -> Void
+  ) -> ImageOutput {
     takeCGImage(context: context) {
       handler($0, UIImage(cgImage: $1, scale: scale, orientation: orientation))
     }
@@ -42,38 +42,38 @@ final class ImageRecorder {
 
   static func takeCGImage(
     context: CIContext,
-    completionHandler handler: @escaping (ImageRecorder, CGImage) -> Void
-  ) -> ImageRecorder {
+    completionHandler handler: @escaping (ImageOutput, CGImage) -> Void
+  ) -> ImageOutput {
     takeCIImage {
       handler($0, context.createCGImage($1, from: $1.extent)!)
     }
   }
 
   static func takeCIImage(
-    completionHandler handler: @escaping (ImageRecorder, CIImage) -> Void
-  ) -> ImageRecorder {
+    completionHandler handler: @escaping (ImageOutput, CIImage) -> Void
+  ) -> ImageOutput {
     takePixelBuffer {
       handler($0, CIImage(cvPixelBuffer: $1))
     }
   }
 
   static func takePixelBuffer(
-    completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void
-  ) -> ImageRecorder {
-    ImageRecorder(completionHandler: handler)
+    completionHandler handler: @escaping (ImageOutput, CVPixelBuffer) -> Void
+  ) -> ImageOutput {
+    ImageOutput(completionHandler: handler)
   }
 
-  var handler: ((ImageRecorder, CVPixelBuffer) -> Void)?
+  var handler: ((ImageOutput, CVPixelBuffer) -> Void)?
 
-  init(completionHandler handler: @escaping (ImageRecorder, CVPixelBuffer) -> Void) {
-    self.handler = { (imageRecorder, pixelBuffer) in
-      handler(imageRecorder, pixelBuffer)
+  init(completionHandler handler: @escaping (ImageOutput, CVPixelBuffer) -> Void) {
+    self.handler = { (imageOutput, pixelBuffer) in
+      handler(imageOutput, pixelBuffer)
       self.handler = nil
     }
   }
 }
 
-extension ImageRecorder: MediaRecorder.Output.Video {
+extension ImageOutput: MediaRecorder.Output.Video {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     guard let imageBuffer: CVImageBuffer = {

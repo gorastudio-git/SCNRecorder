@@ -32,5 +32,5 @@ public protocol SceneRecordable: Recordable {
 
 extension SceneRecordable {
 
-  public var recorder: Recorder? { sceneRecorder }
+  public var recorder: BaseRecorder? { sceneRecorder }
 }

@@ -35,7 +35,7 @@ enum RecordableError: Swift.Error {
 
 public protocol Recordable: AnyObject {
 
-  var recorder: Recorder? { get }
+  var recorder: BaseRecorder? { get }
 
   var videoRecording: VideoRecording? { get set }
 }
@@ -92,7 +92,7 @@ public extension Recordable {
     return videoRecording
   }
 
-  func finishVideoRecording(completionHandler handler: @escaping (VideoRecordingInfo) -> Void) {
+  func finishVideoRecording(completionHandler handler: @escaping (VideoRecording.Info) -> Void) {
     videoRecording?.finish { videoRecordingInfo in
       DispatchQueue.main.async { handler(videoRecordingInfo) }
     }

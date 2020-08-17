@@ -26,30 +26,27 @@
 import Foundation
 import AVFoundation
 
-public protocol VideoRecordingInfo: AnyObject {
+public final class VideoRecording {
 
-  var url: URL { get }
+    @Observable public var duration: TimeInterval = 0.0
 
-  var fileType: AVFileType { get }
+    @Observable public var state: State = .preparing
 
-  var duration: TimeInterval { get }
-}
+    let videoOutput: VideoOutput
 
-public protocol VideoRecording: VideoRecordingInfo {
+    public var url: URL { videoOutput.url }
 
-  typealias State = VideoRecordingState
+    public var fileType: AVFileType { videoOutput.fileType }
 
-  var durationObserver: Observable<TimeInterval> { get }
+    init(videoOutput: VideoOutput) { self.videoOutput = videoOutput }
 
-  var state: State { get }
+    public func resume() { videoOutput.resume() }
 
-  var stateObserver: Observable<State> { get }
+    public func pause() { videoOutput.pause() }
 
-  func resume()
+    public func finish(completionHandler handler: @escaping (_ info: Info) -> Void) {
+      videoOutput.finish { handler(Info(self)) }
+    }
 
-  func pause()
-
-  func finish(completionHandler handler: @escaping (_ info: VideoRecordingInfo) -> Void)
-
-  func cancel()
+    func cancel() { videoOutput.cancel() }
 }

@@ -27,7 +27,7 @@ import Foundation
 import SceneKit
 import ARKit
 
-public class BaseRecorder: NSObject, Recorder {
+public class BaseRecorder: NSObject {
 
   let mediaRecorder: MediaRecorder
 
@@ -39,12 +39,42 @@ public class BaseRecorder: NSObject, Recorder {
 
   let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
 
-  public override init() { self.mediaRecorder = MediaRecorder(queue: queue) }
-}
+  public var filters: [Filter] {
+    get { mediaRecorder.filters }
+    set { mediaRecorder.filters = newValue }
+  }
 
-extension BaseRecorder: CompositeRecorder {
+  @Observable var error: Swift.Error?
 
-  var composedRecorder: InternalRecorder { mediaRecorder }
+  public override init() {
+    self.mediaRecorder = MediaRecorder(queue: queue)
+    super.init()
+    self.mediaRecorder.$error.observe { [weak self] in self?.error = $0 }
+  }
+
+  public func makeVideoRecording(to url: URL, settings: VideoSettings) throws -> VideoRecording {
+    try mediaRecorder.makeVideoRecording(to: url, settings: settings)
+  }
+
+  public func takePhoto(
+    scale: CGFloat,
+    orientation: UIImage.Orientation,
+    completionHandler handler: @escaping (UIImage) -> Void
+  ) {
+    mediaRecorder.takePhoto(
+      scale: scale,
+      orientation: orientation,
+      completionHandler: handler
+    )
+  }
+
+  public func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
+    mediaRecorder.takeCoreImage(completionHandler: handler)
+  }
+
+  public func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
+    mediaRecorder.takePixelBuffer(completionHandler: handler)
+  }
 }
 
 // MARK: - ARSCNViewDelegate
