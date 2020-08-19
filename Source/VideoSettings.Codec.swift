@@ -180,8 +180,8 @@ public extension VideoSettings {
     var settings: [String: Any] {
       rawSettings.merging(
         ([
-          AVVideoAverageBitRateKey: averageBitRate,
-          AVVideoMaxKeyFrameIntervalKey: maxKeyFrameInterval,
+          AVVideoAverageBitRateKey: averageBitRate.map { $0 as NSNumber },
+          AVVideoMaxKeyFrameIntervalKey: maxKeyFrameInterval.map { $0 as NSNumber },
           AVVideoMaxKeyFrameIntervalDurationKey: maxKeyFrameIntervalDuration,
           AVVideoAllowFrameReorderingKey: allowFrameReordering,
           AVVideoProfileLevelKey: profileLevel?.rawValue,
