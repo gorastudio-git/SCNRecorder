@@ -1,5 +1,5 @@
 //
-//  MediaRecorder.swift
+//  MediaSession.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 24.05.2020.
@@ -26,11 +26,11 @@
 import Foundation
 import AVFoundation
 
-final class MediaRecorder {
+final class MediaSession {
 
-  typealias Input = MediaRecorderInput
+  typealias Input = MediaSessionInput
 
-  typealias Output = MediaRecorderOutput
+  typealias Output = MediaSessionOutput
 
   enum VideoInput: Input.Video {
 
@@ -106,7 +106,7 @@ final class MediaRecorder {
   }
 }
 
-extension MediaRecorder {
+extension MediaSession {
 
   func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
     queue.async { [weak self] in
@@ -127,7 +127,7 @@ extension MediaRecorder {
   }
 }
 
-extension MediaRecorder {
+extension MediaSession {
 
   func makeVideoRecording(
     to url: URL,
@@ -198,30 +198,30 @@ extension MediaRecorder {
   }
 }
 
-extension MediaRecorder {
+extension MediaSession {
 
-  func addVideoOutput(_ videoOutput: MediaRecorder.Output.Video) {
+  func addVideoOutput(_ videoOutput: MediaSession.Output.Video) {
     if ($videoOutputs.modify {
       $0.append(videoOutput)
       return $0.count == 1
     }) { videoInput?.start() }
   }
 
-  func removeVideoOutput(_ videoOutput: MediaRecorder.Output.Video) {
+  func removeVideoOutput(_ videoOutput: MediaSession.Output.Video) {
     if ($videoOutputs.modify {
       $0 = $0.filter { $0 !== videoOutput }
       return $0.count == 0
     }) { videoInput?.stop() }
   }
 
-  func addAudioOutput(_ audioOutput: MediaRecorder.Output.Audio) {
+  func addAudioOutput(_ audioOutput: MediaSession.Output.Audio) {
     if ($audioOutputs.modify {
       $0.append(audioOutput)
       return $0.count == 1
     }) { audioInput?.start() }
   }
 
-  func removeAudioOutput(_ audioOutput: MediaRecorder.Output.Audio) {
+  func removeAudioOutput(_ audioOutput: MediaSession.Output.Audio) {
     if ($audioOutputs.modify {
       $0 = $0.filter { $0 !== audioOutput }
       return $0.count == 0

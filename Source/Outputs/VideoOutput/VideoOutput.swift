@@ -196,7 +196,7 @@ private extension VideoOutput {
 }
 
 // - MARK: VideoOutput
-extension VideoOutput: MediaRecorder.Output.Video {
+extension VideoOutput: MediaSession.Output.Video {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     state = state.appendVideoSampleBuffer(sampleBuffer, to: self)
@@ -208,7 +208,7 @@ extension VideoOutput: MediaRecorder.Output.Video {
 }
 
 // - MARK: AudioOutput
-extension VideoOutput: MediaRecorder.Output.Audio {
+extension VideoOutput: MediaSession.Output.Audio {
 
   func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     state = state.appendAudioSampleBuffer(sampleBuffer, to: self)

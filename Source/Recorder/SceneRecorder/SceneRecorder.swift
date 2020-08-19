@@ -34,7 +34,7 @@ public final class SceneRecorder: BaseRecorder {
   public init(_ recordableView: SceneRecordableView, timeScale: CMTimeScale = 600) throws {
     self.videoInput = try VideoInput(recordableView: recordableView, timeScale: timeScale)
     super.init()
-    self.mediaRecorder.setVideoInput(videoInput)
+    self.mediaSession.setVideoInput(videoInput)
   }
 
   public func render(atTime time: TimeInterval) {

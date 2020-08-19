@@ -35,6 +35,13 @@ public extension VideoSettings {
     case h264(compressionProperties: H264CompressionProperties = H264CompressionProperties())
     
     case jpeg
+
+    var compressionProperties: [String: Any]? {
+        switch self {
+        case .h264(let compressionProperties): return compressionProperties.settings
+        case .hevc, .jpeg: return nil
+        }
+    }
   }
 }
 

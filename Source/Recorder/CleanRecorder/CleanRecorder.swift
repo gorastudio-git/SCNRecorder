@@ -33,7 +33,7 @@ public final class CleanRecorder: BaseRecorder {
   public init(_ cleanRecordable: CleanRecordable, timeScale: CMTimeScale = 600) {
     self.videoInput = VideoInput(cleanRecordable: cleanRecordable, timeScale: timeScale)
     super.init()
-    self.mediaRecorder.setVideoInput(videoInput)
+    self.mediaSession.setVideoInput(videoInput)
   }
 
   public func renderer(

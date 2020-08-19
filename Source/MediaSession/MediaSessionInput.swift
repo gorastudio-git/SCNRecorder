@@ -1,5 +1,5 @@
 //
-//  MediaRecorderInput.swift
+//  MediaSessionInput.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 24.05.2020.
@@ -26,12 +26,11 @@
 import Foundation
 import AVFoundation
 
-// MARK: - MediaRecorderInput
-protocol MediaRecorderInput {
+protocol MediaSessionInput {
 
-  typealias Audio = AudioMediaRecorderInput
+  typealias Audio = AudioMediaSessionInput
 
-  typealias Video = VideoMediaRecorderInput
+  typealias Video = VideoMediaSessionInput
 
   typealias SampleBufferAudio = Audio & SampleBufferInput
 
@@ -44,9 +43,9 @@ protocol MediaRecorderInput {
   func stop()
 }
 
-protocol AudioMediaRecorderInput: MediaRecorderInput { }
+protocol AudioMediaSessionInput: MediaSessionInput { }
 
-protocol VideoMediaRecorderInput: MediaRecorderInput {
+protocol VideoMediaSessionInput: MediaSessionInput {
   
   var size: CGSize { get }
   

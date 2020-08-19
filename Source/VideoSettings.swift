@@ -70,7 +70,8 @@ extension VideoSettings {
       AVVideoHeightKey: size.height,
       AVVideoCodecKey: codec.avCodec,
       AVVideoScalingModeKey: scalingMode.avScalingMode,
-      AVVideoColorPropertiesKey: videoColorProperties
+      AVVideoColorPropertiesKey: videoColorProperties,
+      AVVideoCompressionPropertiesKey: codec.compressionProperties
     ] as [String: Any?]).compactMapValues({ $0 }),
       uniquingKeysWith: { raw, _ in raw }
     )

@@ -1,5 +1,5 @@
 //
-//  MediaRecorderOutput.swift
+//  MediaSessionOutput.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 24.05.2020.
@@ -26,19 +26,19 @@
 import Foundation
 import AVFoundation
 
-protocol MediaRecorderOutput: AnyObject {
+protocol MediaSessionOutput: AnyObject {
 
-  typealias Audio = AudioMediaRecorderOutput
+  typealias Audio = AudioMediaSessionOutput
 
-  typealias Video = VideoMediaRecorderOutput
+  typealias Video = VideoMediaSessionOutput
 }
 
-protocol AudioMediaRecorderOutput: MediaRecorderOutput {
+protocol AudioMediaSessionOutput: MediaSessionOutput {
 
   func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer)
 }
 
-protocol VideoMediaRecorderOutput: MediaRecorderOutput {
+protocol VideoMediaSessionOutput: MediaSessionOutput {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer)
 

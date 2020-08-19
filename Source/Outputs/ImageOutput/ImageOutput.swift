@@ -73,7 +73,7 @@ final class ImageOutput {
   }
 }
 
-extension ImageOutput: MediaRecorder.Output.Video {
+extension ImageOutput: MediaSession.Output.Video {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     guard let imageBuffer: CVImageBuffer = {

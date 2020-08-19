@@ -29,31 +29,31 @@ import ARKit
 
 public class BaseRecorder: NSObject {
 
-  let mediaRecorder: MediaRecorder
+  let mediaSession: MediaSession
 
   lazy var audioInput: AudioInput = {
     let audioInput = AudioInput(queue: queue)
-    mediaRecorder.audioInput = audioInput
+    mediaSession.audioInput = audioInput
     return audioInput
   }()
 
   let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
 
   public var filters: [Filter] {
-    get { mediaRecorder.filters }
-    set { mediaRecorder.filters = newValue }
+    get { mediaSession.filters }
+    set { mediaSession.filters = newValue }
   }
 
   @Observable var error: Swift.Error?
 
   public override init() {
-    self.mediaRecorder = MediaRecorder(queue: queue)
+    self.mediaSession = MediaSession(queue: queue)
     super.init()
-    self.mediaRecorder.$error.observe { [weak self] in self?.error = $0 }
+    self.mediaSession.$error.observe { [weak self] in self?.error = $0 }
   }
 
   public func makeVideoRecording(to url: URL, settings: VideoSettings) throws -> VideoRecording {
-    try mediaRecorder.makeVideoRecording(to: url, settings: settings)
+    try mediaSession.makeVideoRecording(to: url, settings: settings)
   }
 
   public func takePhoto(
@@ -61,7 +61,7 @@ public class BaseRecorder: NSObject {
     orientation: UIImage.Orientation,
     completionHandler handler: @escaping (UIImage) -> Void
   ) {
-    mediaRecorder.takePhoto(
+    mediaSession.takePhoto(
       scale: scale,
       orientation: orientation,
       completionHandler: handler
@@ -69,11 +69,11 @@ public class BaseRecorder: NSObject {
   }
 
   public func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
-    mediaRecorder.takeCoreImage(completionHandler: handler)
+    mediaSession.takeCoreImage(completionHandler: handler)
   }
 
   public func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
-    mediaRecorder.takePixelBuffer(completionHandler: handler)
+    mediaSession.takePixelBuffer(completionHandler: handler)
   }
 }
 
