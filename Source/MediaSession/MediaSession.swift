@@ -66,9 +66,9 @@ final class MediaSession {
 
   @Observable var error: Swift.Error?
 
-  var videoInput: VideoInput?
+  private(set) var videoInput: VideoInput?
 
-  var audioInput: Input.SampleBufferAudio?
+  private(set) var audioInput: Input.SampleBufferAudio?
 
   public init(queue: DispatchQueue) { self.queue = queue }
 

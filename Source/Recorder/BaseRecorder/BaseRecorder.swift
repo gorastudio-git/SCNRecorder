@@ -33,7 +33,7 @@ public class BaseRecorder: NSObject {
 
   lazy var audioInput: AudioInput = {
     let audioInput = AudioInput(queue: queue)
-    mediaSession.audioInput = audioInput
+    mediaSession.setAudioInput(audioInput) 
     return audioInput
   }()
 
