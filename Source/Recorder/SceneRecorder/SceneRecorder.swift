@@ -28,20 +28,23 @@ import SceneKit
 import ARKit
 
 public final class SceneRecorder: BaseRecorder {
-
+  
   let videoInput: VideoInput
-
+  
   public init(_ recordableView: SceneRecordableView, timeScale: CMTimeScale = 600) throws {
     self.videoInput = try VideoInput(recordableView: recordableView, timeScale: timeScale)
     super.init()
     self.mediaSession.setVideoInput(videoInput)
   }
-
+  
   public func render(atTime time: TimeInterval) {
     do { try videoInput.render(atTime: time) }
     catch { self.error = error }
   }
+}
 
+extension SceneRecorder: SCNSceneRendererDelegate {
+  
   public func renderer(
     _ renderer: SCNSceneRenderer,
     didRenderScene scene: SCNScene,

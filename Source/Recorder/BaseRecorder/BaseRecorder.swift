@@ -77,8 +77,8 @@ public class BaseRecorder: NSObject {
   }
 }
 
-// MARK: - ARSCNViewDelegate
-extension BaseRecorder: ARSCNViewDelegate {
+// MARK: - ARSessionDelegate
+extension BaseRecorder: ARSessionDelegate {
 
   @objc public func session(
     _ session: ARSession,

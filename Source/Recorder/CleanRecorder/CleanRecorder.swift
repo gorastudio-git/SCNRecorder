@@ -35,6 +35,9 @@ public final class CleanRecorder: BaseRecorder {
     super.init()
     self.mediaSession.setVideoInput(videoInput)
   }
+}
+
+extension CleanRecorder: SCNSceneRendererDelegate {
 
   public func renderer(
     _ renderer: SCNSceneRenderer,

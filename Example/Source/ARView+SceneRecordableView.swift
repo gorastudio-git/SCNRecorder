@@ -83,12 +83,14 @@ extension ARView: SceneRecordableView {
       cancelable?.cancel()
       _sceneRecorder = newValue
 
-      var time = Date().timeIntervalSince1970
+      var time = CACurrentMediaTime() as TimeInterval
       cancelable = scene.subscribe(to: SceneEvents.Update.self
       ) { [weak self] (event) in
         time += event.deltaTime
         self?.sceneRecorder?.render(atTime: time)
       }
+
+      session.delegate = newValue
     }
   }
 }

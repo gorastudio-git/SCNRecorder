@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ARKit
 import RealityKit
 import AVKit
 
@@ -33,12 +34,26 @@ class RKViewController: UIViewController {
 
       // Add the box anchor to the scene
       sceneView.scene.anchors.append(boxAnchor)
+      sceneView.automaticallyConfigureSession = false
     }
     catch { }
 
     // It is recommended to prepare the view for recording at viewDidLoad
     do { try sceneView.prepareForRecording() }
     catch { print("Something went wrong during recording preparation: \(error)") }
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    // Create a session configuration
+    let configuration = ARWorldTrackingConfiguration()
+
+    // We want to record audio as well
+    configuration.providesAudioData = true
+
+    // Run the view's session
+    sceneView.session.run(configuration)
   }
 
   @IBAction func takePhoto(_ sender: UIButton) {
