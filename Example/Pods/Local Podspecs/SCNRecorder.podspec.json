@@ -1,6 +1,6 @@
 {
   "name": "SCNRecorder",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "summary": "A lags-free recorder of ARKit and SceneKit for iOS in Swift",
   "homepage": "https://github.com/gorastudio/SCNRecorder",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/gorastudio/SCNRecorder.git",
-    "tag": "1.2.0"
+    "tag": "2.0.0"
   },
   "module_name": "SCNRecorder",
   "module_map": "SCNRecorder.modulemap",
@@ -20,14 +20,35 @@
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": [
-    "SCNRecorder.h",
-    "Source/**/*.{h,m,swift}"
+  "default_subspecs": [
+    "Core",
+    "Scene"
   ],
-  "public_header_files": [
-    "SCNRecorder.h",
-    "Source/**/*.h"
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": [
+        "SCNRecorder.h",
+        "Sources/**/*.{h,m,swift}"
+      ],
+      "exclude_files": [
+        "Sources/**/*Clean*.{h,m,swift}",
+        "Sources/**/*Scene*.{h,m,swift}"
+      ],
+      "public_header_files": [
+        "SCNRecorder.h",
+        "Sources/**/*.h"
+      ],
+      "private_header_files": "Sources/**/*.h"
+    },
+    {
+      "name": "Scene",
+      "source_files": "Sources/**/*Scene*.{h,m,swift}"
+    },
+    {
+      "name": "Clean",
+      "source_files": "Sources/**/*Clean*.{h,m,swift}"
+    }
   ],
-  "private_header_files": "Source/**/*.h",
   "swift_version": "5.2"
 }

@@ -39,7 +39,7 @@ class SCNViewController: ViewController {
     sceneView.allowsCameraControl = true
 
     do {
-      guard let recorder = sceneView.sceneRecorder else { return }
+      guard let recorder = sceneView.recorder else { return }
       captureSession = try SCNViewController.makeAudioCaptureSessionForRecorder(recorder: recorder)
       captureSession?.startRunning()
     }
@@ -67,10 +67,10 @@ extension SCNViewController {
 
     case canNotAddInput(input: AVCaptureInput)
 
-    case canNotAddRecorder(recorder: SceneRecorder)
+    case canNotAddRecorder(recorder: BaseRecorder)
   }
 
-  static func makeAudioCaptureSessionForRecorder(recorder: SceneRecorder) throws -> AVCaptureSession {
+  static func makeAudioCaptureSessionForRecorder(recorder: BaseRecorder) throws -> AVCaptureSession {
     let captureSession = AVCaptureSession()
 
     let mediaType = AVMediaType.audio

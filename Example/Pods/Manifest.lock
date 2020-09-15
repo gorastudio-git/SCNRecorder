@@ -1,5 +1,9 @@
 PODS:
-  - SCNRecorder (1.2.0)
+  - SCNRecorder (2.0.0):
+    - SCNRecorder/Core (= 2.0.0)
+    - SCNRecorder/Scene (= 2.0.0)
+  - SCNRecorder/Core (2.0.0)
+  - SCNRecorder/Scene (2.0.0)
 
 DEPENDENCIES:
   - SCNRecorder (from `../`)
@@ -9,8 +13,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SCNRecorder: ca57b16652f731f6e1915ad7eea452861db16b8d
+  SCNRecorder: 00d860c12355016b5a1e41aeffc423731ed3d47a
 
 PODFILE CHECKSUM: 37b2284aa204af843c132b14b01f53e8965290c4
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

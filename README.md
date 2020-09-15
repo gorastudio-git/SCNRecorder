@@ -1,66 +1,69 @@
 # SCNRecorder
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/gorastudio/SCNRecorder/master/LICENSE.md)
+![Platforms](https://img.shields.io/cocoapods/p/SCNRecorder.svg)
+![Swift](https://img.shields.io/badge/swift-5.2-red.svg)
+[![Cocoapods compatible](https://img.shields.io/cocoapods/v/SCNRecorder.svg)](https://cocoapods.org/pods/SCNRecorder)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share the media content of your augmented reality app or SceneKit based game.
 
 SCNRecorder supports Metal and OpenGL.
 
 ![Sample](/images/sample2.gif?raw=true )
 
-(Don't worry! The bottom line is a part of the content, not the user interface!)
-
 ## Requirements
 
 - iOS 11.0+
-- Xcode 10.1+
+- Xcode 11.5+
 - Swift 4.2+
 
 ## Installation
 
-For now, the only available way to install the library is to use CocoaPods.
-But the framework has no external dependencies, so you can install it by cloning the repository.
-
-### Installation with CocoaPods
+### CocoaPods
 
 [CocoaPods](http://cocoapods.org/)  is a dependency manager for Swift and Objective-C Cocoa projects, which automates and simplifies the process of using 3rd-party libraries in your projects. See the [Get Started](https://cocoapods.org/#get_started) section for more details.
 
 #### Podfile
-```
+
+```ruby
 pod 'SCNRecorder', '~> 1.1'
+```
+
+### Carthage
+
+```ruby
+github "gorastudio/SCNRecorder"
 ```
 
 ## Usage
 
 Import the SCNRecorder module.
 
-```
+```swift
 import SCNRecorder
 ```
 
 At `viewDidLoad` it is recomended to prepare a `sceneView` for recording.
 
-```
+```swift
+@IBOutlet var sceneView: SCNView!
+
 override func viewDidLoad() {
   super.viewDidLoad()
-
-  do { try sceneView.prepareForRecording() }
-  catch { print("Something went wrong during recording preparation: \(error)") }
+  sceneView.prepareForRecording()
 }
 ```
 
 And now you can use new functions to capture videos.
-```
-do { try sceneView.startVideoRecording() }
-catch { print("Something went wrong during video-recording preparation: \(error)") }
-```
-```
-sceneView.finishVideoRecording { (videoRecording) in 
-  /* Process the captured video. Main thread. */
-}
+
+```swift
+try sceneView.startVideoRecording()
 ```
 
-For example, you can play the video in a different controller.
-```
-sceneView.finishVideoRecording { (recording) in
+```swift
+sceneView.finishVideoRecording { (videoRecording) in 
+  /* Process the captured video. Main thread. */
   let controller = AVPlayerViewController()
   controller.player = AVPlayer(url: recording.url)
   self.navigationController?.pushViewController(controller, animated: true)
@@ -68,37 +71,37 @@ sceneView.finishVideoRecording { (recording) in
 ```
 
 To capture an image it is enough to call:
-```
-do {
-  try sceneView.takePhoto { (photo) in
-    /* Your photo is now here. Main thread. */
-  }
+
+```swift
+try sceneView.takePhoto { (photo) in
+  /* Your photo is now here. Main thread. */
 }
-catch { print("Something went wrong during photo-capture preparation: \(error)") }
 ```
 
 Look at the Example project for more details.
 
 ### Audio capture
 
-To capture video with audio from `ARSCNView` enable it in the `ARConfiguration`.
-```
+#### ARSCNView
+
+To capture video with audio from `ARSCNView` enable audio in the `ARConfiguration`.
+
+```swift
 let configuration = ARWorldTrackingConfiguration()
 configuration.providesAudioData = true
 sceneView.session.run(configuration)
 ```
 
-To capture audio from `SCNView` you have to implement it by yourself.
-For example:
+#### SCNView
 
-```
+To capture audio from `SCNView` you have to implement it by yourself.
+
+```swift
 var captureSession: AVCaptureSession?
 
 override func viewDidLoad() {
   super.viewDidLoad()
-  
-  do { try sceneView.prepareForRecording() }
-  catch { print("Something went wrong during recording preparation: \(error)") }
+  sceneView.prepareForRecording()
   
   guard let recorder = sceneView.recorder else { return }
   let captureSession = AVCaptureSession()
@@ -135,4 +138,4 @@ Thanks to  for testing and clarifying the public interface of the framework.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details

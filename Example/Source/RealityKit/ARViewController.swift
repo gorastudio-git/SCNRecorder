@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  ARViewController.swift
 //  Example
 //
-//  Created by Vladislav Grigoryev on 01/07/2019.
+//  Created by Vladislav Grigoryev on 17.08.2020.
 //  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,15 +24,15 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
 import ARKit
+import RealityKit
 import AVKit
 
 import SCNRecorder
 
-class ViewController: UIViewController {
+class ARViewController: UIViewController {
 
-  @IBOutlet var sceneView: SCNView!
+  @IBOutlet var sceneView: ARView!
 
   @IBOutlet var durationLabel: UILabel!
 
@@ -45,18 +45,31 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Show statistics such as fps and timing information
-    sceneView.showsStatistics = true
+    // Load the "Box" scene from the "Experience" Reality File
+    do {
+      let boxAnchor = try Experience.loadBox()
 
-    // Create a new scene
-    let scene = SCNScene(named: "art.scnassets/ship.scn")!
-
-    // Set the scene to the view
-    sceneView.scene = scene
-    sceneView.rendersContinuously = true
+      // Add the box anchor to the scene
+      sceneView.scene.anchors.append(boxAnchor)
+      sceneView.automaticallyConfigureSession = false
+    }
+    catch { }
 
     // It is recommended to prepare the view for recording at viewDidLoad
     sceneView.prepareForRecording()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    // Create a session configuration
+    let configuration = ARWorldTrackingConfiguration()
+
+    // We want to record audio as well
+    configuration.providesAudioData = true
+
+    // Run the view's session
+    sceneView.session.run(configuration)
   }
 
   @IBAction func takePhoto(_ sender: UIButton) {

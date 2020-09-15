@@ -1,4 +1,5 @@
 disabled_rules:
+  - identifier_name
   - statement_position
   - nesting
 included:
@@ -9,3 +10,6 @@ reporter: "xcode"
 identifier_name:
   min_length: 1
   allowed_symbols: ["_"]
+
+cyclomatic_complexity:
+  ignores_case_statements: true

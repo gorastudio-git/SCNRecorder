@@ -18,10 +18,10 @@
 		BE4C34902237CA8E007AE1EE /* PhotoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4C348F2237CA8E007AE1EE /* PhotoPreviewController.swift */; };
 		BE79CB5A22CA4BD6006058AA /* SCNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE79CB5922CA4BD6006058AA /* SCNViewController.swift */; };
 		BE79CB5C22CA4CE1006058AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE79CB5B22CA4CE1006058AA /* ViewController.swift */; };
-		D5A4065824EB14580022600D /* ARView+SceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065624EB14580022600D /* ARView+SceneRecordable.swift */; };
-		D5A4065924EB14580022600D /* ARView+SceneRecordableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065724EB14580022600D /* ARView+SceneRecordableView.swift */; };
+		D5A4065824EB14580022600D /* ARView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065624EB14580022600D /* ARView+SelfSceneRecordable.swift */; };
+		D5A4065924EB14580022600D /* ARView+MetalRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065724EB14580022600D /* ARView+MetalRecordable.swift */; };
 		D5A4066024EB1A920022600D /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065F24EB1A920022600D /* Experience.rcproject */; };
-		D5A4066224EB1A9D0022600D /* RKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4066124EB1A9D0022600D /* RKViewController.swift */; };
+		D5A4066224EB1A9D0022600D /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4066124EB1A9D0022600D /* ARViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,10 +53,10 @@
 		BE79CB5922CA4BD6006058AA /* SCNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNViewController.swift; sourceTree = "<group>"; };
 		BE79CB5B22CA4CE1006058AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D1017D3B6C65B53A83FA2F47 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
-		D5A4065624EB14580022600D /* ARView+SceneRecordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARView+SceneRecordable.swift"; sourceTree = "<group>"; };
-		D5A4065724EB14580022600D /* ARView+SceneRecordableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARView+SceneRecordableView.swift"; sourceTree = "<group>"; };
+		D5A4065624EB14580022600D /* ARView+SelfSceneRecordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARView+SelfSceneRecordable.swift"; sourceTree = "<group>"; };
+		D5A4065724EB14580022600D /* ARView+MetalRecordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARView+MetalRecordable.swift"; sourceTree = "<group>"; };
 		D5A4065F24EB1A920022600D /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
-		D5A4066124EB1A9D0022600D /* RKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKViewController.swift; sourceTree = "<group>"; };
+		D5A4066124EB1A9D0022600D /* ARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,11 +129,9 @@
 				BE79CB5922CA4BD6006058AA /* SCNViewController.swift */,
 				BE79CB5B22CA4CE1006058AA /* ViewController.swift */,
 				BE4C348F2237CA8E007AE1EE /* PhotoPreviewController.swift */,
-				D5A4066124EB1A9D0022600D /* RKViewController.swift */,
-				D5A4065624EB14580022600D /* ARView+SceneRecordable.swift */,
-				D5A4065724EB14580022600D /* ARView+SceneRecordableView.swift */,
-				BE4C079B247B41730008AA5E /* Supporting Files */,
+				D5399414250F90C900537276 /* RealityKit */,
 				BE4C079A247B40C70008AA5E /* Resources */,
+				BE4C079B247B41730008AA5E /* Supporting Files */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -144,6 +142,16 @@
 				492BDAD07B20A9ABA0CE0078 /* Pods_Example.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5399414250F90C900537276 /* RealityKit */ = {
+			isa = PBXGroup;
+			children = (
+				D5A4066124EB1A9D0022600D /* ARViewController.swift */,
+				D5A4065724EB14580022600D /* ARView+MetalRecordable.swift */,
+				D5A4065624EB14580022600D /* ARView+SelfSceneRecordable.swift */,
+			);
+			path = RealityKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,12 +276,12 @@
 				BE79CB5C22CA4CE1006058AA /* ViewController.swift in Sources */,
 				BE4C34752237C827007AE1EE /* ARSCNViewController.swift in Sources */,
 				BE79CB5A22CA4BD6006058AA /* SCNViewController.swift in Sources */,
-				D5A4065924EB14580022600D /* ARView+SceneRecordableView.swift in Sources */,
+				D5A4065924EB14580022600D /* ARView+MetalRecordable.swift in Sources */,
 				D5A4066024EB1A920022600D /* Experience.rcproject in Sources */,
 				BE4C34712237C827007AE1EE /* AppDelegate.swift in Sources */,
 				BE4C34902237CA8E007AE1EE /* PhotoPreviewController.swift in Sources */,
-				D5A4066224EB1A9D0022600D /* RKViewController.swift in Sources */,
-				D5A4065824EB14580022600D /* ARView+SceneRecordable.swift in Sources */,
+				D5A4066224EB1A9D0022600D /* ARViewController.swift in Sources */,
+				D5A4065824EB14580022600D /* ARView+SelfSceneRecordable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
