@@ -5,7 +5,7 @@
   "homepage": "https://github.com/gorastudio/SCNRecorder",
   "license": {
     "type": "MIT",
-    "file": "LICENSE"
+    "file": "LICENSE.md"
   },
   "authors": {
     "Vladislav Grigoryev": "dev.grigoriev@gmail.com"
@@ -20,35 +20,14 @@
   "platforms": {
     "ios": "11.0"
   },
-  "default_subspecs": [
-    "Core",
-    "Scene"
+  "source_files": [
+    "SCNRecorder.h",
+    "Sources/**/*.{h,m,swift}"
   ],
-  "subspecs": [
-    {
-      "name": "Core",
-      "source_files": [
-        "SCNRecorder.h",
-        "Sources/**/*.{h,m,swift}"
-      ],
-      "exclude_files": [
-        "Sources/**/*Clean*.{h,m,swift}",
-        "Sources/**/*Scene*.{h,m,swift}"
-      ],
-      "public_header_files": [
-        "SCNRecorder.h",
-        "Sources/**/*.h"
-      ],
-      "private_header_files": "Sources/**/*.h"
-    },
-    {
-      "name": "Scene",
-      "source_files": "Sources/**/*Scene*.{h,m,swift}"
-    },
-    {
-      "name": "Clean",
-      "source_files": "Sources/**/*Clean*.{h,m,swift}"
-    }
+  "public_header_files": [
+    "SCNRecorder.h",
+    "Sources/**/*.h"
   ],
+  "private_header_files": "Sources/**/*.h",
   "swift_version": "5.2"
 }
