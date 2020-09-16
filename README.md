@@ -22,10 +22,6 @@ SCNRecorder supports Metal and OpenGL.
 
 ### CocoaPods
 
-[CocoaPods](http://cocoapods.org/)  is a dependency manager for Swift and Objective-C Cocoa projects, which automates and simplifies the process of using 3rd-party libraries in your projects. See the [Get Started](https://cocoapods.org/#get_started) section for more details.
-
-#### Podfile
-
 ```ruby
 pod 'SCNRecorder', '~> 1.1'
 ```
@@ -132,9 +128,7 @@ Look at the Example project for more details.
 
 - [Vladislav Grigoryev](https://github.com/v-grigoriev)
 
-Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) and [Dmitry Yurlov](https://github.com/demonukg) for testing and clarifying the public interface of the framework.
-
-Thanks to  for testing and clarifying the public interface of the framework.
+Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) and [Dmitry Yurlov](https://github.com/demonukg) for testing, reviewing and inspiration.
 
 ## License
 
