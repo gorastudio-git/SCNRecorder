@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BE4C33D52236A6BA007AE1EE /* SCNRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = BE4C33D32236A6BA007AE1EE /* SCNRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE4C34242236BAB2007AE1EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34232236BAB2007AE1EE /* README.md */; };
-		BE4C34262236C034007AE1EE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34252236C034007AE1EE /* LICENSE */; };
 		BE7565A12471246500B7EED2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BE7565A02471246500B7EED2 /* .swiftlint.yml */; };
 		D5B923DF2510CC9B00D35585 /* MTLPixelFormat+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9237B2510CC9A00D35585 /* MTLPixelFormat+Helpers.swift */; };
 		D5B923E02510CC9C00D35585 /* CIContext+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9237C2510CC9A00D35585 /* CIContext+Render.swift */; };
@@ -82,6 +81,7 @@
 		D5B924232510CC9C00D35585 /* SelfRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DB2510CC9B00D35585 /* SelfRecordable.swift */; };
 		D5B924242510CC9C00D35585 /* ARSCNView+SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DD2510CC9B00D35585 /* ARSCNView+SelfCleanRecordable.swift */; };
 		D5B924252510CC9C00D35585 /* SCNView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DE2510CC9B00D35585 /* SCNView+SelfSceneRecordable.swift */; };
+		FB81FF2E251B7885001C129F /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = FB81FF2D251B7885001C129F /* LICENSE.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,7 +89,6 @@
 		BE4C33D32236A6BA007AE1EE /* SCNRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNRecorder.h; sourceTree = "<group>"; };
 		BE4C33D42236A6BA007AE1EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE4C34232236BAB2007AE1EE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		BE4C34252236C034007AE1EE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BE7565A02471246500B7EED2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D5B9237B2510CC9A00D35585 /* MTLPixelFormat+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MTLPixelFormat+Helpers.swift"; sourceTree = "<group>"; };
 		D5B9237C2510CC9A00D35585 /* CIContext+Render.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
@@ -163,6 +162,7 @@
 		D5B923DD2510CC9B00D35585 /* ARSCNView+SelfCleanRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARSCNView+SelfCleanRecordable.swift"; sourceTree = "<group>"; };
 		D5B923DE2510CC9B00D35585 /* SCNView+SelfSceneRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNView+SelfSceneRecordable.swift"; sourceTree = "<group>"; };
 		D5B924262510CCE000D35585 /* SCNRecorder.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = SCNRecorder.modulemap; sourceTree = "<group>"; };
+		FB81FF2D251B7885001C129F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +181,7 @@
 			children = (
 				BE7565A02471246500B7EED2 /* .swiftlint.yml */,
 				BE4C33D42236A6BA007AE1EE /* Info.plist */,
-				BE4C34252236C034007AE1EE /* LICENSE */,
+				FB81FF2D251B7885001C129F /* LICENSE.md */,
 				BE4C34232236BAB2007AE1EE /* README.md */,
 				BE4C33D32236A6BA007AE1EE /* SCNRecorder.h */,
 				D5B924262510CCE000D35585 /* SCNRecorder.modulemap */,
@@ -567,7 +567,7 @@
 		BE4C33C72236A6BA007AE1EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "GORA Studio";
 				TargetAttributes = {
 					BE4C33CF2236A6BA007AE1EE = {
@@ -599,8 +599,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB81FF2E251B7885001C129F /* LICENSE.md in Resources */,
 				BE7565A12471246500B7EED2 /* .swiftlint.yml in Resources */,
-				BE4C34262236C034007AE1EE /* LICENSE in Resources */,
 				BE4C34242236BAB2007AE1EE /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -735,6 +735,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -800,6 +801,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
