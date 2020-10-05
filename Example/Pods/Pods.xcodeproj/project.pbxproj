@@ -65,6 +65,7 @@
 		C98F34072E30CF560FBAD827E2E86DFA /* SceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8011D0D5A594B65B80A352EBD994E542 /* SceneRecordable.swift */; };
 		CD0F252AD64F1D5B9FAC382D892FBB64 /* CleanRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C13AE485D1174AB5CCD44D1FF320 /* CleanRecorder.swift */; };
 		D52A92D824D07ACB00F9CAA2 /* VideoRecording.Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A92D624D07A6400F9CAA2 /* VideoRecording.Info.swift */; };
+		D5446A32252BD63500F039E9 /* RTCOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5446A31252BD63500F039E9 /* RTCOutput.swift */; };
 		D5480B9724C62FCC0006B069 /* VideoSettings.ScalingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5480B9624C62FCC0006B069 /* VideoSettings.ScalingMode.swift */; };
 		D5480B9924C62FE10006B069 /* VideoSettings.Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5480B9824C62FE10006B069 /* VideoSettings.Codec.swift */; };
 		E08048589EE03A6629AD291F3551AC67 /* EAGLPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C522523C6D508C2024BC62B30034D /* EAGLPixelBufferProducer.swift */; };
@@ -160,6 +161,7 @@
 		D0553D4F0D87D8BB1710439AB8BBF5EC /* CIFilter+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CIFilter+Helpers.swift"; sourceTree = "<group>"; };
 		D3C7058AFE2C37173479820E61296702 /* CIContext+Render.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
 		D52A92D624D07A6400F9CAA2 /* VideoRecording.Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecording.Info.swift; sourceTree = "<group>"; };
+		D5446A31252BD63500F039E9 /* RTCOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCOutput.swift; sourceTree = "<group>"; };
 		D5480B9624C62FCC0006B069 /* VideoSettings.ScalingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.ScalingMode.swift; sourceTree = "<group>"; };
 		D5480B9824C62FE10006B069 /* VideoSettings.Codec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.Codec.swift; sourceTree = "<group>"; };
 		D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Example-dummy.m"; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 			children = (
 				F54606622A399B41E7A2DF483A009E8A /* ImageOutput */,
 				E4C35C695B7CCFB9137708308DB5B74D /* VideoOutput */,
+				D5446A31252BD63500F039E9 /* RTCOutput.swift */,
 			);
 			path = Outputs;
 			sourceTree = "<group>";
@@ -728,6 +731,7 @@
 				D52A92D824D07ACB00F9CAA2 /* VideoRecording.Info.swift in Sources */,
 				BF56027C1D666562CA3C7A5819B79B0E /* PixelBufferPoolFactory.swift in Sources */,
 				015C2611559EE034264FE95AC4BC2026 /* PixelBufferProducer.swift in Sources */,
+				D5446A32252BD63500F039E9 /* RTCOutput.swift in Sources */,
 				B6A82AB77921D892527827C6670FF865 /* Property.swift in Sources */,
 				368030710B2C76E3AA30705600786F70 /* ReadWriteAtomic.swift in Sources */,
 				B4CBB3EE48F1F09C7DAAD00E1CA6D894 /* ReadWriteLock.swift in Sources */,

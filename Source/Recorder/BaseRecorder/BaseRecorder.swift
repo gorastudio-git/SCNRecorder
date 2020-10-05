@@ -52,6 +52,10 @@ public class BaseRecorder: NSObject {
     self.mediaSession.$error.observe { [weak self] in self?.error = $0 }
   }
 
+  public func makeRTCCapture(handler: @escaping (CVPixelBuffer) -> Void) -> RTCOutput {
+    mediaSession.makeRTCCapture(handler: handler)
+  }
+
   public func makeVideoRecording(to url: URL, settings: VideoSettings) throws -> VideoRecording {
     try mediaSession.makeVideoRecording(to: url, settings: settings)
   }

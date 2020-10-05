@@ -64,6 +64,13 @@ public extension Recordable {
     if recorder == nil { throw RecordableError.preparation }
   }
 
+  func makeRTCCapture(handler: @escaping (CVPixelBuffer) -> Void) throws -> RTCOutput {
+    try prepareForRecording()
+
+    guard let recorder = recorder else { throw RecordableError.preparation }
+    return recorder.makeRTCCapture(handler: handler)
+  }
+
   @discardableResult
   func startVideoRecording(settings: VideoSettings = VideoSettings()) throws -> VideoRecording {
     return try startVideoRecording(
