@@ -129,7 +129,7 @@ extension MediaSession {
 
 extension MediaSession {
 
-  func makeRTCCapture(handler: @escaping (CVPixelBuffer) -> Void) -> RTCOutput {
+  func makeRTCCapture(handler: @escaping (CVPixelBuffer, CMTime) -> Void) -> RTCOutput {
     let output = RTCOutput(handler: handler)
     let weakOutput = RTCOutput.Weak(output: output) { [weak self] in
         self?.removeVideoOutput($0)

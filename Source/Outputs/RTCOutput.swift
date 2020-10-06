@@ -40,9 +40,9 @@ final public class RTCOutput {
     }
   }
 
-  var handler: (CVPixelBuffer) -> Void
+  var handler: (CVPixelBuffer, CMTime) -> Void
 
-  init(handler: @escaping (CVPixelBuffer) -> Void) {
+  init(handler: @escaping (CVPixelBuffer, CMTime) -> Void) {
     self.handler = handler
   }
 }
@@ -57,10 +57,18 @@ extension RTCOutput: MediaSession.Output.Video {
         return CMSampleBufferGetImageBuffer(sampleBuffer)
       }
     }() else { return }
-    handler(imageBuffer)
+
+    let time: CMTime
+    if #available(iOS 13.0, *) {
+      time = sampleBuffer.presentationTimeStamp
+    } else {
+      time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+    }
+
+    handler(imageBuffer, time)
   }
 
   func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
-    handler(buffer)
+    handler(buffer, time)
   }
 }
