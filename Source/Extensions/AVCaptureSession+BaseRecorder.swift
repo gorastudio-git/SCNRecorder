@@ -35,4 +35,9 @@ public extension AVCaptureSession {
   func addRecorder(_ recorder: BaseRecorder) {
     addOutput(recorder.audioInput.captureOutput)
   }
+
+  func removeRecorder(_ recorder: BaseRecorder) {
+    guard recorder.hasAudioInput else { return }
+    removeOutput(recorder.audioInput.captureOutput)
+  }
 }
