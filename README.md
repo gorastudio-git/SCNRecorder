@@ -23,7 +23,7 @@ SCNRecorder supports Metal and OpenGL.
 ### CocoaPods
 
 ```ruby
-pod 'SCNRecorder', '~> 1.1'
+pod 'SCNRecorder', '~> 2.0'
 ```
 
 ### Carthage
