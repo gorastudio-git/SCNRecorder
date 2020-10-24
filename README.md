@@ -47,6 +47,14 @@ At `viewDidLoad` it is recomended to prepare a `sceneView` for recording.
 
 override func viewDidLoad() {
   super.viewDidLoad()
+  
+  // I would recommend you to add the next line in addition to prepareForRecording()
+  // According to the documentation, it might have a performance impact
+  // But for some reason, on some Pro models (iPhone 11 Pro, iPad 2020 Pro)
+  // Doing this when the scene is running leads to freezes and black frames.
+  // https://github.com/gorastudio/SCNRecorder/issues/17
+  (sceneView.layer as? CAMetalLayer)?.framebufferOnly = false
+  
   sceneView.prepareForRecording()
 }
 ```
