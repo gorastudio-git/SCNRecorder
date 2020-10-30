@@ -6,7 +6,7 @@
 [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SCNRecorder.svg)](https://cocoapods.org/pods/SCNRecorder)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-SCNRecorder allows you to record videos and to capture images from ARSCNView and SCNView without sacrificing performance. It gives you an incredible opportunity to share the media content of your augmented reality app or SceneKit based game.
+SCNRecorder allows you to record videos and to capture images from ARSCNView, SCNView and ARView (RealityKit) without sacrificing performance. It gives you an incredible opportunity to share the media content of your augmented reality app or SceneKit based game.
 
 SCNRecorder supports Metal and OpenGL.
 
@@ -120,6 +120,11 @@ override func viewDidLoad() {
   self.captureSession = captureSession
 }
 ```
+
+#### RealityKit
+
+To support recording RealityKit content copy [ARView+MetalRecordable.swift](Example/Source/RealityKit/ARView+MetalRecordable.swift) and [ARView+SelfSceneRecordable.swift](Example/Source/RealityKit/ARView+SelfSceneRecordable.swift) files to your project.
+Then look at [ARViewController.swift](Example/Source/RealityKit/ARViewController.swift) for usage.
 
 ### That's it!
 
