@@ -28,22 +28,12 @@ import UIKit
 
 #if !targetEnvironment(simulator)
 
-private var lastFramebufferOnlyKey: UInt8 = 0
 private var lastDrawableKey: UInt8 = 0
-private var isRecordingKey: UInt8 = 0
 
 extension CAMetalLayer {
 
-  var lastFramebufferOnlyStorage: AssociatedStorage<Bool> {
-    AssociatedStorage(object: self, key: &lastFramebufferOnlyKey, policy: .OBJC_ASSOCIATION_RETAIN)
-  }
-
   var lastDrawableStorage: AssociatedStorage<CAMetalDrawable> {
     AssociatedStorage(object: self, key: &lastDrawableKey, policy: .OBJC_ASSOCIATION_RETAIN)
-  }
-
-  var isRecordingStorage: AssociatedStorage<Bool> {
-    AssociatedStorage(object: self, key: &isRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
   }
 }
 
@@ -59,19 +49,8 @@ extension CAMetalLayer {
       method_exchangeImplementations(originalMethod, swizzledMethod)
   }()
 
-  static let swizzleSetFramebufferOnlyImplementation: Void = {
-      let aClass: AnyClass = CAMetalLayer.self
-
-      guard let originalMethod = class_getInstanceMethod(aClass, #selector(setter: framebufferOnly)),
-            let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_setFramebufferOnly))
-      else { return }
-
-      method_exchangeImplementations(originalMethod, swizzledMethod)
-  }()
-
   static func swizzle() {
     _ = swizzleNextDrawableImplementation
-    _ = swizzleSetFramebufferOnlyImplementation
   }
 
   var _lastDrawable: CAMetalDrawable? {
@@ -79,26 +58,11 @@ extension CAMetalLayer {
     set { lastDrawableStorage.set(newValue) }
   }
 
-  var lastFramebufferOnly: Bool {
-    get { lastFramebufferOnlyStorage.get() ?? framebufferOnly }
-    set { lastFramebufferOnlyStorage.set(newValue) }
-  }
-
-  var isRecording: Bool {
-    get { isRecordingStorage.get() ?? false }
-    set { isRecordingStorage.set(newValue) }
-  }
-
   func swizzle() { Self.swizzle() }
 
   @objc dynamic func swizzled_nextDrawable() -> CAMetalDrawable? {
     _lastDrawable = swizzled_nextDrawable()
     return _lastDrawable
-  }
-
-  @objc dynamic func swizzled_setFramebufferOnly(_ framebufferOnly: Bool) {
-    if isRecording { lastFramebufferOnly = framebufferOnly }
-    else { swizzled_setFramebufferOnly(framebufferOnly) }
   }
 }
 

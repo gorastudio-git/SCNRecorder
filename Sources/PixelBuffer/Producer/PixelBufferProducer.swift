@@ -26,43 +26,42 @@
 import Foundation
 import AVFoundation
 
-enum PixelBufferProducerError: Swift.Error {
+class PixelBufferProducer {
 
-  case lockBaseAddress(errorCode: CVReturn)
+  enum Error: Swift.Error {
 
-  case getBaseAddress
+    case noSurface
 
-  case emptySource
+    case noPixelBuffer
 
-  case unlockBaseAddress(errorCode: CVReturn)
+    case wrongSize
 
-  case wrongSize
-}
+    case getBaseAddress
 
-protocol PixelBufferProducer {
+    case lastDrawable
+  }
 
-  typealias Error = PixelBufferProducerError
+  let pixelBufferPoolFactory = PixelBufferPoolFactory()
 
-  var size: CGSize { get }
-
-  var videoColorProperties: [String: String]? { get }
-
-  var recommendedPixelBufferAttributes: [String: Any] { get }
-
-  var context: CIContext { get }
-
-  func startWriting()
-
-  func writeIn(pixelBuffer: inout CVPixelBuffer) throws
-
-  func stopWriting()
-}
-
-extension PixelBufferProducer {
+  var size: CGSize { .zero }
 
   var videoColorProperties: [String: String]? { nil }
 
+  var recommendedPixelBufferAttributes: [String: Any] { [:] }
+
+  let context: CIContext
+
+  init(context: CIContext) {
+    self.context = context
+  }
+
   func startWriting() { }
+
+  func produce() throws -> CVPixelBuffer {
+    let attributes = recommendedPixelBufferAttributes
+    let pixelBufferPool = try pixelBufferPoolFactory.makeWithAttributes(attributes)
+    return try CVPixelBuffer.makeWithPixelBufferPool(pixelBufferPool)
+  }
 
   func stopWriting() { }
 }

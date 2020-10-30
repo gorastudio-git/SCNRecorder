@@ -9,10 +9,11 @@ Pod::Spec.new do |s|
   s.module_name           = 'SCNRecorder'
   s.module_map            = 'SCNRecorder.modulemap'
   s.swift_version         = '5.2'
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '12.0'
   s.source_files          = 'SCNRecorder.h', 'Sources/**/*.{h,m,swift}'
   s.public_header_files   = 'SCNRecorder.h', 'Sources/**/*.h'
   s.private_header_files  = 'Sources/**/*.h'
+  s.pod_target_xcconfig = { "GCC_PREPROCESSOR_DEFINITIONS" => "GLES_SILENCE_DEPRECATION CI_SILENCE_GL_DEPRECATION" }
 end
 
 

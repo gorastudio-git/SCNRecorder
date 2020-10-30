@@ -57,10 +57,15 @@ extension CVPixelBuffer {
     return pixelBuffer
   }
 
-  func locked(readOnly: Bool = false, handler: (CVPixelBuffer) throws -> Void) throws {
+  @discardableResult
+  func locked(
+    readOnly: Bool = false,
+    handler: (CVPixelBuffer) throws -> Void
+  ) throws -> CVPixelBuffer {
     try lock(readOnly: readOnly)
     defer { try? unlock(readOnly: readOnly) }
     try handler(self)
+    return self
   }
 
   func lock(readOnly: Bool = false) throws {

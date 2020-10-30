@@ -37,7 +37,7 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
 
   static let alignment = 4
 
-  var size: CGSize {
+  override var size: CGSize {
     let rollback = try? EAGLPixelBufferProducer.setCurrentContext(eaglContext)
     defer { rollback?() }
 
@@ -58,9 +58,9 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
     return CGSize(width: CGFloat(glWidth), height: CGFloat(glHeight))
   }
 
-  var videoColorProperties: [String: String]? { nil }
+  override var videoColorProperties: [String: String]? { nil }
 
-  var recommendedPixelBufferAttributes: [String: Any] {
+  override var recommendedPixelBufferAttributes: [String: Any] {
     let size = self.size
     var attributes: [String: Any] = [
       kCVPixelBufferWidthKey as String: Int(size.width),
@@ -82,16 +82,17 @@ final class EAGLPixelBufferProducer: PixelBufferProducer {
 
   let eaglContext: EAGLContext
 
-  lazy var context: CIContext = {
-    CIContext(
+  init(eaglContext: EAGLContext) {
+    self.eaglContext = eaglContext
+
+    let context = CIContext(
       eaglContext: EAGLContext(api: eaglContext.api) ?? EAGLContext(api: .openGLES3)!
     )
-  }()
+    super.init(context: context)
+  }
 
-  init(eaglContext: EAGLContext) { self.eaglContext = eaglContext }
-
-  func writeIn(pixelBuffer: inout CVPixelBuffer) throws {
-    try pixelBuffer.locked { (pixelBuffer) in
+  override func produce() throws -> CVPixelBuffer {
+    try super.produce().locked { (pixelBuffer) in
       guard let baseAddress = pixelBuffer.baseAddress else { throw Error.getBaseAddress }
 
       let status = glCheckFramebufferStatusOES(GLenum(GL_FRAMEBUFFER_OES))

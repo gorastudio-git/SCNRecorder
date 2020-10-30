@@ -83,13 +83,7 @@ extension SceneRecorder {
 
     func render(atTime time: TimeInterval) throws {
       guard started, let output = output else { return }
-
-      let attributes = producer.recommendedPixelBufferAttributes
-      let pixelBufferPool = try pixelBufferPoolFactory.makeWithAttributes(attributes)
-      var pixelBuffer = try CVPixelBuffer.makeWithPixelBufferPool(pixelBufferPool)
-      try producer.writeIn(pixelBuffer: &pixelBuffer)
-
-      output(pixelBuffer, timeFromSeconds(time))
+      try output(producer.produce(), timeFromSeconds(time))
     }
 
     func stop() {

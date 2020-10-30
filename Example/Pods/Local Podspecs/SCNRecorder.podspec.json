@@ -18,7 +18,7 @@
   "module_map": "SCNRecorder.modulemap",
   "swift_versions": "5.2",
   "platforms": {
-    "ios": "11.0"
+    "ios": "12.0"
   },
   "source_files": [
     "SCNRecorder.h",
@@ -29,5 +29,8 @@
     "Sources/**/*.h"
   ],
   "private_header_files": "Sources/**/*.h",
+  "pod_target_xcconfig": {
+    "GCC_PREPROCESSOR_DEFINITIONS": "GLES_SILENCE_DEPRECATION CI_SILENCE_GL_DEPRECATION"
+  },
   "swift_version": "5.2"
 }

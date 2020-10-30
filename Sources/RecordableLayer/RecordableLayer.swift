@@ -37,35 +37,11 @@ public protocol RecordableLayer: AnyObject {
   var pixelFormat: MTLPixelFormat { get }
 
   var drawableSize: CGSize { get }
-
-  func onStartRecording()
-
-  func onStopRecording()
-}
-
-public extension RecordableLayer {
-
-  func onStartRecording() { }
-
-  func onStopRecording() { }
 }
 
 public extension RecordableLayer where Self: CAMetalLayer {
 
   var lastDrawable: CAMetalDrawable? { _lastDrawable }
-
-  func onStartRecording() {
-    guard !isRecording else { return }
-    lastFramebufferOnly = framebufferOnly
-    framebufferOnly = false
-    isRecording = true
-  }
-
-  func onStopRecording() {
-    guard isRecording else { return }
-    isRecording = false
-    framebufferOnly = lastFramebufferOnly
-  }
 }
 
 #endif // !targetEnvironment(simulator)
