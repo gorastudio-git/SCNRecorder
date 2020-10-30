@@ -129,6 +129,17 @@ extension MediaSession {
 
 extension MediaSession {
 
+  func capturePixelBuffers(
+    handler: @escaping (CVPixelBuffer, CMTime) -> Void
+  ) -> PixelBufferOutput {
+    let output = PixelBufferOutput(handler: handler)
+    let weakOutput = PixelBufferOutput.Weak(output: output) { [weak self] in
+        self?.removeVideoOutput($0)
+    }
+    addVideoOutput(weakOutput)
+    return output
+  }
+
   func makeVideoRecording(
     to url: URL,
     videoSettings: VideoSettings = VideoSettings(),

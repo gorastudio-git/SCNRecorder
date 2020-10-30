@@ -31,9 +31,12 @@ public class BaseRecorder: NSObject {
 
   let mediaSession: MediaSession
 
+  var hasAudioInput = false
+
   lazy var audioInput: AudioInput = {
     let audioInput = AudioInput(queue: queue)
-    mediaSession.setAudioInput(audioInput)
+    hasAudioInput = true
+    mediaSession.setAudioInput(audioInput) 
     return audioInput
   }()
 
@@ -62,6 +65,12 @@ public class BaseRecorder: NSObject {
       videoSettings: videoSettings,
       audioSettings: audioSettings
     )
+  }
+
+  public func capturePixelBuffers(
+    handler: @escaping (CVPixelBuffer, CMTime) -> Void
+  ) -> PixelBufferOutput {
+    mediaSession.capturePixelBuffers(handler: handler)
   }
 
   public func takePhoto(

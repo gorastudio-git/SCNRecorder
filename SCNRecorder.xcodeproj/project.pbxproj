@@ -10,6 +10,7 @@
 		BE4C33D52236A6BA007AE1EE /* SCNRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = BE4C33D32236A6BA007AE1EE /* SCNRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE4C34242236BAB2007AE1EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BE4C34232236BAB2007AE1EE /* README.md */; };
 		BE7565A12471246500B7EED2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = BE7565A02471246500B7EED2 /* .swiftlint.yml */; };
+		D55385CD254CB15900225EC0 /* PixelBufferOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55385CC254CB15900225EC0 /* PixelBufferOutput.swift */; };
 		D5B923DF2510CC9B00D35585 /* MTLPixelFormat+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9237B2510CC9A00D35585 /* MTLPixelFormat+Helpers.swift */; };
 		D5B923E02510CC9C00D35585 /* CIContext+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9237C2510CC9A00D35585 /* CIContext+Render.swift */; };
 		D5B923E12510CC9C00D35585 /* SCNView+MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9237D2510CC9A00D35585 /* SCNView+MulticastDelegate.swift */; };
@@ -90,6 +91,7 @@
 		BE4C33D42236A6BA007AE1EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE4C34232236BAB2007AE1EE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BE7565A02471246500B7EED2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D55385CC254CB15900225EC0 /* PixelBufferOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelBufferOutput.swift; sourceTree = "<group>"; };
 		D5B9237B2510CC9A00D35585 /* MTLPixelFormat+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MTLPixelFormat+Helpers.swift"; sourceTree = "<group>"; };
 		D5B9237C2510CC9A00D35585 /* CIContext+Render.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
 		D5B9237D2510CC9A00D35585 /* SCNView+MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNView+MulticastDelegate.swift"; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		D5B923832510CC9A00D35585 /* Outputs */ = {
 			isa = PBXGroup;
 			children = (
+				D55385CC254CB15900225EC0 /* PixelBufferOutput.swift */,
 				D5B923842510CC9A00D35585 /* ImageOutput */,
 				D5B923862510CC9A00D35585 /* VideoOutput */,
 			);
@@ -637,6 +640,7 @@
 				D5B923F12510CC9C00D35585 /* WeakCollection.swift in Sources */,
 				D5B923F02510CC9C00D35585 /* Property.swift in Sources */,
 				D5B924062510CC9C00D35585 /* BaseRecorder.swift in Sources */,
+				D55385CD254CB15900225EC0 /* PixelBufferOutput.swift in Sources */,
 				D5B924122510CC9C00D35585 /* Renderable.swift in Sources */,
 				D5B9240A2510CC9C00D35585 /* CleanRecorder.VideoInput.swift in Sources */,
 				D5B924202510CC9C00D35585 /* PixelBufferPoolFactory.swift in Sources */,

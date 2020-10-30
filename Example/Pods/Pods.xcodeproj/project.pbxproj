@@ -7,87 +7,88 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02F0E111FC8A98BC4BC9C2D721EC0F49 /* AssociatedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CE362EE4AF0CA58F8D5AA92385EFB /* AssociatedStorage.swift */; };
-		03A76DA1C82BDF27E97166CA74D1A919 /* EAGLRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2180B3CFE7E8D263D9621122247E76D /* EAGLRecordable.swift */; };
-		0487C29EB7CDB46A0F410429123F0C70 /* SCNRecorder-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9593B74BC9E32AC41251DFD4372DB /* SCNRecorder-dummy.m */; };
-		0A59A9AAF71ECCDAF75CDB190AEDEE23 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111DF33BF04E7767595B424384ACC343 /* Buffer.swift */; };
-		0B05CFE3F4ED3372B1524349603600DA /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F221C9B5B00538BDBA41546D63230A /* Filter.swift */; };
-		0BF5A23A3FA9270E6D5FF5CCA4012F5A /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BBF5A368E6F24FCD3FCF3B59B7B746 /* Weak.swift */; };
-		0FA2AD1107619AEBB2124CCB9E59A5B7 /* CIFilter+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE04E49AD268455167278C40C3129 /* CIFilter+Helpers.swift */; };
-		122B2F491182469F427E61353EE7604A /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F6AFB4BFDC45BC7F11B7EC501D7A3A /* CVPixelBuffer+Helpers.swift */; };
-		131452002863148E349F3958DBA436C4 /* TimeScalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B9C0F17B0B09E4E79CA0EEF34EA60 /* TimeScalable.swift */; };
-		13A8EDDF297DAC351AF04C1406EB1D43 /* AudioAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A338E8E41E158E3E861AA26F86E3B931 /* AudioAdapter.swift */; };
-		1515A96256AEDB9A2C6469167DE43347 /* CleanRecorder.VideoInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC559807FE6CFE4A431BCB13DC6948 /* CleanRecorder.VideoInput.swift */; };
-		1AEC424F31E7E696DE575AEF4CCDE6E6 /* VideoSettings.ScalingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3205516BF70A5CF9AA882D50FE4C2D4C /* VideoSettings.ScalingMode.swift */; };
-		1E90919E44D2B9CAF09DD0690E3406FF /* SCNRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = C4F920516136DEE800EF202CD0857247 /* SCNRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		248218694BEECE45E6808949F6A0BA50 /* CAMetalLayer+RecordableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B896F5F3C473C3F6713D435F1CCCBB13 /* CAMetalLayer+RecordableLayer.swift */; };
-		257E0A81BD48F688B59815C49087F261 /* WeakCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D8DAF1E181751764CF32A76B537D6 /* WeakCollection.swift */; };
-		2581E319FF0117581EB236BEE317F605 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B64D93C981A67CBFC3DF2BB8591BBA1 /* Property.swift */; };
-		2F4F2B1FA8C6B1A54E48ED0553482E67 /* SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A46EA14C73C68EEB219DE1F07E00A /* SelfCleanRecordable.swift */; };
-		30DBF800F3A289669CE4B6953313D500 /* SCNRecorderMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BF878F30422A4479F15C92BA00EA8DF /* SCNRecorderMulticastDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3E596ADC427EF8D190CAB840D9128216 /* VideoOutput.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C31AE7D46D8F9DD3AC445003D8AA59 /* VideoOutput.Error.swift */; };
-		4293B0779A39DAD492B26388D8092E78 /* VideoOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1FF14C8811C79B81685359F2B7CB20 /* VideoOutput.swift */; };
-		42BCE2F184436604A2CEEC23D3FFA5F2 /* WatermarkFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071CABA2BDE76400D15867385498262D /* WatermarkFilter.swift */; };
-		46E01E0FF76159C6D8AA9AC882EDF1C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		47D3CEFB9B9BF98A293659FEA37FB240 /* MetalRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8091AB4ACC466DAF5F9BE02AD64ED3 /* MetalRecordable.swift */; };
-		499A3062DF6462930CD562E495EB48DD /* SCNRecorderOriginMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A9FCA1559E39D2EBA8FC36831277BAF /* SCNRecorderOriginMulticastDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		4D6A7CE2A101D5231EBD79BFA45E728B /* AVFileType+FilenameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9FB662B6396670196487AFE76C6EAC /* AVFileType+FilenameExtension.swift */; };
-		5A9690C297DB3CB501A677B4402079B3 /* SCNRecorderMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFE278C67552D8A76DA8B927429961 /* SCNRecorderMulticastDelegate.m */; };
-		5BB13EFA69B3546644E671A5522E3F8A /* SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0956CF9ED6B9BD5AAA7F8FBCB2984982 /* SelfSceneRecordable.swift */; };
-		67A1A9D5D87E08DDAA23B7714C69E957 /* VideoSettings.Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC36849CC224D5E7D0C0B865646B60FB /* VideoSettings.Codec.swift */; };
-		70F57333E03160920DED75A70D29E3ED /* SCNRecorderOriginMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F451961F76333DDB4EF5351E828196A9 /* SCNRecorderOriginMulticastDelegate.m */; };
-		7340F1AE29C83B251B5498C1DC923E2E /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68756B7C6DDB0A7E238C67DEE789F057 /* AudioSettings.swift */; };
-		76247C861EAF6350E39E0338937F3BB9 /* APIRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2D5B767293A990FAF7B407DFB534F /* APIRecordable.swift */; };
-		7688A35E735661CC342073DF25249304 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8DDE0773E00F92E96A489E1A8B9DD7 /* UnfairLock.swift */; };
-		7DAB950FB8DF34702BA934A6377B4EB8 /* SceneRecorder.VideoInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774E359FE951FBFD4F4DB5F11857399 /* SceneRecorder.VideoInput.swift */; };
+		070B8199B0FA5B1606E04A3EB7389980 /* GCDAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2D385FEBDDC541DE23E10353290F78 /* GCDAtomic.swift */; };
+		097DBB4472F29B1887109F8DB1EC0B9D /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D987FFAC840FC6E0E255030FDEE1302B /* VideoSettings.swift */; };
+		14639842A2E98050883887324C700610 /* SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2BDB89766CC170B79D0F65F2FA6461 /* SelfSceneRecordable.swift */; };
+		191F6D4EA3816C8B2568B52FCDD64569 /* CVPixelBufferPool+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FC03B0E81FAF608DBB27A3A0912A6 /* CVPixelBufferPool+Factory.swift */; };
+		192EC4DBDD8A4FD40417F3762D96F688 /* SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CE444B52F565BF277BE92F44923E0 /* SelfCleanRecordable.swift */; };
+		20FA14E7C7AE3F8B0FCFD65CFF8EE42C /* SCNView+APIRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D7F5EA8F8563E5A1AC36E36A36B63C /* SCNView+APIRecordable.swift */; };
+		20FECC01E4C550EEFCCC3EFEA0C63432 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8913694D518A1673581B62D18F07DA /* UnfairLock.swift */; };
+		219AFAABF1872CFDD9260538E586D79E /* ARSCNView+SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D62DAC04C7CEBD530D7BDCEFFAA94B /* ARSCNView+SelfCleanRecordable.swift */; };
+		269489DDCF42B8A3DC8AE8586E1A5D3D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		2858A1709D10DDB785601708E38EE40F /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC6DD4F1831E9DAC3E8399E1AD82F38 /* Buffer.swift */; };
+		29BE3D46C727FFF5AC492BA91323A29C /* AVCaptureSession+BaseRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3F15E9FEC18A7282157FBB8919FB23 /* AVCaptureSession+BaseRecorder.swift */; };
+		30247EAF7138F4D69D877710621A624B /* AssociatedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4437C1E4E2F271CCF26D53EDE3C20C0 /* AssociatedStorage.swift */; };
+		327413F28A620F9FF346A40647058430 /* VideoRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB9A1088057B1EA7F7EF3904499C43A /* VideoRecording.swift */; };
+		364FB2ED8567BB22936DB721F1F79B67 /* VideoOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C455F87A0B03D9CA7E5BD790CBDF2A3C /* VideoOutput.swift */; };
+		440D394B59694266C13E3F7767283AF2 /* SceneRecorder.VideoInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C1D736051F2643BC1FB85B876A393B /* SceneRecorder.VideoInput.swift */; };
+		4522F09395219C77DA64AB2FE44F3A05 /* CleanRecorder.VideoInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D136807B2C417513AE6AC872E8F97A /* CleanRecorder.VideoInput.swift */; };
+		4951B804F155BCC79632948EDFE0B338 /* CleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8103F42999782A9302C78C9BF84AEF7 /* CleanRecordable.swift */; };
+		4BDF12F41259999A0E2E7FF331D8D566 /* SCNView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC025AA2F6615020D91DBCEDE532CC6 /* SCNView+SelfSceneRecordable.swift */; };
+		4DA0671617BE803BC5F85B1FEDB4D0D1 /* MetalPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4154EDF25868E4F2108C24581E0504 /* MetalPixelBufferProducer.swift */; };
+		52AA2A6565EE9D61C95C55DA9FEA4512 /* SCNRecorderOriginMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1857E568BD618E75C6F7FBFA1CE86FF5 /* SCNRecorderOriginMulticastDelegate.m */; };
+		52C5E5AE983CBD3F2535C71B59387112 /* SCNRecorderMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AE798B544360E904807B35C8894F057 /* SCNRecorderMulticastDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		52E254569CDBE367A63DB253467B3296 /* EAGLRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68205EFEE28D712E7D15E4B11F635140 /* EAGLRecordable.swift */; };
+		53FF42E68A9B7DFA112F5F320D38BADF /* SceneRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1FFE8334402FCED38EEB892A76EF1C /* SceneRecorder.swift */; };
+		58CC1F10E1456942ABE0762BE1942248 /* CIContext+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF392C93B7E6383991BE6E85935E2 /* CIContext+Render.swift */; };
+		613EA1436885465B6783A812C8E7EE21 /* VideoRecording.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9551B8701AB08F0888F20B08AA64FC /* VideoRecording.State.swift */; };
+		64AF52376CFFA873F2684D7F0743ED7C /* VideoSettings.ScalingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3838E737E9B2569A4FBAE58CD9B854 /* VideoSettings.ScalingMode.swift */; };
+		670B92A65FD7643FA9C3425ABCAD8322 /* PixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EACEA338A0C95FA76D1D842CC324E49 /* PixelBufferProducer.swift */; };
+		6D3169B1ECF979EAA15ABFCBE9C1D84D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177CA07011A67B98690DF83770036408 /* API.swift */; };
+		6F6CF6FE8A5C2131A88C4D86A9CEDEDF /* MediaSessionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614519FA5E7C3F4D1831D6E06D9A0559 /* MediaSessionInput.swift */; };
+		70A217E8F2A12A7D8780D516EB3AF262 /* EAGLPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057059120BBA2BA2B8877E85F38870 /* EAGLPixelBufferProducer.swift */; };
+		71B89031D5A72F10BCDAF6D18C4B3EEF /* MTLPixelFormat+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A49B677ECE7DE1AF8B93F087A4739FD /* MTLPixelFormat+Helpers.swift */; };
+		72A04E1F93A8C24CF5DDFAB7A164A482 /* VideoSettings.FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B392158AA96460285A5F5619F4D47C3E /* VideoSettings.FileType.swift */; };
+		76FD6C032DD459BBAAB609E18CBAA32E /* SCNRecorderOriginMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8391B18B75511CA40E0F9B326A72483B /* SCNRecorderOriginMulticastDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		77279CFBF070CB84F028FCB9145C1D9E /* RecordableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CD4F6E8E815936E463E5752556AD14 /* RecordableLayer.swift */; };
+		782F73E72B4AE0960AD05FAB2458E30C /* CAMetalLayer+RecordableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BBC6C9817D57D10C4E5C3E024372D9 /* CAMetalLayer+RecordableLayer.swift */; };
+		7B9EB0A52F4099FD6BA25C5BC33DFEC9 /* VideoSettings.Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34174C424853C79E1C0B380973D0CDDE /* VideoSettings.Codec.swift */; };
+		7E522F0B40750D701684A79B00E74EC6 /* SwappingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1BE50596203D246232855DFF0DB7B /* SwappingFilter.swift */; };
+		7F06C87CA3659BAC4EA7F435F1DF18B5 /* ReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED94723D7452EFB70AC0454D700C396 /* ReadWriteLock.swift */; };
 		88BF716AB52BA6C205C93809BA8438FB /* Pods-Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7825A90E082A1582EB16256B0E722B3F /* Pods-Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		893AAFC39202DE42BF1956BB019EF0C0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03205036236BF8C30AE52546B75EAD61 /* API.swift */; };
-		8AB216CD31657DBF02E709B1127BA692 /* CleanRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1217E89B609C8D2F4D5B61C77D956F0 /* CleanRecorder.swift */; };
-		97B400059D1684EC1C6C39E669DBD913 /* CompositeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E81C9DFCFDD05EFA5803D82621492 /* CompositeFilter.swift */; };
-		9CD4DDCBAC26B0FBE0280E0EBE0575E8 /* PixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED803E9D7167CBEC92C20D91CC7F456 /* PixelBufferProducer.swift */; };
-		A0798052826394A243836873C437BFEA /* SceneRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196433A36DF72AD331D4A20355287795 /* SceneRecorder.swift */; };
-		A370E26FC67AAEC55FF2B4445287AD5A /* MediaSessionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54172BF13BE3D8FE318355A85028853C /* MediaSessionInput.swift */; };
-		A5249331DE1AEE74FFD7E1C193708F61 /* MetalPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218629BAA8A0044620CEDF7D04F72257 /* MetalPixelBufferProducer.swift */; };
-		A56CDB15D1EB104EE2811F17CC61227F /* ARSCNView+CleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513F20C5DC9FDF419060D280F06D6945 /* ARSCNView+CleanRecordable.swift */; };
-		A7A4CD292BB4766BE5C7DD728F8A9296 /* VideoRecording.Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = F611CBD621AACB9C0633B2EE9BAAA9ED /* VideoRecording.Info.swift */; };
-		AAB16949D900C45C0628DB8B44783417 /* MediaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC0BAE8577616CB31878EEE6765FE16 /* MediaSession.swift */; };
-		AAE7462A1B6C639DE84C22D2A37058FB /* CIContext+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7710248F3C311FAC3F949EFDB50F35DA /* CIContext+Render.swift */; };
-		AB96F56A3762F5388A8B4883F8DEA2D5 /* PixelBufferPoolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A61A1E732A8FE62D2135A2A31F1FF6 /* PixelBufferPoolFactory.swift */; };
+		8A294F6ECA8350569868215BD7B880D9 /* AudioAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D321DCFAE7D74E1DD6B7C58794C8F /* AudioAdapter.swift */; };
+		8FE0125DA7A7AFB7D3A5DEAB124D4AF0 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = C379EFA6F111ACE82DECBEAD1BE9148A /* Property.swift */; };
+		94417AD5BCDB32556CB0F009FB0C29E6 /* MetalRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB03BEF2C389DE73A9CBD61F15EB2A /* MetalRecordable.swift */; };
+		985C3AD3CCDD6921147BB00B1EBFADC9 /* VideoOutput.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A8A5FE1A0A69387C24E388D669FEFF /* VideoOutput.Error.swift */; };
+		A1C4574FB4A0D4563EFC7BADBDF4C767 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E04C6125740A538B828F8C4B950A484 /* Atomic.swift */; };
+		A33EE3AD2CA664069F7B5EFD14D003C6 /* SCNRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = C4F920516136DEE800EF202CD0857247 /* SCNRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A493AD11FA488A90F97B35198323A236 /* ImageOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507685575FC4BFA3D9035CE4057909A0 /* ImageOutput.swift */; };
+		A6D0413412FC9336DCC39B8731EF4B06 /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68238C48902E0207C01BCB8052CBE773 /* AudioSettings.swift */; };
+		A927050AA82E7449D8CCA32039DA1352 /* ReadWriteAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB9558978810FA1CF10438B578933D3 /* ReadWriteAtomic.swift */; };
+		AA92CAE717691E9C7310361215CA497D /* ARSCNView+CleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1438BEE1566A9D506719D304ECEAB3 /* ARSCNView+CleanRecordable.swift */; };
+		AAB3EC094EA25D09FB4744E6BF4824FE /* PixelBufferOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991543B8DCE56CB4B1F5C98DAC453FB /* PixelBufferOutput.swift */; };
+		AC6F7C8969C42485559C8D942DF2F5A5 /* GeometryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8CB725819D61EFC226F8D60497B1A3 /* GeometryFilter.swift */; };
 		AD1D9E0029165BF2B27239788D0DF7EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		ADFB4A0A8FF311D8BBC98FBD02D5C4CE /* VideoOutput.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA50A833D8419E591152DA57B1EC736 /* VideoOutput.State.swift */; };
-		B36DD9720E57D0F1C1CC415D556165AB /* ARSCNView+SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B67F3BFC9000C46565F2F518FC2CB4 /* ARSCNView+SelfCleanRecordable.swift */; };
-		B5BD8F9909463DD4465CD267FB924513 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5C84643D2D2CB2FF2A83DE94DB67E9 /* Atomic.swift */; };
+		AEA6972C06C3AF90332091CD5F66690D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84E800CFEDDDB5E53DA0BCEB603EDDC /* Filter.swift */; };
+		B51C8866A4A327A5EFF5486336B9641C /* BaseRecorder.AudioInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F7B31DAB0F1595B520D9F3FD75661A /* BaseRecorder.AudioInput.swift */; };
+		B57A447D3992F6C7F9F515890795083C /* TimeScalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A636F0157411ED0772742E4BF2D501E3 /* TimeScalable.swift */; };
 		B80ECBC051152011453A7D91C2F97FFC /* Pods-Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */; };
-		BB3DA53E86A4D9847B8C2F558C4516F9 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1014E3C0BA80178D0AEC1E24D838D8FD /* VideoSettings.swift */; };
-		BBE585F4E9B5BA1E18FF959008F8907F /* BaseRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC5C9CAE57CF4F9A8DF1CF0964EFA1 /* BaseRecorder.swift */; };
-		BD26E1DEE2744E8125B5AE344108DD58 /* MTLPixelFormat+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8633C50E708BDC4574191B91384E50EA /* MTLPixelFormat+Helpers.swift */; };
-		BE1E2009706F390662D7C4FD4205C627 /* VideoRecording.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD11112F8418D4C9C1BCE6025938445 /* VideoRecording.State.swift */; };
-		BF04E0FDCEAE3C1CAAC88ACEE293A98B /* MediaSessionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0EBD277FC06ABA07CC49451E4773C /* MediaSessionOutput.swift */; };
-		C5CE902EEDF6B48A864ACE8246A2A81C /* VideoSettings.FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784C5D40C664436F74D96AC8A3F66C4A /* VideoSettings.FileType.swift */; };
-		C71A476339ED4C0EFC115AD3785E824F /* ImageOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E23C298CA0C92B94BBB980027F5EF /* ImageOutput.swift */; };
-		C7A452ED27464BCE0F6F33EEA364EAF9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5D0421883B738D0907416F4908F485 /* Observable.swift */; };
-		CA34FFFF228F8F8DD863092552A04EC2 /* AVCaptureSession+BaseRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AA57C17A10BC491258B5B9C4455A40 /* AVCaptureSession+BaseRecorder.swift */; };
-		CB99B1C9D1990DB8416858B014D455DB /* CleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357035B59E27F9B72DC75AA1338F4F77 /* CleanRecordable.swift */; };
-		CCFB05D71F31CE7BE5B7E2B9CAD54E22 /* SelfRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D25C2F5C9989E877C2DEF6D9BF413 /* SelfRecordable.swift */; };
-		D23C0D4942633BDCF0B45E900F54720F /* SCNView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39ABFA7A7144F9A6D046EEB8AA70762 /* SCNView+SelfSceneRecordable.swift */; };
-		D444766EC266EB28466BB9E175BB2576 /* RecordableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFE693516E69D0F217128D835C43DBF /* RecordableLayer.swift */; };
-		D49C0EE15EC41E8437658C42A2EBEB06 /* SCNView+APIRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD5F1AED5AC302313C97BFB28B15EB2 /* SCNView+APIRecordable.swift */; };
-		D5C9B925B00464CFC175ED96E1C81C86 /* BaseRecorder.AudioInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76001BBF4C62787B9B0079EC5F82834 /* BaseRecorder.AudioInput.swift */; };
-		D7357C2FC7010F73E158426D273C11BF /* UnfairAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5C200A58A659A2253E808661ABAFD0 /* UnfairAtomic.swift */; };
-		D73C7C6E02B54D80909E8C008CFA53E1 /* VideoRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D2EE3AB40D5A92C6561191004CA2FA /* VideoRecording.swift */; };
-		D828E1FCF58CB66CEFC8E756F9CCBBF6 /* GeometryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4063245AE7B97F18E4528D28707B6333 /* GeometryFilter.swift */; };
-		E244224E8DAA9EDDB4AC84251278EF19 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F97E1DC8A950FACAB02C3E0FF6CE98 /* Renderable.swift */; };
-		E82123EE7372156D999E60E24C9A5753 /* EAGLPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAACEF0DADAD1A1FD008029A95358FB /* EAGLPixelBufferProducer.swift */; };
-		F1153D507382A3AA21CC8ED3D4CF4EA9 /* CVPixelBufferPool+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25586DF46EC8D42EB54025600C09AA9A /* CVPixelBufferPool+Factory.swift */; };
-		F5F52268C9E13BC535AB36E263575633 /* ReadWriteAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D66947E5675E74E180F71F94BD659 /* ReadWriteAtomic.swift */; };
-		F9FABFAEEE10C6093837528D483A27A5 /* GCDAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E849AE270A6DAE35C0FBC05EA44FEAB1 /* GCDAtomic.swift */; };
-		FAAC103057B6B3019857B5D4ABB05EBE /* SCNView+MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35138597BBDD3947A4F5297923C6EBD /* SCNView+MulticastDelegate.swift */; };
-		FE7C28771328D0729D2FB47F71E0A7CD /* ReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80892F5C4F4DC7F7E3139F50C1A94D /* ReadWriteLock.swift */; };
-		FF47DDDBE794035D6148B2480B9BC156 /* SwappingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07706D5F0B4A2B7EAE32B94614A2E370 /* SwappingFilter.swift */; };
+		BE8C613F34EA1E2FBD70CBD5EBE712FB /* VideoRecording.Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0A2D1F57B70610B7F08F573C882F59 /* VideoRecording.Info.swift */; };
+		C337840B790F621606B1DEBC8D182622 /* CIFilter+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09603DE513F566A0C9CCF99815CBF814 /* CIFilter+Helpers.swift */; };
+		C5704348A92633CA7E836415F830C991 /* APIRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D005732DFAA53AB6F680BEE10049D1 /* APIRecordable.swift */; };
+		C647C1595DB222CA38F4BCC42228D673 /* SCNRecorder-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9593B74BC9E32AC41251DFD4372DB /* SCNRecorder-dummy.m */; };
+		C64F303F153341E698F293A77253F554 /* WeakCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED55AC0EF04317EC74E85470DC12BCB /* WeakCollection.swift */; };
+		CA190820BAB7C66D6F0BFFE5852C80D3 /* MediaSessionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA882A9AD516EE89890B05CEBB47533 /* MediaSessionOutput.swift */; };
+		CADA5BD75EF47846C2561C5DEF42712B /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF8F1B916D5000FD189D10A30FE2B07 /* Observable.swift */; };
+		CE3B540013DCEE762457FBA573E81295 /* UnfairAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71103F0DB4983BDA1054C87F12B27636 /* UnfairAtomic.swift */; };
+		CEF9C457085578E0A2DF53332CE20CD9 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09EDF1C03A72FC8009A64D132CEEF77 /* Weak.swift */; };
+		D6361DF444BF04B28D3F0D5B75D2617D /* CleanRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D986DD81B2BED3A6F2AFC0C591D0F3 /* CleanRecorder.swift */; };
+		D71FDAB21E5DA03189A411736431C3FA /* BaseRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457438BE16B26AD7C3949AEE577D48BE /* BaseRecorder.swift */; };
+		DC57E5BAC9213B8DF07F004C2C966407 /* AVFileType+FilenameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B8430E46E3FA7C8091AA23A8B352C /* AVFileType+FilenameExtension.swift */; };
+		DE1E24108C66B4148DA839233C30A1F3 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF16CB7A83C32B2D49241244C9207DFF /* Renderable.swift */; };
+		E324BFEF733E34EECDF1F52491990A8F /* WatermarkFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC321AAF920CB84FEF691AB27ADF17EA /* WatermarkFilter.swift */; };
+		E468EE8D5F5BB0A34BC4A5073D44C748 /* SCNView+MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D6741D586D6E94EA0826B30FE0D80 /* SCNView+MulticastDelegate.swift */; };
+		E988A3875FFF101BCCB0150E14CBE000 /* SelfRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78600FB648CA3FDC665B1F372D22F5E7 /* SelfRecordable.swift */; };
+		EE38E7BF30CB28066D9E3407E28338BE /* MediaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C850B37708EB6FC21B50E01BA5FC7D7 /* MediaSession.swift */; };
+		F44C3B931ED4ED298EF343D5EE05323D /* PixelBufferPoolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA132F80A2E493CAC8CC5DFE38E35CE /* PixelBufferPoolFactory.swift */; };
+		F5C2F0F202C1FBF9B19CE5DED5C11330 /* SCNRecorderMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D38D26C0A2DEA8B59B5D0926EF56BCA /* SCNRecorderMulticastDelegate.m */; };
+		FC175F626DD2C7C6A06855D7720FC74F /* CompositeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E3373BDD3FB4BDD812D6783533544 /* CompositeFilter.swift */; };
+		FD2E1DB8DD4A8D2EE713C5E9312F2038 /* VideoOutput.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363BD5874FAF2D1745714987D346F92F /* VideoOutput.State.swift */; };
+		FF1C5E60E5BBC27BF5F9D55FE5BC1D45 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4DBC5BFBF37ADF67E7E7CA103EDBAB /* CVPixelBuffer+Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E3B9EDC015FEE3FE883737160E6B56E5 /* PBXContainerItemProxy */ = {
+		F9059244E6CB76416A66F4805F862756 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -97,101 +98,102 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03205036236BF8C30AE52546B75EAD61 /* API.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		071CABA2BDE76400D15867385498262D /* WatermarkFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatermarkFilter.swift; sourceTree = "<group>"; };
-		07706D5F0B4A2B7EAE32B94614A2E370 /* SwappingFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwappingFilter.swift; sourceTree = "<group>"; };
-		0956CF9ED6B9BD5AAA7F8FBCB2984982 /* SelfSceneRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfSceneRecordable.swift; sourceTree = "<group>"; };
-		0A80892F5C4F4DC7F7E3139F50C1A94D /* ReadWriteLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadWriteLock.swift; sourceTree = "<group>"; };
-		0B64D93C981A67CBFC3DF2BB8591BBA1 /* Property.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
-		1014E3C0BA80178D0AEC1E24D838D8FD /* VideoSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
-		111DF33BF04E7767595B424384ACC343 /* Buffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
-		15AA57C17A10BC491258B5B9C4455A40 /* AVCaptureSession+BaseRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AVCaptureSession+BaseRecorder.swift"; sourceTree = "<group>"; };
-		17BBF5A368E6F24FCD3FCF3B59B7B746 /* Weak.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
-		17F221C9B5B00538BDBA41546D63230A /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		09603DE513F566A0C9CCF99815CBF814 /* CIFilter+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CIFilter+Helpers.swift"; sourceTree = "<group>"; };
+		0A2BDB89766CC170B79D0F65F2FA6461 /* SelfSceneRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfSceneRecordable.swift; sourceTree = "<group>"; };
+		0AE798B544360E904807B35C8894F057 /* SCNRecorderMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderMulticastDelegate.h; sourceTree = "<group>"; };
+		0B1FFE8334402FCED38EEB892A76EF1C /* SceneRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneRecorder.swift; sourceTree = "<group>"; };
+		0C850B37708EB6FC21B50E01BA5FC7D7 /* MediaSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSession.swift; sourceTree = "<group>"; };
+		177CA07011A67B98690DF83770036408 /* API.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		180BC29C7168B61DEA5F541D80DED3CB /* SCNRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SCNRecorder.framework; path = SCNRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		196433A36DF72AD331D4A20355287795 /* SceneRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneRecorder.swift; sourceTree = "<group>"; };
-		1D9FB662B6396670196487AFE76C6EAC /* AVFileType+FilenameExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AVFileType+FilenameExtension.swift"; sourceTree = "<group>"; };
+		1857E568BD618E75C6F7FBFA1CE86FF5 /* SCNRecorderOriginMulticastDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SCNRecorderOriginMulticastDelegate.m; sourceTree = "<group>"; };
+		1991543B8DCE56CB4B1F5C98DAC453FB /* PixelBufferOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelBufferOutput.swift; sourceTree = "<group>"; };
+		19D005732DFAA53AB6F680BEE10049D1 /* APIRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIRecordable.swift; sourceTree = "<group>"; };
+		1E04C6125740A538B828F8C4B950A484 /* Atomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		1F667CC0E19EAF34E5A4119E2121F585 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Example.framework; path = "Pods-Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		210CE362EE4AF0CA58F8D5AA92385EFB /* AssociatedStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssociatedStorage.swift; sourceTree = "<group>"; };
-		214E23C298CA0C92B94BBB980027F5EF /* ImageOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageOutput.swift; sourceTree = "<group>"; };
-		218629BAA8A0044620CEDF7D04F72257 /* MetalPixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetalPixelBufferProducer.swift; sourceTree = "<group>"; };
-		21A61A1E732A8FE62D2135A2A31F1FF6 /* PixelBufferPoolFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelBufferPoolFactory.swift; sourceTree = "<group>"; };
 		243410B9535472556EA4BB6DBC133A0D /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
-		25586DF46EC8D42EB54025600C09AA9A /* CVPixelBufferPool+Factory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CVPixelBufferPool+Factory.swift"; sourceTree = "<group>"; };
-		271B9C0F17B0B09E4E79CA0EEF34EA60 /* TimeScalable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeScalable.swift; sourceTree = "<group>"; };
-		2A7D66947E5675E74E180F71F94BD659 /* ReadWriteAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadWriteAtomic.swift; sourceTree = "<group>"; };
-		2A9FCA1559E39D2EBA8FC36831277BAF /* SCNRecorderOriginMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderOriginMulticastDelegate.h; sourceTree = "<group>"; };
-		2C5D0421883B738D0907416F4908F485 /* Observable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		271D6741D586D6E94EA0826B30FE0D80 /* SCNView+MulticastDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SCNView+MulticastDelegate.swift"; sourceTree = "<group>"; };
+		285E3373BDD3FB4BDD812D6783533544 /* CompositeFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompositeFilter.swift; sourceTree = "<group>"; };
 		2E283D0631DF6C672F55A7E10DD918B2 /* SCNRecorder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SCNRecorder.release.xcconfig; sourceTree = "<group>"; };
-		30F97E1DC8A950FACAB02C3E0FF6CE98 /* Renderable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
+		2E5DF392C93B7E6383991BE6E85935E2 /* CIContext+Render.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
 		31C1D37707DFAA5E6A164BCC07834264 /* Pods-Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-Info.plist"; sourceTree = "<group>"; };
-		3205516BF70A5CF9AA882D50FE4C2D4C /* VideoSettings.ScalingMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.ScalingMode.swift; sourceTree = "<group>"; };
-		357035B59E27F9B72DC75AA1338F4F77 /* CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecordable.swift; sourceTree = "<group>"; };
+		34174C424853C79E1C0B380973D0CDDE /* VideoSettings.Codec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.Codec.swift; sourceTree = "<group>"; };
 		35C305D3797C284E6F5BAA1D3E6F9BF8 /* Pods-Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Example.modulemap"; sourceTree = "<group>"; };
-		4063245AE7B97F18E4528D28707B6333 /* GeometryFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GeometryFilter.swift; sourceTree = "<group>"; };
-		42B0EBD277FC06ABA07CC49451E4773C /* MediaSessionOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSessionOutput.swift; sourceTree = "<group>"; };
-		440A46EA14C73C68EEB219DE1F07E00A /* SelfCleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfCleanRecordable.swift; sourceTree = "<group>"; };
+		363BD5874FAF2D1745714987D346F92F /* VideoOutput.State.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.State.swift; sourceTree = "<group>"; };
+		3E057059120BBA2BA2B8877E85F38870 /* EAGLPixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EAGLPixelBufferProducer.swift; sourceTree = "<group>"; };
+		3EFB03BEF2C389DE73A9CBD61F15EB2A /* MetalRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetalRecordable.swift; sourceTree = "<group>"; };
 		441854E35F81731E63E53DC7E4EEAD9D /* Pods-Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		45C31AE7D46D8F9DD3AC445003D8AA59 /* VideoOutput.Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.Error.swift; sourceTree = "<group>"; };
+		457438BE16B26AD7C3949AEE577D48BE /* BaseRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseRecorder.swift; sourceTree = "<group>"; };
+		4A49B677ECE7DE1AF8B93F087A4739FD /* MTLPixelFormat+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "MTLPixelFormat+Helpers.swift"; sourceTree = "<group>"; };
+		4DA132F80A2E493CAC8CC5DFE38E35CE /* PixelBufferPoolFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelBufferPoolFactory.swift; sourceTree = "<group>"; };
 		4DC8B0B622856D34486CD4F5A2F96667 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.md; sourceTree = "<group>"; };
-		513F20C5DC9FDF419060D280F06D6945 /* ARSCNView+CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARSCNView+CleanRecordable.swift"; sourceTree = "<group>"; };
-		54172BF13BE3D8FE318355A85028853C /* MediaSessionInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSessionInput.swift; sourceTree = "<group>"; };
-		59BC5C9CAE57CF4F9A8DF1CF0964EFA1 /* BaseRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseRecorder.swift; sourceTree = "<group>"; };
-		5ED803E9D7167CBEC92C20D91CC7F456 /* PixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelBufferProducer.swift; sourceTree = "<group>"; };
-		64F6AFB4BFDC45BC7F11B7EC501D7A3A /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
-		6774E359FE951FBFD4F4DB5F11857399 /* SceneRecorder.VideoInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneRecorder.VideoInput.swift; sourceTree = "<group>"; };
+		4F9551B8701AB08F0888F20B08AA64FC /* VideoRecording.State.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.State.swift; sourceTree = "<group>"; };
+		507685575FC4BFA3D9035CE4057909A0 /* ImageOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageOutput.swift; sourceTree = "<group>"; };
+		55D62DAC04C7CEBD530D7BDCEFFAA94B /* ARSCNView+SelfCleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARSCNView+SelfCleanRecordable.swift"; sourceTree = "<group>"; };
+		59D136807B2C417513AE6AC872E8F97A /* CleanRecorder.VideoInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecorder.VideoInput.swift; sourceTree = "<group>"; };
+		59F7B31DAB0F1595B520D9F3FD75661A /* BaseRecorder.AudioInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseRecorder.AudioInput.swift; sourceTree = "<group>"; };
+		5EACEA338A0C95FA76D1D842CC324E49 /* PixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelBufferProducer.swift; sourceTree = "<group>"; };
+		60CD4F6E8E815936E463E5752556AD14 /* RecordableLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecordableLayer.swift; sourceTree = "<group>"; };
+		614519FA5E7C3F4D1831D6E06D9A0559 /* MediaSessionInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSessionInput.swift; sourceTree = "<group>"; };
 		67C949DAC2497EB6F0458E31C5E0847E /* SCNRecorder.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SCNRecorder.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		68756B7C6DDB0A7E238C67DEE789F057 /* AudioSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
-		6A8091AB4ACC466DAF5F9BE02AD64ED3 /* MetalRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetalRecordable.swift; sourceTree = "<group>"; };
+		68205EFEE28D712E7D15E4B11F635140 /* EAGLRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EAGLRecordable.swift; sourceTree = "<group>"; };
+		68238C48902E0207C01BCB8052CBE773 /* AudioSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
+		6B2D385FEBDDC541DE23E10353290F78 /* GCDAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCDAtomic.swift; sourceTree = "<group>"; };
+		6D3F15E9FEC18A7282157FBB8919FB23 /* AVCaptureSession+BaseRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AVCaptureSession+BaseRecorder.swift"; sourceTree = "<group>"; };
 		6D7246BC11C92E1BBBD46EB41B5BB8E3 /* SCNRecorder.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SCNRecorder.modulemap; sourceTree = "<group>"; };
+		6EB9A1088057B1EA7F7EF3904499C43A /* VideoRecording.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.swift; sourceTree = "<group>"; };
+		70A8A5FE1A0A69387C24E388D669FEFF /* VideoOutput.Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.Error.swift; sourceTree = "<group>"; };
+		71103F0DB4983BDA1054C87F12B27636 /* UnfairAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UnfairAtomic.swift; sourceTree = "<group>"; };
 		7124A8AF029512FDEB37693670093D95 /* SCNRecorder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SCNRecorder.debug.xcconfig; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7710248F3C311FAC3F949EFDB50F35DA /* CIContext+Render.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CIContext+Render.swift"; sourceTree = "<group>"; };
 		7825A90E082A1582EB16256B0E722B3F /* Pods-Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Example-umbrella.h"; sourceTree = "<group>"; };
-		784C5D40C664436F74D96AC8A3F66C4A /* VideoSettings.FileType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.FileType.swift; sourceTree = "<group>"; };
-		7BF878F30422A4479F15C92BA00EA8DF /* SCNRecorderMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderMulticastDelegate.h; sourceTree = "<group>"; };
-		7F6D25C2F5C9989E877C2DEF6D9BF413 /* SelfRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfRecordable.swift; sourceTree = "<group>"; };
-		811E81C9DFCFDD05EFA5803D82621492 /* CompositeFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CompositeFilter.swift; sourceTree = "<group>"; };
+		78600FB648CA3FDC665B1F372D22F5E7 /* SelfRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfRecordable.swift; sourceTree = "<group>"; };
+		7C6CE444B52F565BF277BE92F44923E0 /* SelfCleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfCleanRecordable.swift; sourceTree = "<group>"; };
+		7ED55AC0EF04317EC74E85470DC12BCB /* WeakCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeakCollection.swift; sourceTree = "<group>"; };
+		7FA1BE50596203D246232855DFF0DB7B /* SwappingFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwappingFilter.swift; sourceTree = "<group>"; };
 		82800733CFA2E202151A2295EAEF75AD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		8633C50E708BDC4574191B91384E50EA /* MTLPixelFormat+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "MTLPixelFormat+Helpers.swift"; sourceTree = "<group>"; };
-		8EFFE278C67552D8A76DA8B927429961 /* SCNRecorderMulticastDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SCNRecorderMulticastDelegate.m; sourceTree = "<group>"; };
+		8391B18B75511CA40E0F9B326A72483B /* SCNRecorderOriginMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderOriginMulticastDelegate.h; sourceTree = "<group>"; };
+		83D7F5EA8F8563E5A1AC36E36A36B63C /* SCNView+APIRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SCNView+APIRecordable.swift"; sourceTree = "<group>"; };
+		85BBC6C9817D57D10C4E5C3E024372D9 /* CAMetalLayer+RecordableLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CAMetalLayer+RecordableLayer.swift"; sourceTree = "<group>"; };
+		8AC025AA2F6615020D91DBCEDE532CC6 /* SCNView+SelfSceneRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SCNView+SelfSceneRecordable.swift"; sourceTree = "<group>"; };
+		8B4154EDF25868E4F2108C24581E0504 /* MetalPixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetalPixelBufferProducer.swift; sourceTree = "<group>"; };
+		90C1D736051F2643BC1FB85B876A393B /* SceneRecorder.VideoInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneRecorder.VideoInput.swift; sourceTree = "<group>"; };
+		974D321DCFAE7D74E1DD6B7C58794C8F /* AudioAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioAdapter.swift; sourceTree = "<group>"; };
+		9B4DBC5BFBF37ADF67E7E7CA103EDBAB /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
+		9C0A2D1F57B70610B7F08F573C882F59 /* VideoRecording.Info.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.Info.swift; sourceTree = "<group>"; };
+		9C3838E737E9B2569A4FBAE58CD9B854 /* VideoSettings.ScalingMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.ScalingMode.swift; sourceTree = "<group>"; };
+		9D1438BEE1566A9D506719D304ECEAB3 /* ARSCNView+CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARSCNView+CleanRecordable.swift"; sourceTree = "<group>"; };
+		9D38D26C0A2DEA8B59B5D0926EF56BCA /* SCNRecorderMulticastDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SCNRecorderMulticastDelegate.m; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9DC0BAE8577616CB31878EEE6765FE16 /* MediaSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSession.swift; sourceTree = "<group>"; };
-		A1D2EE3AB40D5A92C6561191004CA2FA /* VideoRecording.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.swift; sourceTree = "<group>"; };
-		A338E8E41E158E3E861AA26F86E3B931 /* AudioAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioAdapter.swift; sourceTree = "<group>"; };
-		A39ABFA7A7144F9A6D046EEB8AA70762 /* SCNView+SelfSceneRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SCNView+SelfSceneRecordable.swift"; sourceTree = "<group>"; };
+		9E7B8430E46E3FA7C8091AA23A8B352C /* AVFileType+FilenameExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AVFileType+FilenameExtension.swift"; sourceTree = "<group>"; };
+		9EA882A9AD516EE89890B05CEBB47533 /* MediaSessionOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSessionOutput.swift; sourceTree = "<group>"; };
+		9F8913694D518A1673581B62D18F07DA /* UnfairLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
+		A10FC03B0E81FAF608DBB27A3A0912A6 /* CVPixelBufferPool+Factory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CVPixelBufferPool+Factory.swift"; sourceTree = "<group>"; };
+		A4437C1E4E2F271CCF26D53EDE3C20C0 /* AssociatedStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssociatedStorage.swift; sourceTree = "<group>"; };
 		A445E7F5E090EB783D361115074F8C16 /* SCNRecorder-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SCNRecorder-Info.plist"; sourceTree = "<group>"; };
-		A76001BBF4C62787B9B0079EC5F82834 /* BaseRecorder.AudioInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseRecorder.AudioInput.swift; sourceTree = "<group>"; };
-		ACFAE04E49AD268455167278C40C3129 /* CIFilter+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CIFilter+Helpers.swift"; sourceTree = "<group>"; };
-		AF5C200A58A659A2253E808661ABAFD0 /* UnfairAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UnfairAtomic.swift; sourceTree = "<group>"; };
+		A636F0157411ED0772742E4BF2D501E3 /* TimeScalable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeScalable.swift; sourceTree = "<group>"; };
+		AA8CB725819D61EFC226F8D60497B1A3 /* GeometryFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GeometryFilter.swift; sourceTree = "<group>"; };
+		ACB9558978810FA1CF10438B578933D3 /* ReadWriteAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadWriteAtomic.swift; sourceTree = "<group>"; };
+		AED94723D7452EFB70AC0454D700C396 /* ReadWriteLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadWriteLock.swift; sourceTree = "<group>"; };
+		AF16CB7A83C32B2D49241244C9207DFF /* Renderable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		AFECBC24E09D0D25F822C27BD944AFD4 /* Pods-Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Example-frameworks.sh"; sourceTree = "<group>"; };
-		AFFE693516E69D0F217128D835C43DBF /* RecordableLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecordableLayer.swift; sourceTree = "<group>"; };
-		B1217E89B609C8D2F4D5B61C77D956F0 /* CleanRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecorder.swift; sourceTree = "<group>"; };
+		B392158AA96460285A5F5619F4D47C3E /* VideoSettings.FileType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.FileType.swift; sourceTree = "<group>"; };
 		B45138496B85A072654D1D0F8EBBEDE5 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
-		B896F5F3C473C3F6713D435F1CCCBB13 /* CAMetalLayer+RecordableLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CAMetalLayer+RecordableLayer.swift"; sourceTree = "<group>"; };
-		C2180B3CFE7E8D263D9621122247E76D /* EAGLRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EAGLRecordable.swift; sourceTree = "<group>"; };
+		B8103F42999782A9302C78C9BF84AEF7 /* CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecordable.swift; sourceTree = "<group>"; };
+		B84E800CFEDDDB5E53DA0BCEB603EDDC /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		C379EFA6F111ACE82DECBEAD1BE9148A /* Property.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		C455F87A0B03D9CA7E5BD790CBDF2A3C /* VideoOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.swift; sourceTree = "<group>"; };
 		C4F920516136DEE800EF202CD0857247 /* SCNRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorder.h; sourceTree = "<group>"; };
-		CFAACEF0DADAD1A1FD008029A95358FB /* EAGLPixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EAGLPixelBufferProducer.swift; sourceTree = "<group>"; };
-		D4C2D5B767293A990FAF7B407DFB534F /* APIRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIRecordable.swift; sourceTree = "<group>"; };
+		D09EDF1C03A72FC8009A64D132CEEF77 /* Weak.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Example-dummy.m"; sourceTree = "<group>"; };
-		DBDC559807FE6CFE4A431BCB13DC6948 /* CleanRecorder.VideoInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecorder.VideoInput.swift; sourceTree = "<group>"; };
-		DC36849CC224D5E7D0C0B865646B60FB /* VideoSettings.Codec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.Codec.swift; sourceTree = "<group>"; };
-		DCD5F1AED5AC302313C97BFB28B15EB2 /* SCNView+APIRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SCNView+APIRecordable.swift"; sourceTree = "<group>"; };
-		E44D8DAF1E181751764CF32A76B537D6 /* WeakCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeakCollection.swift; sourceTree = "<group>"; };
+		D987FFAC840FC6E0E255030FDEE1302B /* VideoSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
+		DC321AAF920CB84FEF691AB27ADF17EA /* WatermarkFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatermarkFilter.swift; sourceTree = "<group>"; };
+		DDF8F1B916D5000FD189D10A30FE2B07 /* Observable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		E533D88387EBA0E758746E2353F22CA1 /* SCNRecorder.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SCNRecorder.modulemap; sourceTree = "<group>"; };
 		E6F9593B74BC9E32AC41251DFD4372DB /* SCNRecorder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SCNRecorder-dummy.m"; sourceTree = "<group>"; };
-		E849AE270A6DAE35C0FBC05EA44FEAB1 /* GCDAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCDAtomic.swift; sourceTree = "<group>"; };
 		EA21B344259B58996DB73382B1B1521F /* Pods-Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		EBA50A833D8419E591152DA57B1EC736 /* VideoOutput.State.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.State.swift; sourceTree = "<group>"; };
-		EC5C84643D2D2CB2FF2A83DE94DB67E9 /* Atomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
-		ED8DDE0773E00F92E96A489E1A8B9DD7 /* UnfairLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
-		F35138597BBDD3947A4F5297923C6EBD /* SCNView+MulticastDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SCNView+MulticastDelegate.swift"; sourceTree = "<group>"; };
+		EBC6DD4F1831E9DAC3E8399E1AD82F38 /* Buffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		F364D9BBBDB267D695A6779BB2968442 /* SCNRecorder-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCNRecorder-prefix.pch"; sourceTree = "<group>"; };
-		F451961F76333DDB4EF5351E828196A9 /* SCNRecorderOriginMulticastDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SCNRecorderOriginMulticastDelegate.m; sourceTree = "<group>"; };
-		F611CBD621AACB9C0633B2EE9BAAA9ED /* VideoRecording.Info.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.Info.swift; sourceTree = "<group>"; };
-		F8B67F3BFC9000C46565F2F518FC2CB4 /* ARSCNView+SelfCleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARSCNView+SelfCleanRecordable.swift"; sourceTree = "<group>"; };
-		FC1FF14C8811C79B81685359F2B7CB20 /* VideoOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.swift; sourceTree = "<group>"; };
-		FDD11112F8418D4C9C1BCE6025938445 /* VideoRecording.State.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.State.swift; sourceTree = "<group>"; };
+		F8D986DD81B2BED3A6F2AFC0C591D0F3 /* CleanRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecorder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,48 +205,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D6F926B2FA1DE6E5E10D62235154152D /* Frameworks */ = {
+		AB7DEF33A5935874EB4A6FDE15290898 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46E01E0FF76159C6D8AA9AC882EDF1C3 /* Foundation.framework in Frameworks */,
+				269489DDCF42B8A3DC8AE8586E1A5D3D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0254CC4EF58EE2EC4E965DD09DA10DC5 /* MulticastDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				7BF878F30422A4479F15C92BA00EA8DF /* SCNRecorderMulticastDelegate.h */,
-				8EFFE278C67552D8A76DA8B927429961 /* SCNRecorderMulticastDelegate.m */,
-				2A9FCA1559E39D2EBA8FC36831277BAF /* SCNRecorderOriginMulticastDelegate.h */,
-				F451961F76333DDB4EF5351E828196A9 /* SCNRecorderOriginMulticastDelegate.m */,
-			);
-			name = MulticastDelegate;
-			path = MulticastDelegate;
-			sourceTree = "<group>";
-		};
 		0309E6B174FC3BE9C0FE430351C8C1FC /* SCNRecorder */ = {
 			isa = PBXGroup;
 			children = (
 				C4F920516136DEE800EF202CD0857247 /* SCNRecorder.h */,
 				95739E682A8A856693C4637D44300A85 /* Pod */,
-				EE5ECBFCBFD74F1ECA6B81F9C120DE3A /* Sources */,
+				F64B236838B039DD1E54B136CED52D64 /* Sources */,
 				14BFCE0BCABAF1D91274721E94E21AF9 /* Support Files */,
 			);
 			name = SCNRecorder;
 			path = ../..;
-			sourceTree = "<group>";
-		};
-		03D83A0C89A89EBE5F0EA8853787929B /* ImageOutput */ = {
-			isa = PBXGroup;
-			children = (
-				214E23C298CA0C92B94BBB980027F5EF /* ImageOutput.swift */,
-			);
-			name = ImageOutput;
-			path = ImageOutput;
 			sourceTree = "<group>";
 		};
 		14BFCE0BCABAF1D91274721E94E21AF9 /* Support Files */ = {
@@ -261,83 +242,75 @@
 			path = "Example/Pods/Target Support Files/SCNRecorder";
 			sourceTree = "<group>";
 		};
-		1BE3209DF48CF674D0B55382488252E3 /* Recordable */ = {
+		28E2A24F7FE8E3D89D9BC19A22B66A2C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D4C2D5B767293A990FAF7B407DFB534F /* APIRecordable.swift */,
-				357035B59E27F9B72DC75AA1338F4F77 /* CleanRecordable.swift */,
-				C2180B3CFE7E8D263D9621122247E76D /* EAGLRecordable.swift */,
-				6A8091AB4ACC466DAF5F9BE02AD64ED3 /* MetalRecordable.swift */,
-				9E76C363B663F7AF487F65FFB9D763DA /* Extensions */,
+				55D62DAC04C7CEBD530D7BDCEFFAA94B /* ARSCNView+SelfCleanRecordable.swift */,
+				8AC025AA2F6615020D91DBCEDE532CC6 /* SCNView+SelfSceneRecordable.swift */,
 			);
-			name = Recordable;
-			path = Recordable;
+			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
-		209CFC248CB4E7DC1494C6F1AA7DC9F6 /* Outputs */ = {
+		2F85E52F10865BEEAA4F772FDCF2B74A /* GCD */ = {
 			isa = PBXGroup;
 			children = (
-				03D83A0C89A89EBE5F0EA8853787929B /* ImageOutput */,
-				F363DFD23658738161CDFF184720EB96 /* VideoOutput */,
+				6B2D385FEBDDC541DE23E10353290F78 /* GCDAtomic.swift */,
 			);
-			name = Outputs;
-			path = Outputs;
+			name = GCD;
+			path = GCD;
 			sourceTree = "<group>";
 		};
-		20D104DA584261531C1D489509396766 /* MediaSession */ = {
+		3264EB1EFE1B6C866E6BEFD63FA229A7 /* ReadWrite */ = {
 			isa = PBXGroup;
 			children = (
-				9DC0BAE8577616CB31878EEE6765FE16 /* MediaSession.swift */,
-				54172BF13BE3D8FE318355A85028853C /* MediaSessionInput.swift */,
-				42B0EBD277FC06ABA07CC49451E4773C /* MediaSessionOutput.swift */,
+				ACB9558978810FA1CF10438B578933D3 /* ReadWriteAtomic.swift */,
+				AED94723D7452EFB70AC0454D700C396 /* ReadWriteLock.swift */,
 			);
-			name = MediaSession;
-			path = MediaSession;
+			name = ReadWrite;
+			path = ReadWrite;
 			sourceTree = "<group>";
 		};
-		30671D2E541FCEFAE7A7EDBA6DFFAA0D /* BaseRecorder */ = {
+		3A11A8AAAB5309522E94E55C92B95AB3 /* BaseRecorder */ = {
 			isa = PBXGroup;
 			children = (
-				59BC5C9CAE57CF4F9A8DF1CF0964EFA1 /* BaseRecorder.swift */,
-				A76001BBF4C62787B9B0079EC5F82834 /* BaseRecorder.AudioInput.swift */,
+				457438BE16B26AD7C3949AEE577D48BE /* BaseRecorder.swift */,
+				59F7B31DAB0F1595B520D9F3FD75661A /* BaseRecorder.AudioInput.swift */,
 			);
 			name = BaseRecorder;
 			path = BaseRecorder;
 			sourceTree = "<group>";
 		};
-		4B3FF6B52873752465807A117D1308F4 /* PoolFactory */ = {
+		498A6A5F8D07C2C66C87F827C390D405 /* Unfair */ = {
 			isa = PBXGroup;
 			children = (
-				21A61A1E732A8FE62D2135A2A31F1FF6 /* PixelBufferPoolFactory.swift */,
+				71103F0DB4983BDA1054C87F12B27636 /* UnfairAtomic.swift */,
+				9F8913694D518A1673581B62D18F07DA /* UnfairLock.swift */,
 			);
-			name = PoolFactory;
-			path = PoolFactory;
+			name = Unfair;
+			path = Unfair;
 			sourceTree = "<group>";
 		};
-		535EFDAE9712CE1FD6E2651E13562BA3 /* Extensions */ = {
+		529907438752A2F7457B5E00BA8ADD2C /* MulticastDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				15AA57C17A10BC491258B5B9C4455A40 /* AVCaptureSession+BaseRecorder.swift */,
-				1D9FB662B6396670196487AFE76C6EAC /* AVFileType+FilenameExtension.swift */,
-				7710248F3C311FAC3F949EFDB50F35DA /* CIContext+Render.swift */,
-				ACFAE04E49AD268455167278C40C3129 /* CIFilter+Helpers.swift */,
-				64F6AFB4BFDC45BC7F11B7EC501D7A3A /* CVPixelBuffer+Helpers.swift */,
-				25586DF46EC8D42EB54025600C09AA9A /* CVPixelBufferPool+Factory.swift */,
-				8633C50E708BDC4574191B91384E50EA /* MTLPixelFormat+Helpers.swift */,
-				F35138597BBDD3947A4F5297923C6EBD /* SCNView+MulticastDelegate.swift */,
+				0AE798B544360E904807B35C8894F057 /* SCNRecorderMulticastDelegate.h */,
+				9D38D26C0A2DEA8B59B5D0926EF56BCA /* SCNRecorderMulticastDelegate.m */,
+				8391B18B75511CA40E0F9B326A72483B /* SCNRecorderOriginMulticastDelegate.h */,
+				1857E568BD618E75C6F7FBFA1CE86FF5 /* SCNRecorderOriginMulticastDelegate.m */,
 			);
-			name = Extensions;
-			path = Extensions;
+			name = MulticastDelegate;
+			path = MulticastDelegate;
 			sourceTree = "<group>";
 		};
-		539FFEC34FDA080410ADE3A96C46A139 /* Extensions */ = {
+		53611EF67871A4BEF64350621C6F84A5 /* SceneRecorder */ = {
 			isa = PBXGroup;
 			children = (
-				F8B67F3BFC9000C46565F2F518FC2CB4 /* ARSCNView+SelfCleanRecordable.swift */,
-				A39ABFA7A7144F9A6D046EEB8AA70762 /* SCNView+SelfSceneRecordable.swift */,
+				0B1FFE8334402FCED38EEB892A76EF1C /* SceneRecorder.swift */,
+				90C1D736051F2643BC1FB85B876A393B /* SceneRecorder.VideoInput.swift */,
 			);
-			name = Extensions;
-			path = Extensions;
+			name = SceneRecorder;
+			path = SceneRecorder;
 			sourceTree = "<group>";
 		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
@@ -348,36 +321,28 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		5DAABDD91CCCE206B57B58132F9AED5A /* CleanRecorder */ = {
+		5966A5A5DE32215C18866A2698E8AC48 /* Recordable */ = {
 			isa = PBXGroup;
 			children = (
-				B1217E89B609C8D2F4D5B61C77D956F0 /* CleanRecorder.swift */,
-				DBDC559807FE6CFE4A431BCB13DC6948 /* CleanRecorder.VideoInput.swift */,
+				19D005732DFAA53AB6F680BEE10049D1 /* APIRecordable.swift */,
+				B8103F42999782A9302C78C9BF84AEF7 /* CleanRecordable.swift */,
+				68205EFEE28D712E7D15E4B11F635140 /* EAGLRecordable.swift */,
+				3EFB03BEF2C389DE73A9CBD61F15EB2A /* MetalRecordable.swift */,
+				FDD6DA42CB50CB4AEA5C9E24F87AAFC8 /* Extensions */,
 			);
-			name = CleanRecorder;
-			path = CleanRecorder;
+			name = Recordable;
+			path = Recordable;
 			sourceTree = "<group>";
 		};
-		70855BFD2C1FFC28BBE333A88DCAEFD3 /* Multithreading */ = {
+		75C49B0B79DC7966BB99C4E88B312C19 /* MediaSession */ = {
 			isa = PBXGroup;
 			children = (
-				EC5C84643D2D2CB2FF2A83DE94DB67E9 /* Atomic.swift */,
-				99DF7A93A7C63FFE2A8290585EA7B390 /* GCD */,
-				FB874BA54668649192B345097BEC1B38 /* ReadWrite */,
-				C27D9190E4ECC7FE6E73F2DC7F5C5254 /* Unfair */,
+				0C850B37708EB6FC21B50E01BA5FC7D7 /* MediaSession.swift */,
+				614519FA5E7C3F4D1831D6E06D9A0559 /* MediaSessionInput.swift */,
+				9EA882A9AD516EE89890B05CEBB47533 /* MediaSessionOutput.swift */,
 			);
-			name = Multithreading;
-			path = Multithreading;
-			sourceTree = "<group>";
-		};
-		720870FB97B794B0F809110BE3BB84E6 /* RecordableLayer */ = {
-			isa = PBXGroup;
-			children = (
-				B896F5F3C473C3F6713D435F1CCCBB13 /* CAMetalLayer+RecordableLayer.swift */,
-				AFFE693516E69D0F217128D835C43DBF /* RecordableLayer.swift */,
-			);
-			name = RecordableLayer;
-			path = RecordableLayer;
+			name = MediaSession;
+			path = MediaSession;
 			sourceTree = "<group>";
 		};
 		766373889CC412A626FEA8C41A21CF26 /* Development Pods */ = {
@@ -388,24 +353,26 @@
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		797880A5A97205FC485B6D3D698B9F08 /* SceneRecorder */ = {
+		77D431AF6F355A270F319ADEE6C8C435 /* Outputs */ = {
 			isa = PBXGroup;
 			children = (
-				196433A36DF72AD331D4A20355287795 /* SceneRecorder.swift */,
-				6774E359FE951FBFD4F4DB5F11857399 /* SceneRecorder.VideoInput.swift */,
+				1991543B8DCE56CB4B1F5C98DAC453FB /* PixelBufferOutput.swift */,
+				9781FAB64F3D43BD5FB514F9D9ACA417 /* ImageOutput */,
+				8BB788660CC3316F627E5E240960DF5C /* VideoOutput */,
 			);
-			name = SceneRecorder;
-			path = SceneRecorder;
+			name = Outputs;
+			path = Outputs;
 			sourceTree = "<group>";
 		};
-		92C8C06F98F520A39B87A2ABC3A144B3 /* PixelBuffer */ = {
+		8BB788660CC3316F627E5E240960DF5C /* VideoOutput */ = {
 			isa = PBXGroup;
 			children = (
-				4B3FF6B52873752465807A117D1308F4 /* PoolFactory */,
-				AE84A3A330D0957F39067A2F66F4ED96 /* Producer */,
+				C455F87A0B03D9CA7E5BD790CBDF2A3C /* VideoOutput.swift */,
+				70A8A5FE1A0A69387C24E388D669FEFF /* VideoOutput.Error.swift */,
+				363BD5874FAF2D1745714987D346F92F /* VideoOutput.State.swift */,
 			);
-			name = PixelBuffer;
-			path = PixelBuffer;
+			name = VideoOutput;
+			path = VideoOutput;
 			sourceTree = "<group>";
 		};
 		95739E682A8A856693C4637D44300A85 /* Pod */ = {
@@ -419,13 +386,25 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		99DF7A93A7C63FFE2A8290585EA7B390 /* GCD */ = {
+		9781FAB64F3D43BD5FB514F9D9ACA417 /* ImageOutput */ = {
 			isa = PBXGroup;
 			children = (
-				E849AE270A6DAE35C0FBC05EA44FEAB1 /* GCDAtomic.swift */,
+				507685575FC4BFA3D9035CE4057909A0 /* ImageOutput.swift */,
 			);
-			name = GCD;
-			path = GCD;
+			name = ImageOutput;
+			path = ImageOutput;
+			sourceTree = "<group>";
+		};
+		9AEF2DDC67DF839266289EED0A3AECC4 /* SelfRecordable */ = {
+			isa = PBXGroup;
+			children = (
+				7C6CE444B52F565BF277BE92F44923E0 /* SelfCleanRecordable.swift */,
+				78600FB648CA3FDC665B1F372D22F5E7 /* SelfRecordable.swift */,
+				0A2BDB89766CC170B79D0F65F2FA6461 /* SelfSceneRecordable.swift */,
+				28E2A24F7FE8E3D89D9BC19A22B66A2C /* Extensions */,
+			);
+			name = SelfRecordable;
+			path = SelfRecordable;
 			sourceTree = "<group>";
 		};
 		9BDBD95ED116334D1B2835202D8D3060 /* Pods-Example */ = {
@@ -445,64 +424,91 @@
 			path = "Target Support Files/Pods-Example";
 			sourceTree = "<group>";
 		};
-		9E76C363B663F7AF487F65FFB9D763DA /* Extensions */ = {
+		9F5B3717B43BDB763ACD51BC0FCA83B9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				513F20C5DC9FDF419060D280F06D6945 /* ARSCNView+CleanRecordable.swift */,
-				DCD5F1AED5AC302313C97BFB28B15EB2 /* SCNView+APIRecordable.swift */,
-			);
-			name = Extensions;
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		A5BE5B63148EF3BF467ACD3FDAC36157 /* Recorder */ = {
-			isa = PBXGroup;
-			children = (
-				30671D2E541FCEFAE7A7EDBA6DFFAA0D /* BaseRecorder */,
-				5DAABDD91CCCE206B57B58132F9AED5A /* CleanRecorder */,
-				797880A5A97205FC485B6D3D698B9F08 /* SceneRecorder */,
-			);
-			name = Recorder;
-			path = Recorder;
-			sourceTree = "<group>";
-		};
-		AE84A3A330D0957F39067A2F66F4ED96 /* Producer */ = {
-			isa = PBXGroup;
-			children = (
-				CFAACEF0DADAD1A1FD008029A95358FB /* EAGLPixelBufferProducer.swift */,
-				218629BAA8A0044620CEDF7D04F72257 /* MetalPixelBufferProducer.swift */,
-				5ED803E9D7167CBEC92C20D91CC7F456 /* PixelBufferProducer.swift */,
-			);
-			name = Producer;
-			path = Producer;
-			sourceTree = "<group>";
-		};
-		B0E771FCF459F72DD11ABF91EC10785A /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				03205036236BF8C30AE52546B75EAD61 /* API.swift */,
-				210CE362EE4AF0CA58F8D5AA92385EFB /* AssociatedStorage.swift */,
-				A338E8E41E158E3E861AA26F86E3B931 /* AudioAdapter.swift */,
-				111DF33BF04E7767595B424384ACC343 /* Buffer.swift */,
-				2C5D0421883B738D0907416F4908F485 /* Observable.swift */,
-				0B64D93C981A67CBFC3DF2BB8591BBA1 /* Property.swift */,
-				17BBF5A368E6F24FCD3FCF3B59B7B746 /* Weak.swift */,
-				E44D8DAF1E181751764CF32A76B537D6 /* WeakCollection.swift */,
-				0254CC4EF58EE2EC4E965DD09DA10DC5 /* MulticastDelegate */,
-				70855BFD2C1FFC28BBE333A88DCAEFD3 /* Multithreading */,
+				177CA07011A67B98690DF83770036408 /* API.swift */,
+				A4437C1E4E2F271CCF26D53EDE3C20C0 /* AssociatedStorage.swift */,
+				974D321DCFAE7D74E1DD6B7C58794C8F /* AudioAdapter.swift */,
+				EBC6DD4F1831E9DAC3E8399E1AD82F38 /* Buffer.swift */,
+				DDF8F1B916D5000FD189D10A30FE2B07 /* Observable.swift */,
+				C379EFA6F111ACE82DECBEAD1BE9148A /* Property.swift */,
+				D09EDF1C03A72FC8009A64D132CEEF77 /* Weak.swift */,
+				7ED55AC0EF04317EC74E85470DC12BCB /* WeakCollection.swift */,
+				529907438752A2F7457B5E00BA8ADD2C /* MulticastDelegate */,
+				F72A2DD94EBDBE393E819DF56A20C3EC /* Multithreading */,
 			);
 			name = Helpers;
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		C27D9190E4ECC7FE6E73F2DC7F5C5254 /* Unfair */ = {
+		AE7307E0B18E5967F672D95452A8E5ED /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AF5C200A58A659A2253E808661ABAFD0 /* UnfairAtomic.swift */,
-				ED8DDE0773E00F92E96A489E1A8B9DD7 /* UnfairLock.swift */,
+				6D3F15E9FEC18A7282157FBB8919FB23 /* AVCaptureSession+BaseRecorder.swift */,
+				9E7B8430E46E3FA7C8091AA23A8B352C /* AVFileType+FilenameExtension.swift */,
+				2E5DF392C93B7E6383991BE6E85935E2 /* CIContext+Render.swift */,
+				09603DE513F566A0C9CCF99815CBF814 /* CIFilter+Helpers.swift */,
+				9B4DBC5BFBF37ADF67E7E7CA103EDBAB /* CVPixelBuffer+Helpers.swift */,
+				A10FC03B0E81FAF608DBB27A3A0912A6 /* CVPixelBufferPool+Factory.swift */,
+				4A49B677ECE7DE1AF8B93F087A4739FD /* MTLPixelFormat+Helpers.swift */,
+				271D6741D586D6E94EA0826B30FE0D80 /* SCNView+MulticastDelegate.swift */,
 			);
-			name = Unfair;
-			path = Unfair;
+			name = Extensions;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AEF47A6747FE80EF96CFE1EB1FCF61DB /* Producer */ = {
+			isa = PBXGroup;
+			children = (
+				3E057059120BBA2BA2B8877E85F38870 /* EAGLPixelBufferProducer.swift */,
+				8B4154EDF25868E4F2108C24581E0504 /* MetalPixelBufferProducer.swift */,
+				5EACEA338A0C95FA76D1D842CC324E49 /* PixelBufferProducer.swift */,
+			);
+			name = Producer;
+			path = Producer;
+			sourceTree = "<group>";
+		};
+		B181AD77976C544645D6736BDBF2A9DF /* PoolFactory */ = {
+			isa = PBXGroup;
+			children = (
+				4DA132F80A2E493CAC8CC5DFE38E35CE /* PixelBufferPoolFactory.swift */,
+			);
+			name = PoolFactory;
+			path = PoolFactory;
+			sourceTree = "<group>";
+		};
+		C0BAFEE13BCB2171BF5C4A0D0C43FE91 /* CleanRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				F8D986DD81B2BED3A6F2AFC0C591D0F3 /* CleanRecorder.swift */,
+				59D136807B2C417513AE6AC872E8F97A /* CleanRecorder.VideoInput.swift */,
+			);
+			name = CleanRecorder;
+			path = CleanRecorder;
+			sourceTree = "<group>";
+		};
+		C18F17C99B0C35DC0023AB6F0061825F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				AF16CB7A83C32B2D49241244C9207DFF /* Renderable.swift */,
+				A636F0157411ED0772742E4BF2D501E3 /* TimeScalable.swift */,
+			);
+			name = Protocols;
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		C34F4445673EA211150EB85E31697F7B /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				285E3373BDD3FB4BDD812D6783533544 /* CompositeFilter.swift */,
+				B84E800CFEDDDB5E53DA0BCEB603EDDC /* Filter.swift */,
+				AA8CB725819D61EFC226F8D60497B1A3 /* GeometryFilter.swift */,
+				7FA1BE50596203D246232855DFF0DB7B /* SwappingFilter.swift */,
+				DC321AAF920CB84FEF691AB27ADF17EA /* WatermarkFilter.swift */,
+			);
+			name = Filter;
+			path = Filter;
 			sourceTree = "<group>";
 		};
 		C8FFBD6A5E27968D8C3418CEDDC1B571 /* Products */ = {
@@ -512,6 +518,16 @@
 				180BC29C7168B61DEA5F541D80DED3CB /* SCNRecorder.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CC85019FA017CEE1D58EEC9DAF095989 /* RecordableLayer */ = {
+			isa = PBXGroup;
+			children = (
+				85BBC6C9817D57D10C4E5C3E024372D9 /* CAMetalLayer+RecordableLayer.swift */,
+				60CD4F6E8E815936E463E5752556AD14 /* RecordableLayer.swift */,
+			);
+			name = RecordableLayer;
+			path = RecordableLayer;
 			sourceTree = "<group>";
 		};
 		CE2E825F08D3AD0FD76E6D78D7512ED0 /* Targets Support Files */ = {
@@ -541,99 +557,86 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E227F6C96DFEBD92632902123960029E /* Filter */ = {
+		D677C66A55D9BF193B973918E95D98C7 /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
-				811E81C9DFCFDD05EFA5803D82621492 /* CompositeFilter.swift */,
-				17F221C9B5B00538BDBA41546D63230A /* Filter.swift */,
-				4063245AE7B97F18E4528D28707B6333 /* GeometryFilter.swift */,
-				07706D5F0B4A2B7EAE32B94614A2E370 /* SwappingFilter.swift */,
-				071CABA2BDE76400D15867385498262D /* WatermarkFilter.swift */,
+				3A11A8AAAB5309522E94E55C92B95AB3 /* BaseRecorder */,
+				C0BAFEE13BCB2171BF5C4A0D0C43FE91 /* CleanRecorder */,
+				53611EF67871A4BEF64350621C6F84A5 /* SceneRecorder */,
 			);
-			name = Filter;
-			path = Filter;
+			name = Recorder;
+			path = Recorder;
 			sourceTree = "<group>";
 		};
-		ECC315D934CC3C1DEAC55676198D2B67 /* Protocols */ = {
+		DA0C0CF0936EA5F2A132B0D6080F5045 /* PixelBuffer */ = {
 			isa = PBXGroup;
 			children = (
-				30F97E1DC8A950FACAB02C3E0FF6CE98 /* Renderable.swift */,
-				271B9C0F17B0B09E4E79CA0EEF34EA60 /* TimeScalable.swift */,
+				B181AD77976C544645D6736BDBF2A9DF /* PoolFactory */,
+				AEF47A6747FE80EF96CFE1EB1FCF61DB /* Producer */,
 			);
-			name = Protocols;
-			path = Protocols;
+			name = PixelBuffer;
+			path = PixelBuffer;
 			sourceTree = "<group>";
 		};
-		EE5ECBFCBFD74F1ECA6B81F9C120DE3A /* Sources */ = {
+		F64B236838B039DD1E54B136CED52D64 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				68756B7C6DDB0A7E238C67DEE789F057 /* AudioSettings.swift */,
-				A1D2EE3AB40D5A92C6561191004CA2FA /* VideoRecording.swift */,
-				F611CBD621AACB9C0633B2EE9BAAA9ED /* VideoRecording.Info.swift */,
-				FDD11112F8418D4C9C1BCE6025938445 /* VideoRecording.State.swift */,
-				1014E3C0BA80178D0AEC1E24D838D8FD /* VideoSettings.swift */,
-				DC36849CC224D5E7D0C0B865646B60FB /* VideoSettings.Codec.swift */,
-				784C5D40C664436F74D96AC8A3F66C4A /* VideoSettings.FileType.swift */,
-				3205516BF70A5CF9AA882D50FE4C2D4C /* VideoSettings.ScalingMode.swift */,
-				535EFDAE9712CE1FD6E2651E13562BA3 /* Extensions */,
-				E227F6C96DFEBD92632902123960029E /* Filter */,
-				B0E771FCF459F72DD11ABF91EC10785A /* Helpers */,
-				20D104DA584261531C1D489509396766 /* MediaSession */,
-				209CFC248CB4E7DC1494C6F1AA7DC9F6 /* Outputs */,
-				92C8C06F98F520A39B87A2ABC3A144B3 /* PixelBuffer */,
-				ECC315D934CC3C1DEAC55676198D2B67 /* Protocols */,
-				1BE3209DF48CF674D0B55382488252E3 /* Recordable */,
-				720870FB97B794B0F809110BE3BB84E6 /* RecordableLayer */,
-				A5BE5B63148EF3BF467ACD3FDAC36157 /* Recorder */,
-				FA1D96F6DA3E729537B1913E3ECB5FA6 /* SelfRecordable */,
+				68238C48902E0207C01BCB8052CBE773 /* AudioSettings.swift */,
+				6EB9A1088057B1EA7F7EF3904499C43A /* VideoRecording.swift */,
+				9C0A2D1F57B70610B7F08F573C882F59 /* VideoRecording.Info.swift */,
+				4F9551B8701AB08F0888F20B08AA64FC /* VideoRecording.State.swift */,
+				D987FFAC840FC6E0E255030FDEE1302B /* VideoSettings.swift */,
+				34174C424853C79E1C0B380973D0CDDE /* VideoSettings.Codec.swift */,
+				B392158AA96460285A5F5619F4D47C3E /* VideoSettings.FileType.swift */,
+				9C3838E737E9B2569A4FBAE58CD9B854 /* VideoSettings.ScalingMode.swift */,
+				AE7307E0B18E5967F672D95452A8E5ED /* Extensions */,
+				C34F4445673EA211150EB85E31697F7B /* Filter */,
+				9F5B3717B43BDB763ACD51BC0FCA83B9 /* Helpers */,
+				75C49B0B79DC7966BB99C4E88B312C19 /* MediaSession */,
+				77D431AF6F355A270F319ADEE6C8C435 /* Outputs */,
+				DA0C0CF0936EA5F2A132B0D6080F5045 /* PixelBuffer */,
+				C18F17C99B0C35DC0023AB6F0061825F /* Protocols */,
+				5966A5A5DE32215C18866A2698E8AC48 /* Recordable */,
+				CC85019FA017CEE1D58EEC9DAF095989 /* RecordableLayer */,
+				D677C66A55D9BF193B973918E95D98C7 /* Recorder */,
+				9AEF2DDC67DF839266289EED0A3AECC4 /* SelfRecordable */,
 			);
 			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		F363DFD23658738161CDFF184720EB96 /* VideoOutput */ = {
+		F72A2DD94EBDBE393E819DF56A20C3EC /* Multithreading */ = {
 			isa = PBXGroup;
 			children = (
-				FC1FF14C8811C79B81685359F2B7CB20 /* VideoOutput.swift */,
-				45C31AE7D46D8F9DD3AC445003D8AA59 /* VideoOutput.Error.swift */,
-				EBA50A833D8419E591152DA57B1EC736 /* VideoOutput.State.swift */,
+				1E04C6125740A538B828F8C4B950A484 /* Atomic.swift */,
+				2F85E52F10865BEEAA4F772FDCF2B74A /* GCD */,
+				3264EB1EFE1B6C866E6BEFD63FA229A7 /* ReadWrite */,
+				498A6A5F8D07C2C66C87F827C390D405 /* Unfair */,
 			);
-			name = VideoOutput;
-			path = VideoOutput;
+			name = Multithreading;
+			path = Multithreading;
 			sourceTree = "<group>";
 		};
-		FA1D96F6DA3E729537B1913E3ECB5FA6 /* SelfRecordable */ = {
+		FDD6DA42CB50CB4AEA5C9E24F87AAFC8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				440A46EA14C73C68EEB219DE1F07E00A /* SelfCleanRecordable.swift */,
-				7F6D25C2F5C9989E877C2DEF6D9BF413 /* SelfRecordable.swift */,
-				0956CF9ED6B9BD5AAA7F8FBCB2984982 /* SelfSceneRecordable.swift */,
-				539FFEC34FDA080410ADE3A96C46A139 /* Extensions */,
+				9D1438BEE1566A9D506719D304ECEAB3 /* ARSCNView+CleanRecordable.swift */,
+				83D7F5EA8F8563E5A1AC36E36A36B63C /* SCNView+APIRecordable.swift */,
 			);
-			name = SelfRecordable;
-			path = SelfRecordable;
-			sourceTree = "<group>";
-		};
-		FB874BA54668649192B345097BEC1B38 /* ReadWrite */ = {
-			isa = PBXGroup;
-			children = (
-				2A7D66947E5675E74E180F71F94BD659 /* ReadWriteAtomic.swift */,
-				0A80892F5C4F4DC7F7E3139F50C1A94D /* ReadWriteLock.swift */,
-			);
-			name = ReadWrite;
-			path = ReadWrite;
+			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		39DA5B00D77AAB8894935905F9869596 /* Headers */ = {
+		33CF6BF49F6D3DA15732E3C16ED4C074 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E90919E44D2B9CAF09DD0690E3406FF /* SCNRecorder.h in Headers */,
-				30DBF800F3A289669CE4B6953313D500 /* SCNRecorderMulticastDelegate.h in Headers */,
-				499A3062DF6462930CD562E495EB48DD /* SCNRecorderOriginMulticastDelegate.h in Headers */,
+				A33EE3AD2CA664069F7B5EFD14D003C6 /* SCNRecorder.h in Headers */,
+				52C5E5AE983CBD3F2535C71B59387112 /* SCNRecorderMulticastDelegate.h in Headers */,
+				76FD6C032DD459BBAAB609E18CBAA32E /* SCNRecorderOriginMulticastDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,7 +663,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E22C92746633BF853E13535FA974C00A /* PBXTargetDependency */,
+				E7132B4FEA298DFE240D076A51C10262 /* PBXTargetDependency */,
 			);
 			name = "Pods-Example";
 			productName = "Pods-Example";
@@ -669,12 +672,12 @@
 		};
 		51BCF70A44F955B4404D7F39BF2F245D /* SCNRecorder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0BFC25F5C391854AEAE9DFCC3CF89A75 /* Build configuration list for PBXNativeTarget "SCNRecorder" */;
+			buildConfigurationList = 89D8A776BB68BE3F6CA936073FEA6ED1 /* Build configuration list for PBXNativeTarget "SCNRecorder" */;
 			buildPhases = (
-				39DA5B00D77AAB8894935905F9869596 /* Headers */,
-				4EA55E211EAA5A8DC1112CB1181A62DB /* Sources */,
-				D6F926B2FA1DE6E5E10D62235154152D /* Frameworks */,
-				644D63474C285F236524313F5B21C93D /* Resources */,
+				33CF6BF49F6D3DA15732E3C16ED4C074 /* Headers */,
+				D8C22DB32598106A3EBB9BD4ABCF6617 /* Sources */,
+				AB7DEF33A5935874EB4A6FDE15290898 /* Frameworks */,
+				2B4ED7F516A000DB9C0F852C6F5B6080 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -714,7 +717,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		644D63474C285F236524313F5B21C93D /* Resources */ = {
+		2B4ED7F516A000DB9C0F852C6F5B6080 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -739,98 +742,99 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EA55E211EAA5A8DC1112CB1181A62DB /* Sources */ = {
+		D8C22DB32598106A3EBB9BD4ABCF6617 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				893AAFC39202DE42BF1956BB019EF0C0 /* API.swift in Sources */,
-				76247C861EAF6350E39E0338937F3BB9 /* APIRecordable.swift in Sources */,
-				A56CDB15D1EB104EE2811F17CC61227F /* ARSCNView+CleanRecordable.swift in Sources */,
-				B36DD9720E57D0F1C1CC415D556165AB /* ARSCNView+SelfCleanRecordable.swift in Sources */,
-				02F0E111FC8A98BC4BC9C2D721EC0F49 /* AssociatedStorage.swift in Sources */,
-				B5BD8F9909463DD4465CD267FB924513 /* Atomic.swift in Sources */,
-				13A8EDDF297DAC351AF04C1406EB1D43 /* AudioAdapter.swift in Sources */,
-				7340F1AE29C83B251B5498C1DC923E2E /* AudioSettings.swift in Sources */,
-				CA34FFFF228F8F8DD863092552A04EC2 /* AVCaptureSession+BaseRecorder.swift in Sources */,
-				4D6A7CE2A101D5231EBD79BFA45E728B /* AVFileType+FilenameExtension.swift in Sources */,
-				D5C9B925B00464CFC175ED96E1C81C86 /* BaseRecorder.AudioInput.swift in Sources */,
-				BBE585F4E9B5BA1E18FF959008F8907F /* BaseRecorder.swift in Sources */,
-				0A59A9AAF71ECCDAF75CDB190AEDEE23 /* Buffer.swift in Sources */,
-				248218694BEECE45E6808949F6A0BA50 /* CAMetalLayer+RecordableLayer.swift in Sources */,
-				AAE7462A1B6C639DE84C22D2A37058FB /* CIContext+Render.swift in Sources */,
-				0FA2AD1107619AEBB2124CCB9E59A5B7 /* CIFilter+Helpers.swift in Sources */,
-				CB99B1C9D1990DB8416858B014D455DB /* CleanRecordable.swift in Sources */,
-				8AB216CD31657DBF02E709B1127BA692 /* CleanRecorder.swift in Sources */,
-				1515A96256AEDB9A2C6469167DE43347 /* CleanRecorder.VideoInput.swift in Sources */,
-				97B400059D1684EC1C6C39E669DBD913 /* CompositeFilter.swift in Sources */,
-				122B2F491182469F427E61353EE7604A /* CVPixelBuffer+Helpers.swift in Sources */,
-				F1153D507382A3AA21CC8ED3D4CF4EA9 /* CVPixelBufferPool+Factory.swift in Sources */,
-				E82123EE7372156D999E60E24C9A5753 /* EAGLPixelBufferProducer.swift in Sources */,
-				03A76DA1C82BDF27E97166CA74D1A919 /* EAGLRecordable.swift in Sources */,
-				0B05CFE3F4ED3372B1524349603600DA /* Filter.swift in Sources */,
-				F9FABFAEEE10C6093837528D483A27A5 /* GCDAtomic.swift in Sources */,
-				D828E1FCF58CB66CEFC8E756F9CCBBF6 /* GeometryFilter.swift in Sources */,
-				C71A476339ED4C0EFC115AD3785E824F /* ImageOutput.swift in Sources */,
-				AAB16949D900C45C0628DB8B44783417 /* MediaSession.swift in Sources */,
-				A370E26FC67AAEC55FF2B4445287AD5A /* MediaSessionInput.swift in Sources */,
-				BF04E0FDCEAE3C1CAAC88ACEE293A98B /* MediaSessionOutput.swift in Sources */,
-				A5249331DE1AEE74FFD7E1C193708F61 /* MetalPixelBufferProducer.swift in Sources */,
-				47D3CEFB9B9BF98A293659FEA37FB240 /* MetalRecordable.swift in Sources */,
-				BD26E1DEE2744E8125B5AE344108DD58 /* MTLPixelFormat+Helpers.swift in Sources */,
-				C7A452ED27464BCE0F6F33EEA364EAF9 /* Observable.swift in Sources */,
-				AB96F56A3762F5388A8B4883F8DEA2D5 /* PixelBufferPoolFactory.swift in Sources */,
-				9CD4DDCBAC26B0FBE0280E0EBE0575E8 /* PixelBufferProducer.swift in Sources */,
-				2581E319FF0117581EB236BEE317F605 /* Property.swift in Sources */,
-				F5F52268C9E13BC535AB36E263575633 /* ReadWriteAtomic.swift in Sources */,
-				FE7C28771328D0729D2FB47F71E0A7CD /* ReadWriteLock.swift in Sources */,
-				D444766EC266EB28466BB9E175BB2576 /* RecordableLayer.swift in Sources */,
-				E244224E8DAA9EDDB4AC84251278EF19 /* Renderable.swift in Sources */,
-				A0798052826394A243836873C437BFEA /* SceneRecorder.swift in Sources */,
-				7DAB950FB8DF34702BA934A6377B4EB8 /* SceneRecorder.VideoInput.swift in Sources */,
-				0487C29EB7CDB46A0F410429123F0C70 /* SCNRecorder-dummy.m in Sources */,
-				5A9690C297DB3CB501A677B4402079B3 /* SCNRecorderMulticastDelegate.m in Sources */,
-				70F57333E03160920DED75A70D29E3ED /* SCNRecorderOriginMulticastDelegate.m in Sources */,
-				D49C0EE15EC41E8437658C42A2EBEB06 /* SCNView+APIRecordable.swift in Sources */,
-				FAAC103057B6B3019857B5D4ABB05EBE /* SCNView+MulticastDelegate.swift in Sources */,
-				D23C0D4942633BDCF0B45E900F54720F /* SCNView+SelfSceneRecordable.swift in Sources */,
-				2F4F2B1FA8C6B1A54E48ED0553482E67 /* SelfCleanRecordable.swift in Sources */,
-				CCFB05D71F31CE7BE5B7E2B9CAD54E22 /* SelfRecordable.swift in Sources */,
-				5BB13EFA69B3546644E671A5522E3F8A /* SelfSceneRecordable.swift in Sources */,
-				FF47DDDBE794035D6148B2480B9BC156 /* SwappingFilter.swift in Sources */,
-				131452002863148E349F3958DBA436C4 /* TimeScalable.swift in Sources */,
-				D7357C2FC7010F73E158426D273C11BF /* UnfairAtomic.swift in Sources */,
-				7688A35E735661CC342073DF25249304 /* UnfairLock.swift in Sources */,
-				3E596ADC427EF8D190CAB840D9128216 /* VideoOutput.Error.swift in Sources */,
-				ADFB4A0A8FF311D8BBC98FBD02D5C4CE /* VideoOutput.State.swift in Sources */,
-				4293B0779A39DAD492B26388D8092E78 /* VideoOutput.swift in Sources */,
-				A7A4CD292BB4766BE5C7DD728F8A9296 /* VideoRecording.Info.swift in Sources */,
-				BE1E2009706F390662D7C4FD4205C627 /* VideoRecording.State.swift in Sources */,
-				D73C7C6E02B54D80909E8C008CFA53E1 /* VideoRecording.swift in Sources */,
-				67A1A9D5D87E08DDAA23B7714C69E957 /* VideoSettings.Codec.swift in Sources */,
-				C5CE902EEDF6B48A864ACE8246A2A81C /* VideoSettings.FileType.swift in Sources */,
-				1AEC424F31E7E696DE575AEF4CCDE6E6 /* VideoSettings.ScalingMode.swift in Sources */,
-				BB3DA53E86A4D9847B8C2F558C4516F9 /* VideoSettings.swift in Sources */,
-				42BCE2F184436604A2CEEC23D3FFA5F2 /* WatermarkFilter.swift in Sources */,
-				0BF5A23A3FA9270E6D5FF5CCA4012F5A /* Weak.swift in Sources */,
-				257E0A81BD48F688B59815C49087F261 /* WeakCollection.swift in Sources */,
+				6D3169B1ECF979EAA15ABFCBE9C1D84D /* API.swift in Sources */,
+				C5704348A92633CA7E836415F830C991 /* APIRecordable.swift in Sources */,
+				AA92CAE717691E9C7310361215CA497D /* ARSCNView+CleanRecordable.swift in Sources */,
+				219AFAABF1872CFDD9260538E586D79E /* ARSCNView+SelfCleanRecordable.swift in Sources */,
+				30247EAF7138F4D69D877710621A624B /* AssociatedStorage.swift in Sources */,
+				A1C4574FB4A0D4563EFC7BADBDF4C767 /* Atomic.swift in Sources */,
+				8A294F6ECA8350569868215BD7B880D9 /* AudioAdapter.swift in Sources */,
+				A6D0413412FC9336DCC39B8731EF4B06 /* AudioSettings.swift in Sources */,
+				29BE3D46C727FFF5AC492BA91323A29C /* AVCaptureSession+BaseRecorder.swift in Sources */,
+				DC57E5BAC9213B8DF07F004C2C966407 /* AVFileType+FilenameExtension.swift in Sources */,
+				B51C8866A4A327A5EFF5486336B9641C /* BaseRecorder.AudioInput.swift in Sources */,
+				D71FDAB21E5DA03189A411736431C3FA /* BaseRecorder.swift in Sources */,
+				2858A1709D10DDB785601708E38EE40F /* Buffer.swift in Sources */,
+				782F73E72B4AE0960AD05FAB2458E30C /* CAMetalLayer+RecordableLayer.swift in Sources */,
+				58CC1F10E1456942ABE0762BE1942248 /* CIContext+Render.swift in Sources */,
+				C337840B790F621606B1DEBC8D182622 /* CIFilter+Helpers.swift in Sources */,
+				4951B804F155BCC79632948EDFE0B338 /* CleanRecordable.swift in Sources */,
+				D6361DF444BF04B28D3F0D5B75D2617D /* CleanRecorder.swift in Sources */,
+				4522F09395219C77DA64AB2FE44F3A05 /* CleanRecorder.VideoInput.swift in Sources */,
+				FC175F626DD2C7C6A06855D7720FC74F /* CompositeFilter.swift in Sources */,
+				FF1C5E60E5BBC27BF5F9D55FE5BC1D45 /* CVPixelBuffer+Helpers.swift in Sources */,
+				191F6D4EA3816C8B2568B52FCDD64569 /* CVPixelBufferPool+Factory.swift in Sources */,
+				70A217E8F2A12A7D8780D516EB3AF262 /* EAGLPixelBufferProducer.swift in Sources */,
+				52E254569CDBE367A63DB253467B3296 /* EAGLRecordable.swift in Sources */,
+				AEA6972C06C3AF90332091CD5F66690D /* Filter.swift in Sources */,
+				070B8199B0FA5B1606E04A3EB7389980 /* GCDAtomic.swift in Sources */,
+				AC6F7C8969C42485559C8D942DF2F5A5 /* GeometryFilter.swift in Sources */,
+				A493AD11FA488A90F97B35198323A236 /* ImageOutput.swift in Sources */,
+				EE38E7BF30CB28066D9E3407E28338BE /* MediaSession.swift in Sources */,
+				6F6CF6FE8A5C2131A88C4D86A9CEDEDF /* MediaSessionInput.swift in Sources */,
+				CA190820BAB7C66D6F0BFFE5852C80D3 /* MediaSessionOutput.swift in Sources */,
+				4DA0671617BE803BC5F85B1FEDB4D0D1 /* MetalPixelBufferProducer.swift in Sources */,
+				94417AD5BCDB32556CB0F009FB0C29E6 /* MetalRecordable.swift in Sources */,
+				71B89031D5A72F10BCDAF6D18C4B3EEF /* MTLPixelFormat+Helpers.swift in Sources */,
+				CADA5BD75EF47846C2561C5DEF42712B /* Observable.swift in Sources */,
+				AAB3EC094EA25D09FB4744E6BF4824FE /* PixelBufferOutput.swift in Sources */,
+				F44C3B931ED4ED298EF343D5EE05323D /* PixelBufferPoolFactory.swift in Sources */,
+				670B92A65FD7643FA9C3425ABCAD8322 /* PixelBufferProducer.swift in Sources */,
+				8FE0125DA7A7AFB7D3A5DEAB124D4AF0 /* Property.swift in Sources */,
+				A927050AA82E7449D8CCA32039DA1352 /* ReadWriteAtomic.swift in Sources */,
+				7F06C87CA3659BAC4EA7F435F1DF18B5 /* ReadWriteLock.swift in Sources */,
+				77279CFBF070CB84F028FCB9145C1D9E /* RecordableLayer.swift in Sources */,
+				DE1E24108C66B4148DA839233C30A1F3 /* Renderable.swift in Sources */,
+				53FF42E68A9B7DFA112F5F320D38BADF /* SceneRecorder.swift in Sources */,
+				440D394B59694266C13E3F7767283AF2 /* SceneRecorder.VideoInput.swift in Sources */,
+				C647C1595DB222CA38F4BCC42228D673 /* SCNRecorder-dummy.m in Sources */,
+				F5C2F0F202C1FBF9B19CE5DED5C11330 /* SCNRecorderMulticastDelegate.m in Sources */,
+				52AA2A6565EE9D61C95C55DA9FEA4512 /* SCNRecorderOriginMulticastDelegate.m in Sources */,
+				20FA14E7C7AE3F8B0FCFD65CFF8EE42C /* SCNView+APIRecordable.swift in Sources */,
+				E468EE8D5F5BB0A34BC4A5073D44C748 /* SCNView+MulticastDelegate.swift in Sources */,
+				4BDF12F41259999A0E2E7FF331D8D566 /* SCNView+SelfSceneRecordable.swift in Sources */,
+				192EC4DBDD8A4FD40417F3762D96F688 /* SelfCleanRecordable.swift in Sources */,
+				E988A3875FFF101BCCB0150E14CBE000 /* SelfRecordable.swift in Sources */,
+				14639842A2E98050883887324C700610 /* SelfSceneRecordable.swift in Sources */,
+				7E522F0B40750D701684A79B00E74EC6 /* SwappingFilter.swift in Sources */,
+				B57A447D3992F6C7F9F515890795083C /* TimeScalable.swift in Sources */,
+				CE3B540013DCEE762457FBA573E81295 /* UnfairAtomic.swift in Sources */,
+				20FECC01E4C550EEFCCC3EFEA0C63432 /* UnfairLock.swift in Sources */,
+				985C3AD3CCDD6921147BB00B1EBFADC9 /* VideoOutput.Error.swift in Sources */,
+				FD2E1DB8DD4A8D2EE713C5E9312F2038 /* VideoOutput.State.swift in Sources */,
+				364FB2ED8567BB22936DB721F1F79B67 /* VideoOutput.swift in Sources */,
+				BE8C613F34EA1E2FBD70CBD5EBE712FB /* VideoRecording.Info.swift in Sources */,
+				613EA1436885465B6783A812C8E7EE21 /* VideoRecording.State.swift in Sources */,
+				327413F28A620F9FF346A40647058430 /* VideoRecording.swift in Sources */,
+				7B9EB0A52F4099FD6BA25C5BC33DFEC9 /* VideoSettings.Codec.swift in Sources */,
+				72A04E1F93A8C24CF5DDFAB7A164A482 /* VideoSettings.FileType.swift in Sources */,
+				64AF52376CFFA873F2684D7F0743ED7C /* VideoSettings.ScalingMode.swift in Sources */,
+				097DBB4472F29B1887109F8DB1EC0B9D /* VideoSettings.swift in Sources */,
+				E324BFEF733E34EECDF1F52491990A8F /* WatermarkFilter.swift in Sources */,
+				CEF9C457085578E0A2DF53332CE20CD9 /* Weak.swift in Sources */,
+				C64F303F153341E698F293A77253F554 /* WeakCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E22C92746633BF853E13535FA974C00A /* PBXTargetDependency */ = {
+		E7132B4FEA298DFE240D076A51C10262 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SCNRecorder;
 			target = 51BCF70A44F955B4404D7F39BF2F245D /* SCNRecorder */;
-			targetProxy = E3B9EDC015FEE3FE883737160E6B56E5 /* PBXContainerItemProxy */;
+			targetProxy = F9059244E6CB76416A66F4805F862756 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		27294C81CCCC434F05CFF28BB2D83406 /* Debug */ = {
+		1E915A881A5CD54D19D7198F9F32690A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7124A8AF029512FDEB37693670093D95 /* SCNRecorder.debug.xcconfig */;
+			baseConfigurationReference = 2E283D0631DF6C672F55A7E10DD918B2 /* SCNRecorder.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -858,10 +862,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 		2B9E26EAE2CD392AD762421F663075A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -926,6 +931,41 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		3593B8498AF1B970AC9087EACD948EC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7124A8AF029512FDEB37693670093D95 /* SCNRecorder.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SCNRecorder/SCNRecorder-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SCNRecorder/SCNRecorder-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SCNRecorder/SCNRecorder.modulemap";
+				PRODUCT_MODULE_NAME = SCNRecorder;
+				PRODUCT_NAME = SCNRecorder;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -1066,54 +1106,9 @@
 			};
 			name = Debug;
 		};
-		C7F3708EF4B3B36B61B432A7EEF85773 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E283D0631DF6C672F55A7E10DD918B2 /* SCNRecorder.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SCNRecorder/SCNRecorder-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SCNRecorder/SCNRecorder-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/SCNRecorder/SCNRecorder.modulemap";
-				PRODUCT_MODULE_NAME = SCNRecorder;
-				PRODUCT_NAME = SCNRecorder;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0BFC25F5C391854AEAE9DFCC3CF89A75 /* Build configuration list for PBXNativeTarget "SCNRecorder" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				27294C81CCCC434F05CFF28BB2D83406 /* Debug */,
-				C7F3708EF4B3B36B61B432A7EEF85773 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		1F512CEC17A051D8C0115E4E54A12BE9 /* Build configuration list for PBXNativeTarget "Pods-Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1128,6 +1123,15 @@
 			buildConfigurations = (
 				2B9E26EAE2CD392AD762421F663075A1 /* Debug */,
 				63FAF33E1C55B71A5F5A8B3CC8749F99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89D8A776BB68BE3F6CA936073FEA6ED1 /* Build configuration list for PBXNativeTarget "SCNRecorder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3593B8498AF1B970AC9087EACD948EC5 /* Debug */,
+				1E915A881A5CD54D19D7198F9F32690A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

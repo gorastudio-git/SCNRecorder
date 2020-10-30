@@ -80,6 +80,15 @@ public extension SelfRecordable {
     try startVideoRecording(videoSettings: VideoSettings(fileType: fileType, size: size))
   }
 
+  func capturePixelBuffers(
+    handler: @escaping (CVPixelBuffer, CMTime) -> Void
+  ) throws -> PixelBufferOutput {
+    prepareForRecording()
+
+    guard let recorder = recorder else { throw SelfRecordableError.recorderNotInjected }
+    return recorder.capturePixelBuffers(handler: handler)
+  }
+
   @discardableResult
   func startVideoRecording(
     to url: URL,
