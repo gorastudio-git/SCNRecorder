@@ -55,7 +55,8 @@ class ViewController: UIViewController {
     sceneView.scene = scene
     sceneView.rendersContinuously = true
 
-    // It is recommended to prepare the view for recording at viewDidLoad
+    // You must call prepareForRecording() before capturing something using SCNRecorder
+    // It is recommended to do that at viewDidLoad
     sceneView.prepareForRecording()
   }
 
