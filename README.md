@@ -121,7 +121,7 @@ override func viewDidLoad() {
 }
 ```
 
-#### RealityKit
+### RealityKit
 
 To support recording RealityKit content copy [ARView+MetalRecordable.swift](Example/Source/RealityKit/ARView+MetalRecordable.swift) and [ARView+SelfSceneRecordable.swift](Example/Source/RealityKit/ARView+SelfSceneRecordable.swift) files to your project.
 Then look at [ARViewController.swift](Example/Source/RealityKit/ARViewController.swift) for usage.
