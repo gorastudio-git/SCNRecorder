@@ -40,7 +40,8 @@ Import the SCNRecorder module.
 import SCNRecorder
 ```
 
-At `viewDidLoad` it is recomended to prepare a `sceneView` for recording.
+You must call `sceneView.prepareForRecording()` before capturing something using SCNRecorder.
+It is recommended to do that at `viewDidLoad`.
 
 ```swift
 @IBOutlet var sceneView: SCNView!
@@ -69,7 +70,7 @@ sceneView.finishVideoRecording { (videoRecording) in
 To capture an image it is enough to call:
 
 ```swift
-try sceneView.takePhoto { (photo) in
+sceneView.takePhoto { (photo) in
   /* Your photo is now here. Main thread. */
 }
 ```

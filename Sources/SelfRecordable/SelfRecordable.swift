@@ -36,13 +36,32 @@ public enum SelfRecordableError: Swift.Error {
 
 public protocol SelfRecordable: AnyObject {
 
-  var recorder: (BaseRecorder & Renderable)? { get }
+  typealias Recorder = (BaseRecorder & Renderable)
+
+  var recorder: Recorder? { get }
 
   var videoRecording: VideoRecording? { get set }
 
   func prepareForRecording()
 
   func injectRecorder()
+}
+
+extension SelfRecordable {
+
+  func assertedRecorder(
+    file: StaticString = #file,
+    line: UInt = #line,
+    function: StaticString = #function
+  ) -> Recorder {
+    assert(
+      recorder != nil,
+      "prepareForRecording() must be called before \(function)",
+      file: file,
+      line: line
+    )
+    return recorder!
+  }
 }
 
 public extension SelfRecordable {
@@ -82,11 +101,8 @@ public extension SelfRecordable {
 
   func capturePixelBuffers(
     handler: @escaping (CVPixelBuffer, CMTime) -> Void
-  ) throws -> PixelBufferOutput {
-    prepareForRecording()
-
-    guard let recorder = recorder else { throw SelfRecordableError.recorderNotInjected }
-    return recorder.capturePixelBuffers(handler: handler)
+  ) -> PixelBufferOutput {
+    assertedRecorder().capturePixelBuffers(handler: handler)
   }
 
   @discardableResult
@@ -121,10 +137,7 @@ public extension SelfRecordable {
   ) throws -> VideoRecording {
     guard videoRecording == nil else { throw SelfRecordableError.videoRecordingAlreadyStarted }
 
-    prepareForRecording()
-    guard let recorder = recorder else { throw SelfRecordableError.recorderNotInjected }
-
-    let videoRecording = try recorder.makeVideoRecording(
+    let videoRecording = try assertedRecorder().makeVideoRecording(
       to: url,
       videoSettings: videoSettings,
       audioSettings: audioSettings
@@ -151,9 +164,8 @@ public extension SelfRecordable {
     scale: CGFloat = UIScreen.main.scale,
     orientation: UIImage.Orientation = .up,
     completionHandler handler: @escaping (UIImage) -> Void
-  ) throws {
-    prepareForRecording()
-    recorder?.takePhoto(scale: scale, orientation: orientation) { photo in
+  ) {
+    assertedRecorder().takePhoto(scale: scale, orientation: orientation) { photo in
       DispatchQueue.main.async { handler(photo) }
     }
   }

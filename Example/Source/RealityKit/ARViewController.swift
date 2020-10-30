@@ -55,7 +55,8 @@ class ARViewController: UIViewController {
     }
     catch { }
 
-    // It is recommended to prepare the view for recording at viewDidLoad
+    // You must call prepareForRecording() before capturing something using SCNRecorder
+    // It is recommended to do that at viewDidLoad
     sceneView.prepareForRecording()
   }
 
@@ -73,23 +74,20 @@ class ARViewController: UIViewController {
   }
 
   @IBAction func takePhoto(_ sender: UIButton) {
-    do {
-      // A fastest way to capture photo
-      try sceneView.takePhoto { (photo) in
-        // Create and present photo preview controller
-        let controller = PhotoPreviewController(photo: photo)
-        self.navigationController?.pushViewController(controller, animated: true)
+    // A fastest way to capture photo
+    sceneView.takePhoto { (photo) in
+      // Create and present photo preview controller
+      let controller = PhotoPreviewController(photo: photo)
+      self.navigationController?.pushViewController(controller, animated: true)
 
-        // Enable buttons
-        self.photoButton.isEnabled = true
-        self.videoButton.isEnabled = true
-      }
-
-      // Disable buttons for a while
-      photoButton.isEnabled = false
-      videoButton.isEnabled = false
+      // Enable buttons
+      self.photoButton.isEnabled = true
+      self.videoButton.isEnabled = true
     }
-    catch { print("Something went wrong during photo-capture preparation: \(error)") }
+
+    // Disable buttons for a while
+    photoButton.isEnabled = false
+    videoButton.isEnabled = false
   }
 
   @IBAction func startVideoRecording() {
