@@ -1,5 +1,5 @@
 PODS:
-  - SCNRecorder (2.1.1)
+  - SCNRecorder (2.1.2)
 
 DEPENDENCIES:
   - SCNRecorder (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SCNRecorder: 2adef262e4c51f1d5b0b353fa143dfb549db4139
+  SCNRecorder: 8fb988232b1ba508d36e64d743960ec259d67a35
 
 PODFILE CHECKSUM: e392a018caa1209a22fbb64a189d92975244c2bf
 

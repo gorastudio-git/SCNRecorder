@@ -77,10 +77,8 @@
 		D5B9241E2510CC9C00D35585 /* EAGLPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923D42510CC9B00D35585 /* EAGLPixelBufferProducer.swift */; };
 		D5B9241F2510CC9C00D35585 /* MetalPixelBufferProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923D52510CC9B00D35585 /* MetalPixelBufferProducer.swift */; };
 		D5B924202510CC9C00D35585 /* PixelBufferPoolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923D72510CC9B00D35585 /* PixelBufferPoolFactory.swift */; };
-		D5B924212510CC9C00D35585 /* SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923D92510CC9B00D35585 /* SelfCleanRecordable.swift */; };
 		D5B924222510CC9C00D35585 /* SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DA2510CC9B00D35585 /* SelfSceneRecordable.swift */; };
 		D5B924232510CC9C00D35585 /* SelfRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DB2510CC9B00D35585 /* SelfRecordable.swift */; };
-		D5B924242510CC9C00D35585 /* ARSCNView+SelfCleanRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DD2510CC9B00D35585 /* ARSCNView+SelfCleanRecordable.swift */; };
 		D5B924252510CC9C00D35585 /* SCNView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B923DE2510CC9B00D35585 /* SCNView+SelfSceneRecordable.swift */; };
 		FB81FF2E251B7885001C129F /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = FB81FF2D251B7885001C129F /* LICENSE.md */; };
 /* End PBXBuildFile section */
@@ -158,10 +156,8 @@
 		D5B923D42510CC9B00D35585 /* EAGLPixelBufferProducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EAGLPixelBufferProducer.swift; sourceTree = "<group>"; };
 		D5B923D52510CC9B00D35585 /* MetalPixelBufferProducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalPixelBufferProducer.swift; sourceTree = "<group>"; };
 		D5B923D72510CC9B00D35585 /* PixelBufferPoolFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelBufferPoolFactory.swift; sourceTree = "<group>"; };
-		D5B923D92510CC9B00D35585 /* SelfCleanRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfCleanRecordable.swift; sourceTree = "<group>"; };
 		D5B923DA2510CC9B00D35585 /* SelfSceneRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfSceneRecordable.swift; sourceTree = "<group>"; };
 		D5B923DB2510CC9B00D35585 /* SelfRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfRecordable.swift; sourceTree = "<group>"; };
-		D5B923DD2510CC9B00D35585 /* ARSCNView+SelfCleanRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARSCNView+SelfCleanRecordable.swift"; sourceTree = "<group>"; };
 		D5B923DE2510CC9B00D35585 /* SCNView+SelfSceneRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNView+SelfSceneRecordable.swift"; sourceTree = "<group>"; };
 		D5B924262510CCE000D35585 /* SCNRecorder.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = SCNRecorder.modulemap; sourceTree = "<group>"; };
 		FB81FF2D251B7885001C129F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
@@ -434,22 +430,11 @@
 			children = (
 				D5B923C52510CC9B00D35585 /* EAGLRecordable.swift */,
 				D5B923C62510CC9B00D35585 /* CleanRecordable.swift */,
-				D5B923C72510CC9B00D35585 /* RecordingSource */,
-				D5B923C82510CC9B00D35585 /* Extensions */,
-				D5B923CB2510CC9B00D35585 /* Clean */,
-				D5B923CC2510CC9B00D35585 /* Layer */,
-				D5B923CD2510CC9B00D35585 /* SceneRecordable */,
 				D5B923CE2510CC9B00D35585 /* APIRecordable.swift */,
 				D5B923CF2510CC9B00D35585 /* MetalRecordable.swift */,
+				D5B923C82510CC9B00D35585 /* Extensions */,
 			);
 			path = Recordable;
-			sourceTree = "<group>";
-		};
-		D5B923C72510CC9B00D35585 /* RecordingSource */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RecordingSource;
 			sourceTree = "<group>";
 		};
 		D5B923C82510CC9B00D35585 /* Extensions */ = {
@@ -459,27 +444,6 @@
 				D5B923CA2510CC9B00D35585 /* ARSCNView+CleanRecordable.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		D5B923CB2510CC9B00D35585 /* Clean */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Clean;
-			sourceTree = "<group>";
-		};
-		D5B923CC2510CC9B00D35585 /* Layer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Layer;
-			sourceTree = "<group>";
-		};
-		D5B923CD2510CC9B00D35585 /* SceneRecordable */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SceneRecordable;
 			sourceTree = "<group>";
 		};
 		D5B923D12510CC9B00D35585 /* PixelBuffer */ = {
@@ -512,7 +476,6 @@
 		D5B923D82510CC9B00D35585 /* SelfRecordable */ = {
 			isa = PBXGroup;
 			children = (
-				D5B923D92510CC9B00D35585 /* SelfCleanRecordable.swift */,
 				D5B923DA2510CC9B00D35585 /* SelfSceneRecordable.swift */,
 				D5B923DB2510CC9B00D35585 /* SelfRecordable.swift */,
 				D5B923DC2510CC9B00D35585 /* Extensions */,
@@ -523,7 +486,6 @@
 		D5B923DC2510CC9B00D35585 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D5B923DD2510CC9B00D35585 /* ARSCNView+SelfCleanRecordable.swift */,
 				D5B923DE2510CC9B00D35585 /* SCNView+SelfSceneRecordable.swift */,
 			);
 			path = Extensions;
@@ -649,7 +611,6 @@
 				D5B924162510CC9C00D35585 /* EAGLRecordable.swift in Sources */,
 				D5B924022510CC9C00D35585 /* CAMetalLayer+RecordableLayer.swift in Sources */,
 				D5B923E92510CC9C00D35585 /* VideoOutput.State.swift in Sources */,
-				D5B924242510CC9C00D35585 /* ARSCNView+SelfCleanRecordable.swift in Sources */,
 				D5B923DF2510CC9B00D35585 /* MTLPixelFormat+Helpers.swift in Sources */,
 				D5B923FF2510CC9C00D35585 /* SCNRecorderOriginMulticastDelegate.m in Sources */,
 				D5B923F92510CC9C00D35585 /* AssociatedStorage.swift in Sources */,
@@ -683,7 +644,6 @@
 				D5B9240F2510CC9C00D35585 /* SwappingFilter.swift in Sources */,
 				D5B923F52510CC9C00D35585 /* ReadWriteLock.swift in Sources */,
 				D5B924152510CC9C00D35585 /* VideoRecording.swift in Sources */,
-				D5B924212510CC9C00D35585 /* SelfCleanRecordable.swift in Sources */,
 				D5B923FE2510CC9C00D35585 /* SCNRecorderMulticastDelegate.m in Sources */,
 				D5B923E02510CC9C00D35585 /* CIContext+Render.swift in Sources */,
 				D5B923EC2510CC9C00D35585 /* MediaSessionOutput.swift in Sources */,
@@ -860,7 +820,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MODULEMAP_FILE = SCNRecorder.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = gora.studio.SCNRecorder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -888,7 +848,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MODULEMAP_FILE = SCNRecorder.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = gora.studio.SCNRecorder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
