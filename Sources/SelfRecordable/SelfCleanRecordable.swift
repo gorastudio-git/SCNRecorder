@@ -30,13 +30,13 @@ private var cleanKey: UInt8 = 0
 
 public protocol SelfCleanRecordable: SelfRecordable, CleanRecordable { }
 
-extension SelfCleanRecordable {
+public extension SelfCleanRecordable {
 
-  var cleanStorage: AssociatedStorage<Clean<Self>> {
+  internal var cleanStorage: AssociatedStorage<Clean<Self>> {
     AssociatedStorage(object: self, key: &cleanKey, policy: .OBJC_ASSOCIATION_RETAIN)
   }
 
-  var _clean: Clean<Self> {
+  internal var _clean: Clean<Self> {
     get {
       cleanStorage.get() ?? {
         let clean = Clean(cleanRecordable: self)
@@ -47,7 +47,7 @@ extension SelfCleanRecordable {
     set { cleanStorage.set(newValue) }
   }
 
-  public var clean: SelfRecordable { _clean }
+  var clean: SelfRecordable { _clean }
 }
 
 final class Clean<T: CleanRecordable>: SelfRecordable {
