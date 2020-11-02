@@ -189,8 +189,11 @@ extension MediaSession {
   }
 
   func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
+    guard let videoInput = videoInput else { return }
+
     addVideoOutput(
       ImageOutput.takeCIImage(
+        context: videoInput.context,
         completionHandler: { [weak self] in
           self?.removeVideoOutput($0)
           handler($1)

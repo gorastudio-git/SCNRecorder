@@ -26,6 +26,7 @@
 import Foundation
 import AVFoundation
 import UIKit
+import VideoToolbox
 
 final class ImageOutput {
 
@@ -40,20 +41,23 @@ final class ImageOutput {
     }
   }
 
+  static func takeCIImage(
+    context: CIContext,
+    completionHandler handler: @escaping (ImageOutput, CIImage) -> Void
+  ) -> ImageOutput {
+    takeCGImage(context: context) {
+      handler($0, CIImage(cgImage: $1))
+    }
+  }
+
   static func takeCGImage(
     context: CIContext,
     completionHandler handler: @escaping (ImageOutput, CGImage) -> Void
   ) -> ImageOutput {
-    takeCIImage {
-      handler($0, context.createCGImage($1, from: $1.extent)!)
-    }
-  }
-
-  static func takeCIImage(
-    completionHandler handler: @escaping (ImageOutput, CIImage) -> Void
-  ) -> ImageOutput {
     takePixelBuffer {
-      handler($0, CIImage(cvPixelBuffer: $1))
+      var image: CGImage?
+      VTCreateCGImageFromCVPixelBuffer($1, options: nil, imageOut: &image)
+      handler($0, image!)
     }
   }
 
