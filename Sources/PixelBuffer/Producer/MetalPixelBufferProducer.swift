@@ -28,13 +28,18 @@ import AVFoundation
 
 #if !targetEnvironment(simulator)
 
-final class MetalPixelBufferProducer: PixelBufferProducer {
+final class MetalPixelBufferProducer {
 
-  override var size: CGSize { recordableLayer.drawableSize }
+  enum Error: Swift.Error {
 
-  override var videoColorProperties: [String: String]? { recordableLayer.pixelFormat.videoColorProperties }
+    case noSurface
+  }
 
-  override var recommendedPixelBufferAttributes: [String: Any] {
+  var size: CGSize { recordableLayer.drawableSize }
+
+  var videoColorProperties: [String: String]? { recordableLayer.pixelFormat.videoColorProperties }
+
+  var recommendedPixelBufferAttributes: [String: Any] {
     var attributes: [String: Any] = [
       kCVPixelBufferWidthKey as String: Int(recordableLayer.drawableSize.width),
       kCVPixelBufferHeightKey as String: Int(recordableLayer.drawableSize.height),
@@ -53,30 +58,30 @@ final class MetalPixelBufferProducer: PixelBufferProducer {
 
   let recordableLayer: RecordableLayer
 
-  init(recordableLayer: RecordableLayer) {
+  let queue: DispatchQueue
+
+  lazy var context = CIContext(mtlDevice: recordableLayer.device ?? MTLCreateSystemDefaultDevice()!)
+
+  init(recordableLayer: RecordableLayer, queue: DispatchQueue) {
     self.recordableLayer = recordableLayer
-    super.init(context: CIContext(mtlDevice: recordableLayer.device ?? MTLCreateSystemDefaultDevice()!))
+    self.queue = queue
   }
 
-  override func produce() throws -> CVPixelBuffer {
-    guard let lastDrawable = recordableLayer.lastDrawable else { throw Error.lastDrawable }
-    let texture = lastDrawable.texture
+  func produce(handler: @escaping (CVPixelBuffer) -> Void) throws {
+    guard let surface = recordableLayer.lastIOSurface else { throw Error.noSurface }
 
-    guard let surface = texture.iosurface else { throw Error.noSurface }
+    queue.async { [recommendedPixelBufferAttributes] in
+      var unmanagedPixelBuffer: Unmanaged<CVPixelBuffer>?
+      CVPixelBufferCreateWithIOSurface(
+        nil,
+        surface,
+        recommendedPixelBufferAttributes as CFDictionary,
+        &unmanagedPixelBuffer
+      )
 
-    var unmanagedPixelBuffer: Unmanaged<CVPixelBuffer>?
-    CVPixelBufferCreateWithIOSurface(
-      nil,
-      surface,
-      recommendedPixelBufferAttributes as CFDictionary,
-      &unmanagedPixelBuffer
-    )
-
-    guard let pixelBuffer = unmanagedPixelBuffer?.takeUnretainedValue() else {
-      throw Error.noPixelBuffer
+      guard let pixelBuffer = unmanagedPixelBuffer?.takeUnretainedValue() else { return }
+      handler(pixelBuffer)
     }
-
-    return pixelBuffer
   }
 }
 

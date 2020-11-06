@@ -27,37 +27,5 @@ import Foundation
 
 public extension VideoRecording {
 
-  enum State: Equatable {
-
-    case ready
-
-    case preparing
-
-    case recording
-
-    case paused
-
-    case canceled
-
-    case finished
-
-    case failed(_ error: Swift.Error)
-
-    public static func == (lhs: State, rhs: State) -> Bool {
-      switch (lhs, rhs) {
-      case (.ready, .ready),
-           (.preparing, .preparing),
-           (.recording, .recording),
-           (.paused, .paused),
-           (.canceled, .canceled),
-           (.finished, .finished):
-        return true
-
-      case (.failed(let lhs as NSError), .failed(let rhs as NSError)):
-        return lhs == rhs
-
-      default: return false
-      }
-    }
-  }
+  typealias State = VideoOutputState
 }

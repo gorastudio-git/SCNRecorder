@@ -66,6 +66,6 @@ extension BaseRecorder.AudioInput: ARSessionObserver {
     _ session: ARSession,
     didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
   ) {
-    output?(audioSampleBuffer)
+    queue.async { [output] in output?(audioSampleBuffer) }
   }
 }

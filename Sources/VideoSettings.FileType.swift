@@ -79,5 +79,13 @@ extension VideoSettings.FileType {
     }
   }
 
-  var fileExtension: String { avFileType.fileExtension }
+  var fileExtension: String {
+    switch self {
+    case .mov: return "mov"
+    case .mp4: return "mp4"
+    case .m4v: return "m4v"
+    case .mobile3GPP: return "3gp"
+    case .mobile3GPP2: return "3g2"
+    }
+  }
 }

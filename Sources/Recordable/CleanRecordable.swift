@@ -81,5 +81,7 @@ final class Clean<T: CleanRecordable>: SelfRecordable {
     injectRecorder()
     assert(cleanRecorder != nil)
     (cleanRecordable as? SCNView)?.addDelegate(cleanRecorder!)
+
+    fixFirstLaunchFrameDrop()
   }
 }

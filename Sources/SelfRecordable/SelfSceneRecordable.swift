@@ -65,16 +65,6 @@ extension SelfSceneRecordable where Self: MetalRecordable {
 
 #endif // !targetEnvironment(simulator)
 
-extension SelfSceneRecordable where Self: EAGLRecordable {
-
-  public func injectRecorder() {
-    assert(sceneRecorder == nil)
-
-    do { sceneRecorder = try SceneRecorder(self) }
-    catch { assertionFailure("\(error)") }
-  }
-}
-
 extension SelfSceneRecordable where Self: APIRecordable {
 
   public func injectRecorder() {

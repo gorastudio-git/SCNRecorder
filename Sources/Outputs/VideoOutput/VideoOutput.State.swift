@@ -26,161 +26,202 @@
 import Foundation
 import AVFoundation
 
+
 extension VideoOutput {
 
-  /// Finite-State Machine
-  enum State {
-    case ready
-    case preparing
-    case recording(time: CMTime)
-    case paused
+  typealias State = VideoOutputState
+}
 
-    case canceled
-    case finished
-    case failed(error: Swift.Error)
+/// Finite-State Machine
+///
+/// Associated values are ignored in equation.
+public enum VideoOutputState: Equatable {
 
-    var isFinal: Bool {
-      switch self {
-      case .ready,
-           .preparing,
-           .recording,
-           .paused:
-        return false
-
-      case .canceled,
-           .finished,
-           .failed:
-        return true
-      }
+  public static func == (lhs: VideoOutputState, rhs: VideoOutputState) -> Bool {
+    switch (lhs, rhs) {
+    case (.starting, starting): return true
+    case (.preparing, .preparing): return true
+    case (.recording, .recording): return true
+    case (.paused, .paused): return true
+    case (.canceled, .canceled): return true
+    case (.finished, .finished): return true
+    case (.failed, .failed): return true
+    default: return false
     }
+  }
 
-    var recordingState: VideoRecording.State {
-      switch self {
-      case .ready: return .ready
-      case .preparing: return .preparing
-      case .recording: return .recording
-      case .paused: return .paused
-      case .canceled: return .canceled
-      case .finished: return .finished
-      case .failed(let error): return .failed(error)
-      }
+  /// AVAssetWriter is starting.
+  case starting
+
+  /// AVAssetWriter is started. Waiting for the resume.
+  case ready
+
+  /// Recording is started. Waiting for the first video frame to set up the session.
+  /// So far audio frames are ignored
+  case preparing
+
+  /// Recording is active.
+  /// Appending audio and video frames.
+  case recording(time: CMTime)
+
+  /// Recording is paused.
+  /// Not tested.
+  /// According to Apple, documentation might not work.
+  case paused
+
+  /// Recording is canceled.
+  /// Final state, not further actions are possible.
+  case canceled
+
+  /// Recording is finished.
+  /// Final state, not further actions are possible.
+  case finished
+
+  /// Recording is failed.
+  /// AVAssetWriter was failed with an error.
+  /// Final state, not further actions are possible.
+  case failed(error: Swift.Error)
+
+  var isFinal: Bool {
+    switch self {
+    case .starting,
+         .ready,
+         .preparing,
+         .recording,
+         .paused:
+      return false
+
+    case .canceled,
+         .finished,
+         .failed:
+      return true
     }
+  }
 
-    func resume(_ videoOutput: VideoOutput) -> State {
-      switch self {
+  func resume(_ videoOutput: VideoOutput) -> Self {
+    switch self {
 
-      case .ready,
-           .preparing:
-        return .preparing
+    case .starting:
+      return self
 
-      case .recording(let time):
-        return .recording(time: time)
+    case .ready,
+         .preparing:
+      return .preparing
 
-      case .paused:
-        return .preparing
+    case .recording(let time):
+      return .recording(time: time)
 
-      case .canceled,
-           .finished,
-           .failed:
-        return self
-      }
+    case .paused:
+      return .preparing
+
+    case .canceled,
+         .finished,
+         .failed:
+      return self
     }
+  }
 
-    func pause(_ videoOutput: VideoOutput) -> State {
-      switch  self {
+  func pause(_ videoOutput: VideoOutput) -> Self {
+    switch  self {
 
-      case .ready,
-           .preparing:
-        return .ready
+    case .starting:
+      return .starting
 
-      case .recording(let seconds):
-        videoOutput.endSession(at: seconds)
-        return .paused
+    case .ready,
+         .preparing:
+      return .ready
 
-      case .paused,
-           .canceled,
-           .finished,
-           .failed:
-        return self
-      }
+    case .recording(let seconds):
+      videoOutput.endSession(at: seconds)
+      return .paused
+
+    case .paused,
+         .canceled,
+         .finished,
+         .failed:
+      return self
     }
+  }
 
-    func finish(_ videoOutput: VideoOutput, completionHandler handler: @escaping () -> Void) -> State {
-      switch self {
+  func finish(_ videoOutput: VideoOutput, completionHandler handler: @escaping () -> Void) -> Self {
+    switch self {
 
-      case .ready,
-           .preparing:
-        handler()
-        return .canceled
+    case .starting,
+         .ready,
+         .preparing:
+      handler()
+      return .canceled
 
-      case .recording,
-           .paused:
-        videoOutput.finishWriting(completionHandler: handler)
-        return .finished
+    case .recording,
+         .paused:
+      videoOutput.finishWriting(completionHandler: handler)
+      return .finished
 
-      case .canceled,
-           .finished,
-           .failed:
-        handler()
-        return self
-      }
+    case .canceled,
+         .finished,
+         .failed:
+      handler()
+      return self
     }
+  }
 
-    func cancel(_ videoOutput: VideoOutput) -> State {
-      switch  self {
+  func cancel(_ videoOutput: VideoOutput) -> Self {
+    switch  self {
 
-      case .ready,
-           .preparing:
-        return .canceled
+    case .starting,
+         .ready,
+         .preparing:
+      return .canceled
 
-      case .recording,
-           .paused:
-        videoOutput.cancelWriting()
-        return .canceled
+    case .recording,
+         .paused:
+      videoOutput.cancelWriting()
+      return .canceled
 
-      case .canceled,
-           .finished,
-           .failed:
-        return self
-      }
+    case .canceled,
+         .finished,
+         .failed:
+      return self
     }
+  }
 
-    func appendVideoSampleBuffer(
-      _ sampleBuffer: CMSampleBuffer,
-      to videoOutput: VideoOutput
-    ) -> State {
-      do { return try _appendVideoSampleBuffer(sampleBuffer, to: videoOutput) }
-      catch { return .failed(error: error) }
-    }
+  func appendVideoSampleBuffer(
+    _ sampleBuffer: CMSampleBuffer,
+    to videoOutput: VideoOutput
+  ) -> Self {
+    do { return try _appendVideoSampleBuffer(sampleBuffer, to: videoOutput) }
+    catch { return .failed(error: error) }
+  }
 
-    func appendVideoBuffer(
-      _ buffer: CVBuffer,
-      at time: CMTime,
-      to videoOutput: VideoOutput
-    ) -> State {
-      do { return try _appendVideoBuffer(buffer, at: time, to: videoOutput) }
-      catch { return .failed(error: error) }
-    }
+  func appendVideoBuffer(
+    _ buffer: CVBuffer,
+    at time: CMTime,
+    to videoOutput: VideoOutput
+  ) -> Self {
+    do { return try _appendVideoBuffer(buffer, at: time, to: videoOutput) }
+    catch { return .failed(error: error) }
+  }
 
-    func appendAudioSampleBuffer(
-      _ sampleBuffer: CMSampleBuffer,
-      to videoOutput: VideoOutput
-    ) -> State {
-      do { return try _appendAudioSampleBuffer(sampleBuffer, to: videoOutput) }
-      catch { return .failed(error: error) }
-    }
+  func appendAudioSampleBuffer(
+    _ sampleBuffer: CMSampleBuffer,
+    to videoOutput: VideoOutput
+  ) -> Self {
+    do { return try _appendAudioSampleBuffer(sampleBuffer, to: videoOutput) }
+    catch { return .failed(error: error) }
   }
 }
 
-private extension VideoOutput.State {
+
+private extension VideoOutputState {
 
   func _appendVideoSampleBuffer(
     _ sampleBuffer: CMSampleBuffer,
     to videoOutput: VideoOutput
-  ) throws -> VideoOutput.State {
+  ) throws -> Self {
     switch self {
 
-    case .ready:
+    case .starting,
+         .ready:
       return self
 
     case .preparing:
@@ -211,10 +252,11 @@ private extension VideoOutput.State {
     _ buffer: CVBuffer,
     at time: CMTime,
     to videoOutput: VideoOutput
-  ) throws -> VideoOutput.State {
+  ) throws -> Self {
     switch self {
 
-    case .ready:
+    case .starting,
+         .ready:
       return self
 
     case .preparing:
@@ -237,10 +279,11 @@ private extension VideoOutput.State {
   func _appendAudioSampleBuffer(
     _ sampleBuffer: CMSampleBuffer,
     to videoOutput: VideoOutput
-  ) throws -> VideoOutput.State {
+  ) throws -> Self {
     switch self {
 
-    case .ready,
+    case .starting,
+         .ready,
          .preparing:
       return self
 

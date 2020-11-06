@@ -25,23 +25,19 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 #if !targetEnvironment(simulator)
 
 public protocol RecordableLayer: AnyObject {
 
-  var lastDrawable: CAMetalDrawable? { get }
+  var lastIOSurface: IOSurface? { get }
 
   var device: MTLDevice? { get }
 
   var pixelFormat: MTLPixelFormat { get }
 
   var drawableSize: CGSize { get }
-}
-
-public extension RecordableLayer where Self: CAMetalLayer {
-
-  var lastDrawable: CAMetalDrawable? { _lastDrawable }
 }
 
 #endif // !targetEnvironment(simulator)

@@ -35,11 +35,13 @@ extension CleanRecorder {
 
     let timeScale: CMTimeScale
 
+    let queue: DispatchQueue
+
     var size: CGSize {
       guard let buffer = cleanRecordable?.cleanPixelBuffer else { return .zero }
       return CGSize(
-        width: buffer.width,
-        height: buffer.height
+        width: CVPixelBufferGetWidth(buffer),
+        height: CVPixelBufferGetHeight(buffer)
       )
     }
 
@@ -52,9 +54,10 @@ extension CleanRecorder {
 
     @UnfairAtomic var started: Bool = false
 
-    init(cleanRecordable: T, timeScale: CMTimeScale) {
+    init(cleanRecordable: T, timeScale: CMTimeScale, queue: DispatchQueue) {
       self.cleanRecordable = cleanRecordable
       self.timeScale = timeScale
+      self.queue = queue
     }
 
     func start() { started = true }
@@ -64,7 +67,9 @@ extension CleanRecorder {
     func render(atTime time: TimeInterval) throws {
       guard started, let output = output else { return }
       guard let pixelBuffer = cleanRecordable?.cleanPixelBuffer else { return }
-      output(pixelBuffer, timeFromSeconds(time))
+
+      let time = timeFromSeconds(time)
+      queue.async { output(pixelBuffer, time) }
     }
   }
 }

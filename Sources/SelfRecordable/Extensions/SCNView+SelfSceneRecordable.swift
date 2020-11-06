@@ -51,5 +51,7 @@ extension SCNView: SelfSceneRecordable {
 
     assert(sceneRecorder != nil)
     addDelegate(sceneRecorder!)
+
+    fixFirstLaunchFrameDrop()
   }
 }

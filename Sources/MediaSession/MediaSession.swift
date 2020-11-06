@@ -58,8 +58,6 @@ final class MediaSession {
 
   let queue: DispatchQueue
 
-  @UnfairAtomic var filters = [Filter]()
-
   @UnfairAtomic var videoOutputs = [Output.Video]()
 
   @UnfairAtomic var audioOutputs = [Output.Audio]()
@@ -75,17 +73,8 @@ final class MediaSession {
   func setVideoInput(_ videoInput: Input.PixelBufferVideo) {
     self.videoInput = .pixel(videoInput)
     videoInput.output = { [weak self] (buffer: CVBuffer, time: CMTime) in
-      guard let this = self, let videoInput = this.videoInput else { return }
-
-      do {
-        // Applying filters is a time consuming operation
-        // Don't do that if video outputs is empty
-        guard !this.videoOutputs.isEmpty else { return }
-
-        try buffer.applyFilters(this.filters, using: videoInput.context)
-        this.appendVideoBuffer(buffer, at: time)
-      }
-      catch { this.error = error }
+      guard let this = self else { return }
+      this.appendVideoBuffer(buffer, at: time)
     }
   }
 
@@ -109,21 +98,15 @@ final class MediaSession {
 extension MediaSession {
 
   func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
-    queue.async { [weak self] in
-      self?.videoOutputs.forEach { $0.appendVideoBuffer(buffer, at: time) }
-    }
+    videoOutputs.forEach { $0.appendVideoBuffer(buffer, at: time) }
   }
 
   func appendVideoBuffer(_ sampleBuffer: CMSampleBuffer) {
-    queue.async { [weak self] in
-      self?.videoOutputs.forEach { $0.appendVideoSampleBuffer(sampleBuffer) }
-    }
+    videoOutputs.forEach { $0.appendVideoSampleBuffer(sampleBuffer) }
   }
 
   func appendAudioBuffer(_ sampleBuffer: CMSampleBuffer) {
-    queue.async { [weak self] in
-      self?.audioOutputs.forEach { $0.appendAudioSampleBuffer(sampleBuffer) }
-    }
+    audioOutputs.forEach { $0.appendAudioSampleBuffer(sampleBuffer) }
   }
 }
 

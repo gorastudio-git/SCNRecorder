@@ -40,16 +40,12 @@ public class BaseRecorder: NSObject {
     return audioInput
   }()
 
-  let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
-
-  public var filters: [Filter] {
-    get { mediaSession.filters }
-    set { mediaSession.filters = newValue }
-  }
+  let queue: DispatchQueue
 
   @Observable var error: Swift.Error?
 
-  public override init() {
+  public init(queue: DispatchQueue) {
+    self.queue = queue
     self.mediaSession = MediaSession(queue: queue)
     super.init()
     self.mediaSession.$error.observe { [weak self] in self?.error = $0 }

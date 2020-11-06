@@ -32,8 +32,15 @@ public final class CleanRecorder<T: CleanRecordable>: BaseRecorder,
   let videoInput: VideoInput<T>
 
   init(_ cleanRecordable: T, timeScale: CMTimeScale = 600) {
-    self.videoInput = VideoInput(cleanRecordable: cleanRecordable, timeScale: timeScale)
-    super.init()
+    let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
+
+    self.videoInput = VideoInput(
+      cleanRecordable: cleanRecordable,
+      timeScale: timeScale,
+      queue: queue
+    )
+    
+    super.init(queue: queue)
     self.mediaSession.setVideoInput(videoInput)
   }
 

@@ -33,9 +33,8 @@ extension SceneRecorder {
 
     let timeScale: CMTimeScale
 
-    let producer: PixelBufferProducer
-
-    let pixelBufferPoolFactory = PixelBufferPoolFactory()
+    #if !targetEnvironment(simulator)
+    let producer: MetalPixelBufferProducer
 
     var size: CGSize { producer.size }
 
@@ -43,53 +42,62 @@ extension SceneRecorder {
 
     var context: CIContext { producer.context }
 
+    #else
+
+    var size: CGSize { .zero }
+
+    var videoColorProperties: [String: String]? { nil }
+
+    var context: CIContext { CIContext() }
+
+    #endif // !targetEnvironment(simulator)
+
     var output: ((CVBuffer, CMTime) -> Void)?
 
     @UnfairAtomic var started: Bool = false
 
     #if !targetEnvironment(simulator)
-    init(recordable: MetalRecordable, timeScale: CMTimeScale) throws {
+    init(recordable: MetalRecordable, timeScale: CMTimeScale, queue: DispatchQueue) throws {
       guard let recordableLayer = recordable.recordableLayer else { throw Error.recordableLayer }
 
       self.timeScale = timeScale
-      self.producer = MetalPixelBufferProducer(recordableLayer: recordableLayer)
+      self.producer = MetalPixelBufferProducer(recordableLayer: recordableLayer, queue: queue)
     }
+    #else
+
+    init(timeScale: CMTimeScale) {
+      self.timeScale = timeScale
+    }
+
     #endif // !targetEnvironment(simulator)
 
-    init(recordable: EAGLRecordable, timeScale: CMTimeScale) throws {
-      guard let eaglContext = recordable.eaglContext else { throw Error.eaglContext }
-      self.timeScale = timeScale
-      self.producer = EAGLPixelBufferProducer(eaglContext: eaglContext)
-    }
-
-    convenience init(recordable: APIRecordable, timeScale: CMTimeScale) throws {
+    convenience init(recordable: APIRecordable, timeScale: CMTimeScale, queue: DispatchQueue) throws {
       switch recordable.api {
       case .metal:
         #if !targetEnvironment(simulator)
-        try self.init(recordable: recordable as MetalRecordable, timeScale: timeScale)
+        try self.init(recordable: recordable as MetalRecordable, timeScale: timeScale, queue: queue)
         #else // !targetEnvironment(simulator)
         throw Error.metalSimulator
         #endif // !targetEnvironment(simulator)
-      case .openGLES:
-        try self.init(recordable: recordable as EAGLRecordable, timeScale: timeScale)
+      case .openGLES: throw Error.openGLES
       case .unknown: throw Error.unknownAPI
       }
     }
 
-    func start() {
-      producer.startWriting()
-      started = true
-    }
+    func start() { started = true }
 
     func render(atTime time: TimeInterval) throws {
       guard started, let output = output else { return }
-      try output(producer.produce(), timeFromSeconds(time))
+
+      let time = timeFromSeconds(time)
+      #if !targetEnvironment(simulator)
+      try producer.produce { [output] (pixelBuffer) in
+        output(pixelBuffer, time)
+      }
+      #endif // !targetEnvironment(simulator)
     }
 
-    func stop() {
-      producer.stopWriting()
-      started = false
-    }
+    func stop() { started = false }
   }
 }
 
@@ -103,6 +111,8 @@ extension SceneRecorder.VideoInput {
     case eaglContext
 
     case metalSimulator
+
+    case openGLES
 
     case unknownAPI
   }

@@ -28,14 +28,14 @@ import SceneKit
 
 #if !targetEnvironment(simulator)
 
-public protocol APIRecordable: MetalRecordable, EAGLRecordable {
+public protocol APIRecordable: MetalRecordable {
 
   var api: API { get }
 }
 
 #else // !targetEnvironment(simulator)
 
-public protocol APIRecordable: EAGLRecordable {
+public protocol APIRecordable {
 
   var api: API { get }
 }

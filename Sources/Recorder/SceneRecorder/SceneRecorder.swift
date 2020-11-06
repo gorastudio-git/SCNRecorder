@@ -31,24 +31,36 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
 
   let videoInput: VideoInput
 
-  init(videoInput: VideoInput) {
+  init(videoInput: VideoInput, queue: DispatchQueue) {
     self.videoInput = videoInput
-    super.init()
+    super.init(queue: queue)
     self.mediaSession.setVideoInput(videoInput)
   }
 
   #if !targetEnvironment(simulator)
   public convenience init<T: MetalRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
-    try self.init(videoInput: VideoInput(recordable: recordable, timeScale: timeScale))
+    let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
+    try self.init(
+      videoInput: VideoInput(
+        recordable: recordable,
+        timeScale: timeScale,
+        queue: queue
+      ),
+      queue: queue
+    )
   }
   #endif // !targetEnvironment(simulator)
 
-  public convenience init<T: EAGLRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
-    try self.init(videoInput: VideoInput(recordable: recordable, timeScale: timeScale))
-  }
-
   public convenience init<T: APIRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
-    try self.init(videoInput: VideoInput(recordable: recordable, timeScale: timeScale))
+    let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
+    try self.init(
+      videoInput: VideoInput(
+        recordable: recordable,
+        timeScale: timeScale,
+        queue: queue
+      ),
+      queue: queue
+    )
   }
 
   public func render(atTime time: TimeInterval) {

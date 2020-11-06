@@ -8,7 +8,7 @@
 
 SCNRecorder allows you to record videos and to capture images from ARSCNView, SCNView and ARView (RealityKit) without sacrificing performance. It gives you an incredible opportunity to share the media content of your augmented reality app or SceneKit based game.
 
-SCNRecorder supports Metal and OpenGL.
+Starting version 2.2.0 SCNRecorder supports Metal only. 
 
 ![Sample](/images/sample2.gif?raw=true )
 
