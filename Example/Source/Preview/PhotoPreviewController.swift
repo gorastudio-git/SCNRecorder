@@ -26,39 +26,30 @@
 import Foundation
 import UIKit
 
-final class PhotoPreviewController: UIViewController {
+final class PhotoPreviewController: ViewController {
 
   let photo: UIImage
 
   init(photo: UIImage) {
     self.photo = photo
-    super.init(nibName: nil, bundle: nil)
+    super.init()
   }
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  override func loadView() {
+    view = UIImageView(image: photo)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let imageView = UIImageView(image: photo)
-    imageView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(imageView)
-
-    imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    imageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-    imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    imageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       barButtonSystemItem: .action,
       target: self,
-      action: #selector(share(_:))
+      action: #selector(share)
     )
   }
 
-  @objc func share(_ sender: Any) {
+  @objc func share() {
     present(
       UIActivityViewController(activityItems: [photo], applicationActivities: nil),
       animated: true,

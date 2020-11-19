@@ -26,28 +26,30 @@
 import Foundation
 
 @propertyWrapper
-final class ReadWriteAtomic<Value>: Atomic {
+public final class ReadWriteAtomic<Value>: Atomic {
 
   private let lock = ReadWriteLock()
 
   private var _wrappedValue: Value
 
-  var wrappedValue: Value {
+  public var wrappedValue: Value {
     get { value }
     set { value = newValue }
   }
 
-  var projectedValue: ReadWriteAtomic<Value> { self }
+  public var projectedValue: ReadWriteAtomic<Value> { self }
 
-  init(wrappedValue: Value) { self._wrappedValue = wrappedValue }
+  public init(wrappedValue: Value) { self._wrappedValue = wrappedValue }
 
   @discardableResult
-  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
+  public func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
     try lock.readLocked { try action(_wrappedValue) }
   }
 
   @discardableResult
-  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+  public func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
     try lock.writeLocked { try action(&_wrappedValue) }
   }
 }
+
+extension ReadWriteAtomic: ObservableInterface where Value: ObservableInterface { }

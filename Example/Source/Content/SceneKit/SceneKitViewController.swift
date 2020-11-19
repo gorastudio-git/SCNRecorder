@@ -1,5 +1,5 @@
 //
-//  SCNViewController.swift
+//  SceneKitViewController.swift
 //  Example
 //
 //  Created by Vladislav Grigoryev on 01/07/2019.
@@ -25,27 +25,36 @@
 
 import Foundation
 import SceneKit
-import ARKit
 import AVKit
-
 import SCNRecorder
 
-class SCNViewController: ViewController {
+final class SceneKitViewController: ViewController {
 
-  var captureSession: AVCaptureSession?
+  lazy var captureSession = sceneView.recorder.flatMap {
+    try? AVCaptureSession.makeAudioForRecorder($0)
+  }
+
+  lazy var sceneView: SCNView = view as! SCNView
+
+  override func loadView() { view = SCNView() }
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    // Create a new scene
+    let scene = SCNScene(named: "art.scnassets/ship.scn")!
+
+    // Set the scene to the view
+    sceneView.scene = scene
+    sceneView.rendersContinuously = true
+    
+    // Show statistics such as fps and timing information
+    sceneView.showsStatistics = true
+    
     sceneView.allowsCameraControl = true
 
-    do {
-      guard let recorder = sceneView.recorder else { return }
-      captureSession = try SCNViewController.makeAudioCaptureSessionForRecorder(recorder: recorder)
-      captureSession?.startRunning()
-    }
-    catch {
-      print("Can't start audio capture session: \(error)")
-    }
+    // You must call prepareForRecording() before capturing something using SCNRecorder
+    // It is recommended to do that at viewDidLoad
+    sceneView.prepareForRecording()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -53,44 +62,23 @@ class SCNViewController: ViewController {
     captureSession?.startRunning()
   }
 
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
     captureSession?.stopRunning()
   }
 }
 
-extension SCNViewController {
+extension SceneKitViewController: Controllable {
 
-  enum Error: Swift.Error {
-
-    case defaultDeviceNotFound(type: AVMediaType)
-
-    case canNotAddInput(input: AVCaptureInput)
-
-    case canNotAddRecorder(recorder: BaseRecorder)
+  func takePhoto(handler: @escaping (UIImage) -> Void) {
+    sceneView.takePhoto(completionHandler: handler)
   }
 
-  static func makeAudioCaptureSessionForRecorder(recorder: BaseRecorder) throws -> AVCaptureSession {
-    let captureSession = AVCaptureSession()
+  func startVideoRecording(size: CGSize) throws -> VideoRecording {
+    try sceneView.startVideoRecording(size: size)
+  }
 
-    let mediaType = AVMediaType.audio
-    guard let captureDevice = AVCaptureDevice.default(for: mediaType) else {
-      throw Error.defaultDeviceNotFound(type: mediaType)
-    }
-
-    let captureInput = try AVCaptureDeviceInput(device: captureDevice)
-
-    guard captureSession.canAddInput(captureInput) else {
-      throw Error.canNotAddInput(input: captureInput)
-    }
-
-    captureSession.addInput(captureInput)
-
-    guard captureSession.canAddRecorder(recorder) else {
-      throw Error.canNotAddRecorder(recorder: recorder)
-    }
-
-    captureSession.addRecorder(recorder)
-    return captureSession
+  func finishVideoRecording(handler: @escaping (URL) -> Void) {
+    sceneView.finishVideoRecording(completionHandler: { handler($0.url) })
   }
 }

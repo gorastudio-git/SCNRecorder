@@ -28,28 +28,9 @@ import RealityKit
 import SCNRecorder
 import Combine
 
-private var sceneRecorderKey: UInt8 = 0
 private var cancellableKey: UInt8 = 0
-private var videoRecordingKey: UInt8 = 0
 
 extension ARView: SelfSceneRecordable {
-
-  public var _sceneRecorder: SceneRecorder? {
-    get {
-      objc_getAssociatedObject(
-        self,
-        &sceneRecorderKey
-      ) as? SceneRecorder
-    }
-    set {
-      objc_setAssociatedObject(
-        self,
-        &sceneRecorderKey,
-        newValue,
-        .OBJC_ASSOCIATION_RETAIN
-      )
-    }
-  }
 
   var _cancelable: Cancellable? {
     get {
@@ -68,39 +49,21 @@ extension ARView: SelfSceneRecordable {
     }
   }
 
-  public var sceneRecorder: SceneRecorder? {
-    get {
-      try? _sceneRecorder ?? {
-        let sceneRecorder = try SceneRecorder(self)
-        session.delegate = sceneRecorder
+  public func injectRecorder() {
+    do {
+      sceneRecorder = try SceneRecorder(self)
 
-        _cancelable = scene.subscribe(
-          to: SceneEvents.Update.self
-        ) { [weak sceneRecorder] (_) in
-          sceneRecorder?.render()
-        }
-
-        self.sceneRecorder = sceneRecorder
-        return sceneRecorder
-      }()
+      #if !targetEnvironment(simulator)
+      session.delegate = sceneRecorder
+      #endif
+      
+      _cancelable?.cancel()
+      _cancelable = scene.subscribe(
+        to: SceneEvents.Update.self
+      ) { [weak sceneRecorder] (_) in
+        sceneRecorder?.render()
+      }
     }
-    set { _sceneRecorder = newValue }
-  }
-
-  public var videoRecording: VideoRecording? {
-    get {
-      objc_getAssociatedObject(
-        self,
-        &videoRecordingKey
-      ) as? VideoRecording
-    }
-    set {
-      objc_setAssociatedObject(
-        self,
-        &videoRecordingKey,
-        newValue,
-        .OBJC_ASSOCIATION_RETAIN
-      )
-    }
+    catch { assertionFailure("\(error)") }
   }
 }

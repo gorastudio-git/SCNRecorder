@@ -25,11 +25,7 @@
 
 import Foundation
 
-#if !targetEnvironment(simulator)
-
 public protocol MetalRecordable {
 
   var recordableLayer: RecordableLayer? { get }
 }
-
-#endif // !targetEnvironment(simulator)

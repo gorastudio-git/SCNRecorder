@@ -1,9 +1,7 @@
 //
-//  ARView+SceneRecordableView.swift
-//  SCNRecorder
+//  SnapKit
 //
-//  Created by Vladislav Grigoryev on 17.08.2020.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Copyright (c) 2011-Present SnapKit Team - https://github.com/SnapKit
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +21,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
-import RealityKit
-import SCNRecorder
+#if os(iOS) || os(tvOS)
+    import UIKit
+    public typealias ConstraintInterfaceLayoutDirection = UIUserInterfaceLayoutDirection
+#else
+    import AppKit
+    public typealias ConstraintInterfaceLayoutDirection = NSUserInterfaceLayoutDirection
+#endif
 
-private var sceneRecorderKey: UInt8 = 0
-private var cancellableKey: UInt8 = 0
 
-extension ARView: MetalRecordable {
-
-  public var recordableLayer: RecordableLayer? { layer.sublayers?.first as? RecordableLayer }
+public struct ConstraintConfig {
+    
+    public static var interfaceLayoutDirection: ConstraintInterfaceLayoutDirection = .leftToRight
+    
 }

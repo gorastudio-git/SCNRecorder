@@ -29,6 +29,8 @@ import AVFoundation
 import SceneKit
 import ARKit
 
+private var videoRecordingKey: UInt8 = 0
+
 public enum SelfRecordableError: Swift.Error {
   case recorderNotInjected
   case videoRecordingAlreadyStarted
@@ -45,6 +47,18 @@ public protocol SelfRecordable: AnyObject {
   func prepareForRecording()
 
   func injectRecorder()
+}
+
+public extension SelfRecordable {
+
+  private var videoRecordingStorage: AssociatedStorage<VideoRecording> {
+    AssociatedStorage(object: self, key: &videoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  }
+
+  var videoRecording: VideoRecording? {
+    get { videoRecordingStorage.get() }
+    set { videoRecordingStorage.set(newValue) }
+  }
 }
 
 extension SelfRecordable {
@@ -89,27 +103,35 @@ public extension SelfRecordable {
 
       let audioSettings = AudioSettings()
 
+      let url = FileManager.default.temporaryDirectory.appendingPathComponent(
+        "\(UUID().uuidString).\(videoSettings.fileType.fileExtension)",
+        isDirectory: false
+      )
+
       let videoOutput = try? VideoOutput(
-        url: FileManager.default.temporaryDirectory.appendingPathComponent(
-          "\(UUID().uuidString).\(videoSettings.fileType.fileExtension)",
-          isDirectory: false
-        ),
+        url: url,
         videoSettings: videoSettings,
         audioSettings: audioSettings,
         queue: queue
       )
 
       queue.async { videoOutput?.cancel() }
+      queue.async { try? FileManager.default.removeItem(at: url) }
     }
   }
 }
 
-#if !targetEnvironment(simulator)
 
 public extension SelfRecordable where Self: MetalRecordable {
 
   func prepareForRecording() {
+    #if !targetEnvironment(simulator)
     (recordableLayer as? CAMetalLayer)?.swizzle()
+    #else
+    if #available(iOS 13.0, *) {
+      (recordableLayer as? CAMetalLayer)?.swizzle()
+    }
+    #endif
 
     guard recorder == nil else { return }
     injectRecorder()
@@ -119,7 +141,6 @@ public extension SelfRecordable where Self: MetalRecordable {
   }
 }
 
-#endif // !targetEnvironment(simulator)
 
 public extension SelfRecordable {
 

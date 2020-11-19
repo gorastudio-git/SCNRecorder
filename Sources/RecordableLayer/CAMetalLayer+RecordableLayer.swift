@@ -27,9 +27,9 @@ import Foundation
 import UIKit
 import AVFoundation
 
-#if !targetEnvironment(simulator)
-
 private var lastIOSurfaceKey: UInt8 = 0
+
+#if !targetEnvironment(simulator)
 
 extension CAMetalLayer {
 
@@ -68,4 +68,45 @@ extension CAMetalLayer: RecordableLayer {
   }
 }
 
-#endif // !targetEnvironment(simulator)
+#else // IF targetEnvironment(simulator)
+
+@available(iOS 13.0, *)
+extension CAMetalLayer {
+
+  var lastIOSurfaceStorage: AssociatedStorage<IOSurface> {
+    AssociatedStorage(object: self, key: &lastIOSurfaceKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  }
+}
+
+@available(iOS 13.0, *)
+extension CAMetalLayer: RecordableLayer {
+
+  static let swizzleNextDrawableImplementation: Void = {
+      let aClass: AnyClass = CAMetalLayer.self
+
+      guard let originalMethod = class_getInstanceMethod(aClass, #selector(nextDrawable)),
+            let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzled_nextDrawable))
+      else { return }
+
+      method_exchangeImplementations(originalMethod, swizzledMethod)
+  }()
+
+  static func swizzle() {
+    _ = swizzleNextDrawableImplementation
+  }
+
+  public var lastIOSurface: IOSurface? {
+    get { lastIOSurfaceStorage.get() }
+    set { lastIOSurfaceStorage.set(newValue) }
+  }
+
+  func swizzle() { Self.swizzle() }
+
+  @objc dynamic func swizzled_nextDrawable() -> CAMetalDrawable? {
+    let nextDrawable = swizzled_nextDrawable()
+    lastIOSurface = nextDrawable?.texture.iosurface
+    return nextDrawable
+  }
+}
+
+#endif // END !targetEnvironment(simulator)

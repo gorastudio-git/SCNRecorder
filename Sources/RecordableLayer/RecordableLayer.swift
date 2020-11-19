@@ -27,8 +27,6 @@ import Foundation
 import UIKit
 import AVFoundation
 
-#if !targetEnvironment(simulator)
-
 public protocol RecordableLayer: AnyObject {
 
   var lastIOSurface: IOSurface? { get }
@@ -39,5 +37,3 @@ public protocol RecordableLayer: AnyObject {
 
   var drawableSize: CGSize { get }
 }
-
-#endif // !targetEnvironment(simulator)

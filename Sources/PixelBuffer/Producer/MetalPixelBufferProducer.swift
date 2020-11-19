@@ -26,8 +26,6 @@
 import Foundation
 import AVFoundation
 
-#if !targetEnvironment(simulator)
-
 final class MetalPixelBufferProducer {
 
   enum Error: Swift.Error {
@@ -84,5 +82,3 @@ final class MetalPixelBufferProducer {
     }
   }
 }
-
-#endif // !targetEnvironment(simulator)

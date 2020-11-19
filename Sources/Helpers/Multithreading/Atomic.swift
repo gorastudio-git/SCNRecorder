@@ -25,7 +25,7 @@
 
 import Foundation
 
-protocol Atomic: AnyObject {
+public protocol Atomic: AnyObject {
 
   associatedtype Value
 
@@ -36,7 +36,7 @@ protocol Atomic: AnyObject {
   func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result
 }
 
-extension Atomic {
+public extension Atomic {
 
   var value: Value {
     get { withValue { $0 } }
@@ -50,5 +50,13 @@ extension Atomic {
       value = newValue
       return oldValue
     }
+  }
+}
+
+public extension Atomic where Value: ObservableInterface {
+
+  var observer: Value.Observer? {
+    get { value.observer }
+    set { value.observer = newValue }
   }
 }

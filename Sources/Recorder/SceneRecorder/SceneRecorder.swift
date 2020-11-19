@@ -37,7 +37,6 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
     self.mediaSession.setVideoInput(videoInput)
   }
 
-  #if !targetEnvironment(simulator)
   public convenience init<T: MetalRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
     let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
     try self.init(
@@ -49,8 +48,7 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
       queue: queue
     )
   }
-  #endif // !targetEnvironment(simulator)
-
+  
   public convenience init<T: APIRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
     let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
     try self.init(

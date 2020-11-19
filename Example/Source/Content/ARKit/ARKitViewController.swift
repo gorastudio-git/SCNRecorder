@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ARKitViewController.swift
 //  Example
 //
 //  Created by Vladislav Grigoryev on 12/03/2019.
@@ -24,16 +24,31 @@
 //  THE SOFTWARE.
 
 import UIKit
-import SceneKit
 import ARKit
 import SCNRecorder
-import AVKit
 
-class ARSCNViewController: ViewController {
+final class ARKitViewController: ViewController {
 
-  // swiftlint:disable force_cast
-  var arSceneView: ARSCNView { sceneView as! ARSCNView }
-  // swiftlint:enable force_cast
+  lazy var sceneView: ARSCNView = view as! ARSCNView
+
+  override func loadView() { view = ARSCNView() }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    // Create a new scene
+    let scene = SCNScene(named: "art.scnassets/ship.scn")!
+
+    // Set the scene to the view
+    sceneView.scene = scene
+
+    // Show statistics such as fps and timing information
+    sceneView.showsStatistics = true
+
+    // You must call prepareForRecording() before capturing something using SCNRecorder
+    // It is recommended to do that at viewDidLoad
+    sceneView.prepareForRecording()
+  }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -45,13 +60,28 @@ class ARSCNViewController: ViewController {
     configuration.providesAudioData = true
 
     // Run the view's session
-    arSceneView.session.run(configuration)
+    sceneView.session.run(configuration)
   }
 
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
 
     // Pause the view's session
-    arSceneView.session.pause()
+    sceneView.session.pause()
+  }
+}
+
+extension ARKitViewController: Controllable {
+
+  func takePhoto(handler: @escaping (UIImage) -> Void) {
+    sceneView.takePhoto(completionHandler: handler)
+  }
+
+  func startVideoRecording(size: CGSize) throws -> VideoRecording {
+    try sceneView.startVideoRecording(size: size)
+  }
+
+  func finishVideoRecording(handler: @escaping (URL) -> Void) {
+    sceneView.finishVideoRecording(completionHandler: { handler($0.url) })
   }
 }

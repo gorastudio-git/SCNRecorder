@@ -26,40 +26,42 @@
 import Foundation
 
 @propertyWrapper
-final class GCDAtomic<Value>: Atomic {
+public final class GCDAtomic<Value>: Atomic {
 
   private var _wrappedValue: Value
 
-  let queue: DispatchQueue
+  public let queue: DispatchQueue
 
-  var wrappedValue: Value {
+  public var wrappedValue: Value {
     get { value }
     set { value = newValue }
   }
 
-  var projectedValue: GCDAtomic<Value> { self }
+  public var projectedValue: GCDAtomic<Value> { self }
 
-  init(wrappedValue: Value) {
+  public init(wrappedValue: Value) {
     self._wrappedValue = wrappedValue
     self.queue = DispatchQueue(label: "\(type(of: self))", attributes: [.concurrent])
   }
 
-  init(wrappedValue: Value, queue: DispatchQueue) {
+  public init(wrappedValue: Value, queue: DispatchQueue) {
     self._wrappedValue = wrappedValue
     self.queue = queue
   }
 
   @discardableResult
-  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
+  public func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
     try queue.sync { try action(_wrappedValue) }
   }
 
   @discardableResult
-  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+  public func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
     try queue.sync(flags: .barrier) { try action(&_wrappedValue) }
   }
 
-  func asyncModify(_ action: @escaping (inout Value) -> Void) {
+  public func asyncModify(_ action: @escaping (inout Value) -> Void) {
     queue.async(flags: .barrier) { action(&self._wrappedValue) }
   }
 }
+
+extension GCDAtomic: ObservableInterface where Value: ObservableInterface { }

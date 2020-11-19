@@ -28,9 +28,9 @@ import AVFoundation
 
 public final class VideoRecording {
 
-    @Observable public var duration: TimeInterval = 0.0
+    @Observable public internal(set) var duration: TimeInterval = 0.0
 
-    @Observable public var state: State = .preparing
+    @Observable public internal(set) var state: State = .preparing
 
     let videoOutput: VideoOutput
 

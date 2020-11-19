@@ -25,29 +25,29 @@
 
 import Foundation
 
-final class ReadWriteLock {
+public final class ReadWriteLock {
 
   private var readWriteLock: pthread_rwlock_t
 
-  init() {
+  public init() {
     readWriteLock = pthread_rwlock_t()
     pthread_rwlock_init(&readWriteLock, nil)
   }
 
   deinit { pthread_rwlock_destroy(&readWriteLock) }
 
-  func readLock() { pthread_rwlock_rdlock(&readWriteLock) }
+  public func readLock() { pthread_rwlock_rdlock(&readWriteLock) }
 
-  func writeLock() { pthread_rwlock_wrlock(&readWriteLock) }
+  public func writeLock() { pthread_rwlock_wrlock(&readWriteLock) }
 
-  func unlock() { pthread_rwlock_unlock(&readWriteLock) }
+  public func unlock() { pthread_rwlock_unlock(&readWriteLock) }
 
-  func tryRead() -> Bool { pthread_rwlock_tryrdlock(&readWriteLock) == 0 }
+  public func tryRead() -> Bool { pthread_rwlock_tryrdlock(&readWriteLock) == 0 }
 
-  func tryWrite() -> Bool { pthread_rwlock_trywrlock(&readWriteLock) == 0 }
+  public func tryWrite() -> Bool { pthread_rwlock_trywrlock(&readWriteLock) == 0 }
 }
 
-extension ReadWriteLock {
+public extension ReadWriteLock {
 
   @discardableResult
   func readLocked<Result>(_ action: () throws -> Result) rethrows -> Result {

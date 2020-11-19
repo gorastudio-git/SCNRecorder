@@ -30,10 +30,8 @@ import SCNRecorder.Private
 
 extension SCNView: APIRecordable {
 
-  #if !targetEnvironment(simulator)
   public var recordableLayer: RecordableLayer? { layer as? RecordableLayer }
-  #endif // !targetEnvironment(simulator)
-
+  
   public var api: API {
     switch renderingAPI {
     case .metal: return .metal

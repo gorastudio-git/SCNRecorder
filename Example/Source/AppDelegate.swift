@@ -28,13 +28,12 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  var window: UIWindow?
+  lazy var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
 
   func application(
     _ application: UIApplication,
     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
-
     if #available(iOS 13.0, *) {
       #if compiler(>=5.1)
       let appearance = UINavigationBarAppearance()
@@ -47,6 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
     }
 
+    let mainViewController = MainViewController()
+    let navigationController = UINavigationController(rootViewController: mainViewController)
+
+    window?.rootViewController = navigationController
+    window?.makeKeyAndVisible()
+    
     return true
   }
 }

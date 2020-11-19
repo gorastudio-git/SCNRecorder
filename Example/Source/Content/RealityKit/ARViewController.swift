@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  RealityViewController.swift
 //  Example
 //
-//  Created by Vladislav Grigoryev on 01/07/2019.
+//  Created by Vladislav Grigoryev on 17.08.2020.
 //  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,15 +24,15 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
 import ARKit
+import RealityKit
 import AVKit
 
 import SCNRecorder
 
-class ViewController: UIViewController {
+class RealityViewController: UIViewController {
 
-  @IBOutlet var sceneView: SCNView!
+  @IBOutlet var sceneView: ARView!
 
   @IBOutlet var durationLabel: UILabel!
 
@@ -40,32 +40,42 @@ class ViewController: UIViewController {
 
   @IBOutlet var videoButton: UIButton!
 
-  var lastRecordingURL: URL?
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Show statistics such as fps and timing information
-    sceneView.showsStatistics = true
+    // Load the "Box" scene from the "Experience" Reality File
+    do {
+      let boxAnchor = try Experience.loadBox()
 
-    // Create a new scene
-    let scene = SCNScene(named: "art.scnassets/ship.scn")!
-
-    // Set the scene to the view
-    sceneView.scene = scene
-    sceneView.rendersContinuously = true
+      // Add the box anchor to the scene
+      sceneView.scene.anchors.append(boxAnchor)
+//      sceneView.automaticallyConfigureSession = false
+    }
+    catch { }
 
     // You must call prepareForRecording() before capturing something using SCNRecorder
     // It is recommended to do that at viewDidLoad
     sceneView.prepareForRecording()
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    // Create a session configuration
+    let configuration = ARWorldTrackingConfiguration()
+
+    // We want to record audio as well
+    configuration.providesAudioData = true
+
+    // Run the view's session
+    sceneView.session.run(configuration)
+  }
+
   @IBAction func takePhoto(_ sender: UIButton) {
     // A fastest way to capture photo
     sceneView.takePhoto { (photo) in
       // Create and present photo preview controller
-      let controller = PhotoPreviewController(photo: photo)
-      self.navigationController?.pushViewController(controller, animated: true)
+
 
       // Enable buttons
       self.photoButton.isEnabled = true
@@ -103,23 +113,6 @@ class ViewController: UIViewController {
   @objc func finishVideoRecording() {
     // Finish recording
     sceneView.finishVideoRecording { (recording) in
-      // Create a controller to preview captured video
-      let controller = AVPlayerViewController()
-
-      // Use an url from the recording
-      // The url is the same you passed to makeVideoRecording
-      controller.player = AVPlayer(url: recording.url)
-
-      // I don't recommend you to do this in an real app
-      self.lastRecordingURL = recording.url
-      controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
-        barButtonSystemItem: .action,
-        target: self,
-        action: #selector(ARSCNViewController.share(_:))
-      )
-
-      // Present the controller
-      self.navigationController?.pushViewController(controller, animated: true)
 
       // Update UI
       self.durationLabel.text = nil
@@ -134,13 +127,5 @@ class ViewController: UIViewController {
     videoButton.addTarget(self, action: #selector(startVideoRecording), for: .touchUpInside)
   }
 
-  @objc func share(_ sender: Any) {
-    guard let url = lastRecordingURL else { return }
 
-    present(
-      UIActivityViewController(activityItems: [url], applicationActivities: nil),
-      animated: true,
-      completion: nil
-    )
-  }
 }

@@ -26,25 +26,18 @@
 import Foundation
 import SceneKit
 
-private var videoRecordingKey: UInt8 = 0
-
 extension SCNView: SelfSceneRecordable {
-
-  var videoRecordingStorage: AssociatedStorage<VideoRecording> {
-    AssociatedStorage(object: self, key: &videoRecordingKey, policy: .OBJC_ASSOCIATION_RETAIN)
-  }
-
-  public var videoRecording: VideoRecording? {
-    get { videoRecordingStorage.get() }
-    set { videoRecordingStorage.set(newValue) }
-  }
 
   public func prepareForRecording() {
     Self.swizzle()
 
     #if !targetEnvironment(simulator)
     (layer as? CAMetalLayer)?.swizzle()
-    #endif // !targetEnvironment(simulator)
+    #else
+    if #available(iOS 13.0, *) {
+      (layer as? CAMetalLayer)?.swizzle()
+    }
+    #endif
 
     guard sceneRecorder == nil else { return }
     injectRecorder()

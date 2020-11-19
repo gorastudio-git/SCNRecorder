@@ -26,28 +26,30 @@
 import Foundation
 
 @propertyWrapper
-final class UnfairAtomic<Value>: Atomic {
+public final class UnfairAtomic<Value>: Atomic {
 
   private let lock = UnfairLock()
 
   private var _wrappedValue: Value
 
-  var wrappedValue: Value {
+  public var wrappedValue: Value {
     get { value }
     set { value = newValue }
   }
 
-  var projectedValue: UnfairAtomic<Value> { self }
+  public var projectedValue: UnfairAtomic<Value> { self }
 
-  init(wrappedValue: Value) { self._wrappedValue = wrappedValue }
+  public init(wrappedValue: Value) { self._wrappedValue = wrappedValue }
 
   @discardableResult
-  func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
+  public func withValue<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
     try lock.locked { try action(_wrappedValue) }
   }
 
   @discardableResult
-  func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
+  public func modify<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
     try lock.locked { try action(&_wrappedValue) }
   }
 }
+
+extension UnfairAtomic: ObservableInterface where Value: ObservableInterface { }

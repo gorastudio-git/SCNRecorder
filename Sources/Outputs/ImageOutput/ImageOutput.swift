@@ -55,9 +55,12 @@ final class ImageOutput {
     completionHandler handler: @escaping (ImageOutput, CGImage) -> Void
   ) -> ImageOutput {
     takePixelBuffer {
-      var image: CGImage?
-      VTCreateCGImageFromCVPixelBuffer($1, options: nil, imageOut: &image)
-      handler($0, image!)
+      var cgImage: CGImage?
+      VTCreateCGImageFromCVPixelBuffer($1, options: nil, imageOut: &cgImage)
+
+      assert(cgImage != nil)
+      guard let image = cgImage else { return }
+      handler($0, image)
     }
   }
 

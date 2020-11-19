@@ -25,11 +25,11 @@
 
 import Foundation
 
-final class UnfairLock {
+public final class UnfairLock {
 
   let unfairLock: os_unfair_lock_t
 
-  init() {
+  public init() {
     unfairLock = .allocate(capacity: 1)
     unfairLock.initialize(to: os_unfair_lock())
   }
@@ -39,14 +39,14 @@ final class UnfairLock {
     unfairLock.deallocate()
   }
 
-  func `try`() -> Bool { os_unfair_lock_trylock(unfairLock) }
+  public func `try`() -> Bool { os_unfair_lock_trylock(unfairLock) }
 
-  func lock() { os_unfair_lock_lock(unfairLock) }
+  public func lock() { os_unfair_lock_lock(unfairLock) }
 
-  func unlock() { os_unfair_lock_unlock(unfairLock) }
+  public func unlock() { os_unfair_lock_unlock(unfairLock) }
 }
 
-extension UnfairLock {
+public extension UnfairLock {
 
   @discardableResult
   func locked<Result>(_ action: () throws -> Result) rethrows -> Result {

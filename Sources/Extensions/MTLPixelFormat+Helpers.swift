@@ -26,8 +26,6 @@
 import Foundation
 import AVFoundation
 
-#if !targetEnvironment(simulator)
-
 extension MTLPixelFormat {
 
   // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
@@ -69,5 +67,3 @@ extension MTLPixelFormat {
     }
   }
 }
-
-#endif // !targetEnvironment(simulator)

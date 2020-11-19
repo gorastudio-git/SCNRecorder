@@ -51,8 +51,6 @@ extension SelfSceneRecordable {
   }
 }
 
-#if !targetEnvironment(simulator)
-
 extension SelfSceneRecordable where Self: MetalRecordable {
 
   public func injectRecorder() {
@@ -62,8 +60,6 @@ extension SelfSceneRecordable where Self: MetalRecordable {
     catch { assertionFailure("\(error)") }
   }
 }
-
-#endif // !targetEnvironment(simulator)
 
 extension SelfSceneRecordable where Self: APIRecordable {
 

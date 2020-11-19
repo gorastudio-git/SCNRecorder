@@ -39,7 +39,7 @@ public final class Observable<Property>: ObservableInterface {
 
   public typealias Observer = (Property) -> Void
 
-  public internal(set) var wrappedValue: Property {
+  public var wrappedValue: Property {
     didSet { observer?(wrappedValue) }
   }
 
@@ -54,14 +54,24 @@ public final class Observable<Property>: ObservableInterface {
 
 public extension ObservableInterface {
 
-  func observe(_ observer: @escaping Observer) { self.observer = observer }
+  func observe(
+    on queue: DispatchQueue? = nil,
+    _ observer: @escaping Observer
+  ) {
+    self.observer = queue.map { queue in
+      { value in queue.async { observer(value) }}
+    } ?? observer
+  }
 }
 
 public extension ObservableInterface where Property: Equatable {
 
-  func observeUnique(_ observer: @escaping Observer) {
+  func observeUnique(
+    on queue: DispatchQueue? = nil,
+    _ observer: @escaping Observer
+  ) {
     var oldValue: Property?
-    observe { (value) in
+    observe(on: queue) { (value) in
       guard oldValue != value else { return }
       observer(value)
       oldValue = value

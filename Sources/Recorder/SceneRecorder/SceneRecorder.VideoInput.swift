@@ -33,7 +33,6 @@ extension SceneRecorder {
 
     let timeScale: CMTimeScale
 
-    #if !targetEnvironment(simulator)
     let producer: MetalPixelBufferProducer
 
     var size: CGSize { producer.size }
@@ -42,43 +41,21 @@ extension SceneRecorder {
 
     var context: CIContext { producer.context }
 
-    #else
-
-    var size: CGSize { .zero }
-
-    var videoColorProperties: [String: String]? { nil }
-
-    var context: CIContext { CIContext() }
-
-    #endif // !targetEnvironment(simulator)
-
     var output: ((CVBuffer, CMTime) -> Void)?
 
     @UnfairAtomic var started: Bool = false
 
-    #if !targetEnvironment(simulator)
     init(recordable: MetalRecordable, timeScale: CMTimeScale, queue: DispatchQueue) throws {
       guard let recordableLayer = recordable.recordableLayer else { throw Error.recordableLayer }
 
       self.timeScale = timeScale
       self.producer = MetalPixelBufferProducer(recordableLayer: recordableLayer, queue: queue)
     }
-    #else
-
-    init(timeScale: CMTimeScale) {
-      self.timeScale = timeScale
-    }
-
-    #endif // !targetEnvironment(simulator)
 
     convenience init(recordable: APIRecordable, timeScale: CMTimeScale, queue: DispatchQueue) throws {
       switch recordable.api {
       case .metal:
-        #if !targetEnvironment(simulator)
         try self.init(recordable: recordable as MetalRecordable, timeScale: timeScale, queue: queue)
-        #else // !targetEnvironment(simulator)
-        throw Error.metalSimulator
-        #endif // !targetEnvironment(simulator)
       case .openGLES: throw Error.openGLES
       case .unknown: throw Error.unknownAPI
       }
@@ -90,11 +67,10 @@ extension SceneRecorder {
       guard started, let output = output else { return }
 
       let time = timeFromSeconds(time)
-      #if !targetEnvironment(simulator)
+
       try producer.produce { [output] (pixelBuffer) in
         output(pixelBuffer, time)
       }
-      #endif // !targetEnvironment(simulator)
     }
 
     func stop() { started = false }
