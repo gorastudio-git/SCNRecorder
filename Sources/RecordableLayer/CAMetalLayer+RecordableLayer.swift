@@ -71,8 +71,8 @@ extension CAMetalLayer: RecordableLayer {
 @available(iOS 13.0, *)
 extension CAMetalLayer {
 
-  var lastIOSurfaceStorage: AssociatedStorage<IOSurface> {
-    AssociatedStorage(object: self, key: &lastIOSurfaceKey, policy: .OBJC_ASSOCIATION_RETAIN)
+  var lastTextureStorage: AssociatedStorage<MTLTexture> {
+    AssociatedStorage(object: self, key: &lastTextureKey, policy: .OBJC_ASSOCIATION_RETAIN)
   }
 }
 
@@ -93,16 +93,14 @@ extension CAMetalLayer: RecordableLayer {
     _ = swizzleNextDrawableImplementation
   }
 
-  public var lastIOSurface: IOSurface? {
-    get { lastIOSurfaceStorage.get() }
-    set { lastIOSurfaceStorage.set(newValue) }
+  public var lastTexture: MTLTexture? {
+    get { lastTextureStorage.get() }
+    set { lastTextureStorage.set(newValue) }
   }
-
-  func swizzle() { Self.swizzle() }
 
   @objc dynamic func swizzled_nextDrawable() -> CAMetalDrawable? {
     let nextDrawable = swizzled_nextDrawable()
-    lastIOSurface = nextDrawable?.texture.iosurface
+    lastTexture = nextDrawable?.texture
     return nextDrawable
   }
 }

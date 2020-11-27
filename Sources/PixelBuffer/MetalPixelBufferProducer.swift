@@ -34,7 +34,11 @@ final class MetalPixelBufferProducer {
 
     case noSurface
 
+    case noBytes
+
     case framebufferOnly
+
+    case baseAddress
   }
 
   var size: CGSize { recordableLayer.drawableSize }
@@ -46,6 +50,8 @@ final class MetalPixelBufferProducer {
   let queue: DispatchQueue
 
   lazy var pixelBufferPoolFactory = PixelBufferPoolFactory.getWeaklyShared()
+
+  lazy var emptyBuffer = Buffer.zeroed(size: 0)
 
   init(recordableLayer: RecordableLayer, queue: DispatchQueue) {
     self.recordableLayer = recordableLayer
@@ -75,22 +81,40 @@ final class MetalPixelBufferProducer {
   ) throws {
     guard !texture.isFramebufferOnly else { throw Error.framebufferOnly }
 
+    let width = Int(recordableLayer.drawableSize.width)
+    let height = Int(recordableLayer.drawableSize.height)
+
     let pixelBufferPool = try pixelBufferPoolFactory.getPixelBufferPool(
-      width: texture.width,
-      height: texture.height,
-      pixelFormat: texture.pixelFormat.pixelFormatType
+      width: width,
+      height: height,
+      pixelFormat: recordableLayer.pixelFormat.pixelFormatType
     )
 
     let pixelBuffer = try pixelBufferPool.getPixelBuffer()
+
+    if let iccData = recordableLayer.pixelFormat.iccData {
+      pixelBuffer.propagatedAttachments = [kCVImageBufferICCProfileKey as String: iccData]
+    }
+
+    let bytesPerRow = pixelBuffer.bytesPerRow
     try pixelBuffer.locked { (pb) in
+      guard let baseAddress = pixelBuffer.baseAddress else { throw Error.baseAddress }
+
       texture.getBytes(
-        pb.baseAddress!,
-        bytesPerRow: pixelBuffer.bytesPerRow,
-        from: MTLRegionMake2D(0, 0, texture.width, texture.height),
+        baseAddress,
+        bytesPerRow: bytesPerRow,
+        from: MTLRegionMake2D(0, 0, width, height),
         mipmapLevel: 0
       )
+
+      guard !isEmpty(baseAddress, size: bytesPerRow * height) else { throw Error.noBytes }
     }
 
     queue.async { handler(pixelBuffer.cvPxelBuffer) }
+  }
+
+  func isEmpty(_ buffer: UnsafeMutableRawPointer, size: Int) -> Bool {
+    if emptyBuffer.size != size { emptyBuffer = Buffer.zeroed(size: size) }
+    return memcmp(buffer, emptyBuffer.ptr, size) == 0
   }
 }

@@ -31,6 +31,20 @@ extension MTLPixelFormat {
   // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
   static let undocumented_bgr10_xr_srgb = MTLPixelFormat(rawValue: 551) ?? .bgr10_xr_srgb
 
+  var colorSpace: CGColorSpace {
+    var colorSpace: CGColorSpace?
+
+    switch self {
+    case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
+      colorSpace = CGColorSpace(name: CGColorSpace.extendedLinearSRGB)
+    default:
+      colorSpace = CGColorSpace(name: CGColorSpace.sRGB)
+    }
+    return colorSpace ?? CGColorSpaceCreateDeviceRGB()
+  }
+
+  var iccData: CFData? { colorSpace.copyICCData() }
+
   var videoColorProperties: [String: String] {
     switch self {
     case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:

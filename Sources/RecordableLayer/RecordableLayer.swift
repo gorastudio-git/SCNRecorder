@@ -45,6 +45,8 @@ public extension RecordableLayer {
   func prepareForRecording() { }
 }
 
+#if !targetEnvironment(simulator)
+
 public extension RecordableLayer where Self: CAMetalLayer {
 
   func prepareForRecording() {
@@ -52,3 +54,18 @@ public extension RecordableLayer where Self: CAMetalLayer {
     if #available(iOS 14, *) { } else { framebufferOnly = false }
   }
 }
+
+#else
+
+@available(iOS 13.0, *)
+public extension RecordableLayer where Self: CAMetalLayer {
+
+  func prepareForRecording() {
+    Self.swizzle()
+    if #available(iOS 14, *) { } else { framebufferOnly = false }
+  }
+}
+
+#endif
+
+

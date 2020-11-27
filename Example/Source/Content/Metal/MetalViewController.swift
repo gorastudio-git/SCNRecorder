@@ -11,6 +11,7 @@ import UIKit
 import SCNRecorder
 import AVKit
 
+@available(iOS 13.0, *)
 final class MetalViewController: UIViewController {
 
   lazy var captureSession = metalView.recorder.flatMap {
@@ -50,6 +51,7 @@ final class MetalViewController: UIViewController {
   }
 }
 
+@available(iOS 13.0, *)
 extension MetalViewController: MetalViewDelegate {
 
   func drawableResize(_ size: CGSize) {
@@ -61,6 +63,7 @@ extension MetalViewController: MetalViewDelegate {
   }
 }
 
+@available(iOS 13.0, *)
 extension MetalViewController: Controllable {
 
   func takePhoto(handler: @escaping (UIImage) -> Void) {

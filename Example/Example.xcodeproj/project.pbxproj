@@ -547,8 +547,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "gora.studio.SCNRecorder.Example.${DEVELOPMENT_TEAM}";
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -571,8 +571,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "gora.studio.SCNRecorder.Example.${DEVELOPMENT_TEAM}";
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Example-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

@@ -10,6 +10,7 @@ import Foundation
 import Metal
 import UIKit
 
+@available(iOS 13.0, *)
 final class SquadRenderer {
 
   static let quadVertices = [

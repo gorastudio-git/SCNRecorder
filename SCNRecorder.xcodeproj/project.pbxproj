@@ -752,7 +752,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.3.0;
 				MODULEMAP_FILE = SCNRecorder.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = gora.studio.SCNRecorder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -780,7 +780,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.3.0;
 				MODULEMAP_FILE = SCNRecorder.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = gora.studio.SCNRecorder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

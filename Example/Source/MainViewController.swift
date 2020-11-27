@@ -21,8 +21,8 @@ final class MainViewController: ViewController {
     items.append((title: "SceneKit Example", controller: SceneKitViewController.self))
     if #available(iOS 13, *) {
       items.append((title: "RealityKit Example", controller: RealityKitViewController.self))
+      items.append( (title: "Metal Example", controller: MetalViewController.self))
     }
-    items.append( (title: "Metal Example", controller: MetalViewController.self))
     return items
   }()
 

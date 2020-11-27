@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SCNRecorder
 
+@available(iOS 13.0, *)
 protocol MetalViewDelegate: AnyObject {
 
   func drawableResize(_ size: CGSize)
@@ -17,6 +18,7 @@ protocol MetalViewDelegate: AnyObject {
   func renderToMetalLayer(_ metalLayer: CAMetalLayer)
 }
 
+@available(iOS 13.0, *)
 final class MetalView: UIView {
 
   override class var layerClass: AnyClass { CAMetalLayer.self }
@@ -65,6 +67,7 @@ final class MetalView: UIView {
   }
 }
 
+@available(iOS 13.0, *)
 extension MetalView {
 
   func startRenderLoop(_ screen: UIScreen) {
@@ -103,6 +106,7 @@ extension MetalView {
 }
 
 // MARK: - Notifications
+@available(iOS 13.0, *)
 extension MetalView {
 
   func subscribeToNotifications() {
@@ -126,6 +130,7 @@ extension MetalView {
   @objc func willEnterForeground(_ notification: Notification) { isPaused = false }
 }
 
+@available(iOS 13.0, *)
 extension MetalView: MetalRecordable, SelfSceneRecordable {
 
   var recordableLayer: RecordableLayer? { metalLayer }
