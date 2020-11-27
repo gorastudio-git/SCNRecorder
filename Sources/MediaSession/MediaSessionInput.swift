@@ -51,7 +51,7 @@ protocol VideoMediaSessionInput: MediaSessionInput {
 
   var videoColorProperties: [String: String]? { get }
 
-  var context: CIContext { get }
+  var pixelBufferPoolFactory: PixelBufferPoolFactory { get }
 }
 
 protocol SampleBufferInput: AnyObject {

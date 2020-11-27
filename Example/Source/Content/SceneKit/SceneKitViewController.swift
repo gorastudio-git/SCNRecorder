@@ -34,7 +34,9 @@ final class SceneKitViewController: ViewController {
     try? AVCaptureSession.makeAudioForRecorder($0)
   }
 
+  // swiftlint:disable force_cast
   lazy var sceneView: SCNView = view as! SCNView
+  // swiftlint:enable force_cast
 
   override func loadView() { view = SCNView() }
 
@@ -46,10 +48,10 @@ final class SceneKitViewController: ViewController {
     // Set the scene to the view
     sceneView.scene = scene
     sceneView.rendersContinuously = true
-    
+
     // Show statistics such as fps and timing information
     sceneView.showsStatistics = true
-    
+
     sceneView.allowsCameraControl = true
 
     // You must call prepareForRecording() before capturing something using SCNRecorder

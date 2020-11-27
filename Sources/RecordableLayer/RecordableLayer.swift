@@ -29,11 +29,26 @@ import AVFoundation
 
 public protocol RecordableLayer: AnyObject {
 
-  var lastIOSurface: IOSurface? { get }
+  var lastTexture: MTLTexture? { get }
 
   var device: MTLDevice? { get }
 
   var pixelFormat: MTLPixelFormat { get }
 
   var drawableSize: CGSize { get }
+
+  func prepareForRecording()
+}
+
+public extension RecordableLayer {
+
+  func prepareForRecording() { }
+}
+
+public extension RecordableLayer where Self: CAMetalLayer {
+
+  func prepareForRecording() {
+    Self.swizzle()
+    if #available(iOS 14, *) { } else { framebufferOnly = false }
+  }
 }

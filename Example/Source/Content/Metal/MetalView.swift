@@ -21,7 +21,9 @@ final class MetalView: UIView {
 
   override class var layerClass: AnyClass { CAMetalLayer.self }
 
+  // swiftlint:disable force_cast
   lazy var metalLayer = layer as! CAMetalLayer
+  // swiftlint:enable force_cast
 
   weak var delegate: MetalViewDelegate?
 
@@ -125,6 +127,6 @@ extension MetalView {
 }
 
 extension MetalView: MetalRecordable, SelfSceneRecordable {
-  
+
   var recordableLayer: RecordableLayer? { metalLayer }
 }

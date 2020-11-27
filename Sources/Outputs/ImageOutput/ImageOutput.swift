@@ -28,72 +28,74 @@ import AVFoundation
 import UIKit
 import VideoToolbox
 
-final class ImageOutput {
+enum ImageOutput {
+
+  enum Error: Swift.Error {
+
+    case createCGImageFromCVPixelBufferFailed(_ status: OSStatus)
+  }
 
   static func takeUIImage(
     scale: CGFloat,
     orientation: UIImage.Orientation,
-    context: CIContext,
-    completionHandler handler: @escaping (ImageOutput, UIImage) -> Void
-  ) -> ImageOutput {
-    takeCGImage(context: context) {
-      handler($0, UIImage(cgImage: $1, scale: scale, orientation: orientation))
+    handler: @escaping (Result<UIImage, Swift.Error>) -> Void
+  ) -> (Result<CVPixelBuffer, Swift.Error>) -> Void {
+    takeCGImage { result in
+      handler(
+        result.map {
+          UIImage(cgImage: $0, scale: scale, orientation: orientation)
+        }
+      )
     }
   }
 
   static func takeCIImage(
-    context: CIContext,
-    completionHandler handler: @escaping (ImageOutput, CIImage) -> Void
-  ) -> ImageOutput {
-    takeCGImage(context: context) {
-      handler($0, CIImage(cgImage: $1))
+    handler: @escaping (Result<CIImage, Swift.Error>) -> Void
+  ) -> (Result<CVPixelBuffer, Swift.Error>) -> Void {
+    takeCGImage { result in
+      handler(
+        result.map {
+          CIImage(cgImage: $0)
+        }
+      )
     }
   }
 
   static func takeCGImage(
-    context: CIContext,
-    completionHandler handler: @escaping (ImageOutput, CGImage) -> Void
-  ) -> ImageOutput {
-    takePixelBuffer {
-      var cgImage: CGImage?
-      VTCreateCGImageFromCVPixelBuffer($1, options: nil, imageOut: &cgImage)
+    handler: @escaping (Result<CGImage, Swift.Error>) -> Void
+  ) -> (Result<CVPixelBuffer, Swift.Error>) -> Void {
+    {
+      handler($0.flatMap { pixelBuffer in
+        var cgImage: CGImage?
+        let status = VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
 
-      assert(cgImage != nil)
-      guard let image = cgImage else { return }
-      handler($0, image)
+        guard let image = cgImage else {
+          return .failure(Error.createCGImageFromCVPixelBufferFailed(status))
+        }
+        return .success(image)
+      })
     }
   }
 
   static func takePixelBuffer(
-    completionHandler handler: @escaping (ImageOutput, CVPixelBuffer) -> Void
-  ) -> ImageOutput {
-    ImageOutput(completionHandler: handler)
-  }
+    pixelBufferPoolFactory: PixelBufferPoolFactory,
+    handler: @escaping (Result<CVPixelBuffer, Swift.Error>) -> Void
+  ) -> (CVPixelBuffer, CMTime) -> Void {
+    { (pixelBuffer, _) in
+      handler(.success(pixelBuffer))
 
-  var handler: ((ImageOutput, CVPixelBuffer) -> Void)?
-
-  init(completionHandler handler: @escaping (ImageOutput, CVPixelBuffer) -> Void) {
-    self.handler = { (imageOutput, pixelBuffer) in
-      handler(imageOutput, pixelBuffer)
-      self.handler = nil
+//      if #available(iOS 14, *) {
+//        handler(Result {
+//          // Copy pixel buffer data since underlying surface might change
+//          let pixelBufferPool = try pixelBufferPoolFactory.getPixelBufferPool(for: pixelBuffer)
+//          let copyPixelBuffer = try pixelBufferPool.getPixelBuffer()
+//          try copyPixelBuffer.copyFrom(pixelBuffer)
+//          return copyPixelBuffer.cvPxelBuffer
+//        })
+//      }
+//      else {
+//        handler(.success(pixelBuffer))
+//      }
     }
-  }
-}
-
-extension ImageOutput: MediaSession.Output.Video {
-
-  func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
-    guard let imageBuffer: CVImageBuffer = {
-      if #available(iOS 13.0, *) {
-        return sampleBuffer.imageBuffer
-      } else {
-        return CMSampleBufferGetImageBuffer(sampleBuffer)
-      }
-    }() else { return }
-    handler?(self, imageBuffer)
-  }
-
-  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
-    handler?(self, buffer)
   }
 }

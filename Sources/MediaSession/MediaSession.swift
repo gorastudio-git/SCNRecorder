@@ -49,7 +49,7 @@ final class MediaSession {
 
     var videoColorProperties: [String: String]? { videoInput.videoColorProperties }
 
-    var context: CIContext { videoInput.context }
+    var pixelBufferPoolFactory: PixelBufferPoolFactory { videoInput.pixelBufferPoolFactory }
 
     func start() { videoInput.start() }
 
@@ -64,22 +64,36 @@ final class MediaSession {
 
   @Observable var error: Swift.Error?
 
-  private(set) var videoInput: VideoInput?
+  let videoInput: VideoInput
 
   private(set) var audioInput: Input.SampleBufferAudio?
 
-  public init(queue: DispatchQueue) { self.queue = queue }
+  init(
+    queue: DispatchQueue,
+    videoInput: VideoInput
+  ) {
+    self.queue = queue
+    self.videoInput = videoInput
+  }
 
-  func setVideoInput(_ videoInput: Input.PixelBufferVideo) {
-    self.videoInput = .pixel(videoInput)
+  convenience init(
+    queue: DispatchQueue,
+    videoInput: Input.PixelBufferVideo
+  ) {
+    self.init(queue: queue, videoInput: .pixel(videoInput))
+
     videoInput.output = { [weak self] (buffer: CVBuffer, time: CMTime) in
       guard let this = self else { return }
       this.appendVideoBuffer(buffer, at: time)
     }
   }
 
-  func setVideoInput(_ videoInput: Input.SampleBufferVideo) {
-    self.videoInput = .sample(videoInput)
+  convenience init(
+    queue: DispatchQueue,
+    videoInput: Input.SampleBufferVideo
+  ) {
+    self.init(queue: queue, videoInput: .sample(videoInput))
+
     videoInput.output = { [weak self] (sampleBuffer: CMSampleBuffer) in
       guard let this = self else { return }
       this.appendVideoBuffer(sampleBuffer)
@@ -97,8 +111,8 @@ final class MediaSession {
 
 extension MediaSession {
 
-  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
-    videoOutputs.forEach { $0.appendVideoBuffer(buffer, at: time) }
+  func appendVideoBuffer(_ pixelBuffer: CVPixelBuffer, at time: CMTime) {
+    videoOutputs.forEach { $0.appendVideoPixelBuffer(pixelBuffer, at: time) }
   }
 
   func appendVideoBuffer(_ sampleBuffer: CMSampleBuffer) {
@@ -128,8 +142,6 @@ extension MediaSession {
     videoSettings: VideoSettings = VideoSettings(),
     audioSettings: AudioSettings = AudioSettings()
   ) throws -> VideoRecording {
-    guard let videoInput = videoInput else { throw NSError() }
-
     var videoSettings = videoSettings
     if videoSettings.size == nil { videoSettings.size = videoInput.size }
     videoSettings.videoColorProperties = videoInput.videoColorProperties
@@ -154,46 +166,35 @@ extension MediaSession {
   func takePhoto(
     scale: CGFloat,
     orientation: UIImage.Orientation,
-    completionHandler handler: @escaping (UIImage) -> Void
+    handler: @escaping (Result<UIImage, Swift.Error>) -> Void
   ) {
-    guard let videoInput = videoInput else { return }
-
-    addVideoOutput(
-      ImageOutput.takeUIImage(
+    takePixelBuffer(
+      handler: ImageOutput.takeUIImage(
         scale: scale,
         orientation: orientation,
-        context: videoInput.context,
-        completionHandler: { [weak self] in
-          self?.removeVideoOutput($0)
-          handler($1)
-        }
+        handler: handler
       )
     )
   }
 
-  func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
-    guard let videoInput = videoInput else { return }
-
-    addVideoOutput(
-      ImageOutput.takeCIImage(
-        context: videoInput.context,
-        completionHandler: { [weak self] in
-          self?.removeVideoOutput($0)
-          handler($1)
-        }
-      )
-    )
+  func takeCoreImage(handler: @escaping (Result<CIImage, Swift.Error>) -> Void) {
+    takePixelBuffer(handler: ImageOutput.takeCIImage(handler: handler))
   }
 
-  func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
-    addVideoOutput(
-      ImageOutput.takePixelBuffer(
-        completionHandler: { [weak self] in
-          self?.removeVideoOutput($0)
-          handler($1)
-        }
+  func takePixelBuffer(handler: @escaping (Result<CVPixelBuffer, Swift.Error>) -> Void) {
+    var localHandler: ((Result<CVPixelBuffer, Swift.Error>) -> Void)?
+    let output = capturePixelBuffers(
+      handler: ImageOutput.takePixelBuffer(
+        pixelBufferPoolFactory: videoInput.pixelBufferPoolFactory,
+        handler: { localHandler?($0) }
       )
     )
+
+    localHandler = {
+      _ = output
+      localHandler = nil
+      handler($0)
+    }
   }
 }
 
@@ -203,14 +204,14 @@ extension MediaSession {
     if ($videoOutputs.modify {
       $0.append(videoOutput)
       return $0.count == 1
-    }) { videoInput?.start() }
+    }) { videoInput.start() }
   }
 
   func removeVideoOutput(_ videoOutput: MediaSession.Output.Video) {
     if ($videoOutputs.modify {
       $0 = $0.filter { $0 !== videoOutput }
       return $0.count == 0
-    }) { videoInput?.stop() }
+    }) { videoInput.stop() }
   }
 
   func addAudioOutput(_ audioOutput: MediaSession.Output.Audio) {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-func weakify<Self: AnyObject>(_ self: Self, _ closure: @escaping (Self) -> () -> ()) -> () -> () {
+func weakify<Self: AnyObject>(_ self: Self, _ closure: @escaping (Self) -> () -> Void) -> () -> Void {
   { [weak self] in self.map { closure($0)() } }
 }
 

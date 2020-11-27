@@ -15,14 +15,20 @@ final class MainViewController: ViewController {
   static let cellResuseIdentifier = "Cell"
 
   typealias Item = (title: String, controller: ControllableViewController.Type)
-  let items: [Item] = [
-    (title: "ARKit Example", controller: ARKitViewController.self),
-    (title: "SceneKit Example", controller: SceneKitViewController.self),
-    (title: "RealityKit Example", controller: RealityKitViewController.self),
-    (title: "Metal Example", controller: MetalViewController.self)
-  ]
+  let items: [Item] = {
+    var items = [Item]()
+    items.append((title: "ARKit Example", controller: ARKitViewController.self))
+    items.append((title: "SceneKit Example", controller: SceneKitViewController.self))
+    if #available(iOS 13, *) {
+      items.append((title: "RealityKit Example", controller: RealityKitViewController.self))
+    }
+    items.append( (title: "Metal Example", controller: MetalViewController.self))
+    return items
+  }()
 
+  // swiftlint:disable force_cast
   lazy var tableView: UITableView = view as! UITableView
+  // swiftlint:enable force_cast
 
   override func loadView() { view = UITableView() }
 

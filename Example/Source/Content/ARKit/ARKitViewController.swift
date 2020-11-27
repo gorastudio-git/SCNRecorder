@@ -29,7 +29,9 @@ import SCNRecorder
 
 final class ARKitViewController: ViewController {
 
+  // swiftlint:disable force_cast
   lazy var sceneView: ARSCNView = view as! ARSCNView
+  // swiftlint:enable force_cast
 
   override func loadView() { view = ARSCNView() }
 

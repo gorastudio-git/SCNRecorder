@@ -47,6 +47,8 @@ extension CleanRecorder {
 
     var videoColorProperties: [String: String]? { nil }
 
+    lazy var pixelBufferPoolFactory = PixelBufferPoolFactory.getWeaklyShared()
+
     let context: CIContext = MTLCreateSystemDefaultDevice()
       .map({ CIContext(mtlDevice: $0 )}) ?? CIContext()
 

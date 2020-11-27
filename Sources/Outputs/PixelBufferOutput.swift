@@ -48,13 +48,13 @@ final public class PixelBufferOutput {
       output.appendVideoSampleBuffer(sampleBuffer)
     }
 
-    func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
+    func appendVideoPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: CMTime) {
       guard let output = output else {
         deinitHandler?(self)
         deinitHandler = nil
         return
       }
-      output.appendVideoBuffer(buffer, at: time)
+      output.appendVideoPixelBuffer(pixelBuffer, at: time)
     }
   }
 
@@ -86,7 +86,7 @@ extension PixelBufferOutput: MediaSession.Output.Video {
     handler(imageBuffer, time)
   }
 
-  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
-    handler(buffer, time)
+  func appendVideoPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: CMTime) {
+    handler(pixelBuffer, time)
   }
 }

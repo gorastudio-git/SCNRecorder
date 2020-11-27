@@ -31,20 +31,6 @@ extension MTLPixelFormat {
   // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
   static let undocumented_bgr10_xr_srgb = MTLPixelFormat(rawValue: 551) ?? .bgr10_xr_srgb
 
-  var colorSpace: CGColorSpace {
-    var colorSpace: CGColorSpace?
-
-    switch self {
-    case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
-      colorSpace = CGColorSpace(name: CGColorSpace.extendedLinearSRGB)
-    default:
-      colorSpace = CGColorSpace(name: CGColorSpace.sRGB)
-    }
-    return colorSpace ?? CGColorSpaceCreateDeviceRGB()
-  }
-
-  var iccData: CFData? { colorSpace.copyICCData() }
-
   var videoColorProperties: [String: String] {
     switch self {
     case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
@@ -60,8 +46,23 @@ extension MTLPixelFormat {
 
   var pixelFormatType: OSType {
     switch self {
-    case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
+
+    case .bgra8Unorm, .bgra8Unorm_srgb:
+      return kCVPixelFormatType_32BGRA
+
+    case .rgba16Float:
+      return kCVPixelFormatType_64RGBAHalf
+
+    case .bgr10_xr, .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
       return kCVPixelFormatType_30RGBLEPackedWideGamut
+
+    case .bgr10a2Unorm:
+      return kCVPixelFormatType_ARGB2101010LEPacked
+
+      // So far there are no public core video pixel formats for metal pixel formats below
+//    case .bgra10_xr, .bgra10_xr_srgb:
+//    case .rgb10a2Unorm:
+
     default:
       return kCVPixelFormatType_32BGRA
     }

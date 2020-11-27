@@ -16,8 +16,10 @@ final class MetalViewController: UIViewController {
   lazy var captureSession = metalView.recorder.flatMap {
     try? AVCaptureSession.makeAudioForRecorder($0)
   }
-  
+
+  // swiftlint:disable force_cast
   lazy var metalView = view as! MetalView
+  // swiftlint:enable force_cast
 
   var renderer: SquadRenderer?
 

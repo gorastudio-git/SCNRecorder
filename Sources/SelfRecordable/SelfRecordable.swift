@@ -65,12 +65,11 @@ extension SelfRecordable {
 
   func assertedRecorder(
     file: StaticString = #file,
-    line: UInt = #line,
-    function: StaticString = #function
+    line: UInt = #line
   ) -> Recorder {
     assert(
       recorder != nil,
-      "prepareForRecording() must be called before \(function)",
+      "Please call prepareForRecording() at viewDidLoad!",
       file: file,
       line: line
     )
@@ -125,13 +124,7 @@ public extension SelfRecordable {
 public extension SelfRecordable where Self: MetalRecordable {
 
   func prepareForRecording() {
-    #if !targetEnvironment(simulator)
-    (recordableLayer as? CAMetalLayer)?.swizzle()
-    #else
-    if #available(iOS 13.0, *) {
-      (recordableLayer as? CAMetalLayer)?.swizzle()
-    }
-    #endif
+    recordableLayer?.prepareForRecording()
 
     guard recorder == nil else { return }
     injectRecorder()
@@ -217,6 +210,17 @@ public extension SelfRecordable {
     scale: CGFloat = UIScreen.main.scale,
     orientation: UIImage.Orientation = .up,
     completionHandler handler: @escaping (UIImage) -> Void
+  ) {
+    takePhotoResult {
+      do { try handler($0.get()) }
+      catch { assertionFailure("\(error)") }
+    }
+  }
+
+  func takePhotoResult(
+    scale: CGFloat = UIScreen.main.scale,
+    orientation: UIImage.Orientation = .up,
+    handler: @escaping (Result<UIImage, Swift.Error>) -> Void
   ) {
     assertedRecorder().takePhoto(scale: scale, orientation: orientation) { photo in
       DispatchQueue.main.async { handler(photo) }

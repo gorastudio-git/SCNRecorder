@@ -30,9 +30,12 @@ import AVKit
 
 import SCNRecorder
 
+@available(iOS 13.0, *)
 class RealityKitViewController: UIViewController {
 
+  // swiftlint:disable force_cast
   lazy var realityView: ARView = view as! ARView
+  // swiftlint:enable force_cast
 
   override func loadView() { view = ARView() }
 
@@ -73,6 +76,7 @@ class RealityKitViewController: UIViewController {
   #endif
 }
 
+@available(iOS 13.0, *)
 extension RealityKitViewController: Controllable {
 
   func takePhoto(handler: @escaping (UIImage) -> Void) {

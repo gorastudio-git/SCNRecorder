@@ -26,14 +26,14 @@
 		D56686A325668A9900F72AE2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56686A225668A9900F72AE2 /* MainViewController.swift */; };
 		D56686A52566CAD000F72AE2 /* VideoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56686A42566CAD000F72AE2 /* VideoPreviewController.swift */; };
 		D56686A72566CCDB00F72AE2 /* Controllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56686A62566CCDB00F72AE2 /* Controllable.swift */; };
-		D5A4065824EB14580022600D /* ARView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065624EB14580022600D /* ARView+SelfSceneRecordable.swift */; };
-		D5A4065924EB14580022600D /* ARView+MetalRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065724EB14580022600D /* ARView+MetalRecordable.swift */; };
 		D5A4066024EB1A920022600D /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065F24EB1A920022600D /* Experience.rcproject */; };
-		D5A4066224EB1A9D0022600D /* RealityKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4066124EB1A9D0022600D /* RealityKitViewController.swift */; };
 		D5C7240425651675006A1168 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7240325651675006A1168 /* MetalView.swift */; };
 		D5C724062565167F006A1168 /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C724052565167F006A1168 /* MetalViewController.swift */; };
 		D5C7240A25651F79006A1168 /* SquadRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7240925651F79006A1168 /* SquadRenderer.swift */; };
 		D5C7240D25652BD6006A1168 /* MetalShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D5C7240C25652BD6006A1168 /* MetalShaders.metal */; };
+		D5EE33EA257105070056085A /* ARView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065624EB14580022600D /* ARView+SelfSceneRecordable.swift */; };
+		D5EE33EB257105070056085A /* ARView+MetalRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4065724EB14580022600D /* ARView+MetalRecordable.swift */; };
+		D5EE33EC257105070056085A /* RealityKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4066124EB1A9D0022600D /* RealityKitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -378,23 +378,23 @@
 			files = (
 				D56686A72566CCDB00F72AE2 /* Controllable.swift in Sources */,
 				D56686A325668A9900F72AE2 /* MainViewController.swift in Sources */,
+				D5EE33EA257105070056085A /* ARView+SelfSceneRecordable.swift in Sources */,
 				D512FDE7256663DA00933885 /* View.swift in Sources */,
+				D5EE33EB257105070056085A /* ARView+MetalRecordable.swift in Sources */,
 				BE4C34752237C827007AE1EE /* ARKitViewController.swift in Sources */,
 				D5C7240425651675006A1168 /* MetalView.swift in Sources */,
 				D56686A52566CAD000F72AE2 /* VideoPreviewController.swift in Sources */,
 				BE79CB5A22CA4BD6006058AA /* SceneKitViewController.swift in Sources */,
-				D5A4065924EB14580022600D /* ARView+MetalRecordable.swift in Sources */,
 				D5A4066024EB1A920022600D /* Experience.rcproject in Sources */,
 				BE4C34712237C827007AE1EE /* AppDelegate.swift in Sources */,
 				BE4C34902237CA8E007AE1EE /* PhotoPreviewController.swift in Sources */,
-				D5A4066224EB1A9D0022600D /* RealityKitViewController.swift in Sources */,
 				D512FDF22566846B00933885 /* ViewController.swift in Sources */,
 				D512FDF02566804100933885 /* Weakifiable.swift in Sources */,
 				D5C7240D25652BD6006A1168 /* MetalShaders.metal in Sources */,
 				D54B203E25654ECB00482B84 /* ControlsViewController.swift in Sources */,
+				D5EE33EC257105070056085A /* RealityKitViewController.swift in Sources */,
 				D512FDEE2566803000933885 /* Weakify.swift in Sources */,
 				D5C724062565167F006A1168 /* MetalViewController.swift in Sources */,
-				D5A4065824EB14580022600D /* ARView+SelfSceneRecordable.swift in Sources */,
 				D54B204125654EDF00482B84 /* ControlsView.swift in Sources */,
 				D5C7240A25651F79006A1168 /* SquadRenderer.swift in Sources */,
 				D512FDEB256669A700933885 /* Button.swift in Sources */,
@@ -542,7 +542,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YRQAZBYJYS;
 				INFOPLIST_FILE = Source/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -566,7 +566,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YRQAZBYJYS;
 				INFOPLIST_FILE = Source/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

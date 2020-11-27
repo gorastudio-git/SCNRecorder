@@ -44,9 +44,9 @@ public class BaseRecorder: NSObject {
 
   @Observable var error: Swift.Error?
 
-  public init(queue: DispatchQueue) {
+  init(queue: DispatchQueue, mediaSession: MediaSession) {
     self.queue = queue
-    self.mediaSession = MediaSession(queue: queue)
+    self.mediaSession = mediaSession
     super.init()
     self.mediaSession.$error.observe { [weak self] in self?.error = $0 }
   }
@@ -72,21 +72,21 @@ public class BaseRecorder: NSObject {
   public func takePhoto(
     scale: CGFloat,
     orientation: UIImage.Orientation,
-    completionHandler handler: @escaping (UIImage) -> Void
+    handler: @escaping (Result<UIImage, Swift.Error>) -> Void
   ) {
     mediaSession.takePhoto(
       scale: scale,
       orientation: orientation,
-      completionHandler: handler
+      handler: handler
     )
   }
 
-  public func takeCoreImage(completionHandler handler: @escaping (CIImage) -> Void) {
-    mediaSession.takeCoreImage(completionHandler: handler)
+  public func takeCoreImage(handler: @escaping (Result<CIImage, Swift.Error>) -> Void) {
+    mediaSession.takeCoreImage(handler: handler)
   }
 
-  public func takePixelBuffer(completionHandler handler: @escaping (CVPixelBuffer) -> Void) {
-    mediaSession.takePixelBuffer(completionHandler: handler)
+  public func takePixelBuffer(handler: @escaping (Result<CVPixelBuffer, Swift.Error>) -> Void) {
+    mediaSession.takePixelBuffer(handler: handler)
   }
 }
 

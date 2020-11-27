@@ -19,7 +19,9 @@ protocol ControlsViewControllerDelegate: AnyObject {
 
 final class ControlsViewController: ViewController {
 
+  // swiftlint:disable force_cast
   lazy var controlsView = view as! ControlsView
+  // swiftlint:enable force_cast
 
   let viewController: ControllableViewController
 

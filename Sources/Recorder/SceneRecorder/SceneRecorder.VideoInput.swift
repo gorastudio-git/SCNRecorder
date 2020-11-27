@@ -39,7 +39,7 @@ extension SceneRecorder {
 
     var videoColorProperties: [String: String]? { producer.videoColorProperties }
 
-    var context: CIContext { producer.context }
+    var pixelBufferPoolFactory: PixelBufferPoolFactory { producer.pixelBufferPoolFactory }
 
     var output: ((CVBuffer, CMTime) -> Void)?
 

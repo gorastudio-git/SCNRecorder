@@ -42,5 +42,5 @@ protocol VideoMediaSessionOutput: MediaSessionOutput {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer)
 
-  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime)
+  func appendVideoPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: CMTime)
 }

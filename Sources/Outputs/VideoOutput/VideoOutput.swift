@@ -222,8 +222,8 @@ extension VideoOutput: MediaSession.Output.Video {
     state = state.appendVideoSampleBuffer(sampleBuffer, to: self)
   }
 
-  func appendVideoBuffer(_ buffer: CVBuffer, at time: CMTime) {
-    state = state.appendVideoBuffer(buffer, at: time, to: self)
+  func appendVideoPixelBuffer(_ pixelBuffer: CVPixelBuffer, at time: CMTime) {
+    state = state.appendVideoPixelBuffer(pixelBuffer, at: time, to: self)
   }
 }
 

@@ -44,9 +44,9 @@ final class SquadRenderer {
 
     drawableRenderDescriptor = MTLRenderPassDescriptor()
 
-    drawableRenderDescriptor.colorAttachments[0].loadAction = .clear;
-    drawableRenderDescriptor.colorAttachments[0].storeAction = .store;
-    drawableRenderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 1, 1, 1);
+    drawableRenderDescriptor.colorAttachments[0].loadAction = .clear
+    drawableRenderDescriptor.colorAttachments[0].storeAction = .store
+    drawableRenderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 1, 1, 1)
 
     guard let vertices = device.makeBuffer(
       bytes: Self.quadVertices,

@@ -71,11 +71,10 @@ final class ControlsView: View {
   }
 }
 
-
 // MARK: - Actions
 extension ControlsView {
 
-  var takePhoto: (() -> (Void))? {
+  var takePhoto: (() -> Void)? {
     get { takePhotoButton.touchUpInside }
     set { takePhotoButton.touchUpInside = newValue }
   }

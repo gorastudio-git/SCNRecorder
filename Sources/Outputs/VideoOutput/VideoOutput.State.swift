@@ -193,12 +193,12 @@ public enum VideoOutputState: Equatable {
     catch { return .failed(error: error) }
   }
 
-  func appendVideoBuffer(
-    _ buffer: CVBuffer,
+  func appendVideoPixelBuffer(
+    _ pixelBuffer: CVPixelBuffer,
     at time: CMTime,
     to videoOutput: VideoOutput
   ) -> Self {
-    do { return try _appendVideoBuffer(buffer, at: time, to: videoOutput) }
+    do { return try _appendVideoPixelBuffer(pixelBuffer, at: time, to: videoOutput) }
     catch { return .failed(error: error) }
   }
 
@@ -248,8 +248,8 @@ private extension VideoOutputState {
     }
   }
 
-  func _appendVideoBuffer(
-    _ buffer: CVBuffer,
+  func _appendVideoPixelBuffer(
+    _ pixelBuffer: CVPixelBuffer,
     at time: CMTime,
     to videoOutput: VideoOutput
   ) throws -> Self {
@@ -261,11 +261,11 @@ private extension VideoOutputState {
 
     case .preparing:
       videoOutput.startSession(at: time)
-      try videoOutput.append(pixelBuffer: buffer, withPresentationTime: time)
+      try videoOutput.append(pixelBuffer: pixelBuffer, withPresentationTime: time)
       return .recording(time: time)
 
     case .recording:
-      try videoOutput.append(pixelBuffer: buffer, withPresentationTime: time)
+      try videoOutput.append(pixelBuffer: pixelBuffer, withPresentationTime: time)
       return .recording(time: time)
 
     case .paused,

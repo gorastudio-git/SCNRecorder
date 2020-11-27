@@ -33,8 +33,10 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
 
   init(videoInput: VideoInput, queue: DispatchQueue) {
     self.videoInput = videoInput
-    super.init(queue: queue)
-    self.mediaSession.setVideoInput(videoInput)
+    super.init(
+      queue: queue,
+      mediaSession: MediaSession(queue: queue, videoInput: videoInput)
+    )
   }
 
   public convenience init<T: MetalRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {

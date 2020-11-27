@@ -30,6 +30,7 @@ import Combine
 
 private var cancellableKey: UInt8 = 0
 
+@available(iOS 13.0, *)
 extension ARView: SelfSceneRecordable {
 
   var _cancelable: Cancellable? {
@@ -56,7 +57,7 @@ extension ARView: SelfSceneRecordable {
       #if !targetEnvironment(simulator)
       session.delegate = sceneRecorder
       #endif
-      
+
       _cancelable?.cancel()
       _cancelable = scene.subscribe(
         to: SceneEvents.Update.self

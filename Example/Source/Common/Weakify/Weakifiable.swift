@@ -14,7 +14,7 @@ extension Weakifiable {
 
   typealias `Self` = Self
 
-  func weakify(_ closure: @escaping (Self) -> () -> ()) -> () -> () {
+  func weakify(_ closure: @escaping (Self) -> () -> Void) -> () -> Void {
     Example.weakify(self, closure)
   }
 

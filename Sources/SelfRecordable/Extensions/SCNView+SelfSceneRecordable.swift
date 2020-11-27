@@ -31,13 +31,7 @@ extension SCNView: SelfSceneRecordable {
   public func prepareForRecording() {
     Self.swizzle()
 
-    #if !targetEnvironment(simulator)
-    (layer as? CAMetalLayer)?.swizzle()
-    #else
-    if #available(iOS 13.0, *) {
-      (layer as? CAMetalLayer)?.swizzle()
-    }
-    #endif
+    recordableLayer?.prepareForRecording()
 
     guard sceneRecorder == nil else { return }
     injectRecorder()

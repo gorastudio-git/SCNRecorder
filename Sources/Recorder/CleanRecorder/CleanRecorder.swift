@@ -40,8 +40,7 @@ public final class CleanRecorder<T: CleanRecordable>: BaseRecorder,
       queue: queue
     )
     
-    super.init(queue: queue)
-    self.mediaSession.setVideoInput(videoInput)
+    super.init(queue: queue, mediaSession: MediaSession(queue: queue, videoInput: videoInput))
   }
 
   func _render(atTime time: TimeInterval) {
