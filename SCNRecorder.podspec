@@ -15,12 +15,14 @@ Pod::Spec.new do |s|
   s.private_header_files  = 'Sources/**/*.h'
 
   s.app_spec 'Example' do |app_spec|
-    app_spec.name = "Example"
+    app_spec.name                = "Example"
     app_spec.platform            = :ios, '13.0'
     app_spec.source_files        = 'Example/Source/**/*.{m,swift,metal}', 'Example/Source/Content/**/*.{h}'
     app_spec.preserve_path       = 'Example/Source/Example-Bridging-Header.h'
-    app_spec.resources           = 'Example/Source/Resources/**/*.{scnassets,xcassets}'
-    app_spec.pod_target_xcconfig = { "SWIFT_OBJC_BRIDGING_HEADER" => "Example/Source/Example-Bridging-Header.h" }
+    app_spec.resources           = 'Example/Source/Resources/**/*.{rcproject,scnassets,xcassets}'
+    app_spec.pod_target_xcconfig = {
+      "SWIFT_OBJC_BRIDGING_HEADER" => "SCNRecorder/Example/Source/Example-Bridging-Header.h"
+    }
 
     app_spec.dependency 'SnapKit', '~> 5.0.0'
   end
@@ -31,7 +33,9 @@ Pod::Spec.new do |s|
     test_spec.app_host_name       = 'SCNRecorder/Example'
     test_spec.source_files        = 'SCNRecorderTests/**/*.{m,swift,metal}', 'SCNRecorderTests/Metal/**/*.h'
     test_spec.preserve_path       = 'SCNRecorderTests/SCNRecorderTests-Bridging-Header.h'
-    test_spec.pod_target_xcconfig = { "SWIFT_OBJC_BRIDGING_HEADER" => "SCNRecorderTests/SCNRecorderTests-Bridging-Header.h" }
+    test_spec.pod_target_xcconfig = {
+      "SWIFT_OBJC_BRIDGING_HEADER" => "SCNRecorder/SCNRecorderTests/SCNRecorderTests-Bridging-Header.h"
+    }
 
 
     test_spec.dependency 'SCNRecorder/Example'
