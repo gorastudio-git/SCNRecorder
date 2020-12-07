@@ -38,7 +38,9 @@ final class MainViewController: ViewController {
     items.append((title: "ARKit Example", controller: ARKitViewController.self))
     items.append((title: "SceneKit Example", controller: SceneKitViewController.self))
     if #available(iOS 13, *) {
+      #if !NON_REALITY
       items.append((title: "RealityKit Example", controller: RealityKitViewController.self))
+      #endif
       items.append( (title: "Metal Example", controller: MetalViewController.self))
     }
     return items
