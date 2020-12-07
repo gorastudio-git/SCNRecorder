@@ -1,0 +1,89 @@
+//
+//  MetalTexturePoolFactory.swift
+//  SCNRecorder
+//
+//  Created by Vladislav Grigoryev on 28.11.2020.
+//  Copyright © 2020 GORA Studio. https://gora.studio
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+import Foundation
+
+final class MetalTexturePoolFactory {
+
+  private static weak var shared: MetalTexturePoolFactory?
+
+  static func getWeaklyShared(
+    device: MTLDevice,
+    pixelBufferPoolFactory: PixelBufferPoolFactory = .getWeaklyShared()
+  ) -> MetalTexturePoolFactory {
+    if let shared = shared { return shared }
+
+    let metalTexturePoolFactory = MetalTexturePoolFactory(
+      device: device,
+      pixelBufferPoolFactory: pixelBufferPoolFactory
+    )
+    shared = metalTexturePoolFactory
+    return metalTexturePoolFactory
+  }
+
+  let device: MTLDevice
+
+  let pixelBufferPoolFactory: PixelBufferPoolFactory
+
+  var metalTexturePools = [MetalTexture.Attributes: MetalTexturePool]()
+
+  init(
+    device: MTLDevice,
+    pixelBufferPoolFactory: PixelBufferPoolFactory
+  ) {
+    self.device = device
+    self.pixelBufferPoolFactory = pixelBufferPoolFactory
+  }
+
+  func getMetalTexturePool(
+    width: Int,
+    height: Int,
+    pixelFormat: MTLPixelFormat
+  ) throws -> MetalTexturePool {
+    try getMetalTexturePool(
+      MetalTexture.Attributes(
+        width: width,
+        height: height,
+        pixelFormat: pixelFormat
+      )
+    )
+  }
+
+  func getMetalTexturePool(_ attributes: MetalTexture.Attributes) throws -> MetalTexturePool {
+    if let metalTexturePool = metalTexturePools[attributes] { return metalTexturePool }
+
+    let pixelBufferAttributes = PixelBuffer.Attributes(attributes)
+    let pixelBufferPool = try pixelBufferPoolFactory.getPixelBufferPool(
+      attributes: pixelBufferAttributes
+    )
+    let metalTexturePool = try MetalTexturePool(
+      device: device,
+      pixelBufferPool: pixelBufferPool,
+      attributes: attributes
+    )
+    metalTexturePools[attributes] = metalTexturePool
+    return metalTexturePool
+  }
+}

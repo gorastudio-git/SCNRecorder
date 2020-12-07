@@ -1,9 +1,9 @@
 //
-//  APIRecordable.swift
-//  SCNRecorder
+//  MTLPixelFormat+Helpers.swift
+//  SCNRecorderTests
 //
-//  Created by Vladislav Grigoryev on 12.09.2020.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Created by Vladislav Grigoryev on 04.12.2020.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,36 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
+import Metal
+@testable import SCNRecorder
 
-public protocol APIRecordable: MetalRecordable {
+extension MTLPixelFormat {
 
-  var api: API { get }
+  static let supportedPixelFormatsNames: [Self: String] = [
+    .bgra8Unorm: "bgra8Unorm",
+    .bgra8Unorm_srgb: "bgra8Unorm_srgb",
+    .bgr10_xr: "bgr10_xr",
+    .bgr10_xr_srgb: "bgr10_xr_srgb",
+    .bgra10_xr: "bgra10_xr",
+    .bgra10_xr_srgb: "bgra10_xr_srgb"
+  ]
+
+  static let wideGamutPixelFormats = Set<MTLPixelFormat>([
+    .bgr10_xr,
+    .bgr10_xr_srgb,
+    .bgra10_xr,
+    .bgra10_xr_srgb
+  ])
+
+  static let srgbPixelFormats = Set<MTLPixelFormat>([
+    .bgra8Unorm_srgb,
+    .bgr10_xr_srgb,
+    .bgra10_xr_srgb
+  ])
+
+  var name: String { Self.supportedPixelFormatsNames[self] ?? "unknown \(rawValue)" }
+
+  var isWideGamut: Bool { Self.wideGamutPixelFormats.contains(self) }
+
+  var isSRGB: Bool { Self.srgbPixelFormats.contains(self) }
 }

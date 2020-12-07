@@ -28,7 +28,7 @@ import AVFoundation
 
 final class PixelBufferPoolFactory {
 
-  static let weaklySharedAllocationTreshold: UInt = 10
+  private static let weaklySharedAllocationTreshold: UInt = 10
 
   private static weak var shared: PixelBufferPoolFactory?
 

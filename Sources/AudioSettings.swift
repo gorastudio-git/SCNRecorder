@@ -28,37 +28,20 @@ import AVFoundation
 
 public struct AudioSettings {
 
-  var format: AudioFormatID?
+  public var format: AudioFormatID = kAudioFormatMPEG4AAC
 
-  var sampleRate: Double?
+  public var sampleRate: Double = 44100.0
 
-  var numberOfChannels: Int?
-
-  var channelLayout: Data?
-
-  public init() { }
-
-  public init(
-    format: AudioFormatID,
-    sampleRate: Double,
-    numberOfChannels: Int,
-    channelLayout: Data? = nil
-  ) {
-    self.format = format
-    self.sampleRate = sampleRate
-    self.numberOfChannels = numberOfChannels
-    self.channelLayout = channelLayout
-  }
+  public var numberOfChannels: Int = 1
 }
 
 extension AudioSettings {
 
   var outputSettings: [String: Any] {
-    ([
+    [
       AVFormatIDKey: format,
       AVSampleRateKey: sampleRate,
-      AVNumberOfChannelsKey: numberOfChannels,
-      AVChannelLayoutKey: channelLayout.map { $0 as NSData }
-    ] as [String: Any?]).compactMapValues({ $0 })
+      AVNumberOfChannelsKey: numberOfChannels
+    ]
   }
 }

@@ -40,8 +40,7 @@ Import the SCNRecorder module.
 import SCNRecorder
 ```
 
-You must call `sceneView.prepareForRecording()` before capturing something using SCNRecorder.
-It is recommended to do that at `viewDidLoad`.
+Call `sceneView.prepareForRecording()` at `viewDidLoad`.
 
 ```swift
 @IBOutlet var sceneView: SCNView!
@@ -70,8 +69,14 @@ sceneView.finishVideoRecording { (videoRecording) in
 To capture an image it is enough to call:
 
 ```swift
-sceneView.takePhoto { (photo) in
+sceneView.takePhoto { (photo: UIImage) in
   /* Your photo is now here. Main thread. */
+}
+```
+or
+```swift
+sceneView.takePhotoResult { (result: Result<UIImage, Swift.Error>) in
+  /* Result is here. Main thread. */
 }
 ```
 
@@ -119,6 +124,18 @@ override func viewDidLoad() {
   captureSession.startRunning()
   self.captureSession = captureSession
 }
+```
+or, simply
+```
+var captureSession: AVCaptureSession?
+
+override func viewDidLoad() {
+  super.viewDidLoad()
+  sceneView.prepareForRecording()
+  
+  captureSession = try? .makeAudioForRecorder(sceneView.recorder)
+}
+
 ```
 
 ### RealityKit

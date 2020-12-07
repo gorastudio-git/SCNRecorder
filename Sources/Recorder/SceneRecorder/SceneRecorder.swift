@@ -38,21 +38,15 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
       mediaSession: MediaSession(queue: queue, videoInput: videoInput)
     )
   }
-
-  public convenience init<T: MetalRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
-    let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
-    try self.init(
-      videoInput: VideoInput(
-        recordable: recordable,
-        timeScale: timeScale,
-        queue: queue
-      ),
-      queue: queue
-    )
-  }
   
-  public convenience init<T: APIRecordable>(_ recordable: T, timeScale: CMTimeScale = 600) throws {
-    let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
+  public convenience init<T: MetalRecordable>(
+    _ recordable: T,
+    timeScale: CMTimeScale = 600
+  ) throws {
+    let queue = DispatchQueue(
+      label: "SCNRecorder.Processing.DispatchQueue",
+      qos: .userInitiated
+    )
     try self.init(
       videoInput: VideoInput(
         recordable: recordable,
@@ -64,13 +58,36 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
   }
 
   public func render(atTime time: TimeInterval) {
-    do { try videoInput.render(atTime: time) }
-    catch { self.error = error }
+    do {
+      try videoInput.render(
+        atTime: time,
+        error: { [weak self] in self?.error = $0 }
+      )
+    }
+    catch {
+      self.error = error
+    }
+  }
+
+  public func render(atTime time: TimeInterval, using commandQueue: MTLCommandQueue) {
+    do {
+      try videoInput.render(
+        atTime: time,
+        using: commandQueue,
+        error: { [weak self] in self?.error = $0 }
+      )
+    }
+    catch {
+      self.error = error
+    }
   }
 
   public func renderer(
     _ renderer: SCNSceneRenderer,
     didRenderScene scene: SCNScene,
     atTime time: TimeInterval
-  ) { render(atTime: time) }
+  ) {
+    guard let commandQueue = renderer.commandQueue else { return }
+    render(atTime: time, using: commandQueue)
+  }
 }

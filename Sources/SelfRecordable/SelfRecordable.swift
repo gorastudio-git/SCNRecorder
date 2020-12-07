@@ -100,8 +100,6 @@ public extension SelfRecordable {
       var videoSettings = VideoSettings()
       videoSettings.size = CGSize(width: 1024, height: 768)
 
-      let audioSettings = AudioSettings()
-
       let url = FileManager.default.temporaryDirectory.appendingPathComponent(
         "\(UUID().uuidString).\(videoSettings.fileType.fileExtension)",
         isDirectory: false
@@ -110,7 +108,7 @@ public extension SelfRecordable {
       let videoOutput = try? VideoOutput(
         url: url,
         videoSettings: videoSettings,
-        audioSettings: audioSettings,
+        audioSettings: AudioSettings().outputSettings,
         queue: queue
       )
 
@@ -163,7 +161,7 @@ public extension SelfRecordable {
   @discardableResult
   func startVideoRecording(
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings = AudioSettings()
+    audioSettings: AudioSettings? = nil
   ) throws -> VideoRecording {
     return try startVideoRecording(
       to: FileManager.default.temporaryDirectory.appendingPathComponent(
@@ -179,7 +177,7 @@ public extension SelfRecordable {
   func startVideoRecording(
     to url: URL,
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings = AudioSettings()
+    audioSettings: AudioSettings? = nil
   ) throws -> VideoRecording {
     guard videoRecording == nil else { throw SelfRecordableError.videoRecordingAlreadyStarted }
 

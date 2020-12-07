@@ -1,8 +1,8 @@
 //
-//  API.swift
-//  SCNRecorder
+//  AppDelegate.swift
+//  SCNRecorderTestsApp
 //
-//  Created by Vladislav Grigoryev on 30.12.2019.
+//  Created by Vladislav Grigoryev on 06.12.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,10 +23,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
+import UIKit
 
-public enum API {
-  case metal
-  case openGLES
-  case unknown
+@main
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    true
+  }
 }
+

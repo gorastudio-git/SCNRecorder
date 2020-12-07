@@ -50,8 +50,19 @@ final class PhotoPreviewController: ViewController {
   }
 
   @objc func share() {
+
+    let format = UIGraphicsImageRendererFormat()
+    format.scale = 1.0
+    format.preferredRange = .extended
+    format.opaque = true
+
+    let data = photo.jpegData(compressionQuality: 1.0)!
+
+    let url = FileManager.default.temporaryDirectory.appendingPathComponent("photo.jpg")
+    try? data.write(to: url)
+
     present(
-      UIActivityViewController(activityItems: [photo], applicationActivities: nil),
+      UIActivityViewController(activityItems: [url], applicationActivities: nil),
       animated: true,
       completion: nil
     )

@@ -37,6 +37,8 @@ public protocol RecordableLayer: AnyObject {
 
   var drawableSize: CGSize { get }
 
+  var colorspace: CGColorSpace? { get }
+
   func prepareForRecording()
 }
 
@@ -49,10 +51,7 @@ public extension RecordableLayer {
 
 public extension RecordableLayer where Self: CAMetalLayer {
 
-  func prepareForRecording() {
-    Self.swizzle()
-    if #available(iOS 14, *) { } else { framebufferOnly = false }
-  }
+  func prepareForRecording() { Self.swizzle() }
 }
 
 #else
@@ -60,10 +59,7 @@ public extension RecordableLayer where Self: CAMetalLayer {
 @available(iOS 13.0, *)
 public extension RecordableLayer where Self: CAMetalLayer {
 
-  func prepareForRecording() {
-    Self.swizzle()
-    if #available(iOS 14, *) { } else { framebufferOnly = false }
-  }
+  func prepareForRecording() { Self.swizzle() }
 }
 
 #endif

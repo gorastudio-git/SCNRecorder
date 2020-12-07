@@ -29,32 +29,39 @@ import AVFoundation
 extension MTLPixelFormat {
 
   // Undocumented format, something like bgr10_xr_srgb, was obtained on iPhone 7 iOS 12.1.4
-  static let undocumented_bgr10_xr_srgb = MTLPixelFormat(rawValue: 551) ?? .bgr10_xr_srgb
+  static let rgb10a8_2p_xr10_srgb = MTLPixelFormat(rawValue: 551) ?? .bgr10_xr_srgb
 
-  var colorSpace: CGColorSpace {
-    var colorSpace: CGColorSpace?
+  #if !targetEnvironment(simulator)
+  static let supportedPixelFormats: Set<MTLPixelFormat> = Set([
+    .bgra8Unorm, .bgra8Unorm_srgb,
+    .bgr10_xr, .bgr10_xr_srgb,
+  ])
+  #else
+  static let supportedPixelFormats: Set<MTLPixelFormat> = Set([
+    .bgra8Unorm
+  ])
+  #endif
 
+  var colorPrimaries: String {
     switch self {
-    case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
-      colorSpace = CGColorSpace(name: CGColorSpace.extendedLinearSRGB)
-    default:
-      colorSpace = CGColorSpace(name: CGColorSpace.sRGB)
+    case .bgr10_xr, .bgr10_xr_srgb: return AVVideoColorPrimaries_P3_D65
+    default: return AVVideoColorPrimaries_ITU_R_709_2
     }
-    return colorSpace ?? CGColorSpaceCreateDeviceRGB()
   }
 
-  var iccData: CFData? { colorSpace.copyICCData() }
+  var videoColorProperties: [String: String] {[
+      AVVideoColorPrimariesKey: colorPrimaries,
+      AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+      AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
+  ]}
 
-  var videoColorProperties: [String: String] {
+  var supportedPixelFormat: MTLPixelFormat {
+    if Self.supportedPixelFormats.contains(self) { return self }
+    
     switch self {
-    case .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
-      return [ AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
-               AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-               AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2 ]
-    default:
-      return [ AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
-               AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-               AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2 ]
+    case .bgra10_xr: return .bgr10_xr
+    case .bgra10_xr_srgb, .rgb10a8_2p_xr10_srgb: return .bgr10_xr_srgb
+    default: return .bgra8Unorm_srgb
     }
   }
 
@@ -64,18 +71,8 @@ extension MTLPixelFormat {
     case .bgra8Unorm, .bgra8Unorm_srgb:
       return kCVPixelFormatType_32BGRA
 
-    case .rgba16Float:
-      return kCVPixelFormatType_64RGBAHalf
-
-    case .bgr10_xr, .bgr10_xr_srgb, .undocumented_bgr10_xr_srgb:
+    case .bgr10_xr, .bgr10_xr_srgb, .rgb10a8_2p_xr10_srgb:
       return kCVPixelFormatType_30RGBLEPackedWideGamut
-
-    case .bgr10a2Unorm:
-      return kCVPixelFormatType_ARGB2101010LEPacked
-
-      // So far there are no public core video pixel formats for metal pixel formats below
-//    case .bgra10_xr, .bgra10_xr_srgb:
-//    case .rgb10a2Unorm:
 
     default:
       return kCVPixelFormatType_32BGRA

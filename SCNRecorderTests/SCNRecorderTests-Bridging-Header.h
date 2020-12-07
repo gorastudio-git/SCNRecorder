@@ -1,9 +1,9 @@
 //
-//  SCNView+APIRecordable.swift
+//  SCNRecorderTests-Bridging-Header.h
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 30.12.2019.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Created by Vladislav Grigoryev on 04.12.2020.
+//  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
-import SceneKit
-import ARKit
-import SCNRecorder.Private
+#ifndef SCNRecorderTests_Bridging_Header_h
+#define SCNRecorderTests_Bridging_Header_h
 
-extension SCNView: APIRecordable {
+#import "TestMetalShaderTypes.h"
 
-  public var recordableLayer: RecordableLayer? { layer as? RecordableLayer }
-  
-  public var api: API {
-    switch renderingAPI {
-    case .metal: return .metal
-    case .openGLES2: return .openGLES
-    #if compiler(>=5)
-    @unknown default: return .unknown
-    #endif // compiler(>=5)
-    }
-  }
-}
+#endif /* SCNRecorderTests_Bridging_Header_h */

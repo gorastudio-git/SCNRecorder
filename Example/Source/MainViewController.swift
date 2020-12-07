@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AVKit
+import StoreKit
 
 final class MainViewController: ViewController {
 

@@ -54,7 +54,7 @@ public class BaseRecorder: NSObject {
   public func makeVideoRecording(
     to url: URL,
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings
+    audioSettings: AudioSettings?
   ) throws -> VideoRecording {
     try mediaSession.makeVideoRecording(
       to: url,

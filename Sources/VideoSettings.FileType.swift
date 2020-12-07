@@ -28,7 +28,7 @@ import AVFoundation
 
 public extension VideoSettings {
 
-  enum FileType {
+  enum FileType: CaseIterable {
 
     /// A UTI for the QuickTime movie file format.
     ///
@@ -57,13 +57,6 @@ public extension VideoSettings {
     ///
     /// Files are identified with the .3gp, .3gpp, and .sdv extensions.
     case mobile3GPP
-
-    /// A UTI for the 3GPP file format.
-    ///
-    /// The value of this UTI is @"public.3gpp2".
-    ///
-    /// Files are identified with the .3g2, .3gp2 extensions.
-    case mobile3GPP2
   }
 }
 
@@ -75,7 +68,6 @@ extension VideoSettings.FileType {
     case .mp4: return .mp4
     case .m4v: return .m4v
     case .mobile3GPP: return .mobile3GPP
-    case .mobile3GPP2: return .mobile3GPP2
     }
   }
 
@@ -85,7 +77,6 @@ extension VideoSettings.FileType {
     case .mp4: return "mp4"
     case .m4v: return "m4v"
     case .mobile3GPP: return "3gp"
-    case .mobile3GPP2: return "3g2"
     }
   }
 }

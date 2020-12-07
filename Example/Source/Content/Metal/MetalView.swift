@@ -13,6 +13,8 @@ import SCNRecorder
 @available(iOS 13.0, *)
 protocol MetalViewDelegate: AnyObject {
 
+  var commandQueue: MTLCommandQueue? { get }
+
   func drawableResize(_ size: CGSize)
 
   func renderToMetalLayer(_ metalLayer: CAMetalLayer)
@@ -83,8 +85,15 @@ extension MetalView {
   }
 
   @objc func render() {
-    delegate?.renderToMetalLayer(metalLayer)
-    recorder?.render()
+    guard let delegate = delegate else { return }
+    delegate.renderToMetalLayer(metalLayer)
+
+    if let commandQueue = delegate.commandQueue {
+      recorder?.render(using: commandQueue)
+    }
+    else {
+      recorder?.render()
+    }
   }
 
   func resizeDrawable() {

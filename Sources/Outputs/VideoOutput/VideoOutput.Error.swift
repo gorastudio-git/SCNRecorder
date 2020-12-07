@@ -31,7 +31,7 @@ extension VideoOutput {
 
     case cantAddVideoAssetWriterInput
 
-    case cantAddAudioAssterWriterInput
+    case cantAddAudioAssterWriterInput(audioSettings: [String: Any])
 
     case cantStartWriting
 

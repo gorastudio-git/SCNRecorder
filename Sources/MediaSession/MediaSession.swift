@@ -49,8 +49,6 @@ final class MediaSession {
 
     var videoColorProperties: [String: String]? { videoInput.videoColorProperties }
 
-    var pixelBufferPoolFactory: PixelBufferPoolFactory { videoInput.pixelBufferPoolFactory }
-
     func start() { videoInput.start() }
 
     func stop() { videoInput.stop() }
@@ -140,16 +138,21 @@ extension MediaSession {
   func makeVideoRecording(
     to url: URL,
     videoSettings: VideoSettings = VideoSettings(),
-    audioSettings: AudioSettings = AudioSettings()
+    audioSettings: AudioSettings? = nil
   ) throws -> VideoRecording {
     var videoSettings = videoSettings
     if videoSettings.size == nil { videoSettings.size = videoInput.size }
     videoSettings.videoColorProperties = videoInput.videoColorProperties
 
+    let audioSettingsDictionary = audioSettings?.outputSettings
+      ?? audioInput?.recommendedAudioSettingsForAssetWriter(
+        writingTo: videoSettings.fileType.avFileType
+      )
+
     let videoOutput = try VideoOutput(
       url: url,
       videoSettings: videoSettings,
-      audioSettings: audioSettings,
+      audioSettings: audioSettingsDictionary,
       queue: queue
     )
 
@@ -184,10 +187,7 @@ extension MediaSession {
   func takePixelBuffer(handler: @escaping (Result<CVPixelBuffer, Swift.Error>) -> Void) {
     var localHandler: ((Result<CVPixelBuffer, Swift.Error>) -> Void)?
     let output = capturePixelBuffers(
-      handler: ImageOutput.takePixelBuffer(
-        pixelBufferPoolFactory: videoInput.pixelBufferPoolFactory,
-        handler: { localHandler?($0) }
-      )
+      handler: ImageOutput.takePixelBuffer(handler: { localHandler?($0) })
     )
 
     localHandler = {

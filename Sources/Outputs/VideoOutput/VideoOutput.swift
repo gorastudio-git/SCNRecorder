@@ -32,7 +32,7 @@ final class VideoOutput {
 
   var videoInput: AVAssetWriterInput!
 
-  var audioInput: AVAssetWriterInput!
+  var audioInput: AVAssetWriterInput?
 
   var pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor!
 
@@ -58,7 +58,7 @@ final class VideoOutput {
   init(
     url: URL,
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings,
+    audioSettings: [String: Any]?,
     queue: DispatchQueue
   ) throws {
     self.queue = queue
@@ -69,24 +69,8 @@ final class VideoOutput {
 
       do {
         this.assetWriter = try AVAssetWriter(url: url, fileType: videoSettings.fileType.avFileType)
-
-        this.videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings.outputSettings)
-        this.videoInput.expectsMediaDataInRealTime = true
-
-        guard this.assetWriter.canAdd(this.videoInput) else { throw Error.cantAddVideoAssetWriterInput }
-        this.assetWriter.add(this.videoInput)
-
-        let audioOutputSettings = audioSettings.outputSettings
-        this.audioInput = AVAssetWriterInput(
-          mediaType: .audio,
-          outputSettings: audioOutputSettings.isEmpty ? nil : audioOutputSettings
-        )
-        this.audioInput.expectsMediaDataInRealTime = true
-
-        guard this.assetWriter.canAdd(this.audioInput) else { throw Error.cantAddAudioAssterWriterInput }
-        this.assetWriter.add(this.audioInput)
-
-        this.pixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: this.videoInput)
+        try this.addVideoInput(videoSettings)
+        try this.addAudioInput(audioSettings)
 
         guard this.assetWriter.startWriting() else {
           throw this.assetWriter.error ?? Error.cantStartWriting
@@ -97,11 +81,35 @@ final class VideoOutput {
       catch {
         this.state = .failed(error: error)
       }
-
     }
   }
 
   deinit { state = state.cancel(self) }
+
+  func addVideoInput(_ videoSettings: VideoSettings) throws {
+    let videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings.outputSettings)
+    videoInput.expectsMediaDataInRealTime = true
+
+    guard assetWriter.canAdd(videoInput) else { throw Error.cantAddVideoAssetWriterInput }
+    assetWriter.add(videoInput)
+    self.videoInput = videoInput
+
+    let pixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: videoInput)
+    self.pixelBufferAdaptor = pixelBufferAdaptor
+  }
+
+  func addAudioInput(_ audioSettings: [String: Any]?) throws {
+    let audioInput = AVAssetWriterInput(mediaType: .audio, outputSettings: audioSettings)
+    audioInput.expectsMediaDataInRealTime = true
+
+    guard assetWriter.canAdd(audioInput) else {
+      guard let audioSettings = audioSettings else { return }
+      throw Error.cantAddAudioAssterWriterInput(audioSettings: audioSettings)
+    }
+
+    assetWriter.add(audioInput)
+    self.audioInput = audioInput
+  }
 
   func startVideoRecording() -> VideoRecording {
     let videoRecording = VideoRecording(videoOutput: self)
@@ -165,6 +173,7 @@ extension VideoOutput {
   }
 
   func appendAudio(sampleBuffer: CMSampleBuffer) throws {
+    guard let audioInput = audioInput else { return }
     guard audioInput.isReadyForMoreMediaData else { return }
     guard audioInput.append(sampleBuffer) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }

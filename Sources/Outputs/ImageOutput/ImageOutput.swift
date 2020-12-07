@@ -27,6 +27,7 @@ import Foundation
 import AVFoundation
 import UIKit
 import VideoToolbox
+import CoreVideo
 
 enum ImageOutput {
 
@@ -68,7 +69,7 @@ enum ImageOutput {
       handler($0.flatMap { pixelBuffer in
         var cgImage: CGImage?
         let status = VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
-
+        
         guard let image = cgImage else {
           return .failure(Error.createCGImageFromCVPixelBufferFailed(status))
         }
@@ -78,24 +79,10 @@ enum ImageOutput {
   }
 
   static func takePixelBuffer(
-    pixelBufferPoolFactory: PixelBufferPoolFactory,
     handler: @escaping (Result<CVPixelBuffer, Swift.Error>) -> Void
   ) -> (CVPixelBuffer, CMTime) -> Void {
     { (pixelBuffer, _) in
       handler(.success(pixelBuffer))
-
-//      if #available(iOS 14, *) {
-//        handler(Result {
-//          // Copy pixel buffer data since underlying surface might change
-//          let pixelBufferPool = try pixelBufferPoolFactory.getPixelBufferPool(for: pixelBuffer)
-//          let copyPixelBuffer = try pixelBufferPool.getPixelBuffer()
-//          try copyPixelBuffer.copyFrom(pixelBuffer)
-//          return copyPixelBuffer.cvPxelBuffer
-//        })
-//      }
-//      else {
-//        handler(.success(pixelBuffer))
-//      }
     }
   }
 }

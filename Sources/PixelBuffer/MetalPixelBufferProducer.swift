@@ -25,96 +25,138 @@
 
 import Foundation
 import AVFoundation
+import MetalPerformanceShaders
 
 final class MetalPixelBufferProducer {
 
+  typealias CVPixelBufferResult = Result<CVPixelBuffer, Swift.Error>
+
   enum Error: Swift.Error {
 
-    case noTexture
+    case noDevice
+
+    case noCommandQueue
+
+    case noCommandBuffer
+
+    case noLastTexture
 
     case noSurface
 
-    case noBytes
+    case noSourceTexture
 
-    case framebufferOnly
-
-    case baseAddress
+    case commandBufferError(_ error: Swift.Error?)
   }
 
-  var size: CGSize { recordableLayer.drawableSize }
-
-  var videoColorProperties: [String: String]? { recordableLayer.pixelFormat.videoColorProperties }
+  let device: MTLDevice
 
   let recordableLayer: RecordableLayer
 
   let queue: DispatchQueue
 
-  lazy var pixelBufferPoolFactory = PixelBufferPoolFactory.getWeaklyShared()
+  var size: CGSize { recordableLayer.drawableSize }
 
-  lazy var emptyBuffer = Buffer.zeroed(size: 0)
+  var videoColorProperties: [String: String]? {
+    recordableLayer.pixelFormat.supportedPixelFormat.videoColorProperties
+  }
 
-  init(recordableLayer: RecordableLayer, queue: DispatchQueue) {
+  lazy var commandQueue: MTLCommandQueue? = device.makeCommandQueue()
+
+  lazy var metalTexturePoolFactory = MetalTexturePoolFactory.getWeaklyShared(device: device)
+
+  init(recordableLayer: RecordableLayer, queue: DispatchQueue) throws {
+    guard let device = recordableLayer.device else { throw Error.noDevice }
+
+    self.device = device
     self.recordableLayer = recordableLayer
     self.queue = queue
   }
 
-  func produce(handler: @escaping (CVPixelBuffer) -> Void) throws {
-    guard let texture = recordableLayer.lastTexture else { throw Error.noTexture }
-
-    if #available(iOS 14, *) { try produceUsingSurface(from: texture, handler: handler) }
-    else { try produceUsingBytes(from: texture, handler: handler) }
+  func produce(handler: @escaping (CVPixelBufferResult) -> Void) throws {
+    guard let commandQueue = commandQueue else { throw Error.noCommandQueue }
+    try produce(using: commandQueue, handler: handler)
   }
 
-  @available(iOS 14, *)
-  private func produceUsingSurface(
-    from texture: MTLTexture,
-    handler: @escaping (CVPixelBuffer) -> Void
+  func produce(
+    using commandQueue: MTLCommandQueue,
+    handler: @escaping (CVPixelBufferResult) -> Void
   ) throws {
-    guard let surface = texture.iosurface else { throw Error.noSurface }
-    let surfacePixelBuffer = try PixelBuffer(surface)
-    queue.async { handler(surfacePixelBuffer.cvPxelBuffer) }
-  }
+    guard let lastTexture = recordableLayer.lastTexture else { throw Error.noLastTexture }
+    guard let surface = lastTexture.iosurface else { throw Error.noSurface }
+    guard let commandBuffer = commandQueue.makeCommandBuffer() else { throw Error.noCommandBuffer }
 
-  private func produceUsingBytes(
-    from texture: MTLTexture,
-    handler: @escaping (CVPixelBuffer) -> Void
-  ) throws {
-    guard !texture.isFramebufferOnly else { throw Error.framebufferOnly }
+    let textureDescriptor = makeSourceTextureDescriptor(basedOn: lastTexture)
+    let attachements = makePixelBufferAttachements(basedOn: surface)
 
-    let width = Int(recordableLayer.drawableSize.width)
-    let height = Int(recordableLayer.drawableSize.height)
+    let metalTexturePool = try makeMetalTexturePool(basedOn: lastTexture)
+    let metalTexture = try metalTexturePool.getMetalTexture(propagatedAttachments: attachements)
 
-    let pixelBufferPool = try pixelBufferPoolFactory.getPixelBufferPool(
-      width: width,
-      height: height,
-      pixelFormat: recordableLayer.pixelFormat.pixelFormatType
+    guard let sourceTexture = device.makeTexture(
+      descriptor: textureDescriptor,
+      iosurface: surface,
+      plane: 0
+    ) else {
+      throw Error.noSourceTexture
+    }
+
+    let imageConversion = makeImageConversion()
+    imageConversion.encode(
+      commandBuffer: commandBuffer,
+      sourceTexture: sourceTexture,
+      destinationTexture: metalTexture.mtlTexture
     )
 
-    let pixelBuffer = try pixelBufferPool.getPixelBuffer()
-
-    if let iccData = recordableLayer.pixelFormat.iccData {
-      pixelBuffer.propagatedAttachments = [kCVImageBufferICCProfileKey as String: iccData]
+    commandBuffer.addCompletedHandler { [weak self] (commandBuffer) in
+      let result: CVPixelBufferResult = commandBuffer.status == .completed
+        ? .success(metalTexture.pixelBuffer.cvPxelBuffer)
+        : .failure(Error.commandBufferError(commandBuffer.error))
+      self?.queue.async { handler(result) }
     }
-
-    let bytesPerRow = pixelBuffer.bytesPerRow
-    try pixelBuffer.locked { (pb) in
-      guard let baseAddress = pixelBuffer.baseAddress else { throw Error.baseAddress }
-
-      texture.getBytes(
-        baseAddress,
-        bytesPerRow: bytesPerRow,
-        from: MTLRegionMake2D(0, 0, width, height),
-        mipmapLevel: 0
-      )
-
-      guard !isEmpty(baseAddress, size: bytesPerRow * height) else { throw Error.noBytes }
-    }
-
-    queue.async { handler(pixelBuffer.cvPxelBuffer) }
+    commandBuffer.commit()
   }
 
-  func isEmpty(_ buffer: UnsafeMutableRawPointer, size: Int) -> Bool {
-    if emptyBuffer.size != size { emptyBuffer = Buffer.zeroed(size: size) }
-    return memcmp(buffer, emptyBuffer.ptr, size) == 0
+  func makeMetalTexturePool(basedOn texture: MTLTexture) throws -> MetalTexturePool {
+    try metalTexturePoolFactory.getMetalTexturePool(
+      width: texture.width,
+      height: texture.height,
+      pixelFormat: texture.pixelFormat.supportedPixelFormat
+    )
+  }
+
+  func makeSourceTextureDescriptor(basedOn texture: MTLTexture) -> MTLTextureDescriptor {
+    let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: texture.pixelFormat,
+      width: texture.width,
+      height: texture.height,
+      mipmapped: false
+    )
+    textureDescriptor.usage = .shaderRead
+    if #available(iOS 13.0, *) {
+      textureDescriptor.hazardTrackingMode = .untracked
+    }
+    return textureDescriptor
+  }
+
+  func makePixelBufferAttachements(basedOn surface: IOSurface) -> [String: Any] {
+    var attachements = (try? PixelBuffer(surface).propagatedAttachments) ?? [:]
+
+    let colorSpaceKey = kCVImageBufferCGColorSpaceKey as String
+    var colorSpace = attachements[colorSpaceKey].map({ $0 as! CGColorSpace })
+    colorSpace = colorSpace ?? recordableLayer.colorspace
+
+    attachements[colorSpaceKey] = colorSpace
+    attachements[kCVImageBufferICCProfileKey as String] = colorSpace?.copyICCData()
+
+    return attachements
+  }
+
+  func makeImageConversion() -> MPSImageConversion {
+    MPSImageConversion(
+      device: device,
+      srcAlpha: .alphaIsOne,
+      destAlpha: .alphaIsOne,
+      backgroundColor: nil,
+      conversionInfo: nil
+    )
   }
 }

@@ -28,25 +28,29 @@ import AVFoundation
 
 public final class VideoRecording {
 
-    @Observable public internal(set) var duration: TimeInterval = 0.0
+  @Observable public internal(set) var duration: TimeInterval
 
-    @Observable public internal(set) var state: State = .preparing
+  @Observable public internal(set) var state: State
 
-    let videoOutput: VideoOutput
+  public var url: URL { videoOutput.url }
 
-    public var url: URL { videoOutput.url }
+  public var fileType: AVFileType { videoOutput.fileType }
 
-    public var fileType: AVFileType { videoOutput.fileType }
+  let videoOutput: VideoOutput
+  
+  init(videoOutput: VideoOutput) {
+    self.state = videoOutput.state
+    self.duration = videoOutput.duration
+    self.videoOutput = videoOutput
+  }
 
-    init(videoOutput: VideoOutput) { self.videoOutput = videoOutput }
+  public func resume() { videoOutput.resume() }
 
-    public func resume() { videoOutput.resume() }
+  public func pause() { videoOutput.pause() }
 
-    public func pause() { videoOutput.pause() }
+  public func finish(completionHandler handler: @escaping (_ info: Info) -> Void) {
+    videoOutput.finish { handler(Info(self)) }
+  }
 
-    public func finish(completionHandler handler: @escaping (_ info: Info) -> Void) {
-      videoOutput.finish { handler(Info(self)) }
-    }
-
-    func cancel() { videoOutput.cancel() }
+  func cancel() { videoOutput.cancel() }
 }

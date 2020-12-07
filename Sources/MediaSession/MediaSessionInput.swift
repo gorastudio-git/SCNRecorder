@@ -43,15 +43,18 @@ protocol MediaSessionInput {
   func stop()
 }
 
-protocol AudioMediaSessionInput: MediaSessionInput { }
+protocol AudioMediaSessionInput: MediaSessionInput {
+
+  func recommendedAudioSettingsForAssetWriter(
+    writingTo outputFileType: AVFileType
+  ) -> [String : Any]
+}
 
 protocol VideoMediaSessionInput: MediaSessionInput {
 
   var size: CGSize { get }
 
   var videoColorProperties: [String: String]? { get }
-
-  var pixelBufferPoolFactory: PixelBufferPoolFactory { get }
 }
 
 protocol SampleBufferInput: AnyObject {

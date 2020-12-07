@@ -24,6 +24,8 @@ final class MetalViewController: UIViewController {
 
   var renderer: SquadRenderer?
 
+  var commandQueue: MTLCommandQueue? { renderer?.commandQueue }
+
   override func loadView() {
     view = MetalView()
   }

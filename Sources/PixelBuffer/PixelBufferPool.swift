@@ -29,8 +29,6 @@ import AVFoundation
 final class PixelBufferPool {
 
   enum Error: Swift.Error {
-    case zeroOrNegativeWidth
-    case zeroOrNegativeHeight
     case pixelBufferPoolAllocation(errorCode: CVReturn)
 
     case allocationTresholdExceeded
@@ -44,9 +42,6 @@ final class PixelBufferPool {
   init(_ pixelBufferPool: CVPixelBufferPool) { self.pixelBufferPool = pixelBufferPool }
 
   convenience init(attributes: PixelBuffer.Attributes) throws {
-    guard attributes.width > 0 else { throw Error.zeroOrNegativeWidth }
-    guard attributes.height > 0 else { throw Error.zeroOrNegativeHeight }
-
     var unmanagedPixelBufferPool: CVPixelBufferPool?
     let errorCode = CVPixelBufferPoolCreate(
       nil,
@@ -78,13 +73,15 @@ final class PixelBufferPool {
     )
 
     switch (errorCode, unmanagedPixelBuffer) {
-    case (kCVReturnSuccess, .some(let pixelBuffer)):
-      let pixelBuffer = PixelBuffer(pixelBuffer)
+    case (kCVReturnSuccess, .some(let cvPixelBuffer)):
+      let pixelBuffer = PixelBuffer(cvPixelBuffer)
       pixelBuffer.propagatedAttachments = propagatedAttachments
       pixelBuffer.nonPropagatedAttachments = nonPropagatedAttachments
       return pixelBuffer
-    case (kCVReturnWouldExceedAllocationThreshold, _): throw Error.allocationTresholdExceeded
-    default: throw Error.pixelBufferAllocation(errorCode: errorCode)
+    case (kCVReturnWouldExceedAllocationThreshold, _):
+      throw Error.allocationTresholdExceeded
+    default:
+      throw Error.pixelBufferAllocation(errorCode: errorCode)
     }
   }
 }

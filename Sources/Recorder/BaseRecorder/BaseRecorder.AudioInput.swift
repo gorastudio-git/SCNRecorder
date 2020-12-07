@@ -33,19 +33,29 @@ extension BaseRecorder {
 
     let queue: DispatchQueue
 
+    let captureOutput = AVCaptureAudioDataOutput()
+
+    @UnfairAtomic var started: Bool = false
+
     var output: ((CMSampleBuffer) -> Void)?
 
-    lazy var captureOutput: AVCaptureAudioDataOutput = {
-      let output = AVCaptureAudioDataOutput()
-      output.setSampleBufferDelegate(self, queue: queue)
-      return output
-    }()
+    init(queue: DispatchQueue) {
+      self.queue = queue
+      super.init()
+      self.captureOutput.setSampleBufferDelegate(self, queue: queue)
+    }
 
-    init(queue: DispatchQueue) { self.queue = queue }
+    func start() { started = true }
 
-    func start() { }
+    func stop() { started = false }
 
-    func stop() { }
+    func recommendedAudioSettingsForAssetWriter(
+      writingTo outputFileType: AVFileType
+    ) -> [String : Any] {
+      captureOutput.recommendedAudioSettingsForAssetWriter(
+        writingTo: outputFileType
+      ) as? [String: Any] ?? AudioSettings().outputSettings
+    }
   }
 }
 
@@ -56,6 +66,7 @@ extension BaseRecorder.AudioInput: AVCaptureAudioDataOutputSampleBufferDelegate 
     didOutput sampleBuffer: CMSampleBuffer,
     from connection: AVCaptureConnection
   ) {
+    guard started else { return }
     self.output?(sampleBuffer)
   }
 }
@@ -66,6 +77,7 @@ extension BaseRecorder.AudioInput: ARSessionObserver {
     _ session: ARSession,
     didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
   ) {
+    guard started else { return }
     queue.async { [output] in output?(audioSampleBuffer) }
   }
 }

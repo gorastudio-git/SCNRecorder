@@ -21,6 +21,7 @@
 		D512FDEE2566803000933885 /* Weakify.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512FDED2566803000933885 /* Weakify.swift */; };
 		D512FDF02566804100933885 /* Weakifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512FDEF2566804100933885 /* Weakifiable.swift */; };
 		D512FDF22566846B00933885 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512FDF12566846B00933885 /* ViewController.swift */; };
+		D514C0722576DB960041E34B /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D514C0712576DB960041E34B /* UIColor+Helpers.swift */; };
 		D54B203E25654ECB00482B84 /* ControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B203D25654ECB00482B84 /* ControlsViewController.swift */; };
 		D54B204125654EDF00482B84 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B204025654EDF00482B84 /* ControlsView.swift */; };
 		D56686A325668A9900F72AE2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56686A225668A9900F72AE2 /* MainViewController.swift */; };
@@ -68,6 +69,7 @@
 		D512FDED2566803000933885 /* Weakify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weakify.swift; sourceTree = "<group>"; };
 		D512FDEF2566804100933885 /* Weakifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weakifiable.swift; sourceTree = "<group>"; };
 		D512FDF12566846B00933885 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D514C0712576DB960041E34B /* UIColor+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		D54B203D25654ECB00482B84 /* ControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewController.swift; sourceTree = "<group>"; };
 		D54B204025654EDF00482B84 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
 		D56686A225668A9900F72AE2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				D512FDE5256663CF00933885 /* Common */,
 				D54B203F25654ED100482B84 /* Controls */,
 				D583F3D22566885A0099CB4C /* Content */,
+				D514C0702576DB820041E34B /* Extensions */,
 				D583F3D32566886F0099CB4C /* Preview */,
 				BE4C079A247B40C70008AA5E /* Resources */,
 				BE4C079B247B41730008AA5E /* Supporting Files */,
@@ -188,6 +191,14 @@
 				D512FDEF2566804100933885 /* Weakifiable.swift */,
 			);
 			path = Weakify;
+			sourceTree = "<group>";
+		};
+		D514C0702576DB820041E34B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D514C0712576DB960041E34B /* UIColor+Helpers.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D5399414250F90C900537276 /* RealityKit */ = {
@@ -381,6 +392,7 @@
 				D5EE33EA257105070056085A /* ARView+SelfSceneRecordable.swift in Sources */,
 				D512FDE7256663DA00933885 /* View.swift in Sources */,
 				D5EE33EB257105070056085A /* ARView+MetalRecordable.swift in Sources */,
+				D514C0722576DB960041E34B /* UIColor+Helpers.swift in Sources */,
 				BE4C34752237C827007AE1EE /* ARKitViewController.swift in Sources */,
 				D5C7240425651675006A1168 /* MetalView.swift in Sources */,
 				D56686A52566CAD000F72AE2 /* VideoPreviewController.swift in Sources */,
@@ -540,20 +552,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YRQAZBYJYS;
+				DEVELOPMENT_TEAM = 5S8646274U;
 				INFOPLIST_FILE = Source/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "gora.studio.SCNRecorder.Example.${DEVELOPMENT_TEAM}";
-				MARKETING_VERSION = 2.3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -564,19 +576,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YRQAZBYJYS;
+				DEVELOPMENT_TEAM = 5S8646274U;
 				INFOPLIST_FILE = Source/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "gora.studio.SCNRecorder.Example.${DEVELOPMENT_TEAM}";
-				MARKETING_VERSION = 2.3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Example-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -13,14 +13,22 @@ import UIKit
 @available(iOS 13.0, *)
 final class SquadRenderer {
 
-  static let quadVertices = [
-    MetalVertex(position: vector_float2(250, -250), color: vector_float3(1.0, 0.0, 0.0)),
-    MetalVertex(position: vector_float2(-250, -250), color: vector_float3(0.0, 1.0, 0.0)),
-    MetalVertex(position: vector_float2(-250, 250), color: vector_float3(0.0, 0.0, 1.0)),
+  static let red = UIColor(displayP3Red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0).vec3
 
-    MetalVertex(position: vector_float2(250, -250), color: vector_float3(1.0, 0.0, 0.0)),
-    MetalVertex(position: vector_float2(-250, 250), color: vector_float3(0.0, 0.0, 1.0)),
-    MetalVertex(position: vector_float2(250, 250), color: vector_float3(1.0, 0.0, 1.0))
+  static let green = UIColor(displayP3Red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).vec3
+
+  static let blue = UIColor(displayP3Red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0).vec3
+
+  static let magenta = UIColor(displayP3Red: 1.0, green: 0.0, blue: 1.0, alpha: 1.0).vec3
+
+  static let quadVertices = [
+    MetalVertex(position: vector_float2(250, -250), color: red),
+    MetalVertex(position: vector_float2(-250, -250), color: green),
+    MetalVertex(position: vector_float2(-250, 250), color: blue),
+
+    MetalVertex(position: vector_float2(250, -250), color: red),
+    MetalVertex(position: vector_float2(-250, 250), color: blue),
+    MetalVertex(position: vector_float2(250, 250), color: magenta)
   ]
 
   let device: MTLDevice
@@ -81,6 +89,10 @@ final class SquadRenderer {
   }
 
   func renderToMetalLayer(_ metalLayer: CAMetalLayer) {
+    autoreleasepool { _renderToMetalLayer(metalLayer) }
+  }
+
+  private func _renderToMetalLayer(_ metalLayer: CAMetalLayer) {
     frame += 1
 
     guard let currentDrawable = metalLayer.nextDrawable() else { return }

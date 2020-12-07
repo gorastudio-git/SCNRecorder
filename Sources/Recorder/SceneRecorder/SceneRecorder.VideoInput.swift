@@ -31,6 +31,11 @@ extension SceneRecorder {
 
   final class VideoInput: MediaSession.Input.PixelBufferVideo, TimeScalable {
 
+    enum Error: Swift.Error {
+
+      case recordableLayer
+    }
+
     let timeScale: CMTimeScale
 
     let producer: MetalPixelBufferProducer
@@ -38,8 +43,6 @@ extension SceneRecorder {
     var size: CGSize { producer.size }
 
     var videoColorProperties: [String: String]? { producer.videoColorProperties }
-
-    var pixelBufferPoolFactory: PixelBufferPoolFactory { producer.pixelBufferPoolFactory }
 
     var output: ((CVBuffer, CMTime) -> Void)?
 
@@ -49,47 +52,42 @@ extension SceneRecorder {
       guard let recordableLayer = recordable.recordableLayer else { throw Error.recordableLayer }
 
       self.timeScale = timeScale
-      self.producer = MetalPixelBufferProducer(recordableLayer: recordableLayer, queue: queue)
-    }
-
-    convenience init(recordable: APIRecordable, timeScale: CMTimeScale, queue: DispatchQueue) throws {
-      switch recordable.api {
-      case .metal:
-        try self.init(recordable: recordable as MetalRecordable, timeScale: timeScale, queue: queue)
-      case .openGLES: throw Error.openGLES
-      case .unknown: throw Error.unknownAPI
-      }
+      self.producer = try MetalPixelBufferProducer(recordableLayer: recordableLayer, queue: queue)
     }
 
     func start() { started = true }
 
-    func render(atTime time: TimeInterval) throws {
+    func render(
+      atTime time: TimeInterval,
+      error errorHandler: @escaping (Swift.Error) -> Void
+    ) throws {
       guard started, let output = output else { return }
 
       let time = timeFromSeconds(time)
+      try producer.produce { [output] (result) in
+        switch result {
+        case .success(let pixelBuffer): output(pixelBuffer, time)
+        case .failure(let error): errorHandler(error)
+        }
+      }
+    }
 
-      try producer.produce { [output] (pixelBuffer) in
-        output(pixelBuffer, time)
+    func render(
+      atTime time: TimeInterval,
+      using commandQueue: MTLCommandQueue,
+      error errorHandler: @escaping (Swift.Error) -> Void
+    ) throws {
+      guard started, let output = output else { return }
+
+      let time = timeFromSeconds(time)
+      try producer.produce(using: commandQueue) { [output] (result) in
+        switch result {
+        case .success(let pixelBuffer): output(pixelBuffer, time)
+        case .failure(let error): errorHandler(error)
+        }
       }
     }
 
     func stop() { started = false }
-  }
-}
-
-// MARK: - Error
-extension SceneRecorder.VideoInput {
-
-  enum Error: Swift.Error {
-
-    case recordableLayer
-
-    case eaglContext
-
-    case metalSimulator
-
-    case openGLES
-
-    case unknownAPI
   }
 }
