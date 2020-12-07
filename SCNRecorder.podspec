@@ -21,7 +21,6 @@ Pod::Spec.new do |s|
     app_spec.exclude_files       = 'Example/Source/Content/RealityKit/*'
     app_spec.preserve_path       = 'Example/Source/Example-Bridging-Header.h'
     app_spec.resources           = 'Example/Source/Resources/**/*.{scnassets,xcassets}'
-    app_spec.compiler_flags      = '-DNON_REALITY'
     app_spec.pod_target_xcconfig = {
       "SWIFT_OBJC_BRIDGING_HEADER" => "SCNRecorder/Example/Source/Example-Bridging-Header.h"
     }
