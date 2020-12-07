@@ -133,7 +133,7 @@ override func viewDidLoad() {
   super.viewDidLoad()
   sceneView.prepareForRecording()
   
-  captureSession = try? .makeAudioForRecorder(sceneView.recorder)
+  captureSession = try? .makeAudioForRecorder(sceneView.recorder!)
 }
 ```
 
