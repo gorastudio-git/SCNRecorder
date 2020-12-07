@@ -126,7 +126,7 @@ override func viewDidLoad() {
 }
 ```
 or, simply
-```
+```swift
 var captureSession: AVCaptureSession?
 
 override func viewDidLoad() {
@@ -135,7 +135,6 @@ override func viewDidLoad() {
   
   captureSession = try? .makeAudioForRecorder(sceneView.recorder)
 }
-
 ```
 
 ### RealityKit
