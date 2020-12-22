@@ -70,9 +70,9 @@ final class ControlsViewController: ViewController {
   }
 
   func bindView() {
-    controlsView.takePhoto = weakify(Self.takePhoto)
-    controlsView.startVideoRecording = weakify(Self.startVideoRecording)
-    controlsView.finishVideoRecording = weakify(Self.finishVideoRecording)
+    controlsView.takePhoto = weakify(This.takePhoto)
+    controlsView.startVideoRecording = weakify(This.startVideoRecording)
+    controlsView.finishVideoRecording = weakify(This.finishVideoRecording)
   }
 
   func takePhoto() {

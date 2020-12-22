@@ -209,7 +209,10 @@ public extension SelfRecordable {
     orientation: UIImage.Orientation = .up,
     completionHandler handler: @escaping (UIImage) -> Void
   ) {
-    takePhotoResult {
+    takePhotoResult(
+      scale: scale,
+      orientation: orientation
+    ) {
       do { try handler($0.get()) }
       catch { assertionFailure("\(error)") }
     }

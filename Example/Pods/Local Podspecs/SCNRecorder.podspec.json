@@ -44,7 +44,7 @@
       ],
       "preserve_paths": "SCNRecorderTests/SCNRecorderTests-Bridging-Header.h",
       "pod_target_xcconfig": {
-        "SWIFT_OBJC_BRIDGING_HEADER": "SCNRecorderTests/SCNRecorderTests-Bridging-Header.h"
+        "SWIFT_OBJC_BRIDGING_HEADER": "SCNRecorder/SCNRecorderTests/SCNRecorderTests-Bridging-Header.h"
       },
       "dependencies": {
         "SCNRecorder/Example": [
@@ -63,10 +63,11 @@
         "Example/Source/**/*.{m,swift,metal}",
         "Example/Source/Content/**/*.{h}"
       ],
+      "exclude_files": "Example/Source/Content/RealityKit/*",
       "preserve_paths": "Example/Source/Example-Bridging-Header.h",
       "resources": "Example/Source/Resources/**/*.{scnassets,xcassets}",
       "pod_target_xcconfig": {
-        "SWIFT_OBJC_BRIDGING_HEADER": "Example/Source/Example-Bridging-Header.h"
+        "SWIFT_OBJC_BRIDGING_HEADER": "SCNRecorder/Example/Source/Example-Bridging-Header.h"
       },
       "dependencies": {
         "SnapKit": [

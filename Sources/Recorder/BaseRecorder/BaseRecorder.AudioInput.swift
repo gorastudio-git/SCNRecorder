@@ -35,6 +35,8 @@ extension BaseRecorder {
 
     let captureOutput = AVCaptureAudioDataOutput()
 
+    var audioFormat: AVAudioFormat?
+
     @UnfairAtomic var started: Bool = false
 
     var output: ((CMSampleBuffer) -> Void)?
@@ -52,9 +54,9 @@ extension BaseRecorder {
     func recommendedAudioSettingsForAssetWriter(
       writingTo outputFileType: AVFileType
     ) -> [String : Any] {
-      captureOutput.recommendedAudioSettingsForAssetWriter(
-        writingTo: outputFileType
-      ) as? [String: Any] ?? AudioSettings().outputSettings
+      audioFormat.map { AudioSettings(audioFormat: $0).outputSettings }
+        ?? captureOutput.recommendedAudioSettingsForAssetWriter(writingTo: outputFileType) as? [String: Any]
+        ?? AudioSettings().outputSettings
     }
   }
 }
@@ -75,6 +77,17 @@ extension BaseRecorder.AudioInput: ARSessionObserver {
 
   func session(
     _ session: ARSession,
+    didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
+  ) {
+    guard started else { return }
+    queue.async { [output] in output?(audioSampleBuffer) }
+  }
+}
+
+extension BaseRecorder.AudioInput {
+
+  func audioEngine(
+    _ audioEngine: AudioEngine,
     didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
   ) {
     guard started else { return }

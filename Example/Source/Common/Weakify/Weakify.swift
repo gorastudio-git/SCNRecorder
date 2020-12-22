@@ -25,10 +25,35 @@
 
 import Foundation
 
-func _weakify<Self: AnyObject>(_ self: Self, _ closure: @escaping (Self) -> () -> Void) -> () -> Void {
+func weakify<This: AnyObject>(
+  _ self: This,
+  _ closure: @escaping (This) -> () -> Void
+) -> () -> Void {
   { [weak self] in self.map { closure($0)() } }
 }
 
-func _weakify<Self: AnyObject, T>(_ self: Self, _ closure: @escaping (Self) -> () -> T) -> () -> T? {
+func weakify<This: AnyObject, Result>(
+  _ self: This,
+  _ closure: @escaping (This) -> () -> Result
+) -> () -> Result? {
   { [weak self] in self.map { closure($0)() } }
+}
+
+func weakify<This: AnyObject, Parameter>(
+  _ self: This,
+  _ closure: @escaping (This) -> (Parameter) -> Void
+) -> (Parameter) -> Void {
+  { [weak self] (parameter) in
+    self.map { closure($0)(parameter) }
+  }
+}
+
+func weakify<This: AnyObject, Parameter, Result>(
+  _ self: This,
+  _ closure: @escaping (This) -> (Parameter) -> Result
+) -> (Parameter) -> Result? {
+  { [weak self] (parameter) in
+    self.map { closure($0)(parameter)
+    }
+  }
 }
