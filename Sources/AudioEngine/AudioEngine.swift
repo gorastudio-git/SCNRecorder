@@ -117,6 +117,8 @@ public final class AudioEngine {
       }
 
       recorder.audioInput.audioFormat = player?.audioFormat
+
+      guard oldValue == nil else { return }
       engine.mainMixerNode.installTap(
         onBus: 0,
         bufferSize: 4096,
