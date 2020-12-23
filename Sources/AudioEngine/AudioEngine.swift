@@ -140,7 +140,7 @@ public final class AudioEngine {
     }
   }
 
-  @Observable var error: Swift.Error?
+  @Observable public internal(set) var error: Swift.Error?
 
   public init() { setupObservers() }
 
