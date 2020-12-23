@@ -44,7 +44,7 @@ public class BaseRecorder: NSObject {
 
   @Observable var error: Swift.Error?
 
-  var useAudioEngine: Bool {
+  public var useAudioEngine: Bool {
     get { audioInput.useAudioEngine }
     set { audioInput.useAudioEngine = newValue }
   }
