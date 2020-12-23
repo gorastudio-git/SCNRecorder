@@ -92,8 +92,8 @@ public final class AudioEngine {
         guard let this = self else { return }
         this.engine.pause()
 
-        do { try this.audioSession.setActive(false) }
-        catch { this.error = error }
+//        do { try this.audioSession.setActive(false) }
+//        catch { this.error = error }
       }
 
       player.didStop = { [weak self] in
@@ -102,8 +102,8 @@ public final class AudioEngine {
         this.engine.stop()
         this.engine.reset()
 
-        do { try this.audioSession.setActive(false) }
-        catch { this.error = error }
+//        do { try this.audioSession.setActive(false) }
+//        catch { this.error = error }
       }
     }
   }
@@ -147,7 +147,7 @@ public final class AudioEngine {
   deinit {
     player?.stop()
     observers.forEach { notificationCenter.removeObserver($0) }
-    try? audioSession.setActive(false)
+//    try? audioSession.setActive(false)
   }
 }
 
