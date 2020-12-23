@@ -42,7 +42,7 @@ public class BaseRecorder: NSObject {
 
   let queue: DispatchQueue
 
-  @Observable var error: Swift.Error?
+  @Observable public internal(set) var error: Swift.Error?
 
   public var useAudioEngine: Bool {
     get { audioInput.useAudioEngine }
