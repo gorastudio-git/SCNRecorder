@@ -44,6 +44,11 @@ public class BaseRecorder: NSObject {
 
   @Observable var error: Swift.Error?
 
+  var useAudioEngine: Bool {
+    get { audioInput.useAudioEngine }
+    set { audioInput.useAudioEngine = newValue }
+  }
+
   init(queue: DispatchQueue, mediaSession: MediaSession) {
     self.queue = queue
     self.mediaSession = mediaSession

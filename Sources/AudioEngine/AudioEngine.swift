@@ -77,7 +77,7 @@ public final class AudioEngine {
         guard !isInterrupted else { return false }
 
         do {
-          try this.audioSession.setCategory(.playback)
+          try this.audioSession.setCategory(.playAndRecord, options: .defaultToSpeaker)
           try this.audioSession.setActive(true)
           try this.engine.start()
           return true

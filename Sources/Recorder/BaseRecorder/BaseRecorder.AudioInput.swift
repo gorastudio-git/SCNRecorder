@@ -39,6 +39,8 @@ extension BaseRecorder {
 
     @UnfairAtomic var started: Bool = false
 
+    @UnfairAtomic var useAudioEngine: Bool = false
+
     var output: ((CMSampleBuffer) -> Void)?
 
     init(queue: DispatchQueue) {
@@ -90,7 +92,7 @@ extension BaseRecorder.AudioInput {
     _ audioEngine: AudioEngine,
     didOutputAudioSampleBuffer audioSampleBuffer: CMSampleBuffer
   ) {
-    guard started else { return }
+    guard started, useAudioEngine else { return }
     queue.async { [output] in output?(audioSampleBuffer) }
   }
 }
