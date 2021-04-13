@@ -114,7 +114,7 @@ final class PixelBuffer: CustomStringConvertible {
     )
 
     guard errorCode == kCVReturnSuccess,
-          let pixelBuffer = unmanagedPixelBuffer?.takeUnretainedValue()
+          let pixelBuffer = unmanagedPixelBuffer?.takeRetainedValue()
     else { throw Error.allocation(errorCode: errorCode) }
 
     self.init(pixelBuffer)

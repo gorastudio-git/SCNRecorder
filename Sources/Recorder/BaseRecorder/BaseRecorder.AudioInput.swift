@@ -86,6 +86,7 @@ extension BaseRecorder.AudioInput: ARSessionObserver {
   }
 }
 
+@available(iOS 13.0, *)
 extension BaseRecorder.AudioInput {
 
   func audioEngine(

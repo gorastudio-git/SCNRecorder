@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 
+@available(iOS 13.0, *)
 public final class AudioEngine {
 
   enum State {
@@ -68,42 +69,37 @@ public final class AudioEngine {
       )
 
       player.willStart = { [weak self] in
-        guard let this = self else { return false }
+        guard let self = self else { return false }
 
         let isInterrupted = DispatchQueue.main.sync { () -> Bool in
-          if this.state.isInterrupted { this.state = .interrupted(playing: true) }
-          return this.state.isInterrupted
+          if self.state.isInterrupted { self.state = .interrupted(playing: true) }
+          return self.state.isInterrupted
         }
         guard !isInterrupted else { return false }
 
         do {
-          try this.audioSession.setCategory(.playAndRecord, options: .defaultToSpeaker)
-          try this.audioSession.setActive(true)
-          try this.engine.start()
+          try self.activateAudioSessionIfNeeded()
+          try self.engine.start()
           return true
         }
         catch {
-          this.error = error
+          self.error = error
           return false
         }
       }
 
       player.didPause = { [weak self] in
-        guard let this = self else { return }
-        this.engine.pause()
-
-//        do { try this.audioSession.setActive(false) }
-//        catch { this.error = error }
+        guard let self = self else { return }
+        self.engine.pause()
+        self.deactivateAudioSessionIfNeeded()
       }
 
       player.didStop = { [weak self] in
-        guard let this = self else { return }
+        guard let self = self else { return }
 
-        this.engine.stop()
-        this.engine.reset()
-
-//        do { try this.audioSession.setActive(false) }
-//        catch { this.error = error }
+        self.engine.stop()
+        self.engine.reset()
+        self.deactivateAudioSessionIfNeeded()
       }
     }
   }
@@ -124,34 +120,56 @@ public final class AudioEngine {
         bufferSize: 4096,
         format: nil
       ) { [weak self] (buffer, time) in
-        guard let this = self, let recorder = this.recorder else {
-          self?.recorder = nil
+        guard let self = self else { return }
+        guard let recorder = self.recorder else {
+          self.engine.mainMixerNode.removeTap(onBus: 0)
           return
         }
 
         do {
           let sampleBuffer = try Self.createAudioSampleBuffer(from: buffer, time: time)
-          recorder.audioInput.audioEngine(this, didOutputAudioSampleBuffer: sampleBuffer)
+          recorder.audioInput.audioEngine(self, didOutputAudioSampleBuffer: sampleBuffer)
         }
         catch {
-          this.error = error
+          self.error = error
         }
       }
     }
   }
+  
+  let exclusivelyManageAudioSession: Bool
 
   @Observable public internal(set) var error: Swift.Error?
 
-  public init() { setupObservers() }
+  public init(exclusivelyManageAudioSession: Bool = true) {
+    self.exclusivelyManageAudioSession = exclusivelyManageAudioSession
+    setupObservers()
+  }
 
   deinit {
+    recorder?.audioInput.audioFormat = nil
     player?.stop()
     observers.forEach { notificationCenter.removeObserver($0) }
-//    try? audioSession.setActive(false)
+    deactivateAudioSessionIfNeeded()
+  }
+  
+  func activateAudioSessionIfNeeded() throws {
+    guard exclusivelyManageAudioSession else { return }
+
+    try audioSession.setCategory(.playAndRecord, options: .defaultToSpeaker)
+    try audioSession.setActive(true)
+  }
+  
+  func deactivateAudioSessionIfNeeded() {
+    guard exclusivelyManageAudioSession else { return }
+    
+    do { try audioSession.setActive(false) }
+    catch { self.error = error }
   }
 }
 
 // MARK: - Observers
+@available(iOS 13.0, *)
 extension AudioEngine {
 
   func setupObservers() {
@@ -246,34 +264,31 @@ extension AudioEngine {
   }
 }
 
+@available(iOS 13.0, *)
 extension AudioEngine {
 
   static func createAudioSampleBuffer(from buffer: AVAudioPCMBuffer, time: AVAudioTime) throws -> CMSampleBuffer {
     let audioBufferList = buffer.mutableAudioBufferList
     let streamDescription = buffer.format.streamDescription.pointee
-    if #available(iOS 13.0, *) {
-      let timescale = CMTimeScale(streamDescription.mSampleRate)
-      let format = try CMAudioFormatDescription(audioStreamBasicDescription: streamDescription)
-      let sampleBuffer = try CMSampleBuffer(
-        dataBuffer: nil,
-        formatDescription: format,
-        numSamples: CMItemCount(buffer.frameLength),
-        sampleTimings: [
-          CMSampleTimingInfo(
-            duration: CMTime(value: 1, timescale: timescale),
-            presentationTimeStamp: CMTime(
-              seconds: AVAudioTime.seconds(forHostTime: time.hostTime),
-              preferredTimescale: timescale
-            ),
-            decodeTimeStamp: .invalid
-          )
-        ],
-        sampleSizes: []
-      )
-      try sampleBuffer.setDataBuffer(fromAudioBufferList: audioBufferList)
-      return sampleBuffer
-    } else {
-      throw NSError()
-    }
+    let timescale = CMTimeScale(streamDescription.mSampleRate)
+    let format = try CMAudioFormatDescription(audioStreamBasicDescription: streamDescription)
+    let sampleBuffer = try CMSampleBuffer(
+      dataBuffer: nil,
+      formatDescription: format,
+      numSamples: CMItemCount(buffer.frameLength),
+      sampleTimings: [
+        CMSampleTimingInfo(
+          duration: CMTime(value: 1, timescale: timescale),
+          presentationTimeStamp: CMTime(
+            seconds: AVAudioTime.seconds(forHostTime: time.hostTime),
+            preferredTimescale: timescale
+          ),
+          decodeTimeStamp: .invalid
+        )
+      ],
+      sampleSizes: []
+    )
+    try sampleBuffer.setDataBuffer(fromAudioBufferList: audioBufferList)
+    return sampleBuffer
   }
 }

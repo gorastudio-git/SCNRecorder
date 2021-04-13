@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 
+@available(iOS 13.0, *)
 extension AudioEngine {
 
   public final class Player {
@@ -143,6 +144,7 @@ extension AudioEngine {
 }
 
 // MARK: - Scheduling
+@available(iOS 13.0, *)
 extension AudioEngine.Player {
 
   func schedule(
@@ -178,6 +180,7 @@ extension AudioEngine.Player {
 }
 
 // MARK: - Time
+@available(iOS 13.0, *)
 extension AudioEngine.Player {
 
   func updatePosition() {

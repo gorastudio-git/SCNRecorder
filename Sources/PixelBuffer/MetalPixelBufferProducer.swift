@@ -83,32 +83,53 @@ final class MetalPixelBufferProducer {
   ) throws {
     guard let lastTexture = recordableLayer.lastTexture else { throw Error.noLastTexture }
     guard let surface = lastTexture.iosurface else { throw Error.noSurface }
-    guard let commandBuffer = commandQueue.makeCommandBuffer() else { throw Error.noCommandBuffer }
-
-    let textureDescriptor = makeSourceTextureDescriptor(basedOn: lastTexture)
-    let attachements = makePixelBufferAttachements(basedOn: surface)
-
-    let metalTexturePool = try makeMetalTexturePool(basedOn: lastTexture)
-    let metalTexture = try metalTexturePool.getMetalTexture(propagatedAttachments: attachements)
-
-    guard let sourceTexture = device.makeTexture(
-      descriptor: textureDescriptor,
+    
+    let sourceTextureDescriptor = self.makeSourceTextureDescriptor(basedOn: lastTexture)
+    guard let sourceTexture = self.device.makeTexture(
+      descriptor: sourceTextureDescriptor,
       iosurface: surface,
       plane: 0
     ) else {
       throw Error.noSourceTexture
     }
+    
+    let attachements = self.makePixelBufferAttachements(basedOn: surface)
+    let metalTexturePool = try self.makeMetalTexturePool(basedOn: lastTexture)
+    let destinationTexture = try metalTexturePool.getMetalTexture(propagatedAttachments: attachements)
 
-    let imageConversion = makeImageConversion()
+    queue.async { [weak self] in
+      do {
+        try self?.produce(
+          using: destinationTexture,
+          from: sourceTexture,
+          commandQueue: commandQueue,
+          handler: handler
+        )
+      }
+      catch {
+        handler(.failure(error))
+      }
+    }
+  }
+    
+  func produce(
+    using destinationTexture: MetalTexture,
+    from sourceTexture: MTLTexture,
+    commandQueue: MTLCommandQueue,
+    handler: @escaping (CVPixelBufferResult) -> Void
+  ) throws {
+    guard let commandBuffer = commandQueue.makeCommandBuffer() else { throw Error.noCommandBuffer }
+
+    let imageConversion = self.makeImageConversion()
     imageConversion.encode(
       commandBuffer: commandBuffer,
       sourceTexture: sourceTexture,
-      destinationTexture: metalTexture.mtlTexture
+      destinationTexture: destinationTexture.mtlTexture
     )
 
     commandBuffer.addCompletedHandler { [weak self] (commandBuffer) in
       let result: CVPixelBufferResult = commandBuffer.status == .completed
-        ? .success(metalTexture.pixelBuffer.cvPxelBuffer)
+        ? .success(destinationTexture.pixelBuffer.cvPxelBuffer)
         : .failure(Error.commandBufferError(commandBuffer.error))
       self?.queue.async { handler(result) }
     }

@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 
+@available(iOS 13.0, *)
 extension AudioEngine.Player {
 
   public enum State: Equatable {
