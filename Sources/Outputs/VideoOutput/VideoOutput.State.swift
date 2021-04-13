@@ -26,7 +26,6 @@
 import Foundation
 import AVFoundation
 
-
 extension VideoOutput {
 
   typealias State = VideoOutputState
@@ -210,7 +209,6 @@ public enum VideoOutputState: Equatable {
     catch { return .failed(error: error) }
   }
 }
-
 
 private extension VideoOutputState {
 

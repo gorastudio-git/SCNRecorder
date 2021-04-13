@@ -136,10 +136,6 @@ extension AudioEngine {
       assertEngine()
       queue?.async { self.state = self.state.seek(self, to: time) }
     }
-
-    func reset() {
-      
-    }
   }
 }
 

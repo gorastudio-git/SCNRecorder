@@ -13,7 +13,7 @@ import AVFoundation
 public final class AudioEngine {
 
   enum State {
-    
+
     case normal
 
     case interrupted(playing: Bool)
@@ -136,7 +136,7 @@ public final class AudioEngine {
       }
     }
   }
-  
+
   let exclusivelyManageAudioSession: Bool
 
   @Observable public internal(set) var error: Swift.Error?
@@ -152,17 +152,17 @@ public final class AudioEngine {
     observers.forEach { notificationCenter.removeObserver($0) }
     deactivateAudioSessionIfNeeded()
   }
-  
+
   func activateAudioSessionIfNeeded() throws {
     guard exclusivelyManageAudioSession else { return }
 
     try audioSession.setCategory(.playAndRecord, options: .defaultToSpeaker)
     try audioSession.setActive(true)
   }
-  
+
   func deactivateAudioSessionIfNeeded() {
     guard exclusivelyManageAudioSession else { return }
-    
+
     do { try audioSession.setActive(false) }
     catch { self.error = error }
   }

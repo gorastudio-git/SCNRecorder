@@ -28,7 +28,7 @@ extension AudioEngine.Player {
 
     func getPosition(_ player: AudioEngine.Player) -> AVAudioFramePosition {
       guard let playerNode = player.playerNode else { return player.position }
-      
+
       return self == .playing
         ? playerNode.lastRenderTime.flatMap { playerNode.playerTime(forNodeTime: $0).map { max($0.sampleTime, 0) }} ?? 0
         : player.position

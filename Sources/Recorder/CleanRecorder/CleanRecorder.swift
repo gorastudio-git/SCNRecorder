@@ -39,7 +39,7 @@ public final class CleanRecorder<T: CleanRecordable>: BaseRecorder,
       timeScale: timeScale,
       queue: queue
     )
-    
+
     super.init(queue: queue, mediaSession: MediaSession(queue: queue, videoInput: videoInput))
   }
 

@@ -118,7 +118,6 @@ public extension SelfRecordable {
   }
 }
 
-
 public extension SelfRecordable where Self: MetalRecordable {
 
   func prepareForRecording() {
@@ -131,7 +130,6 @@ public extension SelfRecordable where Self: MetalRecordable {
     fixFirstLaunchFrameDrop()
   }
 }
-
 
 public extension SelfRecordable {
 

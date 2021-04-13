@@ -57,7 +57,7 @@ extension MTLPixelFormat {
 
   var supportedPixelFormat: MTLPixelFormat {
     if Self.supportedPixelFormats.contains(self) { return self }
-    
+
     switch self {
     case .bgra10_xr: return .bgr10_xr
     case .bgra10_xr_srgb, .rgb10a8_2p_xr10_srgb: return .bgr10_xr_srgb

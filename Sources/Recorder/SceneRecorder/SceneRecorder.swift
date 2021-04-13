@@ -38,7 +38,7 @@ public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDele
       mediaSession: MediaSession(queue: queue, videoInput: videoInput)
     )
   }
-  
+
   public convenience init<T: MetalRecordable>(
     _ recordable: T,
     timeScale: CMTimeScale = 600

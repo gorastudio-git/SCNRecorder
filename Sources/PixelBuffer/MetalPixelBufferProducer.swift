@@ -83,7 +83,7 @@ final class MetalPixelBufferProducer {
   ) throws {
     guard let lastTexture = recordableLayer.lastTexture else { throw Error.noLastTexture }
     guard let surface = lastTexture.iosurface else { throw Error.noSurface }
-    
+
     let sourceTextureDescriptor = self.makeSourceTextureDescriptor(basedOn: lastTexture)
     guard let sourceTexture = self.device.makeTexture(
       descriptor: sourceTextureDescriptor,
@@ -92,7 +92,7 @@ final class MetalPixelBufferProducer {
     ) else {
       throw Error.noSourceTexture
     }
-    
+
     let attachements = self.makePixelBufferAttachements(basedOn: surface)
     let metalTexturePool = try self.makeMetalTexturePool(basedOn: lastTexture)
     let destinationTexture = try metalTexturePool.getMetalTexture(propagatedAttachments: attachements)
@@ -111,7 +111,7 @@ final class MetalPixelBufferProducer {
       }
     }
   }
-    
+
   func produce(
     using destinationTexture: MetalTexture,
     from sourceTexture: MTLTexture,
@@ -162,7 +162,9 @@ final class MetalPixelBufferProducer {
     var attachements = (try? PixelBuffer(surface).propagatedAttachments) ?? [:]
 
     let colorSpaceKey = kCVImageBufferCGColorSpaceKey as String
+    // swiftlint:disable force_cast
     var colorSpace = attachements[colorSpaceKey].map({ $0 as! CGColorSpace })
+    // swiftlint:enable force_cast
     colorSpace = colorSpace ?? recordableLayer.colorspace
 
     attachements[colorSpaceKey] = colorSpace

@@ -58,9 +58,11 @@ public extension ObservableInterface {
     on queue: DispatchQueue? = nil,
     _ observer: @escaping Observer
   ) {
+    // swiftlint:disable opening_brace
     self.observer = queue.map { queue in
       { value in queue.async { observer(value) }}
     } ?? observer
+    // swiftlint:enable opening_brace
   }
 }
 
