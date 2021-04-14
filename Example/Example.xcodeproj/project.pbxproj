@@ -401,11 +401,11 @@
 				BE4C34712237C827007AE1EE /* AppDelegate.swift in Sources */,
 				BE4C34902237CA8E007AE1EE /* PhotoPreviewController.swift in Sources */,
 				D512FDF22566846B00933885 /* ViewController.swift in Sources */,
+				D512FDEE2566803000933885 /* Weakify.swift in Sources */,
 				D512FDF02566804100933885 /* Weakifiable.swift in Sources */,
 				D5C7240D25652BD6006A1168 /* MetalShaders.metal in Sources */,
 				D54B203E25654ECB00482B84 /* ControlsViewController.swift in Sources */,
 				D5EE33EC257105070056085A /* RealityKitViewController.swift in Sources */,
-				D512FDEE2566803000933885 /* Weakify.swift in Sources */,
 				D5C724062565167F006A1168 /* MetalViewController.swift in Sources */,
 				D54B204125654EDF00482B84 /* ControlsView.swift in Sources */,
 				D5C7240A25651F79006A1168 /* SquadRenderer.swift in Sources */,
@@ -554,7 +554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5S8646274U;
 				INFOPLIST_FILE = Source/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -578,7 +578,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5S8646274U;
 				INFOPLIST_FILE = Source/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

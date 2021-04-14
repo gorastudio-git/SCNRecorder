@@ -37,12 +37,8 @@ final class MainViewController: ViewController {
     var items = [Item]()
     items.append((title: "ARKit Example", controller: ARKitViewController.self))
     items.append((title: "SceneKit Example", controller: SceneKitViewController.self))
-    if #available(iOS 13, *) {
-      #if !COCOAPODS
-      items.append((title: "RealityKit Example", controller: RealityKitViewController.self))
-      #endif
-      items.append( (title: "Metal Example", controller: MetalViewController.self))
-    }
+    items.append((title: "RealityKit Example", controller: RealityKitViewController.self))
+    items.append( (title: "Metal Example", controller: MetalViewController.self))
     return items
   }()
 

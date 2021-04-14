@@ -34,25 +34,25 @@ extension Weakifiable {
   func weakify(
     _ closure: @escaping (Self) -> () -> Void
   ) -> () -> Void {
-    Example.weakify(self, closure)
+    Global.weakify(self, closure)
   }
 
   func weakify<Result>(
     _ closure: @escaping (Self) -> () -> Result
   ) -> () -> Result? {
-    Example.weakify(self, closure)
+    Global.weakify(self, closure)
   }
 
   func weakify<Parameter>(
     _ closure: @escaping (Self) -> (Parameter) -> Void
   ) -> (Parameter) -> Void {
-    Example.weakify(self, closure)
+    Global.weakify(self, closure)
   }
 
   func weakify<Parameter, Result>(
     _ closure: @escaping (Self) -> (Parameter) -> Result
   ) -> (Parameter) -> Result? {
-    Example.weakify(self, closure)
+    Global.weakify(self, closure)
   }
 }
 

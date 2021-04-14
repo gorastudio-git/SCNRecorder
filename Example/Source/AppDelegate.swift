@@ -34,17 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
-    if #available(iOS 13.0, *) {
-      #if compiler(>=5.1)
-      let appearance = UINavigationBarAppearance()
-      appearance.configureWithTransparentBackground()
-      UINavigationBar.appearance().standardAppearance = appearance
-      #endif
-    } else {
-      UINavigationBar.appearance().isTranslucent = true
-      UINavigationBar.appearance().shadowImage = UIImage()
-      UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-    }
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithTransparentBackground()
+    UINavigationBar.appearance().standardAppearance = appearance
 
     let mainViewController = MainViewController()
     let navigationController = UINavigationController(rootViewController: mainViewController)

@@ -44,10 +44,13 @@ class RealityKitViewController: UIViewController {
 
     // Load the "Box" scene from the "Experience" Reality File
     do {
+      // For now cocoapods doesn't suppor rcproject files.
+      #if !COCOAPODS
       let boxAnchor = try Experience.loadBox()
 
       // Add the box anchor to the scene
       realityView.scene.anchors.append(boxAnchor)
+      #endif
 
       #if !targetEnvironment(simulator)
       realityView.automaticallyConfigureSession = false
