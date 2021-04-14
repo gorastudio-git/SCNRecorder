@@ -14,16 +14,16 @@ Starting version 2.2.0 SCNRecorder supports Metal only.
 
 ## Requirements
 
-- iOS 11.0+
-- Xcode 11.5+
-- Swift 4.2+
+- iOS 12.0+
+- Xcode 12.0+
+- Swift 5.0+
 
 ## Installation
 
 ### CocoaPods
 
 ```ruby
-pod 'SCNRecorder', '~> 2.4'
+pod 'SCNRecorder', '~> 2.5'
 ```
 
 ### Carthage
@@ -137,9 +137,39 @@ override func viewDidLoad() {
 }
 ```
 
+### Music Overlay
+
+Instead of capturing audio using microphone you can play music and add it to video at the same time.
+
+```swift
+
+let auidoEngine = AudioEngine()
+
+override func viewDidLoad() {
+  super.viewDidLoad()
+  
+  sceneView.prepareForRecording()
+  do {
+    audioEngine.recorder = sceneView.recorder
+    
+    // If true, use sound data from audioEngine if any
+    // If false, use sound data ARSession/AVCaptureSession if any
+    sceneView.recorder?.useAudioEngine = true
+    
+    let player = try AudioEngine.Player(url: url)
+    audioEngine.player = player
+    
+    player.play()
+  }
+  catch { 
+    print(\(error))
+  }
+}
+```
+
 ### RealityKit
 
-To support recording RealityKit content copy [ARView+MetalRecordable.swift](Example/Source/RealityKit/ARView+MetalRecordable.swift) and [ARView+SelfSceneRecordable.swift](Example/Source/RealityKit/ARView+SelfSceneRecordable.swift) files to your project.
+To support recording RealityKit, copy [ARView+MetalRecordable.swift](Example/Source/RealityKit/ARView+MetalRecordable.swift) and [ARView+SelfSceneRecordable.swift](Example/Source/RealityKit/ARView+SelfSceneRecordable.swift) files to your project.
 Then look at [ARViewController.swift](Example/Source/RealityKit/ARViewController.swift) for usage.
 
 ### That's it!

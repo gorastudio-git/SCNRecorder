@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'SCNRecorder'
-  s.version               = '2.4.0'
+  s.version               = '2.5.0'
   s.summary               = 'A lags-free recorder of ARKit and SceneKit for iOS in Swift'
   s.homepage              = 'https://github.com/gorastudio/SCNRecorder'
   s.license               = { :type => 'MIT', :file => 'LICENSE.md' }
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source                = { :git => 'https://github.com/gorastudio/SCNRecorder.git', :tag => s.version.to_s }
   s.module_name           = 'SCNRecorder'
   s.module_map            = 'SCNRecorder.modulemap'
-  s.swift_version         = '5.2'
+  s.swift_version         = '5.0'
   s.source_files          = 'SCNRecorder.h', 'Sources/**/*.{h,m,swift}'
   s.public_header_files   = 'SCNRecorder.h', 'Sources/**/*.h'
   s.private_header_files  = 'Sources/**/*.h'
@@ -18,11 +18,10 @@ Pod::Spec.new do |s|
     app_spec.name                = "Example"
     app_spec.platform            = :ios, '13.0'
     app_spec.source_files        = 'Example/Source/**/*.{m,swift,metal}', 'Example/Source/Content/**/*.{h}'
-    app_spec.exclude_files       = 'Example/Source/Content/RealityKit/*'
-    app_spec.preserve_path       = 'Example/Source/Example-Bridging-Header.h'
+    app_spec.preserve_paths      = 'Example/Source/Example-Bridging-Header.h'
     app_spec.resources           = 'Example/Source/Resources/**/*.{scnassets,xcassets}'
     app_spec.pod_target_xcconfig = {
-      "SWIFT_OBJC_BRIDGING_HEADER" => "SCNRecorder/Example/Source/Example-Bridging-Header.h"
+      "SWIFT_OBJC_BRIDGING_HEADER" => "$(PODS_TARGET_SRCROOT)/Example/Source/Example-Bridging-Header.h"
     }
 
     app_spec.dependency 'SnapKit', '~> 5.0.0'
@@ -33,11 +32,10 @@ Pod::Spec.new do |s|
     test_spec.requires_app_host   = true
     test_spec.app_host_name       = 'SCNRecorder/Example'
     test_spec.source_files        = 'SCNRecorderTests/**/*.{m,swift,metal}', 'SCNRecorderTests/Metal/**/*.h'
-    test_spec.preserve_path       = 'SCNRecorderTests/SCNRecorderTests-Bridging-Header.h'
+    test_spec.preserve_paths      = 'SCNRecorderTests/SCNRecorderTests-Bridging-Header.h'
     test_spec.pod_target_xcconfig = {
-      "SWIFT_OBJC_BRIDGING_HEADER" => "SCNRecorder/SCNRecorderTests/SCNRecorderTests-Bridging-Header.h"
+      "SWIFT_OBJC_BRIDGING_HEADER" => "$(PODS_TARGET_SRCROOT)/SCNRecorderTests/SCNRecorderTests-Bridging-Header.h"
     }
-
 
     test_spec.dependency 'SCNRecorder/Example'
   end

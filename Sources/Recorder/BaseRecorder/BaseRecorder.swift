@@ -36,13 +36,18 @@ public class BaseRecorder: NSObject {
   lazy var audioInput: AudioInput = {
     let audioInput = AudioInput(queue: queue)
     hasAudioInput = true
-    mediaSession.setAudioInput(audioInput) 
+    mediaSession.setAudioInput(audioInput)
     return audioInput
   }()
 
   let queue: DispatchQueue
 
-  @Observable var error: Swift.Error?
+  @Observable public internal(set) var error: Swift.Error?
+
+  public var useAudioEngine: Bool {
+    get { audioInput.useAudioEngine }
+    set { audioInput.useAudioEngine = newValue }
+  }
 
   init(queue: DispatchQueue, mediaSession: MediaSession) {
     self.queue = queue

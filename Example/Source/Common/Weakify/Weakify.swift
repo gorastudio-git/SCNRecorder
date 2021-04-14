@@ -25,10 +25,66 @@
 
 import Foundation
 
-func _weakify<Self: AnyObject>(_ self: Self, _ closure: @escaping (Self) -> () -> Void) -> () -> Void {
-  { [weak self] in self.map { closure($0)() } }
+func weakify<This: AnyObject>(
+  _ this: This,
+  _ closure: @escaping (This) -> () -> Void
+) -> () -> Void {
+  Global.weakify(this, closure)
 }
 
-func _weakify<Self: AnyObject, T>(_ self: Self, _ closure: @escaping (Self) -> () -> T) -> () -> T? {
-  { [weak self] in self.map { closure($0)() } }
+func weakify<This: AnyObject, Result>(
+  _ this: This,
+  _ closure: @escaping (This) -> () -> Result
+) -> () -> Result? {
+  Global.weakify(this, closure)
+}
+
+func weakify<This: AnyObject, Parameter>(
+  _ this: This,
+  _ closure: @escaping (This) -> (Parameter) -> Void
+) -> (Parameter) -> Void {
+  Global.weakify(this, closure)
+}
+
+func weakify<This: AnyObject, Parameter, Result>(
+  _ this: This,
+  _ closure: @escaping (This) -> (Parameter) -> Result
+) -> (Parameter) -> Result? {
+  Global.weakify(this, closure)
+}
+
+enum Global {
+
+  static func weakify<This: AnyObject>(
+    _ this: This,
+    _ closure: @escaping (This) -> () -> Void
+  ) -> () -> Void {
+    { [weak this] in this.map { closure($0)() } }
+  }
+
+  static func weakify<This: AnyObject, Result>(
+    _ this: This,
+    _ closure: @escaping (This) -> () -> Result
+  ) -> () -> Result? {
+    { [weak this] in this.map { closure($0)() } }
+  }
+
+  static func weakify<This: AnyObject, Parameter>(
+    _ this: This,
+    _ closure: @escaping (This) -> (Parameter) -> Void
+  ) -> (Parameter) -> Void {
+    { [weak this] (parameter) in
+      this.map { closure($0)(parameter) }
+    }
+  }
+
+  static func weakify<This: AnyObject, Parameter, Result>(
+    _ this: This,
+    _ closure: @escaping (This) -> (Parameter) -> Result
+  ) -> (Parameter) -> Result? {
+    { [weak this] (parameter) in
+      this.map { closure($0)(parameter)
+      }
+    }
+  }
 }

@@ -63,5 +63,3 @@ public extension RecordableLayer where Self: CAMetalLayer {
 }
 
 #endif
-
-

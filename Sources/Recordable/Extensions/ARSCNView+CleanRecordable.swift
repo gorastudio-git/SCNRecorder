@@ -3,9 +3,6 @@
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 25.05.2020.
-//  SCNRecorder
-//
-//  Created by Vladislav Grigoryev on 25.05.2020.
 //  Copyright © 2020 GORA Studio. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy

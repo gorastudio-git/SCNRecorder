@@ -69,7 +69,7 @@ enum ImageOutput {
       handler($0.flatMap { pixelBuffer in
         var cgImage: CGImage?
         let status = VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
-        
+
         guard let image = cgImage else {
           return .failure(Error.createCGImageFromCVPixelBufferFailed(status))
         }

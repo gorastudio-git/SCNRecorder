@@ -2,8 +2,9 @@ disabled_rules:
   - identifier_name
   - statement_position
   - nesting
+  - trailing_comma
 included:
-  - Source
+  - Sources
   - Example/Source
 reporter: "xcode"
 

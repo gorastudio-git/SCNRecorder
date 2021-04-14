@@ -1,5 +1,5 @@
 //
-//  GCDAtomic.swift
+//  DispatchAtomic.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 17.05.2020.
@@ -26,7 +26,7 @@
 import Foundation
 
 @propertyWrapper
-public final class GCDAtomic<Value>: Atomic {
+public final class DispatchAtomic<Value>: Atomic {
 
   private var _wrappedValue: Value
 
@@ -37,7 +37,7 @@ public final class GCDAtomic<Value>: Atomic {
     set { value = newValue }
   }
 
-  public var projectedValue: GCDAtomic<Value> { self }
+  public var projectedValue: DispatchAtomic<Value> { self }
 
   public init(wrappedValue: Value) {
     self._wrappedValue = wrappedValue
@@ -64,4 +64,4 @@ public final class GCDAtomic<Value>: Atomic {
   }
 }
 
-extension GCDAtomic: ObservableInterface where Value: ObservableInterface { }
+extension DispatchAtomic: ObservableInterface where Value: ObservableInterface { }

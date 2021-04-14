@@ -70,9 +70,9 @@ final class ControlsViewController: ViewController {
   }
 
   func bindView() {
-    controlsView.takePhoto = weakify(Self.takePhoto)
-    controlsView.startVideoRecording = weakify(Self.startVideoRecording)
-    controlsView.finishVideoRecording = weakify(Self.finishVideoRecording)
+    controlsView.takePhoto = weakify(This.takePhoto)
+    controlsView.startVideoRecording = weakify(This.startVideoRecording)
+    controlsView.finishVideoRecording = weakify(This.finishVideoRecording)
   }
 
   func takePhoto() {
@@ -80,13 +80,13 @@ final class ControlsViewController: ViewController {
     controlsView.startVideoRecordingButton.isEnabled = false
 
     viewController.takePhoto { [weak self] (image) in
-      guard let this = self else { return }
+      guard let self = self else { return }
 
       DispatchQueue.main.async {
-        this.delegate?.controlsViewControllerDidTakePhoto(image)
+        self.delegate?.controlsViewControllerDidTakePhoto(image)
 
-        this.controlsView.takePhotoButton.isEnabled = true
-        this.controlsView.startVideoRecordingButton.isEnabled = true
+        self.controlsView.takePhotoButton.isEnabled = true
+        self.controlsView.startVideoRecordingButton.isEnabled = true
       }
     }
   }
@@ -102,8 +102,8 @@ final class ControlsViewController: ViewController {
       }
 
       videoRecording.$duration.observe(on: .main) { [weak self] in
-        guard let this = self else { return }
-        this.durationBarButtonItem.title = formatted($0)
+        guard let self = self else { return }
+        self.durationBarButtonItem.title = formatted($0)
       }
 
       durationBarButtonItem.title = formatted(videoRecording.duration)
@@ -117,16 +117,18 @@ final class ControlsViewController: ViewController {
   }
 
   func finishVideoRecording() {
+    controlsView.finishVideoRecordingButton.isEnabled = false
     viewController.finishVideoRecording { [weak self] url in
-      guard let this = self else { return }
+      guard let self = self else { return }
 
       DispatchQueue.main.async {
-        this.delegate?.controlsViewControllerDidTakeVideoAt(url)
+        self.delegate?.controlsViewControllerDidTakeVideoAt(url)
 
-        this.durationBarButtonItem.title = nil
-        this.controlsView.takePhotoButton.isEnabled = true
-        this.controlsView.startVideoRecordingButton.isHidden = false
-        this.controlsView.finishVideoRecordingButton.isHidden = true
+        self.durationBarButtonItem.title = nil
+        self.controlsView.takePhotoButton.isEnabled = true
+        self.controlsView.startVideoRecordingButton.isHidden = false
+        self.controlsView.finishVideoRecordingButton.isEnabled = true
+        self.controlsView.finishVideoRecordingButton.isHidden = true
       }
     }
   }

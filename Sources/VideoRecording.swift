@@ -37,7 +37,7 @@ public final class VideoRecording {
   public var fileType: AVFileType { videoOutput.fileType }
 
   let videoOutput: VideoOutput
-  
+
   init(videoOutput: VideoOutput) {
     self.state = videoOutput.state
     self.duration = videoOutput.duration

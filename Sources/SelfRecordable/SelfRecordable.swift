@@ -118,7 +118,6 @@ public extension SelfRecordable {
   }
 }
 
-
 public extension SelfRecordable where Self: MetalRecordable {
 
   func prepareForRecording() {
@@ -131,7 +130,6 @@ public extension SelfRecordable where Self: MetalRecordable {
     fixFirstLaunchFrameDrop()
   }
 }
-
 
 public extension SelfRecordable {
 
@@ -209,7 +207,10 @@ public extension SelfRecordable {
     orientation: UIImage.Orientation = .up,
     completionHandler handler: @escaping (UIImage) -> Void
   ) {
-    takePhotoResult {
+    takePhotoResult(
+      scale: scale,
+      orientation: orientation
+    ) {
       do { try handler($0.get()) }
       catch { assertionFailure("\(error)") }
     }

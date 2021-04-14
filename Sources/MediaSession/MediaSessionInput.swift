@@ -23,7 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation 
+import Foundation
 import AVFoundation
 
 protocol MediaSessionInput {
@@ -47,7 +47,7 @@ protocol AudioMediaSessionInput: MediaSessionInput {
 
   func recommendedAudioSettingsForAssetWriter(
     writingTo outputFileType: AVFileType
-  ) -> [String : Any]
+  ) -> [String: Any]
 }
 
 protocol VideoMediaSessionInput: MediaSessionInput {
