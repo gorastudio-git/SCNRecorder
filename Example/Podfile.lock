@@ -1,5 +1,5 @@
 PODS:
-  - SCNRecorder (2.5.0)
+  - SCNRecorder (2.5.1)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SCNRecorder: 87469846988b24e3b9f28aa501e2133f5edd6d7b
+  SCNRecorder: b446114276ca77d0b247836b28c3b9ae80b2cb08
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
 PODFILE CHECKSUM: a402c811b8b6a231a13402257d93acd3b67abb0d

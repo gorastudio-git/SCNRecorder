@@ -1,6 +1,6 @@
 {
   "name": "SCNRecorder",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "summary": "A lags-free recorder of ARKit and SceneKit for iOS in Swift",
   "homepage": "https://github.com/gorastudio/SCNRecorder",
   "license": {
@@ -15,7 +15,7 @@
   },
   "source": {
     "git": "https://github.com/gorastudio/SCNRecorder.git",
-    "tag": "2.5.0"
+    "tag": "2.5.1"
   },
   "module_name": "SCNRecorder",
   "module_map": "SCNRecorder.modulemap",

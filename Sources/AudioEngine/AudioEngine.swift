@@ -95,7 +95,7 @@ public final class AudioEngine {
         guard !isInterrupted else { return false }
 
         do {
-          try self.activateAudioSessionIfNeeded()
+          try self.activateAudioSession()
           try self.engine.start()
           return true
         }
@@ -108,7 +108,7 @@ public final class AudioEngine {
       player.didPause = { [weak self] in
         guard let self = self else { return }
         self.engine.pause()
-        self.deactivateAudioSessionIfNeeded()
+        self.deactivateAudioSession()
       }
 
       player.didStop = { [weak self] in
@@ -116,7 +116,7 @@ public final class AudioEngine {
 
         self.engine.stop()
         self.engine.reset()
-        self.deactivateAudioSessionIfNeeded()
+        self.deactivateAudioSession()
       }
     }
   }
@@ -154,12 +154,12 @@ public final class AudioEngine {
     }
   }
 
-  let exclusivelyManageAudioSession: Bool
+  let canDeactivateAudioSession: Bool
 
   @Observable public internal(set) var error: Swift.Error?
 
-  public init(exclusivelyManageAudioSession: Bool = true) {
-    self.exclusivelyManageAudioSession = exclusivelyManageAudioSession
+  public init(canDeactivateAudioSession: Bool = true) {
+    self.canDeactivateAudioSession = canDeactivateAudioSession
     setupObservers()
   }
 
@@ -167,18 +167,16 @@ public final class AudioEngine {
     recorder?.audioInput.audioFormat = nil
     player?.stop()
     observers.forEach { notificationCenter.removeObserver($0) }
-    deactivateAudioSessionIfNeeded()
+    deactivateAudioSession()
   }
 
-  func activateAudioSessionIfNeeded() throws {
-    guard exclusivelyManageAudioSession else { return }
-
+  func activateAudioSession() throws {
     try audioSession.setCategory(.playAndRecord, options: .defaultToSpeaker)
     try audioSession.setActive(true)
   }
 
-  func deactivateAudioSessionIfNeeded() {
-    guard exclusivelyManageAudioSession else { return }
+  func deactivateAudioSession() {
+    guard canDeactivateAudioSession else { return }
 
     do { try audioSession.setActive(false) }
     catch { self.error = error }
