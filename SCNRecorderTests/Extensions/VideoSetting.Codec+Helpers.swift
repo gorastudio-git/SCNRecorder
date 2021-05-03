@@ -30,8 +30,9 @@ extension VideoSettings.Codec {
 
   var name: String {
     switch self {
-    case .h264: return "h264"
     case .hevc: return "hevc"
+    case .hevcWithAlpha: return "hevcWithAlpha"
+    case .h264: return "h264"
     case .jpeg: return "jpeg"
     }
   }

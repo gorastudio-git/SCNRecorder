@@ -30,164 +30,125 @@ public extension VideoSettings {
 
   enum Codec {
 
-    case hevc
+    public static func hevc(
+      averageBitRate: Int? = nil,
+      maxKeyFrameInterval: Int? = nil,
+      maxKeyFrameIntervalDuration: TimeInterval? = nil,
+      allowFrameReordering: Bool? = nil,
+      expectedSourceFrameRate: Int? = nil,
+      averageNonDroppableFrameRate: Int? = nil,
+      profileLevel: HEVCCompressionProperties.ProfileLevel? = nil
+    ) -> Codec {
+      .hevc(.init(
+        averageBitRate: averageBitRate,
+        maxKeyFrameInterval: maxKeyFrameInterval,
+        maxKeyFrameIntervalDuration: maxKeyFrameIntervalDuration,
+        allowFrameReordering: allowFrameReordering,
+        expectedSourceFrameRate: expectedSourceFrameRate,
+        averageNonDroppableFrameRate: averageNonDroppableFrameRate,
+        profileLevel: profileLevel
+      ))
+    }
+
+    case hevc(_ compressionProperties: HEVCCompressionProperties)
+
+    @available(iOS 13.0, *)
+    public static func hevcWithAlpha(
+      averageBitRate: Int? = nil,
+      maxKeyFrameInterval: Int? = nil,
+      maxKeyFrameIntervalDuration: TimeInterval? = nil,
+      allowFrameReordering: Bool? = nil,
+      expectedSourceFrameRate: Int? = nil,
+      averageNonDroppableFrameRate: Int? = nil,
+      profileLevel: HEVCCompressionProperties.ProfileLevel? = nil
+    ) -> Codec {
+      .hevcWithAlpha(.init(
+        averageBitRate: averageBitRate,
+        maxKeyFrameInterval: maxKeyFrameInterval,
+        maxKeyFrameIntervalDuration: maxKeyFrameIntervalDuration,
+        allowFrameReordering: allowFrameReordering,
+        expectedSourceFrameRate: expectedSourceFrameRate,
+        averageNonDroppableFrameRate: averageNonDroppableFrameRate,
+        profileLevel: profileLevel
+      ))
+    }
+
+    @available(iOS 13.0, *)
+    case hevcWithAlpha(_ compressionProperties: HEVCCompressionProperties)
 
     public static func h264(
       averageBitRate: Int? = nil,
       maxKeyFrameInterval: Int? = nil,
       maxKeyFrameIntervalDuration: TimeInterval? = nil,
       allowFrameReordering: Bool? = nil,
-      profileLevel: H264CompressionProperties.ProfileLevel? = nil,
-      entropyMode: H264CompressionProperties.EntropyMode? = nil,
       expectedSourceFrameRate: Int? = nil,
-      averageNonDroppableFrameRate: Int? = nil
+      averageNonDroppableFrameRate: Int? = nil,
+      profileLevel: H264CompressionProperties.ProfileLevel? = nil,
+      entropyMode: H264CompressionProperties.EntropyMode? = nil
     ) -> Codec {
-      .h264(H264CompressionProperties(
+      .h264(.init(
         averageBitRate: averageBitRate,
         maxKeyFrameInterval: maxKeyFrameInterval,
         maxKeyFrameIntervalDuration: maxKeyFrameIntervalDuration,
         allowFrameReordering: allowFrameReordering,
-        profileLevel: profileLevel,
-        entropyMode: entropyMode,
         expectedSourceFrameRate: expectedSourceFrameRate,
-        averageNonDroppableFrameRate: averageNonDroppableFrameRate
+        averageNonDroppableFrameRate: averageNonDroppableFrameRate,
+        profileLevel: profileLevel,
+        entropyMode: entropyMode
       ))
     }
 
     case h264(_ compressionProperties: H264CompressionProperties)
 
-    case jpeg
+    public static func jpeg(
+      averageBitRate: Int? = nil,
+      maxKeyFrameInterval: Int? = nil,
+      maxKeyFrameIntervalDuration: TimeInterval? = nil,
+      allowFrameReordering: Bool? = nil,
+      expectedSourceFrameRate: Int? = nil,
+      averageNonDroppableFrameRate: Int? = nil
+    ) -> Codec {
+      .jpeg(.init(
+        averageBitRate: averageBitRate,
+        maxKeyFrameInterval: maxKeyFrameInterval,
+        maxKeyFrameIntervalDuration: maxKeyFrameIntervalDuration,
+        allowFrameReordering: allowFrameReordering,
+        expectedSourceFrameRate: expectedSourceFrameRate,
+        averageNonDroppableFrameRate: averageNonDroppableFrameRate
+      ))
+    }
 
-    var compressionProperties: [String: Any]? {
+    case jpeg(_ compressionProperties: JPEGCompressionProperties)
+
+    var _compressionProperties: CompressionProperties {
       switch self {
-      case .h264(let compressionProperties): return compressionProperties.settings
-      case .hevc, .jpeg: return nil
+      case .hevc(let compressionProperties as CompressionProperties),
+           .hevcWithAlpha(let compressionProperties as CompressionProperties),
+           .h264(let compressionProperties as CompressionProperties),
+           .jpeg(let compressionProperties as CompressionProperties):
+        return compressionProperties
       }
+    }
+
+    public var compressionProperties: [String: Any]? {
+      _compressionProperties.settings
     }
   }
 }
 
-extension VideoSettings.Codec {
+public extension VideoSettings.Codec {
 
   var avCodec: AVVideoCodecType {
     switch self {
-    case .hevc: return .hevc
-    case .h264: return .h264
-    case .jpeg: return .jpeg
-    }
-  }
-}
-
-public extension VideoSettings {
-
-  struct H264CompressionProperties {
-
-    public enum ProfileLevel: RawRepresentable {
-      case baseline30
-      case baseline31
-      case baseline41
-      case baselineAutoLevel
-
-      case main30
-      case main31
-      case main32
-      case main41
-      case mainAutoLevel
-
-      case high40
-      case high41
-      case highAutoLevel
-
-      public init?(rawValue: String) {
-        switch rawValue {
-        case AVVideoProfileLevelH264Baseline30: self = .baseline30
-        case AVVideoProfileLevelH264Baseline31: self = .baseline31
-        case AVVideoProfileLevelH264Baseline41: self = .baseline41
-        case AVVideoProfileLevelH264BaselineAutoLevel: self = .baselineAutoLevel
-
-        case AVVideoProfileLevelH264Main30: self = .main30
-        case AVVideoProfileLevelH264Main31: self = .main31
-        case AVVideoProfileLevelH264Main32: self = .main32
-        case AVVideoProfileLevelH264Main41: self = .main41
-        case AVVideoProfileLevelH264MainAutoLevel: self = .mainAutoLevel
-
-        case AVVideoProfileLevelH264High40: self = .high40
-        case AVVideoProfileLevelH264High41: self = .high41
-        case AVVideoProfileLevelH264HighAutoLevel: self = .highAutoLevel
-
-        default: return nil
-        }
-      }
-
-      public var rawValue: String {
-        switch self {
-        case .baseline30: return AVVideoProfileLevelH264Baseline30
-        case .baseline31: return AVVideoProfileLevelH264Baseline31
-        case .baseline41: return AVVideoProfileLevelH264Baseline41
-        case .baselineAutoLevel: return AVVideoProfileLevelH264BaselineAutoLevel
-
-        case .main30: return AVVideoProfileLevelH264Main30
-        case .main31: return AVVideoProfileLevelH264Main31
-        case .main32: return AVVideoProfileLevelH264Main32
-        case .main41: return AVVideoProfileLevelH264Main41
-        case .mainAutoLevel: return AVVideoProfileLevelH264MainAutoLevel
-
-        case .high40: return AVVideoProfileLevelH264High40
-        case .high41: return AVVideoProfileLevelH264High41
-        case .highAutoLevel: return AVVideoProfileLevelH264HighAutoLevel
-        }
-      }
-    }
-
-    public enum EntropyMode: RawRepresentable {
-
-      case cavlc
-
-      case cabac
-
-      public init?(rawValue: String) {
-        switch rawValue {
-        case AVVideoH264EntropyModeCAVLC: self = .cavlc
-        case AVVideoH264EntropyModeCABAC: self = .cabac
-        default: return nil
-        }
-      }
-
-      public var rawValue: String {
-        switch self {
-        case .cavlc: return AVVideoH264EntropyModeCAVLC
-        case .cabac: return AVVideoH264EntropyModeCABAC
-        }
-      }
-    }
-
-    public var averageBitRate: Int?
-
-    public var maxKeyFrameInterval: Int?
-
-    public var maxKeyFrameIntervalDuration: TimeInterval?
-
-    public var allowFrameReordering: Bool?
-
-    public var profileLevel: ProfileLevel?
-
-    public var entropyMode: EntropyMode?
-
-    public var expectedSourceFrameRate: Int?
-
-    public var averageNonDroppableFrameRate: Int?
-
-    var settings: [String: Any] {
-      ([
-        AVVideoAverageBitRateKey: averageBitRate.map { $0 as NSNumber },
-        AVVideoMaxKeyFrameIntervalKey: maxKeyFrameInterval.map { $0 as NSNumber },
-        AVVideoMaxKeyFrameIntervalDurationKey: maxKeyFrameIntervalDuration,
-        AVVideoAllowFrameReorderingKey: allowFrameReordering,
-        AVVideoProfileLevelKey: profileLevel?.rawValue,
-        AVVideoH264EntropyModeKey: entropyMode?.rawValue,
-        AVVideoExpectedSourceFrameRateKey: expectedSourceFrameRate,
-        AVVideoAverageNonDroppableFrameRateKey: averageNonDroppableFrameRate
-      ] as [String: Any?]).compactMapValues({ $0 })
+    case .hevc:
+      return .hevc
+    case .hevcWithAlpha:
+      if #available(iOS 13.0, *) { return .hevcWithAlpha }
+      else { return .hevc }
+    case .h264:
+      return .h264
+    case .jpeg:
+      return .jpeg
     }
   }
 }

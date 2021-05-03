@@ -72,10 +72,17 @@ extension SceneRecorderTests {
     var codecs: [VideoSettings.Codec] = [.h264()]
 
     let supportHEVCEncoder = AVAssetExportSession.allExportPresets().contains(AVAssetExportPresetHEVC1920x1080)
-    if supportHEVCEncoder { codecs.append(.hevc) }
+    if supportHEVCEncoder {
+      codecs.append(.hevc())
+      if #available(iOS 13.0, *) {
+        if fileType == .mov {
+          codecs.append(.hevcWithAlpha())
+        }
+      }
+    }
 
     #if !targetEnvironment(simulator)
-    codecs.append(.jpeg)
+    codecs.append(.jpeg())
     #endif
 
     codecs.forEach { (codec) in

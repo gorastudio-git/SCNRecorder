@@ -100,6 +100,7 @@
 		D101D0E902BA16B5FE8701D23E3343EC /* Pods-Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */; };
 		D22EB7E01E32AD38AF9356AEC3CDDEB3 /* WeakCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9562B8E77A994CD119F7B5BD15584F /* WeakCollection.swift */; };
 		D4697DC40F3B059E4A0867838CA1814E /* ConstraintMultiplierTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AB9BB47A2175181386A432C07253AE /* ConstraintMultiplierTarget.swift */; };
+		D56915C7263F38CD00591380 /* VideoSettings.CompressionProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56915C6263F38CD00591380 /* VideoSettings.CompressionProperties.swift */; };
 		D87CAB6C1835509848E2D43CED80599C /* SceneRecorder.VideoInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF04E3CAB349EAC7FC528AEFE737210 /* SceneRecorder.VideoInput.swift */; };
 		DCB63052BF1F384F8F2765BB2352F0F0 /* MediaSessionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C627DC3ED6B3156B877F75C1DF0658 /* MediaSessionOutput.swift */; };
 		E17DED917339E18BC26FAC018DD77F93 /* SelfRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF464FFE795E9317E6A1C2A4A3AA058 /* SelfRecordable.swift */; };
@@ -149,9 +150,9 @@
 		13F460233F2A555D41511B6CCA66A124 /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		141BC33167429B9926FB24A17F01568C /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
 		166D20EBE7A28B107DAD12AFFB8B727F /* AudioEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
-		180BC29C7168B61DEA5F541D80DED3CB /* SCNRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SCNRecorder.framework; path = SCNRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		180BC29C7168B61DEA5F541D80DED3CB /* SCNRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCNRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE071C523210B371BCDA7B1525C2FC3 /* ReadWriteAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadWriteAtomic.swift; sourceTree = "<group>"; };
-		1F667CC0E19EAF34E5A4119E2121F585 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Example.framework; path = "Pods-Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F667CC0E19EAF34E5A4119E2121F585 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		243410B9535472556EA4BB6DBC133A0D /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		250E41DBB680A3A2ECDDD2210311B230 /* ConstraintConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConfig.swift; path = Source/ConstraintConfig.swift; sourceTree = "<group>"; };
 		25479F58B67AA43E092C7B156C1B5C1B /* ConstraintRelation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelation.swift; path = Source/ConstraintRelation.swift; sourceTree = "<group>"; };
@@ -175,7 +176,7 @@
 		474AFC560A8B414B467174737DBC891A /* ConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintItem.swift; path = Source/ConstraintItem.swift; sourceTree = "<group>"; };
 		47B200BD964F52F6693D4168248B8645 /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
 		485892927263D43C91B7A900637EA717 /* VideoSettings.ScalingMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.ScalingMode.swift; sourceTree = "<group>"; };
-		4DC8B0B622856D34486CD4F5A2F96667 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.md; sourceTree = "<group>"; };
+		4DC8B0B622856D34486CD4F5A2F96667 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		4DF9FF8B6BD529F08A30679CA232B322 /* MediaSessionInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSessionInput.swift; sourceTree = "<group>"; };
 		4E197B72763F4F68548F9DC173CAB2E8 /* AssociatedStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssociatedStorage.swift; sourceTree = "<group>"; };
 		4F483CE93C663CBF75CD42F34BB54605 /* VideoRecording.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.swift; sourceTree = "<group>"; };
@@ -191,7 +192,7 @@
 		60182C731A08A1FE657E94FF4E1E3002 /* VideoOutput.Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.Error.swift; sourceTree = "<group>"; };
 		66C5188AE61F0E667CD9E7ED28CDD61C /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Source/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		66C627DC3ED6B3156B877F75C1DF0658 /* MediaSessionOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSessionOutput.swift; sourceTree = "<group>"; };
-		67C949DAC2497EB6F0458E31C5E0847E /* SCNRecorder.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SCNRecorder.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		67C949DAC2497EB6F0458E31C5E0847E /* SCNRecorder.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = SCNRecorder.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		67F1E153B10A6F7603A78C9895787F06 /* SCNRecorderOriginMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderOriginMulticastDelegate.h; sourceTree = "<group>"; };
 		6A9341666EAC154422A032092A7DC2D7 /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Source/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
 		6D7246BC11C92E1BBBD46EB41B5BB8E3 /* SCNRecorder.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SCNRecorder.modulemap; sourceTree = "<group>"; };
@@ -208,20 +209,20 @@
 		7AE00ECC24C5CC6DC938204FF42AD0E5 /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Source/ConstraintDSL.swift; sourceTree = "<group>"; };
 		7C21E0C93A1141A1E2EB51575500E27D /* SnapKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.debug.xcconfig; sourceTree = "<group>"; };
 		7C2EC377264B25FB0E67D150E37E87CD /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Source/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
-		82800733CFA2E202151A2295EAEF75AD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		82800733CFA2E202151A2295EAEF75AD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		887F06390DE55D5DB48A042116517CE8 /* ARSCNView+CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARSCNView+CleanRecordable.swift"; sourceTree = "<group>"; };
 		8DA7789A7AF31E3802D135358A8464AC /* Renderable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		91164BE769DA144776663FBF46785561 /* ConstraintDirectionalInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsets.swift; path = Source/ConstraintDirectionalInsets.swift; sourceTree = "<group>"; };
 		91A53CAF547D71AEFABE49D91B4E6816 /* ConstraintMakerPriortizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPriortizable.swift; path = Source/ConstraintMakerPriortizable.swift; sourceTree = "<group>"; };
 		9716AD15FADF38A93170E034F2BCE457 /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Source/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
 		978280BF44C6E7659366A0910CD8A4FA /* ImageOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageOutput.swift; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A02344D5706D0EC631B52192BBD73F4 /* MediaSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSession.swift; sourceTree = "<group>"; };
 		9A0B149BC89311023F9AF603F05806C2 /* AudioEngine.Player.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioEngine.Player.swift; sourceTree = "<group>"; };
 		9B229F0999BABF80F0C341B9A146AFBA /* VideoSettings.FileType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.FileType.swift; sourceTree = "<group>"; };
 		9B9562B8E77A994CD119F7B5BD15584F /* WeakCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeakCollection.swift; sourceTree = "<group>"; };
 		9BF04E3CAB349EAC7FC528AEFE737210 /* SceneRecorder.VideoInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneRecorder.VideoInput.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A1CD432F32277BB93DEAADA626ECEC5B /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
 		A37A4618E40C1043C262074089DD309B /* VideoRecording.State.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoRecording.State.swift; sourceTree = "<group>"; };
 		A445E7F5E090EB783D361115074F8C16 /* SCNRecorder-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SCNRecorder-Info.plist"; sourceTree = "<group>"; };
@@ -246,6 +247,7 @@
 		D2686A84F9C5BA89FC85C4C281DDB061 /* UnfairAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UnfairAtomic.swift; sourceTree = "<group>"; };
 		D3ACA57DF2E22C4C0AA11E14D1EDB83C /* PixelBufferOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelBufferOutput.swift; sourceTree = "<group>"; };
 		D4E066869A95E00B949CBA4D2284C35F /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
+		D56915C6263F38CD00591380 /* VideoSettings.CompressionProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.CompressionProperties.swift; sourceTree = "<group>"; };
 		D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Example-dummy.m"; sourceTree = "<group>"; };
 		DB58658627A3F24C9854244EA1E8D4D9 /* SelfSceneRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfSceneRecordable.swift; sourceTree = "<group>"; };
 		DC8DFCBE720BC958C85CC1E3CBB80E47 /* MetalPixelBufferProducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetalPixelBufferProducer.swift; sourceTree = "<group>"; };
@@ -309,7 +311,6 @@
 				F75AB386A3AE47871B6A135384CE133F /* PixelBufferPool.swift */,
 				512A55FC99CA7B66F306C42354440E45 /* PixelBufferPoolFactory.swift */,
 			);
-			name = PixelBuffer;
 			path = PixelBuffer;
 			sourceTree = "<group>";
 		};
@@ -332,7 +333,6 @@
 				117082B5EF7166A98DA08602B869833D /* MetalRecordable.swift */,
 				F5445984B5D51BD43AF2188F878E195B /* Extensions */,
 			);
-			name = Recordable;
 			path = Recordable;
 			sourceTree = "<group>";
 		};
@@ -353,7 +353,6 @@
 				4DF9FF8B6BD529F08A30679CA232B322 /* MediaSessionInput.swift */,
 				66C627DC3ED6B3156B877F75C1DF0658 /* MediaSessionOutput.swift */,
 			);
-			name = MediaSession;
 			path = MediaSession;
 			sourceTree = "<group>";
 		};
@@ -377,7 +376,6 @@
 				583F0045063A1731C11CA0FFD957551C /* CleanRecorder.swift */,
 				340919B3F7BB1FE0275F5C314E24F4C2 /* CleanRecorder.VideoInput.swift */,
 			);
-			name = CleanRecorder;
 			path = CleanRecorder;
 			sourceTree = "<group>";
 		};
@@ -388,7 +386,6 @@
 				09D89732FA90C05E4FE36414796ED90D /* MTLPixelFormat+Helpers.swift */,
 				4361E6BF0F58B5732FA7C33BA93AA0C5 /* SCNView+MulticastDelegate.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -399,7 +396,6 @@
 				DB58658627A3F24C9854244EA1E8D4D9 /* SelfSceneRecordable.swift */,
 				EACA12B6338FFCC8225AEB62175D4588 /* Extensions */,
 			);
-			name = SelfRecordable;
 			path = SelfRecordable;
 			sourceTree = "<group>";
 		};
@@ -410,7 +406,6 @@
 				F27A51CBA6EBCB5E0215B054E4A68306 /* ImageOutput */,
 				67F500C0CF6E1BE423416A697D8F5B0C /* VideoOutput */,
 			);
-			name = Outputs;
 			path = Outputs;
 			sourceTree = "<group>";
 		};
@@ -420,7 +415,6 @@
 				AE4D8E1277588F00FADDBB2F16AD65ED /* SceneRecorder.swift */,
 				9BF04E3CAB349EAC7FC528AEFE737210 /* SceneRecorder.VideoInput.swift */,
 			);
-			name = SceneRecorder;
 			path = SceneRecorder;
 			sourceTree = "<group>";
 		};
@@ -438,7 +432,6 @@
 				76AD4CBA7C81128D5DCB004BAD146A77 /* MulticastDelegate */,
 				566EDCE0926AF1736B10E274661693D4 /* Multithreading */,
 			);
-			name = Helpers;
 			path = Helpers;
 			sourceTree = "<group>";
 		};
@@ -449,7 +442,6 @@
 				186FDA6F9FD3B22751003582CF94C24B /* CleanRecorder */,
 				27CF3E1415E1ADE9BDBC37B701113892 /* SceneRecorder */,
 			);
-			name = Recorder;
 			path = Recorder;
 			sourceTree = "<group>";
 		};
@@ -459,7 +451,6 @@
 				8DA7789A7AF31E3802D135358A8464AC /* Renderable.swift */,
 				5C58A6FED3DDEDD8824224301781D3F1 /* TimeScalable.swift */,
 			);
-			name = Protocols;
 			path = Protocols;
 			sourceTree = "<group>";
 		};
@@ -469,7 +460,6 @@
 				326F1BD08173EA8A0E371FD3C0CD9947 /* BaseRecorder.swift */,
 				08DE21C9DE7E9EC42CF18BDE276FD554 /* BaseRecorder.AudioInput.swift */,
 			);
-			name = BaseRecorder;
 			path = BaseRecorder;
 			sourceTree = "<group>";
 		};
@@ -479,7 +469,6 @@
 				D2686A84F9C5BA89FC85C4C281DDB061 /* UnfairAtomic.swift */,
 				5588139CECDDC34E8836B4458D71531C /* UnfairLock.swift */,
 			);
-			name = Unfair;
 			path = Unfair;
 			sourceTree = "<group>";
 		};
@@ -491,7 +480,6 @@
 				616C468E5E52F252692D2B3353964CAD /* ReadWrite */,
 				4CBAEF5F5C2C4B9D43BBEC2426A1B2C3 /* Unfair */,
 			);
-			name = Multithreading;
 			path = Multithreading;
 			sourceTree = "<group>";
 		};
@@ -509,7 +497,6 @@
 				1BE071C523210B371BCDA7B1525C2FC3 /* ReadWriteAtomic.swift */,
 				0BDFE4CE0EE1183CE7B4A2DBC90741CC /* ReadWriteLock.swift */,
 			);
-			name = ReadWrite;
 			path = ReadWrite;
 			sourceTree = "<group>";
 		};
@@ -520,7 +507,6 @@
 				60182C731A08A1FE657E94FF4E1E3002 /* VideoOutput.Error.swift */,
 				12A57340D4E1FAC94E0A7B098990510A /* VideoOutput.State.swift */,
 			);
-			name = VideoOutput;
 			path = VideoOutput;
 			sourceTree = "<group>";
 		};
@@ -530,7 +516,6 @@
 				0BF8DA4C6BE29C5C633D669348FF5C31 /* CAMetalLayer+RecordableLayer.swift */,
 				AA9406EFC0DD1212953D5BE8826FEDC1 /* RecordableLayer.swift */,
 			);
-			name = RecordableLayer;
 			path = RecordableLayer;
 			sourceTree = "<group>";
 		};
@@ -550,7 +535,6 @@
 				67F1E153B10A6F7603A78C9895787F06 /* SCNRecorderOriginMulticastDelegate.h */,
 				759FC39FB9846EB17CEA3A7C1AC37F5B /* SCNRecorderOriginMulticastDelegate.m */,
 			);
-			name = MulticastDelegate;
 			path = MulticastDelegate;
 			sourceTree = "<group>";
 		};
@@ -563,6 +547,7 @@
 				A37A4618E40C1043C262074089DD309B /* VideoRecording.State.swift */,
 				6F4B1DFF44E6AAE2F3A5DF6D0751A4E2 /* VideoSettings.swift */,
 				452CAB32AA4D036E335C9BB8F66BF07E /* VideoSettings.Codec.swift */,
+				D56915C6263F38CD00591380 /* VideoSettings.CompressionProperties.swift */,
 				9B229F0999BABF80F0C341B9A146AFBA /* VideoSettings.FileType.swift */,
 				485892927263D43C91B7A900637EA717 /* VideoSettings.ScalingMode.swift */,
 				C9F91CC64073CAA3BF2CA4068B8B6E9A /* AudioEngine */,
@@ -577,7 +562,6 @@
 				2C0BCC5B6E566966291C44DE07A32809 /* Recorder */,
 				233CA5DE8501613D6CBD3B082BB6E49E /* SelfRecordable */,
 			);
-			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
@@ -622,7 +606,6 @@
 				6A9341666EAC154422A032092A7DC2D7 /* UILayoutSupport+Extensions.swift */,
 				843EFF0C650682C304D518A9092EE9FD /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -684,7 +667,6 @@
 				9A0B149BC89311023F9AF603F05806C2 /* AudioEngine.Player.swift */,
 				7006673461D405DCD699766DBC96A8E3 /* AudioEngine.Player.State.swift */,
 			);
-			name = AudioEngine;
 			path = AudioEngine;
 			sourceTree = "<group>";
 		};
@@ -693,7 +675,6 @@
 			children = (
 				F5905A1DB14017F68D08F7182A2E45DE /* DispatchAtomic.swift */,
 			);
-			name = Dispatch;
 			path = Dispatch;
 			sourceTree = "<group>";
 		};
@@ -730,7 +711,6 @@
 			children = (
 				3535CE6F11EEF59FB77BE936193FC298 /* SCNView+SelfSceneRecordable.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -739,7 +719,6 @@
 			children = (
 				978280BF44C6E7659366A0910CD8A4FA /* ImageOutput.swift */,
 			);
-			name = ImageOutput;
 			path = ImageOutput;
 			sourceTree = "<group>";
 		};
@@ -749,7 +728,6 @@
 				887F06390DE55D5DB48A042116517CE8 /* ARSCNView+CleanRecordable.swift */,
 				016B54965DC62859CCE5B5D4C394087C /* SCNView+MetalRecordable.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -1008,6 +986,7 @@
 				1E451D90EA3F27833766AFC5D2AFC0AB /* VideoRecording.Info.swift in Sources */,
 				8C63F30B73DB8F6BED4373D98F286263 /* VideoRecording.State.swift in Sources */,
 				CB3D5C374AACFCCFFDC35FD777A40B94 /* VideoRecording.swift in Sources */,
+				D56915C7263F38CD00591380 /* VideoSettings.CompressionProperties.swift in Sources */,
 				13974857E22B826A4700C1E350D769E4 /* VideoSettings.Codec.swift in Sources */,
 				B0086538FADE5A9D197AB496719358D2 /* VideoSettings.FileType.swift in Sources */,
 				4BE20487453E33C4ACBA69A756F537A7 /* VideoSettings.ScalingMode.swift in Sources */,

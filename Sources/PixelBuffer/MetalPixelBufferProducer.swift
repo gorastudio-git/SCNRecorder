@@ -120,7 +120,11 @@ final class MetalPixelBufferProducer {
   ) throws {
     guard let commandBuffer = commandQueue.makeCommandBuffer() else { throw Error.noCommandBuffer }
 
-    let imageConversion = self.makeImageConversion()
+    let imageConversion = self.makeImageConversion(
+      sourceTexture: sourceTexture,
+      destinationTexture: destinationTexture.mtlTexture
+    )
+
     imageConversion.encode(
       commandBuffer: commandBuffer,
       sourceTexture: sourceTexture,
@@ -173,11 +177,14 @@ final class MetalPixelBufferProducer {
     return attachements
   }
 
-  func makeImageConversion() -> MPSImageConversion {
+  func makeImageConversion(
+    sourceTexture: MTLTexture,
+    destinationTexture: MTLTexture
+  ) -> MPSImageConversion {
     MPSImageConversion(
       device: device,
-      srcAlpha: .alphaIsOne,
-      destAlpha: .alphaIsOne,
+      srcAlpha: sourceTexture.pixelFormat.alphaType,
+      destAlpha: destinationTexture.pixelFormat.alphaType,
       backgroundColor: nil,
       conversionInfo: nil
     )

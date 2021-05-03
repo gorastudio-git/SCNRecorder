@@ -18,6 +18,7 @@
 		D500F759257AB94100118C11 /* TestRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500F758257AB94100118C11 /* TestRenderer.swift */; };
 		D500F774257ABE1200118C11 /* TestRecordableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500F773257ABE1200118C11 /* TestRecordableLayer.swift */; };
 		D55385CD254CB15900225EC0 /* PixelBufferOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55385CC254CB15900225EC0 /* PixelBufferOutput.swift */; };
+		D56915CF263F445B00591380 /* VideoSettings.CompressionProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56915CE263F445B00591380 /* VideoSettings.CompressionProperties.swift */; };
 		D56D805F25F16ECB00935848 /* AudioEngine.Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56D805C25F16ECB00935848 /* AudioEngine.Player.swift */; };
 		D56D806025F16ECB00935848 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56D805D25F16ECB00935848 /* AudioEngine.swift */; };
 		D56D806125F16ECB00935848 /* AudioEngine.Player.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56D805E25F16ECB00935848 /* AudioEngine.Player.State.swift */; };
@@ -137,6 +138,7 @@
 		D500F769257ABA0700118C11 /* SCNRecorderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SCNRecorderTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D500F773257ABE1200118C11 /* TestRecordableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRecordableLayer.swift; sourceTree = "<group>"; };
 		D55385CC254CB15900225EC0 /* PixelBufferOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelBufferOutput.swift; sourceTree = "<group>"; };
+		D56915CE263F445B00591380 /* VideoSettings.CompressionProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSettings.CompressionProperties.swift; sourceTree = "<group>"; };
 		D56D805C25F16ECB00935848 /* AudioEngine.Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.Player.swift; sourceTree = "<group>"; };
 		D56D805D25F16ECB00935848 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		D56D805E25F16ECB00935848 /* AudioEngine.Player.State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.Player.State.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				D5B923AC2510CC9B00D35585 /* VideoRecording.State.swift */,
 				D5B923D02510CC9B00D35585 /* VideoSettings.swift */,
 				D5B923BE2510CC9B00D35585 /* VideoSettings.Codec.swift */,
+				D56915CE263F445B00591380 /* VideoSettings.CompressionProperties.swift */,
 				D5B9238B2510CC9A00D35585 /* VideoSettings.FileType.swift */,
 				D5B923C22510CC9B00D35585 /* VideoSettings.ScalingMode.swift */,
 				D56D805B25F16ECB00935848 /* AudioEngine */,
@@ -824,6 +827,7 @@
 				D5EE33F3257108C20056085A /* MetalPixelBufferProducer.swift in Sources */,
 				D5B923FB2510CC9C00D35585 /* Observable.swift in Sources */,
 				D5B923EB2510CC9C00D35585 /* VideoSettings.FileType.swift in Sources */,
+				D56915CF263F445B00591380 /* VideoSettings.CompressionProperties.swift in Sources */,
 				D5B923E12510CC9C00D35585 /* SCNView+MulticastDelegate.swift in Sources */,
 				D5B923F22510CC9C00D35585 /* UnfairAtomic.swift in Sources */,
 			);
