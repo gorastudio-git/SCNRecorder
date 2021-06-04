@@ -1,9 +1,9 @@
 //
-//  MediaSessionInput.swift
+//  IOSurface+Size.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 24.05.2020.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Created by Vladislav Grigoryev on 04.06.2021.
+//  Copyright © 2021 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,49 +24,9 @@
 //  THE SOFTWARE.
 
 import Foundation
-import AVFoundation
+import UIKit
 
-protocol MediaSessionInput {
+extension IOSurface {
 
-  typealias Audio = AudioMediaSessionInput
-
-  typealias Video = VideoMediaSessionInput
-
-  typealias SampleBufferAudio = Audio & SampleBufferInput
-
-  typealias SampleBufferVideo = Video & SampleBufferInput
-
-  typealias PixelBufferVideo = Video & BufferInput
-
-  func start()
-
-  func stop()
-}
-
-protocol AudioMediaSessionInput: MediaSessionInput {
-
-  func recommendedAudioSettingsForAssetWriter(
-    writingTo outputFileType: AVFileType
-  ) -> [String: Any]
-}
-
-protocol VideoMediaSessionInput: MediaSessionInput {
-
-  var size: CGSize { get }
-
-  var videoColorProperties: [String: String]? { get }
-
-  var videoTransform: CGAffineTransform { get }
-
-  var imageOrientation: UIImage.Orientation { get }
-}
-
-protocol SampleBufferInput: AnyObject {
-
-  var output: ((CMSampleBuffer) -> Void)? { get set }
-}
-
-protocol BufferInput: AnyObject {
-
-  var output: ((CVBuffer, CMTime) -> Void)? { get set }
+  var size: CGSize { CGSize(width: width, height: height) }
 }

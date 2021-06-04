@@ -39,6 +39,10 @@ public protocol RecordableLayer: AnyObject {
 
   var colorspace: CGColorSpace? { get }
 
+  var framebufferOnly: Bool { get }
+
+  var interfaceOrientation: UIInterfaceOrientation { get }
+
   func prepareForRecording()
 }
 

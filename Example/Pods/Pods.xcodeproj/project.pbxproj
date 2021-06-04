@@ -98,6 +98,8 @@
 		D101D0E902BA16B5FE8701D23E3343EC /* Pods-Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */; };
 		D4697DC40F3B059E4A0867838CA1814E /* ConstraintMultiplierTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AB9BB47A2175181386A432C07253AE /* ConstraintMultiplierTarget.swift */; };
 		D477E58BB6A7A158FDFD5048A25F6843 /* AssociatedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02F4030728FD0FC3B9ED1BA3B136FA7 /* AssociatedStorage.swift */; };
+		D5C133FE26696F9C00449DFF /* CALayer+InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C133FD26696F9C00449DFF /* CALayer+InterfaceOrientation.swift */; };
+		D5C13402266A0E6800449DFF /* IOSurface+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C13401266A0E6800449DFF /* IOSurface+Size.swift */; };
 		D717657F5A41A3CEEEBA19EDF4F7B0D4 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381DCE2C5D90C4FB0DE1310AAA3E963A /* Atomic.swift */; };
 		DCCA34DD94195D22EB06EFA6A671FAD8 /* MediaSessionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEEF67592F2F3759F94D8F41A1DE0E4 /* MediaSessionInput.swift */; };
 		E56913509132C772339AC48935E7B525 /* SCNView+MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED0314369CD783C63219B1A7A4401B /* SCNView+MulticastDelegate.swift */; };
@@ -144,13 +146,13 @@
 		09BF299D2EEB87E7DD02630E87B96224 /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Source/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
 		0AA2EFFDDCA0568C674878F31E4C962A /* MediaSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaSession.swift; sourceTree = "<group>"; };
 		11D02329E74D733C03BF6BAE1F564481 /* ConstraintMakerFinalizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerFinalizable.swift; path = Source/ConstraintMakerFinalizable.swift; sourceTree = "<group>"; };
-		11EB1331A10C01C48D9B351FB0DFF1F6 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.md; sourceTree = "<group>"; };
+		11EB1331A10C01C48D9B351FB0DFF1F6 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		13F460233F2A555D41511B6CCA66A124 /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		141BC33167429B9926FB24A17F01568C /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
 		15EAF44C86C07D23D1C4B32E207538E7 /* BaseRecorder.AudioInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseRecorder.AudioInput.swift; sourceTree = "<group>"; };
 		165C02D89953D54B61B5CE0AC9161D3C /* VideoSettings.ScalingMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.ScalingMode.swift; sourceTree = "<group>"; };
-		180BC29C7168B61DEA5F541D80DED3CB /* SCNRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SCNRecorder.framework; path = SCNRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F667CC0E19EAF34E5A4119E2121F585 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Example.framework; path = "Pods-Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		180BC29C7168B61DEA5F541D80DED3CB /* SCNRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCNRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F667CC0E19EAF34E5A4119E2121F585 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		211902B72376AF05DDE152D0EC698BF5 /* VideoOutput.Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoOutput.Error.swift; sourceTree = "<group>"; };
 		2120BBAB3771BAFFEF2EDC3D3A874CE6 /* ReadWriteAtomic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadWriteAtomic.swift; sourceTree = "<group>"; };
 		243410B9535472556EA4BB6DBC133A0D /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -184,7 +186,7 @@
 		549471CD1FE3A1E1865DD172864918D3 /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Source/ConstraintInsets.swift; sourceTree = "<group>"; };
 		56006AA49A060CA2830F32CD6F394823 /* ConstraintViewDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintViewDSL.swift; path = Source/ConstraintViewDSL.swift; sourceTree = "<group>"; };
 		5DE8F92B45260DD55AC30B887764B911 /* SelfRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfRecordable.swift; sourceTree = "<group>"; };
-		5FE9697B5FB31B62361303C88C1FB0D9 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		5FE9697B5FB31B62361303C88C1FB0D9 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		60329AD4FD903F8F003F9442E608230A /* SCNRecorderOriginMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderOriginMulticastDelegate.h; sourceTree = "<group>"; };
 		637875CAB55E38A2732EC78554D66A58 /* AudioAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioAdapter.swift; sourceTree = "<group>"; };
 		65075AF71FD04C5C6BEDBAC889EBE12E /* SCNRecorderMulticastDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SCNRecorderMulticastDelegate.h; sourceTree = "<group>"; };
@@ -214,11 +216,11 @@
 		95995791CB76CD5BF72EC49068D4C240 /* SCNRecorder-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SCNRecorder-Info.plist"; sourceTree = "<group>"; };
 		9611A789C7E9DDD935A55C3B10C3A171 /* Buffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		9716AD15FADF38A93170E034F2BCE457 /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Source/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE7B91909163B53526479A88A5B3B43 /* Observable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		9B41E80C10A8DC452D062CE0E2F10EE4 /* AudioEngine.Player.State.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioEngine.Player.State.swift; sourceTree = "<group>"; };
 		9C652258530C64B1EFB3F305B0127EBC /* Renderable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E2289730E1ABE5C8F8FF03B1749D21C /* MetalTexture.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetalTexture.swift; sourceTree = "<group>"; };
 		A03FC9BB8ADE9853886C1C244F000B43 /* SelfSceneRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelfSceneRecordable.swift; sourceTree = "<group>"; };
 		A1CD432F32277BB93DEAADA626ECEC5B /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
@@ -246,6 +248,8 @@
 		D147C2B0AC7F43979EA0A399E694432E /* CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecordable.swift; sourceTree = "<group>"; };
 		D39D8DB4ACFC5668C23687B5A132384C /* VideoSettings.Codec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VideoSettings.Codec.swift; sourceTree = "<group>"; };
 		D4E066869A95E00B949CBA4D2284C35F /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
+		D5C133FD26696F9C00449DFF /* CALayer+InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+InterfaceOrientation.swift"; sourceTree = "<group>"; };
+		D5C13401266A0E6800449DFF /* IOSurface+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IOSurface+Size.swift"; sourceTree = "<group>"; };
 		D6D7C498FA339E02BD53ECB8916CEA8E /* Pods-Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Example-dummy.m"; sourceTree = "<group>"; };
 		D74397BE7DF410C5E97885FD86206171 /* TimeScalable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeScalable.swift; sourceTree = "<group>"; };
 		DC06178511C30B4D1278BE326D74E740 /* AudioSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
@@ -266,7 +270,7 @@
 		F4EE60BF213527FF930BB703002E45D6 /* SCNRecorder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SCNRecorder-dummy.m"; sourceTree = "<group>"; };
 		F75162A941E004D505D5F89521A27024 /* SCNRecorderOriginMulticastDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SCNRecorderOriginMulticastDelegate.m; sourceTree = "<group>"; };
 		F7AB9BB47A2175181386A432C07253AE /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Source/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
-		F922C4E5A809F7826BF98146FC55DFF2 /* SCNRecorder.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SCNRecorder.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F922C4E5A809F7826BF98146FC55DFF2 /* SCNRecorder.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = SCNRecorder.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FC36AF6FEF499A6C6F06C80C025689F5 /* ARSCNView+CleanRecordable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARSCNView+CleanRecordable.swift"; sourceTree = "<group>"; };
 		FC5A704D333E937A08964734B03DA93A /* CleanRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanRecorder.swift; sourceTree = "<group>"; };
 		FE1E337475D907175952A76E7B7AC2D9 /* CAMetalLayer+RecordableLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CAMetalLayer+RecordableLayer.swift"; sourceTree = "<group>"; };
@@ -316,7 +320,6 @@
 				2120BBAB3771BAFFEF2EDC3D3A874CE6 /* ReadWriteAtomic.swift */,
 				4D19D987DA269BFE9F32A40CDDED9B92 /* ReadWriteLock.swift */,
 			);
-			name = ReadWrite;
 			path = ReadWrite;
 			sourceTree = "<group>";
 		};
@@ -327,7 +330,6 @@
 				A03FC9BB8ADE9853886C1C244F000B43 /* SelfSceneRecordable.swift */,
 				D6203687040E2DBD4EEBB97016A08D90 /* Extensions */,
 			);
-			name = SelfRecordable;
 			path = SelfRecordable;
 			sourceTree = "<group>";
 		};
@@ -337,7 +339,6 @@
 				9C652258530C64B1EFB3F305B0127EBC /* Renderable.swift */,
 				D74397BE7DF410C5E97885FD86206171 /* TimeScalable.swift */,
 			);
-			name = Protocols;
 			path = Protocols;
 			sourceTree = "<group>";
 		};
@@ -362,7 +363,6 @@
 				67F9BA145774D88B6818265010BBD961 /* AudioEngine.Player.swift */,
 				9B41E80C10A8DC452D062CE0E2F10EE4 /* AudioEngine.Player.State.swift */,
 			);
-			name = AudioEngine;
 			path = AudioEngine;
 			sourceTree = "<group>";
 		};
@@ -372,7 +372,6 @@
 				FE1E337475D907175952A76E7B7AC2D9 /* CAMetalLayer+RecordableLayer.swift */,
 				B9DED527CD61020AB44B012B0344678C /* RecordableLayer.swift */,
 			);
-			name = RecordableLayer;
 			path = RecordableLayer;
 			sourceTree = "<group>";
 		};
@@ -390,7 +389,6 @@
 				FC5A704D333E937A08964734B03DA93A /* CleanRecorder.swift */,
 				0727F6FE1CF90B2E8492407DF9398258 /* CleanRecorder.VideoInput.swift */,
 			);
-			name = CleanRecorder;
 			path = CleanRecorder;
 			sourceTree = "<group>";
 		};
@@ -400,7 +398,6 @@
 				6EA0FB61EAD9C94C009C824D041EF577 /* BaseRecorder.swift */,
 				15EAF44C86C07D23D1C4B32E207538E7 /* BaseRecorder.AudioInput.swift */,
 			);
-			name = BaseRecorder;
 			path = BaseRecorder;
 			sourceTree = "<group>";
 		};
@@ -412,7 +409,6 @@
 				60329AD4FD903F8F003F9442E608230A /* SCNRecorderOriginMulticastDelegate.h */,
 				F75162A941E004D505D5F89521A27024 /* SCNRecorderOriginMulticastDelegate.m */,
 			);
-			name = MulticastDelegate;
 			path = MulticastDelegate;
 			sourceTree = "<group>";
 		};
@@ -432,7 +428,6 @@
 				13F9460769300398A226B1CB5A7507A4 /* ReadWrite */,
 				DEB44462099024AFD24AC6306EB4D3DE /* Unfair */,
 			);
-			name = Multithreading;
 			path = Multithreading;
 			sourceTree = "<group>";
 		};
@@ -477,7 +472,6 @@
 				6A9341666EAC154422A032092A7DC2D7 /* UILayoutSupport+Extensions.swift */,
 				843EFF0C650682C304D518A9092EE9FD /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -515,7 +509,6 @@
 				211902B72376AF05DDE152D0EC698BF5 /* VideoOutput.Error.swift */,
 				40C10E52A1DF77E7F06B308CF6E78C3C /* VideoOutput.State.swift */,
 			);
-			name = VideoOutput;
 			path = VideoOutput;
 			sourceTree = "<group>";
 		};
@@ -533,7 +526,6 @@
 				68AE789A296644C352610995630582E2 /* MulticastDelegate */,
 				7D5789B07DB2D67C8864CCF7B7657A67 /* Multithreading */,
 			);
-			name = Helpers;
 			path = Helpers;
 			sourceTree = "<group>";
 		};
@@ -544,7 +536,6 @@
 				D0F8656D99668F36147BDA11960B2C3B /* MetalRecordable.swift */,
 				A19D3A5DFD2BD7D3C8B318910E54369D /* Extensions */,
 			);
-			name = Recordable;
 			path = Recordable;
 			sourceTree = "<group>";
 		};
@@ -571,7 +562,6 @@
 				C0F16572565769A1E79B21D5C0541E0E /* SceneRecorder.swift */,
 				26E6DD286B8ABB32867DE336C5D6337E /* SceneRecorder.VideoInput.swift */,
 			);
-			name = SceneRecorder;
 			path = SceneRecorder;
 			sourceTree = "<group>";
 		};
@@ -581,7 +571,6 @@
 				FC36AF6FEF499A6C6F06C80C025689F5 /* ARSCNView+CleanRecordable.swift */,
 				3CA78A0BCC819E6432A55264EA55DE9F /* SCNView+MetalRecordable.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -596,7 +585,6 @@
 				6A921E7D071773B4077C1577681CACFC /* PixelBufferPool.swift */,
 				407BE07780905C677310D1ABCA5BBC8A /* PixelBufferPoolFactory.swift */,
 			);
-			name = PixelBuffer;
 			path = PixelBuffer;
 			sourceTree = "<group>";
 		};
@@ -605,7 +593,6 @@
 			children = (
 				B0C2C7708526DDAA4FBB3D6851CE3C24 /* ImageOutput.swift */,
 			);
-			name = ImageOutput;
 			path = ImageOutput;
 			sourceTree = "<group>";
 		};
@@ -624,7 +611,6 @@
 				BDEEF67592F2F3759F94D8F41A1DE0E4 /* MediaSessionInput.swift */,
 				4AD54E7E1CFB39D76EA554F49079E81C /* MediaSessionOutput.swift */,
 			);
-			name = MediaSession;
 			path = MediaSession;
 			sourceTree = "<group>";
 		};
@@ -673,8 +659,9 @@
 				657E514AFC176BF705A64F523C268BA0 /* AVCaptureSession+BaseRecorder.swift */,
 				B54B69093019632CE2A0A5DFF68A7C57 /* MTLPixelFormat+Helpers.swift */,
 				50ED0314369CD783C63219B1A7A4401B /* SCNView+MulticastDelegate.swift */,
+				D5C133FD26696F9C00449DFF /* CALayer+InterfaceOrientation.swift */,
+				D5C13401266A0E6800449DFF /* IOSurface+Size.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -683,7 +670,6 @@
 			children = (
 				E01746540A1686C2C64CF8D5E608EE1E /* SCNView+SelfSceneRecordable.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -694,7 +680,6 @@
 				5DC32B39ABDE7237D37F77CE17931B03 /* CleanRecorder */,
 				9C34C6A93240657877DCD5EA28D90A92 /* SceneRecorder */,
 			);
-			name = Recorder;
 			path = Recorder;
 			sourceTree = "<group>";
 		};
@@ -704,7 +689,6 @@
 				50E2875C0AB7C1E815C15D292DE6D6E6 /* UnfairAtomic.swift */,
 				2583CA1B2FE857A53F86C316D7B1ED4B /* UnfairLock.swift */,
 			);
-			name = Unfair;
 			path = Unfair;
 			sourceTree = "<group>";
 		};
@@ -715,7 +699,6 @@
 				ACEB29F5AAE4BBED6F0910630AAB13CB /* ImageOutput */,
 				936E5EB9899494D69D4545ADF69C5F21 /* VideoOutput */,
 			);
-			name = Outputs;
 			path = Outputs;
 			sourceTree = "<group>";
 		};
@@ -743,7 +726,6 @@
 				DC57CE09546111118DAB84D10400E8F1 /* Recorder */,
 				18EE1193DFFB189E9F451BB1814CA3F6 /* SelfRecordable */,
 			);
-			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
@@ -752,7 +734,6 @@
 			children = (
 				79243BB0627CCD6FC0AF7BBF38420323 /* DispatchAtomic.swift */,
 			);
-			name = Dispatch;
 			path = Dispatch;
 			sourceTree = "<group>";
 		};
@@ -928,11 +909,13 @@
 				9FFB615BB04D1D714960D079B6119D9D /* MetalTexture.swift in Sources */,
 				1820B0D9E1538BA1DC50D40DC4DE485B /* MetalTexturePool.swift in Sources */,
 				1346473E029AC60C9BA9AFC36FAB3BAE /* MetalTexturePoolFactory.swift in Sources */,
+				D5C133FE26696F9C00449DFF /* CALayer+InterfaceOrientation.swift in Sources */,
 				2CD098F87032D0814DC4B31A9F0E8B0E /* MTLPixelFormat+Helpers.swift in Sources */,
 				88B4E92FAC28146E18A83754A0E14024 /* Observable.swift in Sources */,
 				E980CFA0B4D7EF74C319B7C6F7AF09A7 /* PixelBuffer.swift in Sources */,
 				673FA4D9F3FBE22420B0C5F2535F164C /* PixelBufferOutput.swift in Sources */,
 				3F16F64A5520BE58E437114F28F68D76 /* PixelBufferPool.swift in Sources */,
+				D5C13402266A0E6800449DFF /* IOSurface+Size.swift in Sources */,
 				77E5E62272BA0D5D335F66E80672727D /* PixelBufferPoolFactory.swift in Sources */,
 				FBB763193A3D6983BE2DCB39488F01E7 /* Property.swift in Sources */,
 				FB6661AF9795208CB3D38CD999B01221 /* ReadWriteAtomic.swift in Sources */,

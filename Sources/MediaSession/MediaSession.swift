@@ -49,6 +49,10 @@ final class MediaSession {
 
     var videoColorProperties: [String: String]? { videoInput.videoColorProperties }
 
+    var videoTransform: CGAffineTransform { videoInput.videoTransform }
+
+    var imageOrientation: UIImage.Orientation { videoInput.imageOrientation }
+
     func start() { videoInput.start() }
 
     func stop() { videoInput.stop() }
@@ -81,8 +85,8 @@ final class MediaSession {
     self.init(queue: queue, videoInput: .pixel(videoInput))
 
     videoInput.output = { [weak self] (buffer: CVBuffer, time: CMTime) in
-      guard let this = self else { return }
-      this.appendVideoBuffer(buffer, at: time)
+      guard let self = self else { return }
+      self.appendVideoBuffer(buffer, at: time)
     }
   }
 
@@ -93,16 +97,16 @@ final class MediaSession {
     self.init(queue: queue, videoInput: .sample(videoInput))
 
     videoInput.output = { [weak self] (sampleBuffer: CMSampleBuffer) in
-      guard let this = self else { return }
-      this.appendVideoBuffer(sampleBuffer)
+      guard let self = self else { return }
+      self.appendVideoBuffer(sampleBuffer)
     }
   }
 
   func setAudioInput(_ audioInput: Input.SampleBufferAudio) {
     self.audioInput = audioInput
     audioInput.output = { [weak self] (sampleBuffer) in
-      guard let this = self else { return }
-      this.appendAudioBuffer(sampleBuffer)
+      guard let self = self else { return }
+      self.appendAudioBuffer(sampleBuffer)
     }
   }
 }
@@ -142,6 +146,7 @@ extension MediaSession {
   ) throws -> VideoRecording {
     var videoSettings = videoSettings
     if videoSettings.size == nil { videoSettings.size = videoInput.size }
+    if videoSettings.transform == nil { videoSettings.transform = videoInput.videoTransform }
     videoSettings.videoColorProperties = videoInput.videoColorProperties
 
     let audioSettingsDictionary = audioSettings?.outputSettings
@@ -168,13 +173,13 @@ extension MediaSession {
 
   func takePhoto(
     scale: CGFloat,
-    orientation: UIImage.Orientation,
+    orientation: UIImage.Orientation?,
     handler: @escaping (Result<UIImage, Swift.Error>) -> Void
   ) {
     takePixelBuffer(
       handler: ImageOutput.takeUIImage(
         scale: scale,
-        orientation: orientation,
+        orientation: orientation ?? videoInput.imageOrientation,
         handler: handler
       )
     )

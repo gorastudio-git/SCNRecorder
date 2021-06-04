@@ -54,10 +54,39 @@ final class MetalPixelBufferProducer {
 
   let queue: DispatchQueue
 
-  var size: CGSize { recordableLayer.drawableSize }
-
   var videoColorProperties: [String: String]? {
     recordableLayer.pixelFormat.supportedPixelFormat.videoColorProperties
+  }
+
+  var videoTransform: CGAffineTransform {
+    guard recordableLayer.framebufferOnly else { return .identity }
+    switch recordableLayer.interfaceOrientation {
+    case .unknown, .portrait:
+      return .identity
+    case .landscapeLeft:
+      return .identity
+        .rotated(by: .pi / 2.0)
+//        .scaledBy(x: 1.0, y: -1.0)
+    case .landscapeRight:
+      return .identity
+        .rotated(by: -.pi / 2.0)
+//        .scaledBy(x: 1.0, y: -1.0)
+    case .portraitUpsideDown:
+      return .identity
+    @unknown default:
+      return .identity
+    }
+  }
+
+  var imageOrientation: UIImage.Orientation {
+    guard recordableLayer.framebufferOnly else { return .up }
+    switch recordableLayer.interfaceOrientation {
+    case .unknown, .portrait: return .up
+    case .landscapeLeft: return .right
+    case .landscapeRight: return .left
+    case .portraitUpsideDown: return .down
+    @unknown default: return .up
+    }
   }
 
   lazy var commandQueue: MTLCommandQueue? = device.makeCommandQueue()
@@ -84,7 +113,7 @@ final class MetalPixelBufferProducer {
     guard let lastTexture = recordableLayer.lastTexture else { throw Error.noLastTexture }
     guard let surface = lastTexture.iosurface else { throw Error.noSurface }
 
-    let sourceTextureDescriptor = self.makeSourceTextureDescriptor(basedOn: lastTexture)
+    let sourceTextureDescriptor = self.makeSourceTextureDescriptor(basedOn: lastTexture, surface: surface)
     guard let sourceTexture = self.device.makeTexture(
       descriptor: sourceTextureDescriptor,
       iosurface: surface,
@@ -94,7 +123,7 @@ final class MetalPixelBufferProducer {
     }
 
     let attachements = self.makePixelBufferAttachements(basedOn: surface)
-    let metalTexturePool = try self.makeMetalTexturePool(basedOn: lastTexture)
+    let metalTexturePool = try self.makeMetalTexturePool(basedOn: lastTexture, surface: surface)
     let destinationTexture = try metalTexturePool.getMetalTexture(propagatedAttachments: attachements)
 
     queue.async { [weak self] in
@@ -118,6 +147,7 @@ final class MetalPixelBufferProducer {
     commandQueue: MTLCommandQueue,
     handler: @escaping (CVPixelBufferResult) -> Void
   ) throws {
+
     guard let commandBuffer = commandQueue.makeCommandBuffer() else { throw Error.noCommandBuffer }
 
     let imageConversion = self.makeImageConversion(
@@ -140,19 +170,19 @@ final class MetalPixelBufferProducer {
     commandBuffer.commit()
   }
 
-  func makeMetalTexturePool(basedOn texture: MTLTexture) throws -> MetalTexturePool {
+  func makeMetalTexturePool(basedOn texture: MTLTexture, surface: IOSurface) throws -> MetalTexturePool {
     try metalTexturePoolFactory.getMetalTexturePool(
-      width: texture.width,
-      height: texture.height,
+      width: surface.width,
+      height: surface.height,
       pixelFormat: texture.pixelFormat.supportedPixelFormat
     )
   }
 
-  func makeSourceTextureDescriptor(basedOn texture: MTLTexture) -> MTLTextureDescriptor {
+  func makeSourceTextureDescriptor(basedOn texture: MTLTexture, surface: IOSurface) -> MTLTextureDescriptor {
     let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
       pixelFormat: texture.pixelFormat,
-      width: texture.width,
-      height: texture.height,
+      width: surface.width,
+      height: surface.height,
       mipmapped: false
     )
     textureDescriptor.usage = .shaderRead

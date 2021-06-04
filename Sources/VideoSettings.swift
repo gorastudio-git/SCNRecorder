@@ -42,25 +42,33 @@ public struct VideoSettings {
 
   public var scalingMode: ScalingMode = .resizeAspectFill
 
+  /// The transform applied to video frames
+  ///
+  /// If `nil` an appropriate transform will be applied.
+  /// Be carefull, the value is not always obvious.
+  public var transform: CGAffineTransform?
+
   var videoColorProperties: [String: String]?
 
   public init(
     fileType: FileType = .mov,
     codec: Codec = .h264(),
     size: CGSize? = nil,
-    scalingMode: ScalingMode = .resizeAspectFill
+    scalingMode: ScalingMode = .resizeAspectFill,
+    transform: CGAffineTransform? = nil
   ) {
     self.fileType = fileType
     self.codec = codec
     self.size = size
     self.scalingMode = scalingMode
+    self.transform = transform
   }
 }
 
 extension VideoSettings {
 
   var outputSettings: [String: Any] {
-    ([
+    return ([
       AVVideoWidthKey: size?.width,
       AVVideoHeightKey: size?.height,
       AVVideoCodecKey: codec.avCodec,
