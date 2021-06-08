@@ -132,6 +132,7 @@ public final class AudioEngine {
       recorder.audioInput.audioFormat = player?.audioFormat
 
       guard oldValue == nil else { return }
+      engine.mainMixerNode.removeTap(onBus: 0)
       engine.mainMixerNode.installTap(
         onBus: 0,
         bufferSize: 4096,
