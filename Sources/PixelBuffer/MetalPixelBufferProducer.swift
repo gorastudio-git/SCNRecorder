@@ -64,11 +64,11 @@ final class MetalPixelBufferProducer {
     case .unknown, .portrait:
       return .identity
     case .landscapeLeft:
-      return .identity
+      return CGAffineTransform.identity
         .rotated(by: .pi / 2.0)
 //        .scaledBy(x: 1.0, y: -1.0)
     case .landscapeRight:
-      return .identity
+      return CGAffineTransform.identity
         .rotated(by: -.pi / 2.0)
 //        .scaledBy(x: 1.0, y: -1.0)
     case .portraitUpsideDown:
