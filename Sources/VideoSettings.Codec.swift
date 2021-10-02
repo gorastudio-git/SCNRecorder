@@ -73,7 +73,6 @@ public extension VideoSettings {
       ))
     }
 
-    @available(iOS 13.0, *)
     case hevcWithAlpha(_ compressionProperties: HEVCCompressionProperties)
 
     public static func h264(
