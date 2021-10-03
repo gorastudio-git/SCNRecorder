@@ -25,6 +25,7 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 protocol MediaSessionInput {
 
@@ -55,6 +56,10 @@ protocol VideoMediaSessionInput: MediaSessionInput {
   var size: CGSize { get }
 
   var videoColorProperties: [String: String]? { get }
+
+  var videoTransform: CGAffineTransform { get }
+
+  var imageOrientation: UIImage.Orientation { get }
 }
 
 protocol SampleBufferInput: AnyObject {

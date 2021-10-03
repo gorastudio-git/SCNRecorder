@@ -65,21 +65,22 @@ final class VideoOutput {
     self.state = .starting
 
     queue.async { [weak self] in
-      guard let this = self else { return }
+      guard let self = self else { return }
 
       do {
-        this.assetWriter = try AVAssetWriter(url: url, fileType: videoSettings.fileType.avFileType)
-        try this.addVideoInput(videoSettings)
-        try this.addAudioInput(audioSettings)
+        self.assetWriter = try AVAssetWriter(url: url, fileType: videoSettings.fileType.avFileType)
 
-        guard this.assetWriter.startWriting() else {
-          throw this.assetWriter.error ?? Error.cantStartWriting
+        try self.addVideoInput(videoSettings)
+        try self.addAudioInput(audioSettings)
+
+        guard self.assetWriter.startWriting() else {
+          throw self.assetWriter.error ?? Error.cantStartWriting
         }
 
-        this.state = .ready
+        self.state = .ready
       }
       catch {
-        this.state = .failed(error: error)
+        self.state = .failed(error: error)
       }
     }
   }
@@ -89,6 +90,7 @@ final class VideoOutput {
   func addVideoInput(_ videoSettings: VideoSettings) throws {
     let videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings.outputSettings)
     videoInput.expectsMediaDataInRealTime = true
+    videoInput.transform = videoSettings.transform ?? .identity
 
     guard assetWriter.canAdd(videoInput) else { throw Error.cantAddVideoAssetWriterInput }
     assetWriter.add(videoInput)

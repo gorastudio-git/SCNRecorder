@@ -1,9 +1,9 @@
 //
-//  RecordableLayer.swift
+//  IOSurface+Size.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 30.12.2019.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Created by Vladislav Grigoryev on 04.06.2021.
+//  Copyright © 2021 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,45 +25,8 @@
 
 import Foundation
 import UIKit
-import AVFoundation
 
-public protocol RecordableLayer: AnyObject {
+extension IOSurface {
 
-  var lastTexture: MTLTexture? { get }
-
-  var device: MTLDevice? { get }
-
-  var pixelFormat: MTLPixelFormat { get }
-
-  var drawableSize: CGSize { get }
-
-  var colorspace: CGColorSpace? { get }
-
-  var framebufferOnly: Bool { get }
-
-  var interfaceOrientation: UIInterfaceOrientation { get }
-
-  func prepareForRecording()
+  var size: CGSize { CGSize(width: width, height: height) }
 }
-
-public extension RecordableLayer {
-
-  func prepareForRecording() { }
-}
-
-#if !targetEnvironment(simulator)
-
-public extension RecordableLayer where Self: CAMetalLayer {
-
-  func prepareForRecording() { Self.swizzle() }
-}
-
-#else
-
-@available(iOS 13.0, *)
-public extension RecordableLayer where Self: CAMetalLayer {
-
-  func prepareForRecording() { Self.swizzle() }
-}
-
-#endif

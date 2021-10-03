@@ -47,6 +47,10 @@ extension CleanRecorder {
 
     var videoColorProperties: [String: String]? { nil }
 
+    var videoTransform: CGAffineTransform { .identity }
+
+    var imageOrientation: UIImage.Orientation { .up }
+
     lazy var pixelBufferPoolFactory = PixelBufferPoolFactory.getWeaklyShared()
 
     let context: CIContext = MTLCreateSystemDefaultDevice()

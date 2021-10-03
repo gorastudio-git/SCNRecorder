@@ -76,7 +76,7 @@ public class BaseRecorder: NSObject {
 
   public func takePhoto(
     scale: CGFloat,
-    orientation: UIImage.Orientation,
+    orientation: UIImage.Orientation?,
     handler: @escaping (Result<UIImage, Swift.Error>) -> Void
   ) {
     mediaSession.takePhoto(

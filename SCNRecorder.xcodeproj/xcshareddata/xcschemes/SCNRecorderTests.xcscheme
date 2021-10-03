@@ -14,7 +14,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D574649825725B6B0025578A"
+               BlueprintIdentifier = "D5D5F48F257D72FB008D7107"
                BuildableName = "SCNRecorderTestsApp.app"
                BlueprintName = "SCNRecorderTestsApp"
                ReferencedContainer = "container:SCNRecorder.xcodeproj">

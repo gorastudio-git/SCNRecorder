@@ -5,6 +5,7 @@
 ![Swift](https://img.shields.io/badge/swift-5.2-red.svg)
 [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SCNRecorder.svg)](https://cocoapods.org/pods/SCNRecorder)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
 
 SCNRecorder allows you to record videos and to capture images from ARSCNView, SCNView and ARView (RealityKit) without sacrificing performance. It gives you an incredible opportunity to share the media content of your augmented reality app or SceneKit based game.
 
@@ -23,7 +24,7 @@ Starting version 2.2.0 SCNRecorder supports Metal only.
 ### CocoaPods
 
 ```ruby
-pod 'SCNRecorder', '~> 2.6'
+pod 'SCNRecorder', '~> 2.7'
 ```
 
 ### Carthage
@@ -169,8 +170,8 @@ override func viewDidLoad() {
 
 ### RealityKit
 
-To support recording RealityKit, copy [ARView+MetalRecordable.swift](Example/Source/RealityKit/ARView+MetalRecordable.swift) and [ARView+SelfSceneRecordable.swift](Example/Source/RealityKit/ARView+SelfSceneRecordable.swift) files to your project.
-Then look at [ARViewController.swift](Example/Source/RealityKit/ARViewController.swift) for usage.
+To support recording RealityKit, copy [ARView+MetalRecordable.swift](Example/Source/Content/RealityKit/ARView+MetalRecordable.swift) and [ARView+SelfSceneRecordable.swift](Example/Source/Content/RealityKit/ARView+SelfSceneRecordable.swift) files to your project.
+Then look at [RealityKitViewController.swift](Example/Source/Content/RealityKit/RealityKitViewController.swift) for usage.
 
 ### That's it!
 

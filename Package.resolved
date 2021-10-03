@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MulticastDelegate",
+        "repositoryURL": "https://github.com/v-grigoriev/MulticastDelegate.git",
+        "state": {
+          "branch": null,
+          "revision": "19a9cc018fd22589594f7868400823b382d0cf08",
+          "version": "1.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

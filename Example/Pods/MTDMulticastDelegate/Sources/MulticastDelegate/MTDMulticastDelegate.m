@@ -1,6 +1,6 @@
 //
-//  SCNRecorderMulticastDelegate.m
-//  SCNRecorder
+//  MTDMulticastDelegate.m
+//  MulticastDelegate
 //
 //  Created by Vladislav Grigoryev on 30.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
@@ -23,15 +23,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "SCNRecorderMulticastDelegate.h"
+#import <MulticastDelegate/MTDMulticastDelegate.h>
 
-@interface SCNRecorderMulticastDelegate ()
+@interface MTDMulticastDelegate ()
 
 @property (nonatomic, strong) NSPointerArray *mutableDelegates;
 
 @end
 
-@implementation SCNRecorderMulticastDelegate
+@implementation MTDMulticastDelegate
 
 - (instancetype)init
 {

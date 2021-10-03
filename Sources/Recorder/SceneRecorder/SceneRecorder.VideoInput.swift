@@ -40,9 +40,13 @@ extension SceneRecorder {
 
     let producer: MetalPixelBufferProducer
 
-    var size: CGSize { producer.size }
+    lazy var size: CGSize = producer.recordableLayer.drawableSize
 
     var videoColorProperties: [String: String]? { producer.videoColorProperties }
+
+    var videoTransform: CGAffineTransform { producer.videoTransform }
+
+    var imageOrientation: UIImage.Orientation { producer.imageOrientation }
 
     var output: ((CVBuffer, CMTime) -> Void)?
 
@@ -61,6 +65,8 @@ extension SceneRecorder {
       atTime time: TimeInterval,
       error errorHandler: @escaping (Swift.Error) -> Void
     ) throws {
+      size = (producer.recordableLayer.lastTexture?.iosurface as IOSurface?)?.size ?? size
+
       guard started, let output = output else { return }
 
       let time = timeFromSeconds(time)
@@ -77,6 +83,8 @@ extension SceneRecorder {
       using commandQueue: MTLCommandQueue,
       error errorHandler: @escaping (Swift.Error) -> Void
     ) throws {
+      size = (producer.recordableLayer.lastTexture?.iosurface as IOSurface?)?.size ?? size
+
       guard started, let output = output else { return }
 
       let time = timeFromSeconds(time)

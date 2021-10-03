@@ -1,0 +1,6 @@
+framework module MulticastDelegate {
+  umbrella header "MTDMulticastDelegate-umbrella.h"
+
+  export *
+  module * { export * }
+}

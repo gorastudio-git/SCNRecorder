@@ -204,7 +204,7 @@ public extension SelfRecordable {
 
   func takePhoto(
     scale: CGFloat = UIScreen.main.scale,
-    orientation: UIImage.Orientation = .up,
+    orientation: UIImage.Orientation? = nil,
     completionHandler handler: @escaping (UIImage) -> Void
   ) {
     takePhotoResult(
@@ -218,7 +218,7 @@ public extension SelfRecordable {
 
   func takePhotoResult(
     scale: CGFloat = UIScreen.main.scale,
-    orientation: UIImage.Orientation = .up,
+    orientation: UIImage.Orientation? = nil,
     handler: @escaping (Result<UIImage, Swift.Error>) -> Void
   ) {
     assertedRecorder().takePhoto(scale: scale, orientation: orientation) { photo in

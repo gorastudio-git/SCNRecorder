@@ -54,7 +54,12 @@ final class MetalViewController: UIViewController {
 
     guard let device = MTLCreateSystemDefaultDevice() else { return }
     metalView.metalLayer.device = device
+
+    #if targetEnvironment(simulator)
+    metalView.metalLayer.pixelFormat = .bgra8Unorm
+    #else
     metalView.metalLayer.pixelFormat = .bgr10_xr_srgb
+    #endif
 
     renderer = SquadRenderer(device: device, pixelFormat: metalView.metalLayer.pixelFormat)
   }

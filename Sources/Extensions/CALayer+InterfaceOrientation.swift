@@ -1,9 +1,9 @@
 //
-//  Renderable.swift
+//  CALayer+Window.swift
 //  SCNRecorder
 //
-//  Created by Vladislav Grigoryev on 13.09.2020.
-//  Copyright © 2020 GORA Studio. All rights reserved.
+//  Created by Vladislav Grigoryev on 03.06.2021.
+//  Copyright © 2021 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,24 +25,38 @@
 
 import Foundation
 import UIKit
-import Metal
 
-public protocol Renderable {
+extension CALayer {
 
-  func render(atTime time: TimeInterval)
-
-  func render(atTime time: TimeInterval, using commandQueue: MTLCommandQueue)
-}
-
-public extension Renderable {
-
-  func render() { render(atTime: CACurrentMediaTime()) }
-
-  func render(using commandQueue: MTLCommandQueue) {
-    render(atTime: CACurrentMediaTime(), using: commandQueue)
+  var window: UIWindow? {
+    (delegate as? UIView)?.window
+      ?? superlayer?.window
+      ?? UIApplication.shared.keyWindow
   }
 
-  func render(atTime time: TimeInterval, using commandQueue: MTLCommandQueue) {
-    render(atTime: time)
+  public var interfaceOrientation: UIInterfaceOrientation {
+    if #available(iOS 13.0, *) {
+      return window?.windowScene?.interfaceOrientation ?? _interfaceOrientation
+    } else {
+      return _interfaceOrientation
+    }
+  }
+
+  private var _interfaceOrientation: UIInterfaceOrientation {
+    guard let window = window else { return .unknown }
+    let fixedCoordinateSpace = window.screen.fixedCoordinateSpace
+
+    let origin = convert(frame.origin, to: window.layer)
+    let fixedOrigin = window.convert(origin, to: fixedCoordinateSpace)
+
+    let isXGreater = fixedOrigin.x > origin.x
+    let isYGreater = fixedOrigin.y > origin.y
+
+    switch (isXGreater, isYGreater) {
+    case (true, true): return .portraitUpsideDown
+    case (true, false): return .landscapeRight
+    case (false, true): return .landscapeLeft
+    case (false, false): return .portrait
+    }
   }
 }
