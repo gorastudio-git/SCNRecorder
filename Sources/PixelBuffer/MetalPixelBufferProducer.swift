@@ -26,6 +26,7 @@
 import Foundation
 import AVFoundation
 import MetalPerformanceShaders
+import UIKit
 
 final class MetalPixelBufferProducer {
 

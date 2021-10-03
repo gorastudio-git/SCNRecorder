@@ -1,6 +1,6 @@
 //
-//  SCNRecorderMulticastDelegate.h
-//  SCNRecorder
+//  MTDOriginMulticastDelegate.h
+//  MulticastDelegate
 //
 //  Created by Vladislav Grigoryev on 30.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
@@ -24,19 +24,14 @@
 //  THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <MulticastDelegate/MTDMulticastDelegate.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(MulticastDelegate)
-@interface SCNRecorderMulticastDelegate<__covariant Delegate> : NSProxy
+NS_SWIFT_NAME(OriginMulticastDelegate)
+@interface MTDOriginMulticastDelegate<__covariant Delegate> : MTDMulticastDelegate<Delegate>
 
-@property (nonatomic, strong, readonly) NSArray<Delegate> *delegates;
-
-- (instancetype)init;
-
-- (void)addDelegate:(Delegate)delegate;
-
-- (void)removeDelegate:(Delegate)delegate;
+@property (nonatomic, weak, nullable) Delegate origin;
 
 @end
 

@@ -84,7 +84,7 @@ extension SceneRecorder {
       error errorHandler: @escaping (Swift.Error) -> Void
     ) throws {
       size = (producer.recordableLayer.lastTexture?.iosurface as IOSurface?)?.size ?? size
-      
+
       guard started, let output = output else { return }
 
       let time = timeFromSeconds(time)

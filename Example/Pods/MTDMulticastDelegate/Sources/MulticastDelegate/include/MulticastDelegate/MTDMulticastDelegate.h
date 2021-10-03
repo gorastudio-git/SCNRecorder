@@ -1,8 +1,8 @@
 //
-//  SCNRecorder.h
-//  SCNRecorder
+//  MTDMulticastDelegate.h
+//  MulticastDelegate
 //
-//  Created by Vladislav Grigoryev on 11/03/2019.
+//  Created by Vladislav Grigoryev on 30.05.2020.
 //  Copyright © 2020 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,17 +23,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
+#import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT double SCNRecorderVersionNumber;
-FOUNDATION_EXPORT const unsigned char SCNRecorderVersionString[];
+NS_ASSUME_NONNULL_BEGIN
+
+NS_SWIFT_NAME(MulticastDelegate)
+@interface MTDMulticastDelegate<__covariant Delegate> : NSProxy
+
+@property (nonatomic, strong, readonly) NSArray<Delegate> *delegates;
+
+- (instancetype)init;
+
+- (void)addDelegate:(Delegate)delegate;
+
+- (void)removeDelegate:(Delegate)delegate;
+
+@end
+
+NS_ASSUME_NONNULL_END

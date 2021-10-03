@@ -1,9 +1,9 @@
 //
-//  SCNRecorderOriginMulticastDelegate.m
-//  SCNRecorder
+//  MulticastDelegate.h
+//  MulticastDelegate
 //
 //  Created by Vladislav Grigoryev on 30.05.2020.
-//  Copyright © 2020 GORA Studio. https://gora.studio
+//  Copyright © 2021 GORA Studio. https://gora.studio
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,38 +23,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "SCNRecorderOriginMulticastDelegate.h"
+#import <Foundation/Foundation.h>
 
-@implementation SCNRecorderOriginMulticastDelegate
+//! Project version number for MulticastDelegate.
+FOUNDATION_EXPORT double MulticastDelegateVersionNumber;
 
-#pragma mark - NSProxy
+//! Project version string for MulticastDelegate.
+FOUNDATION_EXPORT const unsigned char MulticastDelegateVersionString[];
 
-- (void)forwardInvocation:(NSInvocation *)invocation
-{
-  if ([self.origin respondsToSelector:invocation.selector]) {
-     [invocation invokeWithTarget:self.origin];
-  }
+#import <MulticastDelegate/MTDMulticastDelegate.h>
+#import <MulticastDelegate/MTDOriginMulticastDelegate.h>
 
-  [super forwardInvocation:invocation];
-}
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
-{
-  NSMethodSignature *methodSinature = [self.origin methodSignatureForSelector:selector];
-  if (methodSinature) {
-    return methodSinature;
-  }
-  return [super methodSignatureForSelector:selector];
-}
-
-- (BOOL)respondsToSelector:(SEL)selector
-{
-  return [self.origin respondsToSelector:selector] || [super respondsToSelector:selector];
-}
-
-- (BOOL)conformsToProtocol:(Protocol *)protocol
-{
-    return [self.origin conformsToProtocol:protocol] || [super conformsToProtocol:protocol];
-}
-
-@end

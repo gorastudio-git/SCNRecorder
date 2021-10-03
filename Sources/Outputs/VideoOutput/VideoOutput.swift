@@ -69,7 +69,7 @@ final class VideoOutput {
 
       do {
         self.assetWriter = try AVAssetWriter(url: url, fileType: videoSettings.fileType.avFileType)
-        
+
         try self.addVideoInput(videoSettings)
         try self.addAudioInput(audioSettings)
 

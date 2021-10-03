@@ -24,6 +24,8 @@
 //  THE SOFTWARE.
 
 import Foundation
+import UIKit
+import Metal
 
 public protocol Renderable {
 

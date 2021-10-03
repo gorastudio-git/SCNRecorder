@@ -25,6 +25,7 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 protocol MediaSessionInput {
 
