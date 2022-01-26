@@ -183,6 +183,10 @@ Look at the Example project for more details.
 
 Thanks to [Fedor Prokhorov](https://github.com/prokhorovxo) and [Dmitry Yurlov](https://github.com/demonukg) for testing, reviewing and inspiration.
 
+## GORA Studio
+
+Made with magic 🪄 at [GORA Studio](https://gora.studio/)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details
