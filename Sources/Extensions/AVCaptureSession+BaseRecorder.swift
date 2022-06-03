@@ -23,10 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-/* NOTE
- You should exclude this class from the Target Membership if you don't use its functionality.
- In this way you are not required to include NSCameraUsageDescription when pushing your build to appstoreconnect
- */
 import Foundation
 import AVFoundation
 
