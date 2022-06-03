@@ -138,7 +138,7 @@ override func viewDidLoad() {
 }
 ```
 
- Knows issues: Capturing audio requires that you provide a valid NSCameraUsageDescription (or NSMicrophoneUsageDescription?) key in the InfoPlist when you submit your app to appstoreconnect. Anyway, If you are not using the audio recorder, you can exclude the `AVCaptureSession+BaseRecorder` extension from the Target Membership and this will fix appstoreconnect asking for NSCameraUsageDescription key.
+ Knows issues: Capturing audio requires that you provide a valid NSCameraUsageDescription key in the InfoPlist when you submit your app to appstoreconnect. If you are not using the audio recorder, you can exclude the `AVCaptureSession+BaseRecorder.swift` extension from the Target Membership. Doing that fixes appstoreconnect asking for NSCameraUsageDescription key.
 
 ### Music Overlay
 
