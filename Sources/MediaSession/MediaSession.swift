@@ -148,7 +148,7 @@ extension MediaSession {
     var videoSettings = videoSettings
     if videoSettings.size == nil { videoSettings.size = videoInput.size }
     if videoSettings.transform == nil { videoSettings.transform = videoInput.videoTransform }
-    videoSettings.videoColorProperties = videoInput.videoColorProperties
+    //videoSettings.videoColorProperties = videoInput.videoColorProperties
 
     let audioSettingsDictionary = audioSettings?.outputSettings
       ?? audioInput?.recommendedAudioSettingsForAssetWriter(
