@@ -33,11 +33,11 @@ protocol MediaSessionInput {
 
   typealias Video = VideoMediaSessionInput
 
-  typealias SampleBufferAudio = Audio & SampleBufferInput
+  typealias SampleBufferAudio = AudioMediaSessionInput & SampleBufferInput
 
-  typealias SampleBufferVideo = Video & SampleBufferInput
+  typealias SampleBufferVideo = VideoMediaSessionInput & SampleBufferInput
 
-  typealias PixelBufferVideo = Video & BufferInput
+  typealias PixelBufferVideo = VideoMediaSessionInput & BufferInput
 
   func start()
 
