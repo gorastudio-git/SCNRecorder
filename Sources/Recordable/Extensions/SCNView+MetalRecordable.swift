@@ -25,7 +25,6 @@
 
 import Foundation
 import SceneKit
-import ARKit
 
 extension SCNView: MetalRecordable {
 

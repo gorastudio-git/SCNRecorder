@@ -24,7 +24,8 @@
 //  THE SOFTWARE.
 
 import Foundation
-import ARKit
+import SceneKit
+import CoreMedia
 
 public final class CleanRecorder<T: CleanRecordable>: BaseRecorder,
   Renderable, SCNSceneRendererDelegate {
