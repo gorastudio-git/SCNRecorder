@@ -27,7 +27,6 @@ import Foundation
 import UIKit
 import AVFoundation
 import SceneKit
-import ARKit
 
 private var videoRecordingKey: UInt8 = 0
 

@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 
 import Foundation
-import SceneKit
+import CoreMedia
 import ARKit
 
 public class BaseRecorder: NSObject {
