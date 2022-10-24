@@ -29,7 +29,7 @@ import SceneKit
 
 extension CleanRecorder {
 
-  final class VideoInput<T: CleanRecordable>: MediaSession.Input.PixelBufferVideo, TimeScalable {
+  final class VideoInput<T: CleanRecordable>: MediaSessionInput_PixelBufferVideo, TimeScalable {
 
     weak var cleanRecordable: T?
 
