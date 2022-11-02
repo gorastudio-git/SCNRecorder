@@ -28,30 +28,20 @@ import AVFoundation
 import UIKit
 
 
-public typealias MediaSessionInput_SampleBufferAudio = AudioMediaSessionInput & SampleBufferInput
-public typealias MediaSessionInput_SampleBufferVideo = VideoMediaSessionInput & SampleBufferInput
-public typealias MediaSessionInput_PixelBufferVideo = VideoMediaSessionInput & BufferInput
+internal typealias MediaSessionInput_SampleBufferAudio = AudioMediaSessionInput & SampleBufferInput
+internal typealias MediaSessionInput_SampleBufferVideo = VideoMediaSessionInput & SampleBufferInput
+internal typealias MediaSessionInput_PixelBufferVideo = VideoMediaSessionInput & BufferInput
 
 
-public
+internal
 protocol MediaSessionInput {
-
-//  typealias Audio = AudioMediaSessionInput
-//
-//  typealias Video = VideoMediaSessionInput
-
-//  typealias SampleBufferAudio = AudioMediaSessionInput & SampleBufferInput
-//
-//  typealias SampleBufferVideo = VideoMediaSessionInput & SampleBufferInput
-//
-//  typealias PixelBufferVideo = VideoMediaSessionInput & BufferInput
 
   func start()
 
   func stop()
 }
 
-public
+internal
 protocol AudioMediaSessionInput: MediaSessionInput {
 
   func recommendedAudioSettingsForAssetWriter(
@@ -59,7 +49,7 @@ protocol AudioMediaSessionInput: MediaSessionInput {
   ) -> [String: Any]
 }
 
-public
+internal
 protocol VideoMediaSessionInput: MediaSessionInput {
 
   var size: CGSize { get }
@@ -71,13 +61,13 @@ protocol VideoMediaSessionInput: MediaSessionInput {
   var imageOrientation: UIImage.Orientation { get }
 }
 
-public
+internal
 protocol SampleBufferInput: AnyObject {
 
   var output: ((CMSampleBuffer) -> Void)? { get set }
 }
 
-public
+internal
 protocol BufferInput: AnyObject {
 
   var output: ((CVBuffer, CMTime) -> Void)? { get set }
