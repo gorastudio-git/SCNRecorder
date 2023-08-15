@@ -153,7 +153,12 @@ extension VideoOutput {
   }
 
   func appendVideo(sampleBuffer: CMSampleBuffer) throws {
-    guard videoInput.isReadyForMoreMediaData else { return }
+    guard
+      videoInput.isReadyForMoreMediaData,
+      state.isRecording
+    else {
+      return
+    }
     guard videoInput.append(sampleBuffer) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
       return
@@ -175,10 +180,17 @@ extension VideoOutput {
   }
 
   func appendAudio(sampleBuffer: CMSampleBuffer) throws {
-    guard let audioInput = audioInput else { return }
-    guard audioInput.isReadyForMoreMediaData else { return }
+    guard
+      let audioInput = audioInput,
+      audioInput.isReadyForMoreMediaData,
+      state.isRecording
+    else {
+        return
+    }
     guard audioInput.append(sampleBuffer) else {
-      if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
+      if assetWriter.status == .failed {
+          throw assetWriter.error ?? Error.unknown
+      }
       return
     }
   }

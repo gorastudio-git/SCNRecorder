@@ -97,6 +97,13 @@ public enum VideoOutputState: Equatable {
     }
   }
 
+  var isRecording: Bool {
+    guard case .recording = self else {
+      return false
+    }
+    return true
+  }
+
   func resume(_ videoOutput: VideoOutput) -> Self {
     switch self {
 
@@ -130,8 +137,7 @@ public enum VideoOutputState: Equatable {
          .preparing:
       return .ready
 
-    case .recording(let seconds):
-      videoOutput.endSession(at: seconds)
+    case .recording:
       return .paused
 
     case .paused,
