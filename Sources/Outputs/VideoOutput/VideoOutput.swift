@@ -141,7 +141,9 @@ extension VideoOutput {
   }
 
   func append(pixelBuffer: CVPixelBuffer, withPresentationTime time: CMTime) throws {
-    guard pixelBufferAdaptor.assetWriterInput.isReadyForMoreMediaData else { return }
+    guard pixelBufferAdaptor.assetWriterInput.isReadyForMoreMediaData else {
+      return
+    }
     guard pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: time) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
       return
@@ -153,10 +155,7 @@ extension VideoOutput {
   }
 
   func appendVideo(sampleBuffer: CMSampleBuffer) throws {
-    guard
-      videoInput.isReadyForMoreMediaData,
-      state.isRecording
-    else {
+    guard videoInput.isReadyForMoreMediaData else {
       return
     }
     guard videoInput.append(sampleBuffer) else {
@@ -182,8 +181,7 @@ extension VideoOutput {
   func appendAudio(sampleBuffer: CMSampleBuffer) throws {
     guard
       let audioInput = audioInput,
-      audioInput.isReadyForMoreMediaData,
-      state.isRecording
+      audioInput.isReadyForMoreMediaData
     else {
         return
     }
