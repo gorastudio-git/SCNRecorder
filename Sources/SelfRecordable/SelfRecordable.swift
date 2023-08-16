@@ -189,6 +189,14 @@ public extension SelfRecordable {
     return videoRecording
   }
 
+  func pauseVideoRecording() {
+    videoRecording?.pause()
+  }
+
+  func resumeVideoRecording() {
+    videoRecording?.resume()
+  }
+
   func finishVideoRecording(completionHandler handler: @escaping (VideoRecording.Info) -> Void) {
     videoRecording?.finish { videoRecordingInfo in
       DispatchQueue.main.async { handler(videoRecordingInfo) }
