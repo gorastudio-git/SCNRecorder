@@ -64,8 +64,6 @@ public enum VideoOutputState: Equatable {
   case recording(time: CMTime, pause: CMTime?, resume: CMTime?)
 
   /// Recording is paused.
-  /// Not tested.
-  /// According to Apple, documentation might not work.
   case paused(time: CMTime, pause: CMTime)
 
   /// Recording is canceled.
