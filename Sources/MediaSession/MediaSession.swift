@@ -29,17 +29,14 @@ import UIKit
 
 final class MediaSession {
 
-  typealias Input = MediaSessionInput
 
-  typealias Output = MediaSessionOutput
+  enum VideoInput: VideoMediaSessionInput {
 
-  enum VideoInput: Input.Video {
+    case pixel(_ input: MediaSessionInput_PixelBufferVideo)
 
-    case pixel(_ input: Input.PixelBufferVideo)
+    case sample(_ input: MediaSessionInput_SampleBufferVideo)
 
-    case sample(_ input: Input.SampleBufferVideo)
-
-    var videoInput: Input.Video {
+    var videoInput: VideoMediaSessionInput {
       switch self {
       case .pixel(let input): return input
       case .sample(let input): return input
@@ -61,15 +58,15 @@ final class MediaSession {
 
   let queue: DispatchQueue
 
-  @UnfairAtomic var videoOutputs = [Output.Video]()
+  @UnfairAtomic var videoOutputs = [VideoMediaSessionOutput]()
 
-  @UnfairAtomic var audioOutputs = [Output.Audio]()
+  @UnfairAtomic var audioOutputs = [AudioMediaSessionOutput]()
 
   @Observable var error: Swift.Error?
 
   let videoInput: VideoInput
 
-  private(set) var audioInput: Input.SampleBufferAudio?
+  private(set) var audioInput: MediaSessionInput_SampleBufferAudio?
 
   init(
     queue: DispatchQueue,
@@ -81,7 +78,7 @@ final class MediaSession {
 
   convenience init(
     queue: DispatchQueue,
-    videoInput: Input.PixelBufferVideo
+    videoInput: MediaSessionInput_PixelBufferVideo
   ) {
     self.init(queue: queue, videoInput: .pixel(videoInput))
 
@@ -93,7 +90,7 @@ final class MediaSession {
 
   convenience init(
     queue: DispatchQueue,
-    videoInput: Input.SampleBufferVideo
+    videoInput: MediaSessionInput_SampleBufferVideo
   ) {
     self.init(queue: queue, videoInput: .sample(videoInput))
 
@@ -103,7 +100,7 @@ final class MediaSession {
     }
   }
 
-  func setAudioInput(_ audioInput: Input.SampleBufferAudio) {
+  func setAudioInput(_ audioInput: MediaSessionInput_SampleBufferAudio) {
     self.audioInput = audioInput
     audioInput.output = { [weak self] (sampleBuffer) in
       guard let self = self else { return }
@@ -206,28 +203,28 @@ extension MediaSession {
 
 extension MediaSession {
 
-  func addVideoOutput(_ videoOutput: MediaSession.Output.Video) {
+  func addVideoOutput(_ videoOutput: VideoMediaSessionOutput) {
     if ($videoOutputs.modify {
       $0.append(videoOutput)
       return $0.count == 1
     }) { videoInput.start() }
   }
 
-  func removeVideoOutput(_ videoOutput: MediaSession.Output.Video) {
+  func removeVideoOutput(_ videoOutput: VideoMediaSessionOutput) {
     if ($videoOutputs.modify {
       $0 = $0.filter { $0 !== videoOutput }
       return $0.count == 0
     }) { videoInput.stop() }
   }
 
-  func addAudioOutput(_ audioOutput: MediaSession.Output.Audio) {
+  func addAudioOutput(_ audioOutput: AudioMediaSessionOutput) {
     if ($audioOutputs.modify {
       $0.append(audioOutput)
       return $0.count == 1
     }) { audioInput?.start() }
   }
 
-  func removeAudioOutput(_ audioOutput: MediaSession.Output.Audio) {
+  func removeAudioOutput(_ audioOutput: AudioMediaSessionOutput) {
     if ($audioOutputs.modify {
       $0 = $0.filter { $0 !== audioOutput }
       return $0.count == 0

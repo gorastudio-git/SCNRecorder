@@ -63,7 +63,7 @@ extension MTLPixelFormat {
   ]}
 
   var supportedPixelFormat: MTLPixelFormat {
-    if Self.supportedPixelFormats.contains(self) { return self }
+    guard !Self.supportedPixelFormats.contains(self) else { return self }
 
     // For some reason bgra8Unorm_srgb is not writable on simulators
     #if targetEnvironment(simulator)
@@ -72,9 +72,9 @@ extension MTLPixelFormat {
     let bgra8Unorm_srgb = MTLPixelFormat.bgra8Unorm_srgb
     #endif
 
-    // The recorder doesn't support bgra10_xr, bgra10_xr_srgb and rgb10a8_2p_xr10_srgb to be wrote directly.
-    // They should be converted to intermediate bgra8Unorm and bgra8Unorm_srgb formats to be recorded.
-    // Mostly becaouse, I can find a CoreVideo pixel format to be used for them.
+    // AVAssetWriter doesn't support bgra10_xr, bgra10_xr_srgb and rgb10a8_2p_xr10_srgb to be written directly.
+    // They should be converted to intermediate bgra8Unorm and bgra8Unorm_srgb formats to be recorded,
+    // becaouse I can't find a CoreVideo pixel format to be used for them.
     // The drawback is loose of extended colors.
     // In general any of https://developer.apple.com/documentation/metalperformanceshaders/image_filters#2793234
     // formats can be used as intermediates, but for now, I don't see any reason to experiment.

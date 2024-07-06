@@ -27,7 +27,6 @@ import Foundation
 import UIKit
 import AVFoundation
 import SceneKit
-import ARKit
 
 private var videoRecordingKey: UInt8 = 0
 
@@ -188,6 +187,14 @@ public extension SelfRecordable {
 
     self.videoRecording = videoRecording
     return videoRecording
+  }
+
+  func pauseVideoRecording() {
+    videoRecording?.pause()
+  }
+
+  func resumeVideoRecording() {
+    videoRecording?.resume()
   }
 
   func finishVideoRecording(completionHandler handler: @escaping (VideoRecording.Info) -> Void) {

@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name                  = 'SCNRecorder'
-  s.version               = '2.7.0'
+  s.version               = '2.8.1'
   s.summary               = 'A lags-free recorder of ARKit and SceneKit for iOS in Swift'
   s.homepage              = 'https://github.com/gorastudio/SCNRecorder'
   s.license               = { :type => 'MIT', :file => 'LICENSE.md' }
   s.author                = { 'Vladislav Grigoryev' => 'dev.grigoriev@gmail.com' }
   s.platform              = :ios, '12.0'
-  s.source                = { :git => 'https://github.com/gorastudio/SCNRecorder.git', :tag => s.version.to_s }
+  s.source                = { :git => 'https://github.com/gorastudio-ceo/SCNRecorder.git', :tag => s.version.to_s }
   s.module_name           = 'SCNRecorder'
   s.swift_version         = '5.0'
   s.source_files          = 'Sources/**/*.{swift}'

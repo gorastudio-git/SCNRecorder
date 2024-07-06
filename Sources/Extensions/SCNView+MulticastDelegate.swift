@@ -25,7 +25,6 @@
 
 import Foundation
 import SceneKit
-import ARKit
 import MulticastDelegate
 
 private var multicastDelegateKey: UInt8 = 0

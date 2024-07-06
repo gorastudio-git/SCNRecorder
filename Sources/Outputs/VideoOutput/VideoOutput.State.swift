@@ -61,12 +61,10 @@ public enum VideoOutputState: Equatable {
 
   /// Recording is active.
   /// Appending audio and video frames.
-  case recording(time: CMTime)
+  case recording(time: CMTime, pause: CMTime?, resume: CMTime?)
 
   /// Recording is paused.
-  /// Not tested.
-  /// According to Apple, documentation might not work.
-  case paused
+  case paused(time: CMTime, pause: CMTime)
 
   /// Recording is canceled.
   /// Final state, not further actions are possible.
@@ -107,11 +105,12 @@ public enum VideoOutputState: Equatable {
          .preparing:
       return .preparing
 
-    case .recording(let time):
-      return .recording(time: time)
+    case let .recording(time, pause, resume):
+      return .recording(time: time, pause: pause, resume: resume)
 
-    case .paused:
-      return .preparing
+    case let .paused(time, pause):
+        let resume = CMTime(seconds: CACurrentMediaTime(), preferredTimescale: pause.timescale)
+        return .recording(time: time, pause: pause, resume: resume)
 
     case .canceled,
          .finished,
@@ -130,9 +129,14 @@ public enum VideoOutputState: Equatable {
          .preparing:
       return .ready
 
-    case .recording(let seconds):
-      videoOutput.endSession(at: seconds)
-      return .paused
+    case let .recording(lastTime, pause, resume):
+      let current = CMTime(seconds: CACurrentMediaTime(), preferredTimescale: lastTime.timescale)
+      if let pause, let resume {
+        let adjustedPause = adjustTime(current: current, resume: resume, pause: pause)
+        return .paused(time: lastTime, pause: adjustedPause)
+      } else {
+        return .paused(time: lastTime, pause: current)
+      }
 
     case .paused,
          .canceled,
@@ -229,14 +233,13 @@ private extension VideoOutputState {
       } else {
         time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
       }
-
       videoOutput.startSession(at: time)
       try videoOutput.appendVideo(sampleBuffer: sampleBuffer)
-      return .recording(time: time)
+      return .recording(time: time, pause: nil, resume: nil)
 
-    case .recording(let time):
+    case let .recording(time, pause, resume):
       try videoOutput.appendVideo(sampleBuffer: sampleBuffer)
-      return .recording(time: time)
+      return .recording(time: time, pause: pause, resume: resume)
 
     case .paused,
          .canceled,
@@ -260,11 +263,17 @@ private extension VideoOutputState {
     case .preparing:
       videoOutput.startSession(at: time)
       try videoOutput.append(pixelBuffer: pixelBuffer, withPresentationTime: time)
-      return .recording(time: time)
+      return .recording(time: time, pause: nil, resume: nil)
 
-    case .recording:
-      try videoOutput.append(pixelBuffer: pixelBuffer, withPresentationTime: time)
-      return .recording(time: time)
+    case let .recording(_ ,pause, resume):
+      let finalTime: CMTime
+      if let pause, let resume {
+        finalTime = adjustTime(current: time, resume: resume, pause: pause)
+      } else {
+        finalTime = time
+      }
+      try videoOutput.append(pixelBuffer: pixelBuffer, withPresentationTime: finalTime)
+      return .recording(time: finalTime, pause: pause, resume: resume)
 
     case .paused,
          .canceled,
@@ -285,9 +294,9 @@ private extension VideoOutputState {
          .preparing:
       return self
 
-    case .recording(let time):
+    case let .recording(time, pause, resume):
       try videoOutput.appendAudio(sampleBuffer: sampleBuffer)
-      return .recording(time: time)
+      return .recording(time: time, pause: pause, resume: resume)
 
     case .paused,
          .canceled,
@@ -295,5 +304,9 @@ private extension VideoOutputState {
          .failed:
       return self
     }
+  }
+
+  func adjustTime(current: CMTime, resume: CMTime, pause: CMTime) -> CMTime {
+    return CMTimeSubtract(current, CMTimeSubtract(resume, pause))
   }
 }

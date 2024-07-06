@@ -141,7 +141,9 @@ extension VideoOutput {
   }
 
   func append(pixelBuffer: CVPixelBuffer, withPresentationTime time: CMTime) throws {
-    guard pixelBufferAdaptor.assetWriterInput.isReadyForMoreMediaData else { return }
+    guard pixelBufferAdaptor.assetWriterInput.isReadyForMoreMediaData else {
+      return
+    }
     guard pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: time) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
       return
@@ -153,7 +155,9 @@ extension VideoOutput {
   }
 
   func appendVideo(sampleBuffer: CMSampleBuffer) throws {
-    guard videoInput.isReadyForMoreMediaData else { return }
+    guard videoInput.isReadyForMoreMediaData else {
+      return
+    }
     guard videoInput.append(sampleBuffer) else {
       if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
       return
@@ -175,10 +179,16 @@ extension VideoOutput {
   }
 
   func appendAudio(sampleBuffer: CMSampleBuffer) throws {
-    guard let audioInput = audioInput else { return }
-    guard audioInput.isReadyForMoreMediaData else { return }
+    guard
+      let audioInput = audioInput,
+      audioInput.isReadyForMoreMediaData
+    else {
+        return
+    }
     guard audioInput.append(sampleBuffer) else {
-      if assetWriter.status == .failed { throw assetWriter.error ?? Error.unknown }
+      if assetWriter.status == .failed {
+          throw assetWriter.error ?? Error.unknown
+      }
       return
     }
   }
@@ -227,7 +237,7 @@ private extension VideoOutput {
 }
 
 // - MARK: VideoOutput
-extension VideoOutput: MediaSession.Output.Video {
+extension VideoOutput: VideoMediaSessionOutput {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     state = state.appendVideoSampleBuffer(sampleBuffer, to: self)
@@ -239,7 +249,7 @@ extension VideoOutput: MediaSession.Output.Video {
 }
 
 // - MARK: AudioOutput
-extension VideoOutput: MediaSession.Output.Audio {
+extension VideoOutput: AudioMediaSessionOutput {
 
   func appendAudioSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     state = state.appendAudioSampleBuffer(sampleBuffer, to: self)

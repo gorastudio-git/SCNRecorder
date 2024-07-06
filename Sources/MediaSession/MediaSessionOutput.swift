@@ -28,9 +28,6 @@ import AVFoundation
 
 protocol MediaSessionOutput: AnyObject {
 
-  typealias Audio = AudioMediaSessionOutput
-
-  typealias Video = VideoMediaSessionOutput
 }
 
 protocol AudioMediaSessionOutput: MediaSessionOutput {

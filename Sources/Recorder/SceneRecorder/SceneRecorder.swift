@@ -25,7 +25,7 @@
 
 import Foundation
 import SceneKit
-import ARKit
+import CoreMedia
 
 public final class SceneRecorder: BaseRecorder, Renderable, SCNSceneRendererDelegate {
 

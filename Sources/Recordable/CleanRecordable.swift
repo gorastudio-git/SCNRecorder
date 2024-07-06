@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 
 import Foundation
-import ARKit
+import SceneKit
 
 private var cleanKey: UInt8 = 0
 
@@ -39,18 +39,13 @@ public extension CleanRecordable {
     AssociatedStorage(object: self, key: &cleanKey, policy: .OBJC_ASSOCIATION_RETAIN)
   }
 
-  internal var _clean: Clean<Self> {
-    get {
-      cleanStorage.get() ?? {
-        let clean = Clean(cleanRecordable: self)
-        _clean = clean
-        return clean
-      }()
-    }
-    set { cleanStorage.set(newValue) }
+  var clean: SelfRecordable {
+    cleanStorage.get() ?? {
+      let clean = Clean(cleanRecordable: self)
+      cleanStorage.set(clean)
+      return clean
+    }()
   }
-
-  var clean: SelfRecordable { _clean }
 }
 
 final class Clean<T: CleanRecordable>: SelfRecordable {

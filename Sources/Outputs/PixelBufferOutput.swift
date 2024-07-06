@@ -27,8 +27,8 @@ import Foundation
 import AVFoundation
 
 final public class PixelBufferOutput {
-
-  final class Weak: MediaSession.Output.Video {
+    
+  final class Weak: VideoMediaSessionOutput {
 
     weak var output: PixelBufferOutput?
 
@@ -65,7 +65,7 @@ final public class PixelBufferOutput {
   }
 }
 
-extension PixelBufferOutput: MediaSession.Output.Video {
+extension PixelBufferOutput: VideoMediaSessionOutput {
 
   func appendVideoSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     guard let imageBuffer: CVImageBuffer = {
