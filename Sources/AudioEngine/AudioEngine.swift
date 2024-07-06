@@ -158,7 +158,7 @@ public final class AudioEngine {
 
   let canDeactivateAudioSession: Bool
 
-  @Observable public internal(set) var error: Swift.Error?
+  @SCNObservable public internal(set) var error: Swift.Error?
 
   public init(canDeactivateAudioSession: Bool = true) {
     self.canDeactivateAudioSession = canDeactivateAudioSession

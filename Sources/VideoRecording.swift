@@ -28,9 +28,9 @@ import AVFoundation
 
 public final class VideoRecording {
 
-  @Observable public internal(set) var duration: TimeInterval
+  @SCNObservable public internal(set) var duration: TimeInterval
 
-  @Observable public internal(set) var state: State
+  @SCNObservable public internal(set) var state: State
 
   public var url: URL { videoOutput.url }
 

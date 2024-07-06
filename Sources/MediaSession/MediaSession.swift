@@ -62,7 +62,7 @@ final class MediaSession {
 
   @UnfairAtomic var audioOutputs = [AudioMediaSessionOutput]()
 
-  @Observable var error: Swift.Error?
+  @SCNObservable var error: Swift.Error?
 
   let videoInput: VideoInput
 

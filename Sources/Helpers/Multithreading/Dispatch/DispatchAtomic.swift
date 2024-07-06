@@ -64,4 +64,4 @@ public final class DispatchAtomic<Value>: Atomic {
   }
 }
 
-extension DispatchAtomic: ObservableInterface where Value: ObservableInterface { }
+extension DispatchAtomic: SCNObservableInterface where Value: SCNObservableInterface { }

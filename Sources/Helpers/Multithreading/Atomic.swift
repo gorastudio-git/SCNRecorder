@@ -53,7 +53,7 @@ public extension Atomic {
   }
 }
 
-public extension Atomic where Value: ObservableInterface {
+public extension Atomic where Value: SCNObservableInterface {
 
   var observer: Value.Observer? {
     get { value.observer }

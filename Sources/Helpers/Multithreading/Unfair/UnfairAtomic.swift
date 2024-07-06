@@ -52,4 +52,4 @@ public final class UnfairAtomic<Value>: Atomic {
   }
 }
 
-extension UnfairAtomic: ObservableInterface where Value: ObservableInterface { }
+extension UnfairAtomic: SCNObservableInterface where Value: SCNObservableInterface { }
