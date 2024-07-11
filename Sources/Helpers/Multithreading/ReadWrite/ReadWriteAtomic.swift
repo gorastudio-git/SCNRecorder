@@ -52,4 +52,4 @@ public final class ReadWriteAtomic<Value>: Atomic {
   }
 }
 
-extension ReadWriteAtomic: ObservableInterface where Value: ObservableInterface { }
+extension ReadWriteAtomic: SCNObservableInterface where Value: SCNObservableInterface { }

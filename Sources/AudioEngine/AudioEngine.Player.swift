@@ -61,9 +61,9 @@ extension AudioEngine {
     }()
 
     /// Current player time. Main queue. Unique values.
-    @Observable public private(set) var time: TimeInterval = 0.0
+    @SCNObservable public private(set) var time: TimeInterval = 0.0
 
-    @Observable public private(set) var state = State.stopped {
+    @SCNObservable public private(set) var state = State.stopped {
       didSet {
         guard state != oldValue else { return }
         updater.isPaused = !state.isPlaying

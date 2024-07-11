@@ -1,5 +1,5 @@
 //
-//  Observable.swift
+//  SCNObservable.swift
 //  SCNRecorder
 //
 //  Created by Vladislav Grigoryev on 31.05.2020.
@@ -25,7 +25,7 @@
 
 import Foundation
 
-public protocol ObservableInterface: AnyObject {
+public protocol SCNObservableInterface: AnyObject {
 
   associatedtype Property
 
@@ -35,7 +35,7 @@ public protocol ObservableInterface: AnyObject {
 }
 
 @propertyWrapper
-public final class Observable<Property>: ObservableInterface {
+public final class SCNObservable<Property>: SCNObservableInterface {
 
   public typealias Observer = (Property) -> Void
 
@@ -45,14 +45,14 @@ public final class Observable<Property>: ObservableInterface {
 
   public var value: Property { wrappedValue }
 
-  public var projectedValue: Observable<Property> { self }
+  public var projectedValue: SCNObservable<Property> { self }
 
   public var observer: Observer?
 
   public init(wrappedValue: Property) { self.wrappedValue = wrappedValue }
 }
 
-public extension ObservableInterface {
+public extension SCNObservableInterface {
 
   func observe(
     on queue: DispatchQueue? = nil,
@@ -66,7 +66,7 @@ public extension ObservableInterface {
   }
 }
 
-public extension ObservableInterface where Property: Equatable {
+public extension SCNObservableInterface where Property: Equatable {
 
   func observeUnique(
     on queue: DispatchQueue? = nil,
