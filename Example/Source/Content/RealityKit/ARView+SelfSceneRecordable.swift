@@ -31,7 +31,7 @@ import Combine
 private var cancellableKey: UInt8 = 0
 
 @available(iOS 13.0, *)
-extension ARView: SelfSceneRecordable {
+extension ARView: @retroactive SelfSceneRecordable {
 
   var _cancelable: Cancellable? {
     get {

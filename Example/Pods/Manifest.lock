@@ -1,12 +1,12 @@
 PODS:
   - MTDMulticastDelegate (1.0.0)
-  - SCNRecorder (2.7.0):
+  - SCNRecorder (2.8.1):
     - MTDMulticastDelegate
-  - SnapKit (5.6.0)
+  - SnapKit (5.7.1)
 
 DEPENDENCIES:
   - SCNRecorder (from `../`)
-  - SnapKit (~> 5.6.0)
+  - SnapKit (~> 5.7.1)
 
 SPEC REPOS:
   trunk:
@@ -19,9 +19,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MTDMulticastDelegate: 4cd6b89c670e210071ac1914cdfd489eee4f64a5
-  SCNRecorder: f1891098c0ea72fe166a1c10fc2e5a4e3dd8c9a5
-  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SCNRecorder: dd694ba1c5cd541a58f0794a45d70262109c7024
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
-PODFILE CHECKSUM: 255da2c7d31b68d6e0e261e323e1f3354767b094
+PODFILE CHECKSUM: 6cdab886091e4aeb20218508030c8f0592e2ce55
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2

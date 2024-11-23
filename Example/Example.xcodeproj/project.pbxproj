@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -298,8 +298,9 @@
 		BE4C34652237C827007AE1EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = "GORA Studio";
 				TargetAttributes = {
 					BE4C346C2237C827007AE1EE = {

@@ -30,7 +30,7 @@ import CoreMedia
 public final class CleanRecorder<T: CleanRecordable>: BaseRecorder,
   Renderable, SCNSceneRendererDelegate {
 
-  let videoInput: VideoInput<T>
+  let videoInput: VideoInput
 
   init(_ cleanRecordable: T, timeScale: CMTimeScale = 600) {
     let queue = DispatchQueue(label: "SCNRecorder.Processing.DispatchQueue", qos: .userInitiated)
