@@ -24,7 +24,7 @@ Starting version 2.2.0 SCNRecorder supports Metal only.
 ### CocoaPods
 
 ```ruby
-pod 'SCNRecorder', '~> 2.7'
+pod 'SCNRecorder', '~> 2.9'
 ```
 
 ### Carthage
