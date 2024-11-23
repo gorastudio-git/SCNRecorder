@@ -1,5 +1,5 @@
 PODS:
-  - MTDMulticastDelegate (1.0.0)
+  - MTDMulticastDelegate (1.0.1)
   - SCNRecorder (2.8.1):
     - MTDMulticastDelegate
   - SnapKit (5.7.1)
@@ -18,8 +18,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MTDMulticastDelegate: 4cd6b89c670e210071ac1914cdfd489eee4f64a5
-  SCNRecorder: dd694ba1c5cd541a58f0794a45d70262109c7024
+  MTDMulticastDelegate: dcedff914c281710e3faa64b79ff775741f25b4b
+  SCNRecorder: a42867f4907e6920fe18949063f75d2c3c085d43
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
 PODFILE CHECKSUM: 6cdab886091e4aeb20218508030c8f0592e2ce55

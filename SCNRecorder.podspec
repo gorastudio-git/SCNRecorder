@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
       "SWIFT_OBJC_BRIDGING_HEADER" => "$(PODS_TARGET_SRCROOT)/Example/Source/Example-Bridging-Header.h"
     }
 
-    app_spec.dependency 'SnapKit', '~> 5.0.0'
+    app_spec.dependency 'SnapKit', '~> 5.7.1'
   end
 
   s.test_spec 'Tests' do |test_spec|
